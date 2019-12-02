@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import Router from "./components/Router";
 import * as serviceWorker from "./serviceWorker";
 import configureStore from "./configureStore";
+import "./sass/main.scss";
 
 const store = configureStore();
 
