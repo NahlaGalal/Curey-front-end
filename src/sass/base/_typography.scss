@@ -1,3 +1,18 @@
-// body {
-//   font-family: $font;
-// }
+@font-face {
+  font-family: "Gilory-bold";
+  src: url("../../fonts/Radomir Tinkov - Gilroy-Bold.otf");
+}
+
+@font-face {
+  font-family: "Gilory";
+  src: url("../../fonts/Radomir Tinkov - Gilroy-Regular.otf");
+}
+
+@font-face {
+  font-family: "Gilory-semi-bold";
+  src: url("../../fonts/Radomir Tinkov - Gilroy-SemiBold.otf");
+}
+
+body {
+  font-family: $regular-font;
+}
