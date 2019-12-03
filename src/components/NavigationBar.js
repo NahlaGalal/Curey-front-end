@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const NavigationBar = () => (
   <nav className="NavigationBar">
@@ -26,24 +27,24 @@ const NavigationBar = () => (
 
     <ul className="NavigationBar__links">
       <li className="NavigationBar__item">
-        <a href="/" className="NavigationBar__link">
+        <NavLink to="/" className="NavigationBar__link">
           Appointments
-        </a>
+        </NavLink>
       </li>
       <li className="NavigationBar__item">
-        <a href="/" className="NavigationBar__link">
+        <NavLink to="/" className="NavigationBar__link">
           Prescriptions
-        </a>
+        </NavLink>
       </li>
       <li className="NavigationBar__item">
-        <a href="/" className="NavigationBar__link">
+        <NavLink to="/" className="NavigationBar__link">
           Orders
-        </a>
+        </NavLink>
       </li>
       <li className="NavigationBar__item NavigationBar__item--unique ">
-        <a href="/" className="NavigationBar__link ">
+        <NavLink to="/" className="NavigationBar__link ">
           Medical wallet
-        </a>
+        </NavLink>
       </li>
 
       <div className="NavigationBar__icons">
