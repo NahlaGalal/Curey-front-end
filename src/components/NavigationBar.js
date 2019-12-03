@@ -2,11 +2,15 @@ import React from "react";
 
 const NavigationBar = () => (
   <nav className="NavigationBar">
-    <img
-      className="NavigationBar__logo"
-      src={require("../assets/svg/Logo-SVG.svg")}
-      alt="logo"
-    />
+    <input type="checkbox" class="NavigationBar__checkbox" id="nav-toggle" />
+    <label for="nav-toggle" class="NavigationBar__button">
+      <span class="NavigationBar__hamburger"> </span>
+    </label>
+
+    <div className="NavigationBar__logo">
+      <img src={require("../assets/svg/Logo-SVG.svg")} alt="logo" />
+    </div>
+
     <div className="NavigationBar__search">
       <input
         type="text"
@@ -41,30 +45,30 @@ const NavigationBar = () => (
           Medical wallet
         </a>
       </li>
-    </ul>
 
-    <div className="NavigationBar__icons">
-      <img
-        className="NavigationBar__icon"
-        src={require("../assets/svg/heart.svg")}
-        alt="logo"
-      />
-      <img
-        className="NavigationBar__icon"
-        src={require("../assets/svg/shopping-cart.svg")}
-        alt="logo"
-      />
-      <img
-        className="NavigationBar__icon"
-        src={require("../assets/svg/notifications-button.svg")}
-        alt="logo"
-      />
-      <img
-        src={require("../assets/images/Hassan.png")}
-        alt="profile"
-        className="NavigationBar__img"
-      />
-    </div>
+      <div className="NavigationBar__icons">
+        <img
+          className="NavigationBar__icon"
+          src={require("../assets/svg/heart.svg")}
+          alt="logo"
+        />
+        <img
+          className="NavigationBar__icon"
+          src={require("../assets/svg/shopping-cart.svg")}
+          alt="logo"
+        />
+        <img
+          className="NavigationBar__icon"
+          src={require("../assets/svg/notifications-button.svg")}
+          alt="logo"
+        />
+        <img
+          src={require("../assets/images/Hassan.png")}
+          alt="profile"
+          className="NavigationBar__img"
+        />
+      </div>
+    </ul>
   </nav>
 );
 

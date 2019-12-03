@@ -9,8 +9,6 @@ import {
 import Home from "./Home";
 // Containers
 
-
-
 const Router = () => (
   <BrowserRouter>
     <Switch>
