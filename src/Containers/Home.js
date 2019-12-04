@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import NavigationBar from "../components/NavigationBar";
-import Button from "../components/Button";
+import Footer from "../components/Footer";
 
 export class Home extends Component {
   render() {
     return (
       <div>
         <NavigationBar />
-        <div className="hb">
-          <Button size="btn-lg" color="btn-green">
-            click me
-          </Button>
-        </div>
+        {/* <button className="btn btn-green btn-lg">bla bla</button> */}
+        <Footer />
       </div>
     );
   }
