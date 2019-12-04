@@ -1,0 +1,70 @@
+@import "../main.scss";
+
+$facebook-color: #4267b2;
+$google-color: #3988f2;
+$darken-by: 4;
+
+.social {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include respond(tab-port) {
+        flex-direction: column;
+    }
+
+    > div {
+        flex-basis: 48%;
+
+        @include respond(tab-port) {
+            width: 96%;
+        }
+
+        button {
+            width: 100%;
+            cursor: pointer;
+            border-radius: 1rem;
+            padding: 1.1rem 2.2rem;
+            display: flex;
+            align-items: center;
+            background-color: $facebook-color;
+            border: none;
+            outline: none !important;
+            transition: 0.3s;
+
+            img {
+                height: 2.5rem;
+                width: 2.5rem;
+                margin-right: 1rem;
+            }
+
+            span {
+                font-family: $semi-bold-font;
+                color: $color-white;
+                font-size: 1.6rem;
+            }
+
+            &:hover,
+            &:active,
+            &:focus {
+                background-color: darken($facebook-color, $darken-by);
+            }
+        }
+    }
+
+    &__google {
+        @include respond(tab-port) {
+            margin-top: 2rem;
+        }
+
+        button {
+            background-color: $google-color !important;
+
+            &:hover,
+            &:active,
+            &:focus {
+                background-color: darken($google-color, $darken-by) !important;
+            }
+        }
+    }
+}

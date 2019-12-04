@@ -1,0 +1,33 @@
+@import "../main.scss";
+
+.dividor {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    font-size: 1.4rem;
+    margin-bottom: 3.2rem;
+    margin-top: 3rem;
+
+    span {
+        color: $color-dark;
+        opacity: 0.4;
+    }
+
+    &::after,
+    &::before {
+        opacity: 0.2;
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        height: 1px;
+        width: calc(50% - 3rem);
+        background-color: $color-dark;
+    }
+
+    &::before {
+        left: auto;
+        right: 0;
+    }
+}

@@ -1,0 +1,23 @@
+@import "../main.scss";
+
+.main-button button {
+    border: none;
+    border-radius: 1rem;
+    background-color: $color-green-light;
+    font-family: $semi-bold-font;
+    font-size: 1.6rem;
+    padding: 1.45rem 7.6rem;
+    color: $color-white;
+    cursor: pointer;
+    outline: none !important;
+    transition: $transition;
+
+    &:hover {
+        background-color: $color-green;
+    }
+
+    &:active,
+    &:focus {
+        background-color: darken($color-green, 2);
+    }
+}

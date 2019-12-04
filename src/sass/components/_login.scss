@@ -1,0 +1,112 @@
+@import "../main.scss";
+
+$forgot-color: #ed1a3f;
+
+.login {
+    min-height: 100vh;
+    background-image: url("../../assets/man-on-rocket.svg");
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 11.5rem;
+
+    @include respond(tab-port) {
+        padding-right: 5rem;
+        padding-left: 5rem;
+        justify-content: center;
+        background: none;
+    }
+
+    &__container {
+        flex-basis: 49%;
+
+        @include respond(tab-land) {
+            flex-basis: 75%;
+        }
+
+        @include respond(tab-port) {
+            flex-basis: 100%;
+        }
+
+        &__header {
+            padding-top: 3.5rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            p {
+                font-size: 1.4rem;
+                color: $color-dark;
+            }
+
+            button {
+                font-family: $semi-bold-font;
+                font-size: 1.6rem;
+                background: none;
+                border: 0.2rem solid $color-dark;
+                border-radius: 1rem;
+                padding: 0.5rem 2.8rem;
+                margin-left: 0.8rem;
+                cursor: pointer;
+                transition: $transition;
+                color: $color-dark;
+                outline: none !important;
+
+                &:hover {
+                    opacity: 0.5;
+                }
+
+                &:active,
+                &:focus {
+                    box-shadow: 0 0 0 0.2rem rgba($color-green, $medium-opacity);
+                }
+            }
+        }
+
+        &__form {
+            h1 {
+                font-family: $bold-font;
+                font-size: 3.2rem;
+                color: $color-dark;
+                margin-bottom: 3.2rem;
+
+                span {
+                    display: block;
+                }
+            }
+
+            form {
+                .form--btn {
+                    @include respond(tab-port) {
+                        margin-top: 2rem;
+                    }
+                }
+
+                .forgot-password {
+                    display: flex;
+                    justify-content: flex-end;
+
+                    a {
+                        text-decoration: none;
+
+                        p {
+                            color: $forgot-color;
+                            font-size: 1.4rem;
+                        }
+                    }
+                }
+            }
+        }
+
+        &__footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10rem;
+            margin-bottom: 2.5rem;
+
+            p {
+                font-size: 1.4rem;
+            }
+        }
+    }
+}
