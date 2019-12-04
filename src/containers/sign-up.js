@@ -1,11 +1,10 @@
 //@ts-check
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import "../sass/components/_signup.scss";
-import SocialButtons from "./Social-buttons";
-import Dividor from "./Dividor";
-import FieldInput from "./FieldInput";
-import Button from "./Button";
+import SocialButtons from "../components/Social-buttons";
+import Dividor from "../components/Dividor";
+import FieldInput from "../components/FieldInput";
+import Button from "../components/Button";
 
 class SignupUser extends Component {
     state = {

@@ -1,9 +1,8 @@
 // @ts-check
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
-import "../sass/components/_forgot.scss";
-import FieldInput from "./FieldInput";
-import Button from "./Button";
+import FieldInput from "../components/FieldInput";
+import Button from "../components/Button";
 import EgyptFlag from "../assets/egypt.svg";
 
 class ForgotPassword extends Component {
@@ -17,6 +16,11 @@ class ForgotPassword extends Component {
         });
     };
 
+    onSubmitHandler = e => {
+        e.preventDefault();
+        this.props.history.push("/verification")
+    }
+
     render() {
         return (
             <div className="forgot__container__password">
@@ -25,7 +29,7 @@ class ForgotPassword extends Component {
                     Please, enter your email address or your phone number, You
                     will recieve code to reset your password
                 </p>
-                <form>
+                <form onSubmit={this.onSubmitHandler}>
                     <FieldInput
                         type="email"
                         name="email"
@@ -53,6 +57,11 @@ class CodeVerification extends Component {
         }
     };
 
+    onSubmitHandler = e => {
+        e.preventDefault();
+        this.props.history.push("/reset-password")
+    }
+
     render() {
         return (
             <div className="forgot__container__verification">
@@ -70,7 +79,7 @@ class CodeVerification extends Component {
                 <p className="forgot__container__verification__para">
                     Please, enter the 4 digits sent to your phone
                 </p>
-                <form>
+                <form onSubmit={this.onSubmitHandler}>
                     <FieldInput
                         type="text"
                         name="testCode"
@@ -97,11 +106,16 @@ class ResetPassword extends Component {
         });
     };
 
+    onSubmitHandler = e => {
+        e.preventDefault();
+        this.props.history.push("/login")
+    }
+
     render() {
         return (
             <div className="forgot__container__reset">
                 <h1>Reset your password</h1>
-                <form>
+                <form onSubmit={this.onSubmitHandler}>
                     <FieldInput
                         type="password"
                         name="newPassword"

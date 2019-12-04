@@ -7,9 +7,9 @@ import {
 } from "react-router-dom";
 // Components
 import Home from "./Home";
-import Login from "./Login";
-import Forgot from "./forgot-comps";
-import Signup from "./sign-up";
+import Login from "../containers/Login";
+import Forgot from "../containers/forgot-comps";
+import Signup from "../containers/sign-up";
 // Containers
 
 const Router = () => (
