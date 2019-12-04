@@ -8,8 +8,26 @@
     justify-content: flex-end;
     padding-right: 11.5rem;
 
+    @include respond(tab-port) {
+        padding-right: 5rem;
+        padding-left: 5rem;
+        background: none;
+        justify-content: center;
+        align-items: center;
+    }
+
     &__container {
         flex-basis: 48%;
+
+        @include respond(tab-land) {
+            flex-basis: 55%;
+        }
+
+        @include respond(phone) {
+            padding-right: 2.5rem;
+            padding-left: 2.5rem;
+            flex-basis: 98%;
+        }
 
         &__password,
         &__verification,
@@ -21,12 +39,19 @@
                 font-size: 3.2rem;
                 color: $color-dark;
                 margin-top: 20rem;
+
+                @include respond(tab-port) {
+                    margin-top: 10rem;
+                }
             }
 
             &__para {
                 font-size: 1.6rem;
                 margin-top: 3.2rem;
                 margin-bottom: 3.9rem;
+                background-color: $color-white;
+                padding: 5px;
+                line-height: 25px;
             }
         }
 
@@ -35,6 +60,9 @@
                 margin: 3.2rem 0;
                 font-size: 1.6rem;
                 color: rgba($color-dark, $very-high-opacity);
+                background-color: $color-white;
+                padding: 5px;
+                display: inline-block;
 
                 p {
                     margin-bottom: 0.8rem;
