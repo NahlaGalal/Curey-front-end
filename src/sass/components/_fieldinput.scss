@@ -2,6 +2,10 @@
 
 .fieldinput {
     width: 100%;
+    position: relative;
+    z-index: 1;
+    background-color: $color-white;
+    border-radius: 1rem;
 
     &__input {
         border-radius: 1rem;
@@ -13,15 +17,33 @@
         padding: 1.45rem 1.6rem;
         margin-bottom: 2rem;
         transition: $transition;
+        position: relative;
+        z-index: 2;
+        background: none;
 
         &:active,
         &:focus {
             box-shadow: 0 0 0 2px rgba($color-green-light, $medium-opacity);
         }
+    }
 
-        &::placeholder {
-            font-size: 1.6rem;
-            opacity: $very-high-opacity;
+    span {
+        position: absolute;
+        top: 50%;
+        left: 1.6rem;
+        transform: translateY(-50%);
+        font-size: 1.6rem;
+        color: rgba($color-dark, $very-high-opacity);
+        z-index: 1;
+        transition: $transition;
+
+        &.active {
+            font-size: 1.4rem;
+            transform: translate(0);
+            top: -8px;
+            background-color: $color-white;
+            z-index: 4;
+            padding: 0 0.5rem;
         }
     }
 }

@@ -8,6 +8,7 @@ import {
 // Components
 import Home from "./Home";
 import Login from "./Login";
+import Forgot from "./forgot-comps";
 // Containers
 
 const Router = () => (
@@ -15,6 +16,11 @@ const Router = () => (
         <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
+            <Route
+                exact
+                path={["/forgot-password", "/verification", "/reset-password"]}
+                component={Forgot}
+            />
         </Switch>
     </BrowserRouter>
 );

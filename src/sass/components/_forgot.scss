@@ -1,0 +1,76 @@
+@import "../main.scss";
+
+.forgot {
+    min-height: 100vh;
+    background-image: url("../../assets/questions.svg");
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 11.5rem;
+
+    &__container {
+        flex-basis: 48%;
+
+        &__password,
+        &__verification,
+        &__reset {
+            color: $color-dark;
+
+            h1 {
+                font-family: $bold-font;
+                font-size: 3.2rem;
+                color: $color-dark;
+                margin-top: 20rem;
+            }
+
+            &__para {
+                font-size: 1.6rem;
+                margin-top: 3.2rem;
+                margin-bottom: 3.9rem;
+            }
+        }
+
+        &__verification {
+            &__number {
+                margin: 3.2rem 0;
+                font-size: 1.6rem;
+                color: rgba($color-dark, $very-high-opacity);
+
+                p {
+                    margin-bottom: 0.8rem;
+                }
+
+                > div {
+                    display: flex;
+                    align-items: center;
+
+                    img {
+                        margin-right: 1.5rem;
+                    }
+                }
+            }
+
+            &__para {
+                margin-top: 0 !important;
+                margin-bottom: 2.35rem;
+            }
+        }
+
+        &__reset {
+            h1 {
+                margin-bottom: 3.2rem;
+            }
+        }
+
+        &__footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10rem;
+            margin-bottom: 2.5rem;
+
+            p {
+                font-size: 1.4rem;
+            }
+        }
+    }
+}

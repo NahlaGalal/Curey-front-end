@@ -8,13 +8,15 @@ class FieldInput extends Component {
         return (
             <div className="fieldinput">
                 <input
-                    placeholder={placeholder}
                     className="fieldinput__input"
                     type={type}
                     name={name}
                     value={value}
                     onChange={onChange}
                 />
+                <span className={value && value.length ? "active" : null}>
+                    {placeholder}
+                </span>
             </div>
         );
     }
