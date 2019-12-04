@@ -1,6 +1,3 @@
-@import "../main.scss";
-
-$forgot-color: #ed1a3f;
 
 .login {
     min-height: 100vh;
@@ -58,7 +55,7 @@ $forgot-color: #ed1a3f;
                         text-decoration: none;
 
                         p {
-                            color: $forgot-color;
+                            color: $warning-color;
                             font-size: 1.4rem;
                         }
                     }
