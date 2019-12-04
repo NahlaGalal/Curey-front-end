@@ -20,25 +20,71 @@ breakpiont devices options
 */
 
 @mixin respond($device) {
-  @if $device == phone {
-    @media (max-width: 37.5em) {
-      @content;
+    @if $device == phone {
+        @media (max-width: 37.5em) {
+            @content;
+        }
     }
-  }
-  @if $device == tab-land {
-    @media (max-width: 75em) {
-      @content;
+    @if $device == tab-land {
+        @media (max-width: 75em) {
+            @content;
+        }
     }
-  }
-  @if $device == tab-port {
-    @media (max-width: 56.25em) {
-      @content;
+    @if $device == tab-port {
+        @media (max-width: 56.25em) {
+            @content;
+        }
     }
-  }
-  
-  @if $device == big-desktop {
-    @media (min-width: 112.5em) {
-      @content;
+
+    @if $device == big-desktop {
+        @media (min-width: 112.5em) {
+            @content;
+        }
     }
-  }
+}
+
+@mixin header {
+    padding-top: 3.5rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    p {
+        font-size: 1.4rem;
+        color: $color-dark;
+    }
+
+    button {
+        font-family: $semi-bold-font;
+        font-size: 1.6rem;
+        background: none;
+        border: 0.2rem solid $color-dark;
+        border-radius: 1rem;
+        padding: 0.5rem 2.8rem;
+        margin-left: 0.8rem;
+        cursor: pointer;
+        transition: $transition;
+        color: $color-dark;
+        outline: none !important;
+
+        &:hover {
+            opacity: 0.5;
+        }
+
+        &:active,
+        &:focus {
+            box-shadow: 0 0 0 0.2rem rgba($color-green, $medium-opacity);
+        }
+    }
+}
+
+@mixin footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10rem;
+    margin-bottom: 2.5rem;
+
+    p {
+        font-size: 1.4rem;
+    }
 }

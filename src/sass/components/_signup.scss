@@ -1,0 +1,30 @@
+@import "../main.scss";
+
+.signup {
+    min-height: 100vh;
+    background-image: url("../../assets/man-on-rocket.svg");
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 11.5rem;
+
+    &__container {
+        flex-basis: 49%;
+
+        @include respond(tab-land) {
+            flex-basis: 75%;
+        }
+
+        @include respond(tab-port) {
+            flex-basis: 100%;
+        }
+
+        &__header {
+            @include header;
+        }
+
+        &__footer {
+            @include footer;
+        }
+    }
+}

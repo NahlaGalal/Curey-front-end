@@ -91,14 +91,7 @@
         }
 
         &__footer {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 10rem;
-            margin-bottom: 2.5rem;
-
-            p {
-                font-size: 1.4rem;
-            }
+            @include footer;
         }
     }
 }

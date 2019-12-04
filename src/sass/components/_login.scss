@@ -29,38 +29,7 @@ $forgot-color: #ed1a3f;
         }
 
         &__header {
-            padding-top: 3.5rem;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-
-            p {
-                font-size: 1.4rem;
-                color: $color-dark;
-            }
-
-            button {
-                font-family: $semi-bold-font;
-                font-size: 1.6rem;
-                background: none;
-                border: 0.2rem solid $color-dark;
-                border-radius: 1rem;
-                padding: 0.5rem 2.8rem;
-                margin-left: 0.8rem;
-                cursor: pointer;
-                transition: $transition;
-                color: $color-dark;
-                outline: none !important;
-
-                &:hover {
-                    opacity: 0.5;
-                }
-
-                &:active,
-                &:focus {
-                    box-shadow: 0 0 0 0.2rem rgba($color-green, $medium-opacity);
-                }
-            }
+            @include header;
         }
 
         &__form {
@@ -99,14 +68,7 @@ $forgot-color: #ed1a3f;
         }
 
         &__footer {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 10rem;
-            margin-bottom: 2.5rem;
-
-            p {
-                font-size: 1.4rem;
-            }
+            @include footer;
         }
     }
 }
