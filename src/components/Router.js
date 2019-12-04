@@ -9,7 +9,7 @@ import {
 import Home from "./Home";
 import Login from "./Login";
 import Forgot from "./forgot-comps";
-import SignUp from "./sign-up";
+import Signup from "./sign-up";
 // Containers
 
 const Router = () => (
@@ -22,7 +22,7 @@ const Router = () => (
                 path={["/forgot-password", "/verification", "/reset-password"]}
                 component={Forgot}
             />
-            <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/signup" component={Signup} />
         </Switch>
     </BrowserRouter>
 );

@@ -4,8 +4,7 @@ $forgot-color: #ed1a3f;
 
 .login {
     min-height: 100vh;
-    background-image: url("../../assets/man-on-rocket.svg");
-    background-repeat: no-repeat;
+    @include image("../../assets/man-on-rocket.svg");
     display: flex;
     justify-content: flex-end;
     padding-right: 11.5rem;

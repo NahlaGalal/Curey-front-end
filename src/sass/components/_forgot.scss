@@ -2,8 +2,7 @@
 
 .forgot {
     min-height: 100vh;
-    background-image: url("../../assets/questions.svg");
-    background-repeat: no-repeat;
+    @include image("../../assets/questions.svg");
     display: flex;
     justify-content: flex-end;
     padding-right: 11.5rem;
@@ -50,8 +49,8 @@
                 margin-top: 3.2rem;
                 margin-bottom: 3.9rem;
                 background-color: $color-white;
-                padding: 5px;
-                line-height: 25px;
+                padding: 0.5rem;
+                line-height: 2.5rem;
             }
         }
 
@@ -61,7 +60,7 @@
                 font-size: 1.6rem;
                 color: rgba($color-dark, $very-high-opacity);
                 background-color: $color-white;
-                padding: 5px;
+                padding: 0.5rem;
                 display: inline-block;
 
                 p {
