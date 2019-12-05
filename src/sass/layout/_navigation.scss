@@ -210,3 +210,30 @@
     }
   }
 }
+
+/***************************/
+///Second Nav //Doctors , Medication
+.sNav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.45rem;
+  background-color: $color-light-1;
+  font-size: 1.6rem;
+
+  &__link {
+    text-decoration: none;
+    color: rgba($color-dark, 0.7);
+    display: flex;
+    align-items: center;
+
+    &:not(:last-child) {
+      margin-right: 4.8rem;
+    }
+  }
+
+  &__text {
+    text-decoration: none;
+    margin-left: 0.8rem;
+  }
+}
