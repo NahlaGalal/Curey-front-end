@@ -1,0 +1,57 @@
+.doctorCard {
+  background-color: $color-white;
+  box-shadow: 0px 3px 6px rgba($color-dark, $low-opacity);
+  padding: 3.45rem 1.9rem;
+  width: max-content;
+  font-size: 1.6rem;
+  text-align: center;
+  //width: 27rem;
+  width: 100%;
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  &__name {
+    font-size: 2.4rem;
+    color: $color-dark;
+    font-family: $bold-font;
+  }
+  &__price {
+    font-size: 1.6rem;
+  }
+  &__speciality {
+    color: rgba($color-dark, $very-high-opacity);
+    margin-bottom: 0.9rem;
+    text-align: left;
+  }
+  &__rate {
+    display: flex;
+    align-items: center;
+    span {
+      color: rgba($color-dark, $very-high-opacity);
+    }
+  }
+  &__star {
+    margin-bottom: 1.8rem;
+    &:not(:last-of-type) {
+      margin-right: 0.2rem;
+    }
+    &:last-of-type {
+      margin-right: 0.6rem;
+    }
+  }
+}
+
+.g {
+  background-color: #000;
+  width: 85%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25.5rem, 1fr));
+  grid-gap: 4rem;
+  padding: 5rem;
+}
