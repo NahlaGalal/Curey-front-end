@@ -13,7 +13,7 @@ const Footer = () => (
       <ul className="footer__links">
         <li>
           <NavLink to="/" className="footer__link">
-            Help
+          Consult a doctor
           </NavLink>
         </li>
         <li>
