@@ -4,7 +4,7 @@ import Star from "../assets/svg/heart.svg";
 
 const DoctorCard = props => (
   <div className="doctorCard">
-    <img alt="doctor" src={Doctor} />
+    <img alt="doctor" src={Doctor} className="center" />
 
     <div className="doctorCard__info">
       <h3 className="doctorCard__name">{props.name}</h3>
@@ -19,7 +19,7 @@ const DoctorCard = props => (
       <img src={Star} alt="star" className="doctorCard__star" />
       <span>5.00</span>
     </div>
-    <button className="btn btn-lg btn-green">choose</button>
+    <button className="btn btn-lg btn-green center">choose</button>
   </div>
 );
 
