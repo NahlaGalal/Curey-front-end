@@ -1,5 +1,6 @@
 import React from "react";
 import Medication from "../assets/images/med1.png";
+import Button from "./Button";
 
 const MedicationCard = props => (
   <div className="medicationCard">
@@ -10,7 +11,7 @@ const MedicationCard = props => (
       <span className="medicationCard__price">{props.price}</span>
     </div>
 
-    <button className="btn btn-lg btn-green center">Shop now</button>
+    <Button className="btn btn-lg btn-green center">Shop now</Button>
   </div>
 );
 

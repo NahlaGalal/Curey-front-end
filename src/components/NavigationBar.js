@@ -3,9 +3,9 @@ import { NavLink } from "react-router-dom";
 
 const NavigationBar = () => (
   <nav className="NavigationBar">
-    <input type="checkbox" class="NavigationBar__checkbox" id="nav-toggle" />
-    <label for="nav-toggle" class="NavigationBar__button">
-      <span class="NavigationBar__hamburger"> </span>
+    <input type="checkbox" className="NavigationBar__checkbox" id="nav-toggle" />
+    <label htmlFor="nav-toggle" className="NavigationBar__button">
+      <span className="NavigationBar__hamburger"> </span>
     </label>
 
     <div className="NavigationBar__logo">

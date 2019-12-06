@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Nav";
 import DoctorsGrid from "./DoctorsGrid";
 import MedicationGrid from "./MedicationGrid";
+import Button from "../components/Button";
 //import MedicationCard from "../components/MedicationCard";
 
 export class Home extends Component {
@@ -17,16 +18,16 @@ export class Home extends Component {
           <div className="topDoctors__container">
             <h2 className="heading-2 mb-52">Top doctors</h2>
             <DoctorsGrid />
-            <button className="btn btn-lg btn-green center mb-56">
+            <Button className="btn btn-lg btn-green center mb-56">
               See more
-            </button>
+            </Button>
           </div>
 
           <div className="topMedications__container">
             <h2 className="heading-2 mb-52">Top medications</h2>
             <MedicationGrid />
           </div>
-          <button className="btn btn-lg btn-green center">See more</button>
+          <Button className="btn btn-lg btn-green center">See more</Button>
         </section>
         {/* <MedicationCard name="baf" price="45" /> */}
         <Footer />

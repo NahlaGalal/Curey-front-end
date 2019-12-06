@@ -1,6 +1,7 @@
 import React from "react";
 import Doctor from "../assets/images/doctor1.png";
 import Star from "../assets/svg/heart.svg";
+import Button from "./Button";
 
 const DoctorCard = props => (
   <div className="doctorCard">
@@ -19,7 +20,7 @@ const DoctorCard = props => (
       <img src={Star} alt="star" className="doctorCard__star" />
       <span>5.00</span>
     </div>
-    <button className="btn btn-lg btn-green center">choose</button>
+    <Button className="btn btn-lg btn-green center">choose</Button>
   </div>
 );
 
