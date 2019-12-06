@@ -1,23 +1,44 @@
-@import "../main.scss";
+.btn {
+  font-family: $semi-bold-font;
+  border-radius: 1rem;
+  border: none;
+  cursor: pointer;
+  font-size: 1.6rem;
+  outline: none !important;
+  transition: $transition;
+  padding: 1.45rem 7.6rem;
+  &:hover {
+    background-color: $color-green;
+  }
 
-.main-button button {
-    border: none;
-    border-radius: 1rem;
-    background-color: $color-green-light;
-    font-family: $semi-bold-font;
-    font-size: 1.6rem;
-    padding: 1.45rem 7.6rem;
-    color: $color-white;
-    cursor: pointer;
-    outline: none !important;
-    transition: $transition;
+  &:active,
+  &:focus {
+    background-color: darken($color-green, 2);
+  }
+}
 
-    &:hover {
-        background-color: $color-green;
-    }
+.btn-sm {
+  height: 4rem;
+  width: 13.6rem;
+}
 
-    &:active,
-    &:focus {
-        background-color: darken($color-green, 2);
-    }
+.btn-md {
+  height: 4.8rem;
+  width: 19.2rem;
+}
+
+.btn-lg {
+  height: 4.8rem;
+  width: 21.6rem;
+}
+
+.btn-green {
+  background-color: $color-green-light;
+  color: $color-white;
+}
+
+.btn-transparent {
+  background-color: transparent;
+  color: $color-white;
+  border: 1.5px solid $color-white;
 }

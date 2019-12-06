@@ -6,11 +6,13 @@
 @import "base/typography";
 @import "base/utilities";
 
-// @import "components/buttons";
+@import "components/buttons";
+@import "components/cards";
 
 @import "pages/login";
 @import "pages/signup";
 @import "pages/forgot";
+@import "pages/home";
 
 @import "layout/grid";
 @import "layout/footer";
