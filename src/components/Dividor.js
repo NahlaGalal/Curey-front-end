@@ -1,5 +1,4 @@
 import React from "react";
-import "../sass/components/_dividor.scss";
 
 const Dividor = props => {
     return (

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
-import Router from "./Containers/Router";
+import Router from "./containers/Router";
 import * as serviceWorker from "./serviceWorker";
 import configureStore from "./configureStore";
 import "./sass/main.scss";

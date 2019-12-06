@@ -1,6 +1,5 @@
 //@ts-check
 import React from "react";
-import "../sass/components/_social-buttons.scss";
 import FacebookLogo from "../assets/facebook.svg";
 import GoogleLogo from "../assets/google.svg";
 

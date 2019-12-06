@@ -1,6 +1,5 @@
 //@ts-check
 import React, { Component } from "react";
-import "../sass/components/_fieldinput.scss";
 
 class FieldInput extends Component {
     render() {
