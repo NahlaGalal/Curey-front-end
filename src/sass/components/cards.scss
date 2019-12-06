@@ -48,7 +48,6 @@
 
 .medicationCard {
   @extend .doctorCard;
-  width: 27rem;
 
   &__info {
     @extend .doctorCard__info;
