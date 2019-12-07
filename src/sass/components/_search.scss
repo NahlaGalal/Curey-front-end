@@ -1,0 +1,49 @@
+.Searchbar {
+  width: 85%;
+  margin: 6.4rem auto 0;
+  height: 4.8rem;
+  display: flex;
+  justify-content: space-between;
+
+  &__input {
+    width: 100%;
+    margin-right: 16px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    input {
+      height: 4.8rem;
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba($color: $color-dark, $alpha: $medium-opacity);
+      padding-left: 1.6rem;
+      font-size: 1.6rem;
+      &::placeholder {
+        color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+      }
+      &::-webkit-input-placeholder {
+        color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+      }
+    }
+    &--icon {
+      position: absolute;
+      right: 15.3rem;
+      cursor: pointer;
+      &--medications {
+        right: 1.6rem;
+      }
+    }
+    .btn-search {
+      position: absolute;
+      right: 0;
+      border: 0;
+      border-left: 1px solid rgba($color: $color-dark, $alpha: $medium-opacity);
+      border-radius: 0 10px 10px 0;
+    }
+  }
+
+  .btn-search {
+    height: 4.8rem;
+    width: 13.6rem;
+  }
+}

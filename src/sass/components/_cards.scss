@@ -1,7 +1,7 @@
 .doctorCard {
   background-color: $color-white;
   box-shadow: 0px 3px 6px rgba($color-dark, $low-opacity);
-  padding: 3.45rem 1.9rem;
+  padding: 2rem;
   font-size: 1.6rem;
   //width: 27rem;
   width: 100%;
@@ -12,7 +12,6 @@
     margin-bottom: 0.8rem;
     flex-wrap: wrap;
   }
-
   &__name {
     font-size: 2.4rem;
     color: $color-dark;
@@ -50,8 +49,14 @@
   @extend .doctorCard;
 
   &__info {
-    @extend .doctorCard__info;
-    margin: 1.6rem;
+    margin: 1.6rem 0;
+    &--flex {
+      @extend .doctorCard__info;
+    }
+  }
+
+  &__description {
+    color: rgba($color-dark, $very-high-opacity);
   }
 
   &__name {
