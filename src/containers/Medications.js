@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import MedicationGrid from "../components/Doctors and medications/MedicationGrid";
 import Search from "../components/Doctors and medications/Search";
+import { Filter } from "../components/Doctors and medications/Filter";
 
 const medications = [
   {
@@ -102,10 +103,20 @@ const medications = [
 ];
 
 class Medications extends Component {
+  state = {
+    filterShown: "block"
+  };
+
+  openFilterBox = () => {};
   render() {
     return (
       <div>
-        <Search placeholder="Search Medication, desease...etc" type="medications"/>
+        <Filter style={{ display: this.state.filterShown }} />
+        <Search
+          placeholder="Search Medication, desease...etc"
+          type="medications"
+          openFilterBox={this.openFilterBox}
+        />
         <section className="topDoctors">
           <div className="topDoctors__container">
             <MedicationGrid medications={medications} />

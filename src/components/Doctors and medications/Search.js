@@ -19,7 +19,12 @@ const Search = props => {
           <Button className="btn btn-transparent btn-search">Search map</Button>
         ) : null}
       </div>
-      <Button className="btn btn-search btn-popup">Filter</Button>
+      <Button
+        className="btn btn-search btn-popup"
+        onClick={props.openFilterBox}
+      >
+        Filter
+      </Button>
     </header>
   );
 };
