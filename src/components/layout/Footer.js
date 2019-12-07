@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import CureyLogo from "../assets/svg/Logo-SVG.svg";
-import FacebookLogo from "../assets/svg/facebook.svg";
-import TwitterLogo from "../assets/svg/twitter.svg";
-import InstagramLogo from "../assets/svg/instagram.svg";
+import CureyLogo from "../../assets/svg/Logo-SVG.svg";
+import FacebookLogo from "../../assets/svg/facebook.svg";
+import TwitterLogo from "../../assets/svg/twitter.svg";
+import InstagramLogo from "../../assets/svg/instagram.svg";
 
 const Footer = () => (
   <footer className="footer">

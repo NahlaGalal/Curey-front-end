@@ -9,7 +9,7 @@ const NavigationBar = () => (
     </label>
 
     <div className="NavigationBar__logo">
-      <img src={require("../assets/svg/Logo-SVG.svg")} alt="logo" />
+      <img src={require("../../assets/svg/Logo-SVG.svg")} alt="logo" />
     </div>
 
     <div className="NavigationBar__search">
@@ -20,7 +20,7 @@ const NavigationBar = () => (
       />
       <img
         className="NavigationBar__search--icon"
-        src={require("../assets/svg/search.svg")}
+        src={require("../../assets/svg/search.svg")}
         alt="logo"
       />
     </div>
@@ -50,21 +50,21 @@ const NavigationBar = () => (
       <div className="NavigationBar__icons">
         <img
           className="NavigationBar__icon"
-          src={require("../assets/svg/heart.svg")}
+          src={require("../../assets/svg/heart.svg")}
           alt="logo"
         />
         <img
           className="NavigationBar__icon"
-          src={require("../assets/svg/shopping-cart.svg")}
+          src={require("../../assets/svg/shopping-cart.svg")}
           alt="logo"
         />
         <img
           className="NavigationBar__icon"
-          src={require("../assets/svg/notifications-button.svg")}
+          src={require("../../assets/svg/notifications-button.svg")}
           alt="logo"
         />
         <img
-          src={require("../assets/images/Hassan.png")}
+          src={require("../../assets/images/Hassan.png")}
           alt="profile"
           className="NavigationBar__img"
         />
