@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./Button";
+import Button from "../Button";
 
 const Search = props => {
   return (
@@ -12,7 +12,7 @@ const Search = props => {
               ? "Searchbar__input--icon--medications"
               : null
           }`}
-          src={require("../assets/svg/search.svg")}
+          src={require("../../assets/svg/search.svg")}
           alt="logo"
         />
         {props.type === "doctors" ? (

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import DoctorGrid from "../components/DoctorsGrid";
-import Search from "../components/Search";
+import DoctorGrid from "../components/Doctors and medications/DoctorsGrid";
+import Search from "../components/Doctors and medications/Search";
 
 const doctors = [
   {

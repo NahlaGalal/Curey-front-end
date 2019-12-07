@@ -1,6 +1,6 @@
 import React from "react";
-import Medication from "../assets/images/med1.png";
-import Button from "./Button";
+import Medication from "../../assets/images/med1.png";
+import Button from "../Button";
 
 const MedicationGrid = props => (
   <div className="medicationGrid mb-40">

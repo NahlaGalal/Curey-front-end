@@ -1,7 +1,7 @@
 import React from "react";
-import Doctor from "../assets/images/doctor1.png";
-import Star from "../assets/svg/heart.svg";
-import Button from "./Button";
+import Doctor from "../../assets/images/doctor1.png";
+import Star from "../../assets/svg/heart.svg";
+import Button from "../Button";
 
 class DoctorsGrid extends React.Component {
   state = { doctorRate: [] };

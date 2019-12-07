@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import DoctorsGrid from "../components/DoctorsGrid";
-import MedicationGrid from "../components/MedicationGrid";
+import DoctorsGrid from "../components/Doctors and medications/DoctorsGrid";
+import MedicationGrid from "../components/Doctors and medications/MedicationGrid";
 import Button from "../components/Button";
 
 const doctors = [
