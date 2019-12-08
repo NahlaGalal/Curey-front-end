@@ -1,7 +1,7 @@
 //@ts-check
 import React from "react";
-import FacebookLogo from "../assets/facebook.svg";
-import GoogleLogo from "../assets/google.svg";
+import FacebookLogo from "../assets/svg/facebook.svg";
+import GoogleLogo from "../assets/svg/google.svg";
 
 const SocialButtons = props => {
     return (

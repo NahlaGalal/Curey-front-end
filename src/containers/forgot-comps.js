@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import FieldInput from "../components/FieldInput";
 import Button from "../components/Button";
-import EgyptFlag from "../assets/egypt.svg";
+import EgyptFlag from "../assets/svg/egypt.svg";
 
 class ForgotPassword extends Component {
     state = {

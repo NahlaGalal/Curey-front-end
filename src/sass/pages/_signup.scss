@@ -2,7 +2,7 @@ $active-option-color: #09cacb;
 
 .signup {
     min-height: 100vh;
-    @include image("../../assets/man-on-rocket.svg");
+    @include image("../../assets/svg/man-on-rocket.svg");
     display: flex;
     justify-content: flex-end;
     padding-right: 11.5rem;
