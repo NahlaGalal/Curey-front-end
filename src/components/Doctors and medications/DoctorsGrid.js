@@ -1,6 +1,6 @@
 import React from "react";
 import Doctor from "../../assets/images/doctor1.png";
-import Star from "../../assets/svg/heart.svg";
+import Star from "../../assets/svg/star.svg";
 import Button from "../Button";
 
 class DoctorsGrid extends React.Component {

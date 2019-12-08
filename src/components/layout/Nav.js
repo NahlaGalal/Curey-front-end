@@ -1,15 +1,17 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Heart from "../../assets/svg/heart.svg";
+import doctors_icon from "../../assets/svg/heartbeat.svg";
+import medications_icon from "../../assets/svg/pill.svg";
+
 
 const Navbar = () => (
   <nav className="sNav">
     <NavLink to="/doctors" className="sNav__link">
-      <img src={Heart} alt="doctors icon" />
+      <img src={doctors_icon} alt="doctors icon" />
       <span className="sNav__text">Doctors</span>
     </NavLink>
     <NavLink to="/medications" className="sNav__link">
-      <img src={Heart} alt="medication icon" />
+      <img src={medications_icon} alt="medications icon" />
       <span className="sNav__text">medication</span>
     </NavLink>
   </nav>
