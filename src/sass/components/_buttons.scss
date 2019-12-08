@@ -7,14 +7,6 @@
   outline: none !important;
   transition: $transition;
   box-shadow: 0 0.3rem 0.6rem $color-light-3;
-  &:hover {
-    background-color: $color-green;
-  }
-
-  &:active,
-  &:focus {
-    background-color: darken($color-green, 2);
-  }
 }
 
 .btn-sm {

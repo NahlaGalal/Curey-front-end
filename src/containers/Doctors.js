@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import DoctorGrid from "../components/Doctors and medications/DoctorsGrid";
 import Search from "../components/Doctors and medications/Search";
-import { Filter } from "../components/Doctors and medications/Filter";
+import Filter from "../components/Doctors and medications/Filter";
 
 const doctors = [
   {
@@ -102,20 +102,47 @@ const doctors = [
   }
 ];
 
+const Filters = [
+  "Pediatrics",
+  "General Surgery",
+  "El-Mahalla",
+  "Keyword2",
+  "Physchiatry",
+  "Keyword3",
+  "Dental",
+  "Children",
+  "keyword",
+  "Keyword5",
+  "Keyword6",
+  "Keyword7"
+];
+
 class Doctors extends Component {
   state = {
-    filterShown: "block"
-  }
+    filterShown: "hidden"
+  };
 
-  openFilterBox = () => {
-
-  }
+  openFilterBox = () => this.setState({ filterShown: "visible" });
+  cancelFilters = () => this.setState({ filterShown: "hidden" });
+  applyFilters = filters => {
+    this.setState({ filterShown: "hidden" });
+  };
 
   render() {
     return (
       <div>
-        <Filter style={{display: this.state.filterShown}}/>
-        <Search placeholder="Search Doctors, Specialty" type="doctors" openFilterBox={this.openFilterBox}/>
+        <Filter
+          filters={Filters}
+          display={this.state.filterShown}
+          cancelFilters={this.cancelFilters}
+          applyFilters={this.applyFilters}
+          type="doctors"
+        />
+        <Search
+          placeholder="Search Doctors, Specialty"
+          type="doctors"
+          openFilterBox={this.openFilterBox}
+        />
         <section className="topDoctors">
           <div className="topDoctors__container">
             <DoctorGrid doctors={doctors} />
