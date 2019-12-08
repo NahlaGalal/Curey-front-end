@@ -5,6 +5,16 @@
   font-size: 1.6rem;
   //width: 27rem;
   width: 100%;
+  > img {
+    width: calc(100% - 2 * 4.35rem);
+    object-fit: cover;
+    margin: 2rem auto 3.6rem;
+    box-shadow: 0 0 0 6px $color-green,
+      0 0 0 12px rgba($color: $color-green, $alpha: $medium-opacity),
+      0 0 0 19px $color-white,
+      0 0 0 20px rgba($color: $color-green, $alpha: $low-opacity);
+    border-radius: 50%;
+  }
   &__info {
     display: flex;
     justify-content: space-between;
@@ -27,12 +37,12 @@
   &__rate {
     display: flex;
     align-items: center;
+    margin-bottom: 1.8rem;
     span {
       color: rgba($color-dark, $very-high-opacity);
     }
   }
   &__star {
-    margin-bottom: 1.8rem;
     &:not(:last-of-type) {
       margin-right: 0.2rem;
     }
@@ -47,6 +57,14 @@
 
 .medicationCard {
   @extend .doctorCard;
+  >img {
+    width: calc(100% - 2 * 1.2rem);
+    object-fit: cover;
+    margin: 1.2rem auto 2.8rem;
+    box-shadow: 0 0 0 6px $color-green,
+      0 0 0 12px rgba($color: $color-green, $alpha: $medium-opacity);
+    border-radius: 0;
+  }
 
   &__info {
     margin: 1.6rem 0;
