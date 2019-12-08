@@ -8,31 +8,22 @@ const doctors = [
     name: "Mo Zayan",
     price: 129,
     speciality: "Pediatric Surgery",
-    star: 3
+    star: 3,
+    isCallup: true
   },
   {
     name: "Mo Zayan",
     price: 129,
     speciality: "Pediatric Surgery",
-    star: 4
+    star: 4,
+    isCallup: true
   },
   {
     name: "Mo Zayan",
     price: 129,
     speciality: "Pediatric Surgery",
-    star: 5
-  },
-  {
-    name: "Mo Zayan",
-    price: 129,
-    speciality: "Pediatric Surgery",
-    star: 5
-  },
-  {
-    name: "Mo Zayan",
-    price: 129,
-    speciality: "Pediatric Surgery",
-    star: 5
+    star: 5,
+    isCallup: true
   },
   {
     name: "Mo Zayan",
@@ -68,7 +59,8 @@ const doctors = [
     name: "Mo Zayan",
     price: 129,
     speciality: "Pediatric Surgery",
-    star: 5
+    star: 5,
+    isCallup: true
   },
   {
     name: "Mo Zayan",
@@ -86,6 +78,13 @@ const doctors = [
     name: "Mo Zayan",
     price: 129,
     speciality: "Pediatric Surgery",
+    star: 5,
+    isCallup: true
+  },
+  {
+    name: "Mo Zayan",
+    price: 129,
+    speciality: "Pediatric Surgery",
     star: 5
   },
   {
@@ -93,6 +92,13 @@ const doctors = [
     price: 129,
     speciality: "Pediatric Surgery",
     star: 5
+  },
+  {
+    name: "Mo Zayan",
+    price: 129,
+    speciality: "Pediatric Surgery",
+    star: 5,
+    isCallup: true
   },
   {
     name: "Mo Zayan",

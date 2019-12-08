@@ -7,6 +7,20 @@ const medications = [
   {
     name: "Antinal",
     price: 12,
+    isFavourite: true,
+    description:
+      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+  },
+  {
+    name: "Antinal",
+    price: 12,
+    description:
+      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+  },
+  {
+    name: "Antinal",
+    price: 12,
+    isFavourite: true,
     description:
       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
   },
@@ -49,6 +63,21 @@ const medications = [
   {
     name: "Antinal",
     price: 12,
+    isFavourite: true,
+    description:
+      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+  },
+  {
+    name: "Antinal",
+    price: 12,
+    isFavourite: true,
+    description:
+      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+  },
+  {
+    name: "Antinal",
+    price: 12,
+    isFavourite: true,
     description:
       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
   },
@@ -73,30 +102,7 @@ const medications = [
   {
     name: "Antinal",
     price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
+    isFavourite: true,
     description:
       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
   }

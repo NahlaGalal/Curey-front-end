@@ -8,7 +8,15 @@ const doctors = [
     name: "Mo Zayan",
     price: 129,
     speciality: "Pediatric Surgery",
-    star: 5
+    star: 5,
+    isCallup: true
+  },
+  {
+    name: "Mo Zayan",
+    price: 129,
+    speciality: "Pediatric Surgery",
+    star: 5,
+    isCallup: true
   },
   {
     name: "Mo Zayan",
@@ -26,19 +34,15 @@ const doctors = [
     name: "Mo Zayan",
     price: 129,
     speciality: "Pediatric Surgery",
-    star: 5
+    star: 5,
+    isCallup: true
   },
   {
     name: "Mo Zayan",
     price: 129,
     speciality: "Pediatric Surgery",
-    star: 5
-  },
-  {
-    name: "Mo Zayan",
-    price: 129,
-    speciality: "Pediatric Surgery",
-    star: 5
+    star: 5,
+    isCallup: true
   },
   {
     name: "Mo Zayan",
@@ -57,7 +61,8 @@ const doctors = [
 const medications = [
   {
     name: "Antinal",
-    price: 12
+    price: 12,
+    isFavourite: true
   },
   {
     name: "Antinal",
@@ -69,11 +74,13 @@ const medications = [
   },
   {
     name: "Antinal",
-    price: 12
+    price: 12,
+    isFavourite: true
   },
   {
     name: "Antinal",
-    price: 12
+    price: 12,
+    isFavourite: true
   },
   {
     name: "Antinal",

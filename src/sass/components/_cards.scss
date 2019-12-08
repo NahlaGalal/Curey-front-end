@@ -1,19 +1,24 @@
 .doctorCard {
+  position: relative;
   background-color: $color-white;
   box-shadow: 0px 3px 6px rgba($color-dark, $low-opacity);
   padding: 2rem;
   font-size: 1.6rem;
   //width: 27rem;
   width: 100%;
-  > img {
-    width: calc(100% - 2 * 4.35rem);
-    object-fit: cover;
-    margin: 2rem auto 3.6rem;
-    box-shadow: 0 0 0 6px $color-green,
-      0 0 0 12px rgba($color: $color-green, $alpha: $medium-opacity),
-      0 0 0 19px $color-white,
-      0 0 0 20px rgba($color: $color-green, $alpha: $low-opacity);
-    border-radius: 50%;
+  &__main {
+    display: flex;
+    align-items: flex-start;
+    &__doctorImg {
+      width: calc(100% - 2 * 4.35rem);
+      object-fit: cover;
+      margin: 2rem 2rem 3.6rem 4.35rem;
+      box-shadow: 0 0 0 6px $color-green,
+        0 0 0 12px rgba($color: $color-green, $alpha: $medium-opacity),
+        0 0 0 19px $color-white,
+        0 0 0 20px rgba($color: $color-green, $alpha: $low-opacity);
+      border-radius: 50%;
+    }
   }
   &__info {
     display: flex;
@@ -50,6 +55,36 @@
       margin-right: 0.6rem;
     }
   }
+  .iscallup-doctor-info {
+    position: absolute;
+    width: 18rem;
+    height: 8.2rem;
+    top: -8rem;
+    border-radius: 5px;
+    right: 0;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 3px 6px $color-light-3;
+    background: $color-white;
+    padding: 1.6rem;
+    color: rgba($color-dark, $very-high-opacity);
+    transition: $transition;
+    &::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-top: 8px solid $color-white;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      bottom: -8px;
+      right: 24px;
+    }
+    &.hidden {
+      opacity: 0;
+    }
+  }
 }
 
 /*****************************/
@@ -57,13 +92,21 @@
 
 .medicationCard {
   @extend .doctorCard;
-  >img {
-    width: calc(100% - 2 * 1.2rem);
-    object-fit: cover;
-    margin: 1.2rem auto 2.8rem;
-    box-shadow: 0 0 0 6px $color-green,
-      0 0 0 12px rgba($color: $color-green, $alpha: $medium-opacity);
-    border-radius: 0;
+  &__main {
+    position: relative;
+    &--favourite {
+      position: absolute;
+      right: 2rem;
+      top: 0.8rem;
+    }
+    &__medicationImg {
+      width: calc(100% - 2 * 1.2rem);
+      object-fit: cover;
+      margin: 1.2rem auto 2.8rem;
+      box-shadow: 0 0 0 6px $color-green,
+        0 0 0 12px rgba($color: $color-green, $alpha: $medium-opacity);
+      border-radius: 0;
+    }
   }
 
   &__info {

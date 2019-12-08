@@ -1,12 +1,26 @@
 import React from "react";
 import Medication from "../../assets/images/med1.png";
 import Button from "../Button";
+import Favourite from "../../assets/svg/favourite.svg";
 
 const MedicationGrid = props => (
   <div className="medicationGrid mb-40">
     {props.medications.map((medication, i) => (
       <div className="medicationCard" key={i}>
-        <img alt="medication" src={Medication} className="center" />
+        <div className="medicationCard__main">
+          {medication.isFavourite ? (
+            <img
+              src={Favourite}
+              alt={`${medication.name} is favourite`}
+              className="medicationCard__main--favourite"
+            />
+          ) : null}
+          <img
+            alt={medication.name}
+            src={Medication}
+            className="center medicationCard__main__medicationImg"
+          />
+        </div>
 
         <div className="medicationCard__info">
           <div className="medicationCard__info--flex">
