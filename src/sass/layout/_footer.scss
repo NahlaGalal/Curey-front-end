@@ -49,17 +49,8 @@
     margin: 0 auto;
     width: min-content;
 
-    span {
-      background-color: $color-white;
-      width: 6.4rem;
-      height: 6.4rem;
-      border-radius: 50%;
-      display: flex;
-      justify-items: center;
-      justify-content: center;
-      &:not(:last-child) {
-        margin-right: 2.4rem;
-      }
+    span:not(:last-child) {
+      margin-right: 2.4rem;
     }
   }
 }
