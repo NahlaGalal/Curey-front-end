@@ -111,7 +111,6 @@ const doctors = [
 const Filters = [
   "Pediatrics",
   "General Surgery",
-  "El-Mahalla",
   "Keyword2",
   "Physchiatry",
   "Keyword3",

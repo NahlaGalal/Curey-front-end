@@ -25,7 +25,7 @@ const SelectBox = props => {
           const key = type.split(" ").join("");
           return (
             <div className="option" key={key}>
-              <input type="checkbox" id={key} hidden value={type} />
+              <input type="checkbox" id={key} hidden value={type}/>
               <label htmlFor={key}>{type}</label>
             </div>
           );

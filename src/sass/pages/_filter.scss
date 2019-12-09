@@ -15,6 +15,7 @@
   }
 
   &__filterBox {
+    overflow: auto;
     max-width: 416px;
     background-color: $color-white;
     min-height: 100vh;
@@ -42,7 +43,6 @@
       margin: 0.8rem 0.8rem 0 0;
       font-family: $regular-font;
       &:hover,
-      &:focus,
       &.active {
         background-color: $color-blue;
         color: $color-white;

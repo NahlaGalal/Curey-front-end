@@ -29,6 +29,30 @@ export default class Filter extends Component {
     );
     if (i === -1) {
       i = this.props.filters.findIndex(filterOption => filter === filterOption);
+      if (i === -1) {
+        let cityIndex = this.state.citiesChecked.findIndex(
+          city => filter === city
+        );
+        console.log(cityIndex);
+        if (cityIndex === -1) {
+          let specialityIndex = this.state.specialitiesChecked.findIndex(
+            speciality => filter === speciality
+          );
+          console.log(specialityIndex);
+          let { specialitiesChecked } = this.state;
+          specialitiesChecked = specialitiesChecked
+            .slice(0, specialityIndex)
+            .concat(specialitiesChecked.slice(specialityIndex + 1));
+          this.setState({ specialitiesChecked });
+          return;
+        }
+        let { citiesChecked } = this.state;
+        citiesChecked = citiesChecked
+          .slice(0, cityIndex)
+          .concat(citiesChecked.slice(cityIndex + 1));
+        this.setState({ citiesChecked });
+        return;
+      }
     }
     filtersOptionsClass[i] = !filtersOptionsClass[i];
     if (isChecked === -1) {
@@ -77,8 +101,12 @@ export default class Filter extends Component {
 
   render() {
     const cityList = ["Cairo", "Mansoura", "El-Mahalla", "Bilqas"];
-
-    const specialityList = ["Surgery", "Children", "Dental"];
+    const keywords = [
+      ...this.state.filtersChecked,
+      ...this.state.citiesChecked,
+      ...this.state.specialitiesChecked
+    ];
+    const specialityList = ["Surgery1", "Children1", "Dental1"];
 
     return (
       <div className={`Filter ${this.props.display}`}>
@@ -87,7 +115,7 @@ export default class Filter extends Component {
             <h2> Filter </h2>
           </header>
           <div className="Filter__checked">
-            {this.state.filtersChecked.map((filter, i) => (
+            {keywords.map((filter, i) => (
               <Button
                 className="btn btn-filter active"
                 key={i}
@@ -116,7 +144,9 @@ export default class Filter extends Component {
             <div>
               <SelectBox
                 onClick={this.toggleCitySelectBox}
-                className={`${this.state.citiesChecked.length ? "hasValue" : null}`}
+                className={`${
+                  this.state.citiesChecked.length ? "hasValue" : null
+                }`}
                 listChecked={this.state.citiesChecked}
                 header="Cities"
                 boxOpened={this.state.cityBoxOpened}
