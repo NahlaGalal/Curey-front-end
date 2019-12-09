@@ -139,35 +139,37 @@ export default class Filter extends Component {
               </Button>
             ))}
           </div>
-          <div className="Filter__checkbox">
-            <h3> City & Speciality </h3>
-            <div>
-              <SelectBox
-                onClick={this.toggleCitySelectBox}
-                className={`${
-                  this.state.citiesChecked.length ? "hasValue" : null
-                }`}
-                listChecked={this.state.citiesChecked}
-                header="Cities"
-                boxOpened={this.state.cityBoxOpened}
-                list={cityList}
-                optionsContainerRef={this.citiesContainerRef}
-              />
+          {this.props.type === "doctors" ? (
+            <div className="Filter__checkbox">
+              <h3> City & Speciality </h3>
+              <div>
+                <SelectBox
+                  onClick={this.toggleCitySelectBox}
+                  className={`${
+                    this.state.citiesChecked.length ? "hasValue" : null
+                  }`}
+                  listChecked={this.state.citiesChecked}
+                  header="Cities"
+                  boxOpened={this.state.cityBoxOpened}
+                  list={cityList}
+                  optionsContainerRef={this.citiesContainerRef}
+                />
+              </div>
+              <div>
+                <SelectBox
+                  onClick={this.toggleSpecialitySelectBox}
+                  className={
+                    this.state.specialitiesChecked.length ? "hasValue" : null
+                  }
+                  listChecked={this.state.specialitiesChecked}
+                  header="Specialities"
+                  boxOpened={this.state.specialityBoxOpened}
+                  list={specialityList}
+                  optionsContainerRef={this.specialitiesContainerRef}
+                />
+              </div>
             </div>
-            <div>
-              <SelectBox
-                onClick={this.toggleSpecialitySelectBox}
-                className={
-                  this.state.specialitiesChecked.length ? "hasValue" : null
-                }
-                listChecked={this.state.specialitiesChecked}
-                header="Specialities"
-                boxOpened={this.state.specialityBoxOpened}
-                list={specialityList}
-                optionsContainerRef={this.specialitiesContainerRef}
-              />
-            </div>
-          </div>
+          ) : null}
           <div className="Filter__buttons">
             <Button
               className="btn btn-popup btn-apply"
