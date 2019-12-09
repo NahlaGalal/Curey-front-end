@@ -1,19 +1,34 @@
 import React from "react";
 import Doctor from "../../assets/images/doctor1.png";
-import Star from "../../assets/svg/star.svg";
+import Full_Star from "../../assets/svg/star.svg";
+import Half_Star from "../../assets/svg/half-star.svg";
+import Empty_Star from "../../assets/svg/empty-star.svg";
 import Home_icon from "../../assets/svg/home.svg";
 import Button from "../Button";
 
 class DoctorsGrid extends React.Component {
   state = { doctorRate: [], isCallupInfo: [] };
 
+  /**
+   * doctor.rate = 2
+   * 1, 2 ==> full
+   * 3, 4, 5 ==> empty
+   * 
+   * doctor.rate = 2.3
+   * 1,2 ==> full
+   * 3 ==> Half
+   * 4, 5 ==> empty
+   */
+
   componentDidMount() {
     let doctorRate = [], isCallupInfo = [];
     this.props.doctors.map((doctor, index) => {
       doctorRate.push([]);
       isCallupInfo.push("hidden");
-      for (let i = 0; i < doctor.star; i++) {
-        doctorRate[index].push("");
+      for (let i = 1; i <= 5; i++) {
+        if(Math.ceil(doctor.star) === i && doctor.star !== i) doctorRate[index].push("half");
+        else if(doctor.star < i) doctorRate[index].push("empty")
+        else doctorRate[index].push("full");
       }
       return doctorRate;
     });
@@ -61,7 +76,7 @@ class DoctorsGrid extends React.Component {
               {this.state.doctorRate.length
                 ? this.state.doctorRate[i].map((star, j) => (
                     <img
-                      src={Star}
+                      src={star === "empty" ? Empty_Star : star === "half" ? Half_Star : Full_Star}
                       alt="star"
                       className="doctorCard__star"
                       key={`${i} ${j}`}

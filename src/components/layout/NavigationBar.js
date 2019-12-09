@@ -9,7 +9,9 @@ const NavigationBar = () => (
     </label>
 
     <div className="NavigationBar__logo">
-      <img src={require("../../assets/svg/Logo-SVG.svg")} alt="logo" />
+      <NavLink to="/">
+        <img src={require("../../assets/svg/Logo-SVG.svg")} alt="logo" />
+      </NavLink>
     </div>
 
     <div className="NavigationBar__search">

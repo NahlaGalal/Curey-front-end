@@ -8,33 +8,33 @@ const doctors = [
     name: "Mo Zayan",
     price: 129,
     speciality: "Pediatric Surgery",
-    star: 5,
+    star: 2.5,
     isCallup: true
   },
   {
     name: "Mo Zayan",
     price: 129,
     speciality: "Pediatric Surgery",
-    star: 5,
+    star: 4,
     isCallup: true
   },
   {
     name: "Mo Zayan",
     price: 129,
     speciality: "Pediatric Surgery",
-    star: 5
+    star: 1
   },
   {
     name: "Mo Zayan",
     price: 129,
     speciality: "Pediatric Surgery",
-    star: 5
+    star: 2.2
   },
   {
     name: "Mo Zayan",
     price: 129,
     speciality: "Pediatric Surgery",
-    star: 5,
+    star: 0,
     isCallup: true
   },
   {
