@@ -1,11 +1,19 @@
 import React, { Component } from "react";
 import Button from "../Button";
+import SelectBox from "../SelectBox";
 
 export default class Filter extends Component {
   state = {
     filtersChecked: [],
-    filtersOptionsClass: []
+    citiesChecked: [],
+    specialitiesChecked: [],
+    filtersOptionsClass: [],
+    cityBoxOpened: false,
+    specialityBoxOpened: false
   };
+
+  citiesContainerRef = React.createRef();
+  specialitiesContainerRef = React.createRef();
 
   componentDidMount() {
     let filtersOptionsClass = [];
@@ -33,7 +41,45 @@ export default class Filter extends Component {
     this.setState({ filtersChecked, filtersOptionsClass });
   };
 
+  toggleCitySelectBox = () => {
+    const { cityBoxOpened } = this.state;
+    let citiesChecked = [];
+    if (cityBoxOpened) {
+      citiesChecked = Array.from(
+        this.citiesContainerRef.current.querySelectorAll("input[type=checkbox]")
+      )
+        .filter(input => input.checked)
+        .map(el => el.value);
+    }
+    this.setState({
+      cityBoxOpened: !cityBoxOpened,
+      citiesChecked
+    });
+  };
+
+  toggleSpecialitySelectBox = () => {
+    const { specialityBoxOpened } = this.state;
+    let specialitiesChecked = [];
+    if (specialityBoxOpened) {
+      specialitiesChecked = Array.from(
+        this.specialitiesContainerRef.current.querySelectorAll(
+          "input[type=checkbox]"
+        )
+      )
+        .filter(input => input.checked)
+        .map(el => el.value);
+    }
+    this.setState({
+      specialityBoxOpened: !specialityBoxOpened,
+      specialitiesChecked
+    });
+  };
+
   render() {
+    const cityList = ["Cairo", "Mansoura", "El-Mahalla", "Bilqas"];
+
+    const specialityList = ["Surgery", "Children", "Dental"];
+
     return (
       <div className={`Filter ${this.props.display}`}>
         <section className="Filter__filterBox">
@@ -65,7 +111,33 @@ export default class Filter extends Component {
               </Button>
             ))}
           </div>
-          <div className="Filter__Checkbox"></div>
+          <div className="Filter__checkbox">
+            <h3> City & Speciality </h3>
+            <div>
+              <SelectBox
+                onClick={this.toggleCitySelectBox}
+                className={`${this.state.citiesChecked.length ? "hasValue" : null}`}
+                listChecked={this.state.citiesChecked}
+                header="Cities"
+                boxOpened={this.state.cityBoxOpened}
+                list={cityList}
+                optionsContainerRef={this.citiesContainerRef}
+              />
+            </div>
+            <div>
+              <SelectBox
+                onClick={this.toggleSpecialitySelectBox}
+                className={
+                  this.state.specialitiesChecked.length ? "hasValue" : null
+                }
+                listChecked={this.state.specialitiesChecked}
+                header="Specialities"
+                boxOpened={this.state.specialityBoxOpened}
+                list={specialityList}
+                optionsContainerRef={this.specialitiesContainerRef}
+              />
+            </div>
+          </div>
           <div className="Filter__buttons">
             <Button
               className="btn btn-popup btn-apply"

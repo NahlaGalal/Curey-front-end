@@ -1,0 +1,122 @@
+$active-option-color: #09cacb;
+
+.select-component {
+  width: 100%;
+  position: relative;
+  background-color: $color-white;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+  cursor: pointer;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: calc(50% - 0.6rem);
+    right: 1.5rem;
+    height: 0;
+    width: 0;
+    border: 1.2rem solid transparent;
+    border-top-color: rgba($color-dark, $very-high-opacity);
+  }
+
+  > div:not(.select--options) {
+    border-radius: 1rem;
+    outline: none !important;
+    border: 1px solid rgba($color-dark, $medium-opacity);
+    padding: 2.2rem 1.6rem;
+
+    &.hasValue {
+      padding: 1.3rem 1.6rem;
+      font-size: 1.6rem;
+    }
+
+    &:active,
+    &:focus {
+      box-shadow: 0 0 0 2px rgba($color-green-light, $medium-opacity);
+    }
+  }
+  span {
+    position: absolute;
+    top: 50%;
+    left: 1.6rem;
+    transform: translateY(-50%);
+    font-size: 1.6rem;
+    color: rgba($color-dark, $very-high-opacity);
+    z-index: 1;
+    transition: $transition;
+
+    &.active {
+      font-size: 1.4rem;
+      transform: translate(0);
+      top: -8px;
+      background-color: $color-white;
+      z-index: 4;
+      padding: 0 0.5rem;
+    }
+  }
+  .select--options {
+    position: absolute;
+    width: 100%;
+    background-color: $color-white;
+    top: calc(100% + 1rem);
+    left: 0;
+    z-index: 99;
+    box-shadow: 0px 1px 10px #242a371a;
+    padding: 1.5rem;
+    visibility: hidden;
+    opacity: 0;
+    transition: $transition;
+
+    h3 {
+      font-family: $bold-font;
+      font-size: 1.6rem;
+      margin-bottom: 1.7rem;
+    }
+
+    .option {
+      color: rgba($color-dark, $very-high-opacity);
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+
+      label {
+        cursor: pointer;
+        position: relative;
+        z-index: 5;
+        padding-left: 2.5rem;
+
+        &::after,
+        &::before {
+          z-index: 6;
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 0;
+          transform: translateY(-50%);
+          height: 1.6rem;
+          width: 1.6rem;
+          background-color: $color-light-1;
+        }
+
+        &::before {
+          z-index: 7;
+          width: 0.8rem;
+          height: 0.8rem;
+          left: 0.4rem;
+          transform: translateY(-50%) scale(0);
+          transition: $transition;
+          background-color: $active-option-color;
+        }
+      }
+
+      input:checked + label::before {
+        transform: translateY(-50%) scale(1);
+      }
+    }
+
+    &.active {
+      opacity: 1;
+      visibility: visible;
+      top: calc(100% - 0.5rem);
+    }
+  }
+}

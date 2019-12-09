@@ -3,7 +3,7 @@
   height: 100%;
   position: fixed;
   background-color: rgba($color: $color-white, $alpha: $medium-opacity);
-  z-index: 2;
+  z-index: 100;
   top: 0;
   display: flex;
   justify-content: flex-end;
@@ -32,6 +32,7 @@
   }
 
   &__checked {
+    border-bottom: 1px solid rgba($color: $color-dark, $alpha: $medium-opacity);
     padding: 2.4rem;
     &:empty {
       padding: 0;
@@ -51,13 +52,15 @@
 
   &__options {
     @extend .Filter__checked;
-    border-top: 1px solid rgba($color: $color-dark, $alpha: $medium-opacity);
-    border-bottom: 1px solid rgba($color: $color-dark, $alpha: $medium-opacity);
     h3 {
       font-size: 1.6rem;
       font-family: $bold-font;
       margin-bottom: 1.6rem;
     }
+  }
+
+  &__checkbox {
+    @extend .Filter__options;
   }
 
   &__buttons {

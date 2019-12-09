@@ -5,6 +5,7 @@ import SocialButtons from "../components/Social-buttons";
 import Dividor from "../components/Dividor";
 import FieldInput from "../components/FieldInput";
 import Button from "../components/Button";
+import SelectBox from "../components/SelectBox";
 
 class SignupUser extends Component {
   state = {
@@ -150,43 +151,15 @@ class SignupDoctor extends Component {
             onChange={this.onChangeHandler}
             placeholder="Email address"
           />
-          <div
-            className="signup__container__forms__doctor__select"
+          <SelectBox
             onClick={this.toggleSpec}
-          >
-            <div
-              className={this.state.form.specialty.length ? "hasValue" : null}
-            >
-              {this.state.form.specialty.join(", ").slice(0, 50)}
-            </div>
-            <span
-              style={{
-                display: this.state.form.specialty.length ? "none" : "block"
-              }}
-            >
-              Specialty
-            </span>
-            <div
-              onClick={e => {
-                e.stopPropagation();
-              }}
-              className={`signup__container__forms__doctor__select__options select--options ${
-                this.state.specialtyOpened ? "active" : ""
-              }`}
-              ref={this.optionsContainerRef}
-            >
-              <h3>Surgery</h3>
-              {surgeryList.map(type => {
-                const key = type.split(" ").join("");
-                return (
-                  <div className="option" key={key}>
-                    <input type="checkbox" id={key} hidden value={type} />
-                    <label htmlFor={key}>{type}</label>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+            className={this.state.form.specialty.length ? "hasValue" : null}
+            listChecked={this.state.form.specialty}
+            header="Specialty"
+            boxOpened={this.state.specialtyOpened}
+            list={surgeryList}
+            optionsContainerRef={this.optionsContainerRef}
+          />
           <FieldInput
             type="password"
             name="password"
