@@ -52,6 +52,10 @@ $border: #07a3a4;
             display: flex;
             align-items: flex-start;
 
+            @include respond(tab-port) {
+                flex-direction: column;
+            }
+
             > * {
                 box-shadow: $card-shadow;
                 padding: 3.5rem;
@@ -63,10 +67,27 @@ $border: #07a3a4;
                 margin-right: 4rem;
                 flex-direction: column;
 
+                @include respond(tab-land) {
+                    flex-basis: calc(100% - 29rem);
+                    margin-right: 3rem;
+                }
+
+                @include respond(tab-port) {
+                    flex-basis: 100%;
+                    margin-right: 0;
+                }
+
                 &__header {
                     display: flex;
                     width: 100%;
                     margin-bottom: 2.4rem;
+
+                    @include respond(phone) {
+                        flex-direction: column;
+                        text-align: center;
+                        justify-content: center;
+                        align-items: center;
+                    }
 
                     &__image {
                         display: flex;
@@ -125,6 +146,10 @@ $border: #07a3a4;
                             display: flex;
                             align-items: center;
 
+                            @include respond(phone) {
+                                justify-content: center;
+                            }
+
                             img {
                                 margin-right: 0.3rem;
                             }
@@ -143,6 +168,10 @@ $border: #07a3a4;
                             font-size: 1.6rem;
                             text-align: right;
                             margin-top: 3px;
+
+                            @include respond(phone) {
+                                text-align: center;
+                            }
                         }
                     }
                 }
@@ -199,6 +228,11 @@ $border: #07a3a4;
             flex-direction: column;
             background-color: $color-white;
 
+            @include respond(tab-port) {
+                width: 100%;
+                margin-top: 4rem;
+            }
+
             > button {
                 width: 100%;
 
@@ -216,6 +250,16 @@ $border: #07a3a4;
         padding: 3.2rem;
         margin-bottom: 6.4rem;
 
+        @include respond(tab-land) {
+            width: calc(100% - 29rem);
+            margin-right: 3rem;
+        }
+
+        @include respond(tab-port) {
+            width: 100%;
+            margin-right: 0;
+        }
+
         h2 {
             font-family: $bold-font;
             font-size: 2.4rem;
@@ -230,6 +274,10 @@ $border: #07a3a4;
                 margin-bottom: 3rem;
                 padding-bottom: 3rem;
 
+                @include respond(phone) {
+                    display: block;
+                }
+
                 &:not(:last-of-type) {
                     border-bottom: 1px solid rgba($color-dark, $medium-opacity);
                 }
@@ -242,6 +290,10 @@ $border: #07a3a4;
                 &__image {
                     display: flex;
                     align-items: center;
+
+                    @include respond(phone) {
+                        margin-bottom: 3rem;
+                    }
 
                     img {
                         height: 4.2rem;

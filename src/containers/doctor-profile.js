@@ -41,7 +41,7 @@ const reviewPlaceHolder = id => ({
     image: PersonReviewImage,
     name: "Ahmed Raslan",
     time: "Just now",
-    rate: 3.45,
+    rate: Math.random() * 5,
     content:
         "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
 });
@@ -79,7 +79,9 @@ class DoctorProfile extends Component {
     };
 
     componentDidMount() {
-        window.addEventListener("scroll", this.onScrollHandler);
+        if (window.innerWidth >= 900) {
+            window.addEventListener("scroll", this.onScrollHandler);
+        }
     }
 
     componentWillUnmount() {
