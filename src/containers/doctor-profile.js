@@ -7,6 +7,8 @@ import FullStar from "../assets/svg/star.svg";
 import FacebookLogo from "../assets/svg/fb.svg";
 import Phone from "../assets/svg/phone.svg";
 import At from "../assets/svg/at.svg";
+import Button from "../components/Button";
+import PersonReviewImage from "../assets/images/person-review.png";
 
 const Rate = ({ rate } = { rate: 0 }) => {
     const arr = Array.from({ length: 5 });
@@ -29,10 +31,20 @@ const Rate = ({ rate } = { rate: 0 }) => {
                     {rates(FullStar)}
                 </span>
             </div>
-            <p>{rate <= 5 ? rate : 5}</p>
+            <p>{rate <= 5 ? rate.toFixed(2) : 5}</p>
         </div>
     );
 };
+
+const reviewPlaceHolder = id => ({
+    id,
+    image: PersonReviewImage,
+    name: "Ahmed Raslan",
+    time: "Just now",
+    rate: 3.45,
+    content:
+        "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
+});
 
 class DoctorProfile extends Component {
     state = {
@@ -42,8 +54,37 @@ class DoctorProfile extends Component {
             "Higher National Diploma",
             "Higher National Diploma",
             "Higher National Diploma"
+        ],
+        reviews: [
+            reviewPlaceHolder(0),
+            reviewPlaceHolder(1),
+            reviewPlaceHolder(2),
+            reviewPlaceHolder(3),
+            reviewPlaceHolder(4)
         ]
     };
+
+    boxRef = React.createRef();
+
+    onScrollHandler = ({ currentTarget }) => {
+        const boxOffset = this.boxRef.current.offsetTop;
+        const scroll = currentTarget.pageYOffset;
+        const scrollBy = Math.abs(boxOffset - (scroll + 64));
+
+        if (boxOffset <= scroll + 64) {
+            this.boxRef.current.style.transform = `translateY(${scrollBy}px)`;
+        } else {
+            this.boxRef.current.style.transform = `translateY(0)`;
+        }
+    };
+
+    componentDidMount() {
+        window.addEventListener("scroll", this.onScrollHandler);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this.onScrollHandler);
+    }
 
     render() {
         return (
@@ -126,7 +167,45 @@ class DoctorProfile extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="profile__header__box">box</div>
+                        <div className="profile__header__box" ref={this.boxRef}>
+                            <Button
+                                className="btn btn-lg btn-green"
+                                type="button"
+                            >
+                                Book now 129 L.E
+                            </Button>
+                            <Button
+                                className="btn btn-lg btn-green"
+                                type="button"
+                            >
+                                Call up 255 L.E
+                            </Button>
+                        </div>
+                    </div>
+                </section>
+                <section className="profile__reviews">
+                    <h2>Reviews</h2>
+                    <div className="profile__reviews__container">
+                        {this.state.reviews.map(review => {
+                            return (
+                                <div className="review" key={review.id}>
+                                    <div className="review__image">
+                                        <img
+                                            src={review.image}
+                                            alt="user-profile-image"
+                                        />
+                                        <div>
+                                            <p>{review.name}</p>
+                                            <span>{review.time}</span>
+                                        </div>
+                                    </div>
+                                    <div className="review__rate">
+                                        <Rate rate={review.rate} />
+                                        <p>{review.content}</p>
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </section>
             </section>
