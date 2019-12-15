@@ -22,3 +22,13 @@ body {
   font-family: $bold-font;
   font-size: 3.2rem;
 }
+
+.heading-3 {
+  @extend .heading-2;
+  font-size: 2.4rem;
+}
+
+.heading-4 {
+  @extend .heading-2;
+  font-size: 1.6rem;
+}
