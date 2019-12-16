@@ -69,7 +69,7 @@ const MedicinePage = () => (
           reviews={12}
           address="Roshdy pharmacies"
         />
-        <PharmacyItem
+        {/* <PharmacyItem
           name="Roshdy pharmacies"
           rate={4}
           reviews={12}
@@ -86,7 +86,7 @@ const MedicinePage = () => (
           rate={4}
           reviews={12}
           address="Roshdy pharmacies"
-        />
+        /> */}
       </div>
     </main>
   </React.Fragment>
