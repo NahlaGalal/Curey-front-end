@@ -8,6 +8,12 @@
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: min-content 1fr;
   grid-gap: 4rem;
+
+  @media (max-width: 950px) {
+    grid-template-rows: min-content min-content 1fr;
+    grid-template-columns: 1fr;
+    width: 90%;
+  }
 }
 
 .medicine__container {
@@ -23,6 +29,9 @@
 
   grid-row: 2 / 3;
 
+  @media (max-width: 950px) {
+    grid-row: auto;
+  }
   &__text {
     margin: 3.2rem 0 1.6rem 0;
   }
@@ -42,6 +51,11 @@
   grid-row: 1 / -1;
   height: calc(100% - 3.2rem);
   box-shadow: 0px 3px 6px rgba($color-dark, $low-opacity);
+
+  @media (max-width: 950px) {
+    grid-row: auto;
+    height: 100%;
+  }
 }
 
 /*******************************/

@@ -43,6 +43,30 @@ const MedicinePage = () => (
           name="Roshdy pharmacies"
           rate={4}
           reviews={12}
+          address="Mansoura City, Gehan St"
+        />
+        <PharmacyItem
+          name="Roshdy pharmacies"
+          rate={4}
+          reviews={12}
+          address="Mansoura City, Gehan St"
+        />
+        <PharmacyItem
+          name="Roshdy pharmacies"
+          rate={4}
+          reviews={12}
+          address="Mansoura City, Gehan St"
+        />
+        <PharmacyItem
+          name="Roshdy pharmacies"
+          rate={4}
+          reviews={12}
+          address="Mansoura City, Gehan St"
+        />
+        <PharmacyItem
+          name="Roshdy pharmacies"
+          rate={4}
+          reviews={12}
           address="Roshdy pharmacies"
         />
         <PharmacyItem
