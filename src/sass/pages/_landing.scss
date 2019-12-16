@@ -1,0 +1,300 @@
+.Landing {
+  .container {
+    width: 85%;
+    margin: 0 auto;
+  }
+
+  .Header {
+    @include image("../../assets/images/header-background.png");
+    background-position: top right;
+    overflow: hidden;
+    min-height: 100vh;
+    @media screen and (max-width: 1200px) {
+      background: none;
+      min-height: auto;
+    }
+    &__navbar {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      @media screen and (max-width: 576px) {
+        flex-direction: column;
+      }
+      &__links {
+        @media screen and (max-width: 576px) {
+          text-align: center;
+        }
+        a:first-of-type {
+          margin-right: 1.6rem;
+          @media screen and (max-width: 576px) {
+            display: block;
+            margin-right: 0;
+          }
+          .btn-transparent {
+            color: $color-white;
+            @media screen and (max-width: 1200px) {
+              border: 1.5px solid $color-green;
+              color: $color-green;
+            }
+            @media screen and (max-width: 576px) {
+              margin: 1.6rem 0;
+            }
+            &:hover {
+              background-color: transparent;
+            }
+          }
+        }
+      }
+    }
+    &__intro {
+      padding-top: 10%;
+      h1 {
+        font-family: $bold-font;
+        color: $color-dark;
+        font-size: 6.4rem;
+        line-height: 6.4rem;
+      }
+      h3 {
+        color: $color-green;
+        font-size: 3.2rem;
+        line-height: 3.2rem;
+        margin-top: 1.5rem;
+        margin-bottom: 2.4rem;
+        font-weight: normal;
+      }
+      p {
+        color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+        font-size: 2.4rem;
+        line-height: 3rem;
+        margin-bottom: 2.4rem;
+      }
+    }
+  }
+
+  .About {
+    margin-top: 15rem;
+    &__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 40px;
+      @media screen and (max-width: 992px) {
+        display: block;
+      }
+      img {
+        width: 100%;
+      }
+      &__content {
+        h4 {
+          color: $color-dark;
+          font-size: 2.4rem;
+          font-family: $bold-font;
+          line-height: 3rem;
+          margin: 3.2rem 0;
+        }
+        p {
+          color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+          line-height: 2.5rem;
+          margin: 1.6rem 0;
+          font-size: 1.6rem;
+        }
+      }
+    }
+  }
+
+  .Services {
+    @include image("../../assets/images/services-background.png");
+    background-position: top left;
+    background-size: 486px 508px;
+    padding-top: 6rem;
+    margin-top: 15%;
+    &__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 4rem;
+      @media (max-width: 1200px) {
+        display: block;
+      }
+      &__aside {
+        &__content {
+          p {
+            color: $color-white;
+            font-size: 1.6rem;
+            line-height: 2.5rem;
+          }
+          h4 {
+            color: $color-white;
+            font-size: 3.2rem;
+            line-height: 3.2rem;
+            font-family: $bold-font;
+            margin: 0.8rem 0 1.6rem 0;
+          }
+        }
+      }
+      &__medical {
+        @media (max-width: 1200px) {
+          margin-top: 300px;
+        }
+      }
+      &__medical,
+      &__medications {
+        h5 {
+          color: $color-dark;
+          font-size: 2.4rem;
+          line-height: 3rem;
+          font-family: $bold-font;
+          display: flex;
+          align-items: center;
+          span {
+            width: 8rem;
+            height: 8rem;
+            border-radius: 4rem;
+            box-shadow: $color-light-3 0 3px 6px;
+            text-align: center;
+            margin-right: 1.6rem;
+            img {
+              margin-top: 2rem;
+              display: inline-block;
+            }
+          }
+        }
+        .line {
+          margin-top: 0;
+          position: relative;
+          ul {
+            margin-left: 1rem;
+            margin-top: 2.7rem;
+            list-style: none;
+            padding-left: 4rem;
+            li {
+              position: relative;
+              &::before {
+                content: " ";
+                width: 0.9rem;
+                height: 0.9rem;
+                border-radius: 50%;
+                background-color: $color-dark;
+                position: absolute;
+                top: 1rem;
+                left: -1.5rem;
+              }
+              h6 {
+                color: $color-dark;
+                font-size: 1.6rem;
+                line-height: 2.5rem;
+                font-family: $bold-font;
+              }
+              p {
+                margin-top: 0.8rem;
+                margin-bottom: 2.4rem;
+                color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+                font-size: 1.6rem;
+                line-height: 2.5rem;
+              }
+            }
+          }
+          &::before {
+            content: "";
+            width: 1px;
+            position: absolute;
+            background-color: rgba($color: $color-dark, $alpha: $low-opacity);
+            left: 3.9rem;
+            top: -2.7rem;
+            bottom: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .Social-media {
+    margin: 15rem 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 4rem;
+    @media screen and (max-width: 768px) {
+      display: block;
+    }
+    &__market {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      margin-left: 15%;
+      @media screen and (max-width: 768px) {
+        margin-bottom: 2.4rem;
+      }
+      &__heading {
+        color: $color-dark;
+        font-size: 2.4rem;
+        line-height: 3rem;
+        font-family: $bold-font;
+        margin-bottom: 2.4rem;
+      }
+      &__heading2 {
+        font-size: 1.6rem;
+        line-height: 2.5rem;
+        margin-bottom: 1.6rem;
+        font-family: $bold-font;
+      }
+      &__links {
+        display: grid;
+        grid-gap: 1.6rem;
+        grid-template-columns: 19.2rem 19.2rem;
+        @media screen and (max-width: 992px) and (min-width: 768px) {
+          grid-template-columns: 13.6rem 13.6rem;
+          .btn {
+            height: 4rem;
+            width: 13.6rem;
+          }
+        }
+        @media screen and (max-width: 576px) {
+          display: block;
+          .btn:first-of-type {
+            margin-bottom: 1.6rem;
+          }
+        }
+      }
+    }
+    img {
+      width: 100%;
+    }
+  }
+
+  .Landing__footer {
+    background-color: $color-light-1;
+    height: 192px;
+    display: flex;
+    align-items: center;
+    &__content {
+      display: flex;
+      align-items: center;
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+      }
+      &__logo {
+        flex: 2;
+        display: flex;
+        align-items: center;
+        @media screen and (max-width: 576px) {
+          display: block;
+        }
+        img {
+          width: 19.6rem;
+          height: 6.4rem;
+        }
+        p {
+          color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+          font-size: 1.6rem;
+          margin-left: 24px;
+          @media screen and (max-width: 576px) {
+            margin: 1.6rem 0;
+          }
+        }
+      }
+      &__icons {
+        display: grid;
+        grid-template-columns: repeat(3, 56px);
+        grid-gap: 2.4rem;
+      }
+    }
+  }
+}

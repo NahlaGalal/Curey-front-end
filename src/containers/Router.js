@@ -14,6 +14,7 @@ import Doctors from "./Doctors";
 import Medications from "./Medications";
 import Layout from "../components/Layout";
 import DoctorProfile from "./doctor-profile";
+import Landing_page from "./Landing-page";
 
 const Router = () => (
     <BrowserRouter>
@@ -25,9 +26,10 @@ const Router = () => (
                 component={Forgot}
             />
             <Route exact path="/signup" component={Signup} />
+            <Route exact path="/" component={Landing_page} />
             <Layout>
                 <Switch>
-                    <Route exact path="/" component={Home} />
+                    <Route exact path="/home" component={Home} />
                     <Route exact path="/doctors" component={Doctors} />
                     <Route exact path="/medications" component={Medications} />
                     <Route
