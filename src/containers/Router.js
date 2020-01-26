@@ -15,6 +15,7 @@ import Medications from "./Medications";
 import Layout from "../components/Layout";
 import DoctorProfile from "./doctor-profile";
 import MedicinePage from "./MedicinePage";
+import ShoppingCart from "../components/orders/shoppingCart";
 
 const Router = () => (
   <BrowserRouter>
@@ -33,6 +34,7 @@ const Router = () => (
           <Route exact path="/medications" component={Medications} />
           <Route exact path="/doctor-profile/:id" component={DoctorProfile} />
           <Route exact path="/medicine" component={MedicinePage} />
+          <Route exact path="/shoppingcart" component={ShoppingCart} />
         </Switch>
       </Layout>
     </Switch>
