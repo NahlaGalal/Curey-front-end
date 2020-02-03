@@ -1,0 +1,77 @@
+.shoppingCartContainer {
+  padding: 6.4rem;
+  display: flex;
+  align-items: flex-start;
+
+  @media (max-width: 880px) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .medicationsContainer {
+    flex-basis: 75%;
+    margin-right: auto;
+
+    @media (max-width: 880px) {
+      order: 1;
+      text-align: center;
+      flex-basis: 100%;
+
+      // @media (max-width: 880px) {
+      //   .order {
+      //     margin-left: 10%;
+      //   }
+      // }
+
+      .order {
+        margin-left: 20%;
+
+        @media (max-width: 580px) {
+          margin-left: 10%;
+        }
+      }
+    }
+  }
+
+  .totalPriceCard {
+    flex-basis: 20%;
+    background-color: $color-white;
+    padding: 2.4rem;
+    box-shadow: 0px 3px 6px $color-light-3;
+
+    @media (max-width: 880px) {
+      order: 0;
+      width: 30rem;
+      margin-bottom: 4rem;
+    }
+
+    h3 {
+      font-size: 2.4rem;
+      font-family: $bold-font;
+      color: $color-dark;
+      margin-bottom: 0.8rem;
+    }
+
+    p {
+      color: $color-dark;
+      font-size: 2.4rem;
+      margin-bottom: 0.8rem;
+    }
+  }
+  .medicationCard__pharmacy {
+    display: flex;
+    align-items: center;
+
+    &--pharmacyInfo {
+      margin-left: 0.8rem;
+      font-size: 1.6rem;
+      color: $color-green;
+      img {
+        margin-right: 0.5rem;
+      }
+      p {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}

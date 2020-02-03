@@ -1,0 +1,99 @@
+.medicinePage__contianer {
+  width: 80%;
+  margin: 0 auto;
+  font-size: 1.6rem;
+  padding: 6.4rem 0;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: min-content 1fr;
+  grid-gap: 4rem;
+
+  @media (max-width: 950px) {
+    grid-template-rows: min-content min-content 1fr;
+    grid-template-columns: 1fr;
+    width: 90%;
+  }
+}
+
+.medicine__container {
+  grid-row: 1 / 2;
+}
+
+.delivery__container {
+  padding: 3.2rem;
+  box-shadow: 0px 3px 6px rgba($color-dark, $low-opacity);
+  color: rgba($color-dark, $very-high-opacity);
+  max-height: 300rem;
+  align-self: start;
+
+  grid-row: 2 / 3;
+
+  @media (max-width: 950px) {
+    grid-row: auto;
+  }
+  &__text {
+    margin: 3.2rem 0 1.6rem 0;
+  }
+
+  span {
+    display: block;
+    margin-bottom: 1.6rem;
+  }
+
+  &__btn {
+    margin-left: auto;
+    display: block;
+  }
+}
+
+.pharmacies__container {
+  grid-row: 1 / -1;
+  height: calc(100% - 3.2rem);
+  box-shadow: 0px 3px 6px rgba($color-dark, $low-opacity);
+  overflow: auto;
+
+  @media (max-width: 950px) {
+    grid-row: auto;
+    height: 100%;
+  }
+}
+
+/*******************************/
+//Pharmacy item
+.pharmacy {
+  display: flex;
+  padding: 1.6rem 3.2rem;
+  font-size: 1.6rem;
+  color: rgba($color-dark, $very-high-opacity);
+
+  &:not(:last-child) {
+    border-bottom: 1px solid rgba(36, 42, 55, 0.4);
+  }
+
+  &__info {
+    margin-left: 1.6rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__name {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+  }
+
+  &__address {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2.6rem;
+  }
+
+  &__buttons {
+    margin-left: auto;
+    width: max-content;
+  }
+}

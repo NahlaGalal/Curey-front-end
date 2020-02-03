@@ -147,6 +147,7 @@ class Doctors extends Component {
           placeholder="Search Doctors, Specialty"
           type="doctors"
           openFilterBox={this.openFilterBox}
+          withFilter
         />
         <section className="topDoctors">
           <div className="topDoctors__container">

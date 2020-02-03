@@ -92,6 +92,7 @@
 
 .medicationCard {
   @extend .doctorCard;
+
   &__main {
     position: relative;
     &--favourite {
