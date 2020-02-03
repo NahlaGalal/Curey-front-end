@@ -16,6 +16,7 @@ import Layout from "../components/Layout";
 import DoctorProfile from "./doctor-profile";
 import MedicinePage from "./MedicinePage";
 import ShoppingCart from "../components/orders/shoppingCart";
+import OrderPrescription from "../components/orders/OrderPrescription";
 
 const Router = () => (
   <BrowserRouter>
@@ -35,6 +36,11 @@ const Router = () => (
           <Route exact path="/doctor-profile/:id" component={DoctorProfile} />
           <Route exact path="/medicine" component={MedicinePage} />
           <Route exact path="/shoppingcart" component={ShoppingCart} />
+          <Route
+            exact
+            path="/OrderPrescription"
+            component={OrderPrescription}
+          />
         </Switch>
       </Layout>
     </Switch>
