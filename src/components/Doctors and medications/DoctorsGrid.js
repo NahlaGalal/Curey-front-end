@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Doctor from "../../assets/images/doctor1.png";
 import Home_icon from "../../assets/svg/home.svg";
 import Button from "../Button";
@@ -38,7 +39,7 @@ class DoctorsGrid extends React.Component {
               {doctor.isCallup ? (
                 <img
                   src={Home_icon}
-                  alt={`&{doctor.name} is available for home servicies`}
+                  alt={`${doctor.name} is available for home servicies`}
                   onMouseMove={() => this.hideCallupInfo(i)}
                   onMouseOut={() => this.showCallupInfo(i)}
                 />
@@ -53,7 +54,9 @@ class DoctorsGrid extends React.Component {
             <div className="doctorCard__rate">
               <Rate rate={doctor.star} />
             </div>
-            <Button className="btn btn-lg btn-green center">choose</Button>
+            <Link to="/doctor-profile/1">
+              <Button className="btn btn-lg btn-green center">choose</Button>
+            </Link>
             <div className={`iscallup-doctor-info ${this.state.isCallupInfo[i]}`}>
               <p>This doctor is available for home services</p>
             </div>

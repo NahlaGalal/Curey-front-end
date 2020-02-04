@@ -33,8 +33,14 @@
   background-color: $color-green-light;
   color: $color-white;
 }
+
+.btn-green-dark {
+  background-color: $color-green;
+  color: $color-white;
+}
+
 .checkout-btn {
-  background-color: rgba(7, 163, 164, 1);
+  background-color: $color-green;
   color: $color-white;
   height: 4.8rem;
   width: 100%;

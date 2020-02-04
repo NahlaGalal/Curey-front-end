@@ -37,7 +37,7 @@ class ForgotPassword extends Component {
                         placeholder="Email address - Phone nember"
                         onChange={this.onChangeHandler.bind(this)}
                     />
-                    <Button type="submit">Send</Button>
+                    <Button type="submit" className="btn btn-md btn-green">Send</Button>
                 </form>
             </div>
         );
@@ -87,7 +87,7 @@ class CodeVerification extends Component {
                         placeholder="Type the code"
                         onChange={this.onChangeHandler.bind(this)}
                     />
-                    <Button type="submit">Reset Password</Button>
+                    <Button type="submit" className="btn btn-md btn-green">Reset Password</Button>
                 </form>
             </div>
         );
@@ -130,7 +130,7 @@ class ResetPassword extends Component {
                         placeholder="Repeat new password"
                         onChange={this.onChangeHandler.bind(this)}
                     />
-                    <Button type="submit">Reset Password</Button>
+                    <Button type="submit" className="btn btn-md btn-green">Reset Password</Button>
                 </form>
             </div>
         );

@@ -4,17 +4,25 @@ import Button from "../Button";
 const Search = props => {
   return (
     <header className="Searchbar">
-      <div className="Searchbar__input">
+      <div
+        className={`${
+          !props.withFilter && props.type !== "medications"
+            ? "Searchbar__input--no-filter"
+            : "Searchbar__input"
+        }`}
+      >
         <input type="text" placeholder={props.placeholder} />
-        <img
-          className={`Searchbar__input--icon ${
-            props.type === "medications"
-              ? "Searchbar__input--icon--medications"
-              : null
-          }`}
-          src={require("../../assets/svg/search.svg")}
-          alt="logo"
-        />
+        {props.withFilter ? (
+          <img
+            className={`Searchbar__input--icon ${
+              props.type === "medications"
+                ? "Searchbar__input--icon--medications"
+                : null
+            }`}
+            src={require("../../assets/svg/search.svg")}
+            alt="logo"
+          />
+        ) : null}
         {props.type === "doctors" ? (
           <Button className="btn btn-transparent btn-search">Search map</Button>
         ) : null}
@@ -22,7 +30,7 @@ const Search = props => {
 
       {props.withFilter ? (
         <Button
-          className="btn btn-search btn-popup"
+          className="btn btn-search btn-popup btn-filter"
           onClick={props.openFilterBox}
         >
           Filter

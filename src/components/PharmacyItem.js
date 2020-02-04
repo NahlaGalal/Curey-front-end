@@ -21,7 +21,7 @@ const PharmacyItem = props => (
         <span>{props.reviews + " reviews"}</span>
       </div>
       <div className="pharmacy__buttons">
-        <Button className="btn btn-green btn-xs mr-16">Order</Button>
+        <Button className="btn btn-green-dark btn-xs mr-16">Order</Button>
         <Button className="btn btn-dark btn-xs">Add to cart</Button>
       </div>
     </div>

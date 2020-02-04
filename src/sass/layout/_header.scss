@@ -1,0 +1,13 @@
+.pageHeader {
+  background-color: $color-green;
+  padding: 0 7.5%;
+  height: 14.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h2 {
+    font-size: 3.2rem;
+    color: $color-white;
+  }
+}

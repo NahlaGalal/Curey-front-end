@@ -3,11 +3,17 @@
   margin: 0 auto;
   font-size: 1.6rem;
   padding: 6.4rem 0;
-
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: min-content 1fr;
   grid-gap: 4rem;
+  &__medicine {
+    display: grid;
+    grid-template-rows: min-content min-content;
+    grid-template-columns: 1fr;
+    grid-gap: 4rem;
+    position: sticky;
+    top: 0;
+  }
 
   @media (max-width: 950px) {
     grid-template-rows: min-content min-content 1fr;
@@ -17,7 +23,23 @@
 }
 
 .medicine__container {
-  grid-row: 1 / 2;
+  .medicationCard {
+    padding: 3.2rem 3.2rem 1.6rem;
+    &__main {
+      &__medicationImg {
+        box-shadow: 0 0 0 13.5px $color-green,
+          0 0 0 26px rgba($color: $color-green, $alpha: $medium-opacity);
+        width: calc(100% - 2 * 2.6rem);
+      }
+      &--favourite {
+        right: 4.17rem;
+        top: 1.6rem;
+      }
+    }
+    &__price {
+      font-family: $semi-bold-font;
+    }
+  }
 }
 
 .delivery__container {
@@ -26,8 +48,6 @@
   color: rgba($color-dark, $very-high-opacity);
   max-height: 300rem;
   align-self: start;
-
-  grid-row: 2 / 3;
 
   @media (max-width: 950px) {
     grid-row: auto;
@@ -48,14 +68,19 @@
 }
 
 .pharmacies__container {
-  grid-row: 1 / -1;
-  height: calc(100% - 3.2rem);
+  // height: calc(100% - 3.2rem);
   box-shadow: 0px 3px 6px rgba($color-dark, $low-opacity);
   overflow: auto;
+  padding: 3.2rem;
 
   @media (max-width: 950px) {
     grid-row: auto;
     height: 100%;
+  }
+
+  h2 {
+    margin-bottom: 3.2rem;
+    font-size: 2.4rem;
   }
 }
 
@@ -63,12 +88,18 @@
 //Pharmacy item
 .pharmacy {
   display: flex;
-  padding: 1.6rem 3.2rem;
+  padding: 2.4rem 0;
   font-size: 1.6rem;
   color: rgba($color-dark, $very-high-opacity);
 
   &:not(:last-child) {
     border-bottom: 1px solid rgba(36, 42, 55, 0.4);
+  }
+  &:last-child {
+    padding-bottom: 0;
+  }
+  &:first-of-type {
+    padding-top: 0;
   }
 
   &__info {

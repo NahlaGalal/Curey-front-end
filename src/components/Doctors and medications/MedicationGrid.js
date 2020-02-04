@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Medication from "../../assets/images/med1.png";
 import Button from "../Button";
 import Favourite from "../../assets/svg/favourite.svg";
@@ -36,7 +37,9 @@ const MedicationGrid = props => (
           ) : null}
         </div>
 
-        <Button className="btn btn-lg btn-green center">Shop now</Button>
+        <Link to="/medicine/1">
+          <Button className="btn btn-lg btn-green center">Shop now</Button>
+        </Link>
       </div>
     ))}
   </div>

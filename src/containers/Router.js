@@ -16,50 +16,37 @@ import Layout from "../components/Layout";
 import DoctorProfile from "./doctor-profile";
 import Landing_page from "./Landing-page";
 import MedicinePage from "./MedicinePage";
-import ShoppingCart from "../components/orders/shoppingCart";
-import OrderPrescription from "../components/orders/OrderPrescription";
+import ShoppingCart from "./orders/shoppingCart";
+import OrderPrescription from "./orders/OrderPrescription";
 
 const Router = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/login" component={Login} />
-      <Route
-        exact
-        path={["/forgot-password", "/verification", "/reset-password"]}
-        component={Forgot}
-      />
-      <Route exact path="/signup" component={Signup} />
-      <Layout>
-        <Switch>
-          <Route exact path="/login" component={Login} />
-          <Route
-            exact
-            path={["/forgot-password", "/verification", "/reset-password"]}
-            component={Forgot}
-          />
-          <Route exact path="/signup" component={Signup} />
-          <Route exact path="/" component={Landing_page} />
-          <Layout>
-            <Switch>
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/doctors" component={Doctors} />
-              <Route exact path="/medications" component={Medications} />
-              <Route
-                exact
-                path="/doctor-profile/:id"
-                component={DoctorProfile}
-              />
-              <Route exact path="/medicine" component={MedicinePage} />
-              <Route exact path="/shoppingcart" component={ShoppingCart} />
-              <Route
-                exact
-                path="/OrderPrescription"
-                component={OrderPrescription}
-              />
-            </Switch>
-          </Layout>
-        </Switch>
-      </Layout>
+      <Switch>
+        <Route exact path="/" component={Landing_page} />
+        <Route exact path="/login" component={Login} />
+        <Route
+          exact
+          path={["/forgot-password", "/verification", "/reset-password"]}
+          component={Forgot}
+        />
+        <Route exact path="/signup" component={Signup} />
+        <Layout>
+          <Switch>
+            <Route exact path="/home" component={Home} />
+            <Route exact path="/doctors" component={Doctors} />
+            <Route exact path="/medications" component={Medications} />
+            <Route exact path="/doctor-profile/:id" component={DoctorProfile} />
+            <Route exact path="/medicine/:id" component={MedicinePage} />
+            <Route exact path="/shoppingcart" component={ShoppingCart} />
+            <Route
+              exact
+              path="/OrderPrescription"
+              component={OrderPrescription}
+            />
+          </Switch>
+        </Layout>
+      </Switch>
     </Switch>
   </BrowserRouter>
 );

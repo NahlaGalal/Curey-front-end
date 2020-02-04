@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import DoctorsGrid from "../components/Doctors and medications/DoctorsGrid";
 import MedicationGrid from "../components/Doctors and medications/MedicationGrid";
 import Button from "../components/Button";
@@ -103,24 +104,20 @@ export class Home extends Component {
         <div className="topDoctors__container">
           <h2 className="heading-2 mb-52">Top doctors</h2>
           <DoctorsGrid doctors={doctors} />
-          <Button
-            className="btn btn-lg btn-green center mb-56"
-            onClick={() => this.props.history.push("/doctors")}
-          >
-            See more
-          </Button>
+          <Link to="/doctors">
+            <Button className="btn btn-lg btn-green center mb-56">
+              See more
+            </Button>
+          </Link>
         </div>
 
         <div className="topMedications__container">
           <h2 className="heading-2 mb-52">Top medications</h2>
           <MedicationGrid medications={medications} />
         </div>
-        <Button
-          className="btn btn-lg btn-green center"
-          onClick={() => this.props.history.push("/medications")}
-        >
-          See more
-        </Button>
+        <Link to="/medications">
+          <Button className="btn btn-lg btn-green center">See more</Button>
+        </Link>
       </section>
     );
   }

@@ -3,7 +3,11 @@ import { NavLink } from "react-router-dom";
 
 const NavigationBar = () => (
   <nav className="NavigationBar">
-    <input type="checkbox" className="NavigationBar__checkbox" id="nav-toggle" />
+    <input
+      type="checkbox"
+      className="NavigationBar__checkbox"
+      id="nav-toggle"
+    />
     <label htmlFor="nav-toggle" className="NavigationBar__button">
       <span className="NavigationBar__hamburger"> </span>
     </label>
@@ -50,21 +54,27 @@ const NavigationBar = () => (
       </li>
 
       <div className="NavigationBar__icons">
-        <img
-          className="NavigationBar__icon"
-          src={require("../../assets/svg/heart.svg")}
-          alt="logo"
-        />
-        <img
-          className="NavigationBar__icon"
-          src={require("../../assets/svg/shopping-cart.svg")}
-          alt="logo"
-        />
-        <img
-          className="NavigationBar__icon"
-          src={require("../../assets/svg/notifications-button.svg")}
-          alt="logo"
-        />
+        <NavLink to="/">
+          <img
+            className="NavigationBar__icon"
+            src={require("../../assets/svg/heart.svg")}
+            alt="logo"
+          />
+        </NavLink>
+        <NavLink to="/shoppingcart">
+          <img
+            className="NavigationBar__icon"
+            src={require("../../assets/svg/shopping-cart.svg")}
+            alt="logo"
+          />
+        </NavLink>
+        <NavLink to="/">
+          <img
+            className="NavigationBar__icon"
+            src={require("../../assets/svg/notifications-button.svg")}
+            alt="logo"
+          />
+        </NavLink>
         <img
           src={require("../../assets/images/Hassan.png")}
           alt="profile"
