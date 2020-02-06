@@ -19,6 +19,9 @@
     grid-template-rows: min-content min-content 1fr;
     grid-template-columns: 1fr;
     width: 90%;
+    &__medicine {
+      position: relative;
+    }
   }
 }
 
@@ -102,6 +105,11 @@
     padding-top: 0;
   }
 
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+    align-items: center;
+  }
+
   &__info {
     margin-left: 1.6rem;
     width: 100%;
@@ -115,16 +123,39 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 0.8rem;
+    @media screen and (max-width: 500px) {
+      flex-direction: column;
+      .rate {
+        margin-left: auto;
+        margin-top: 8px;
+      }
+    }
   }
 
   &__address {
     display: flex;
     justify-content: space-between;
     margin-bottom: 2.6rem;
+    @media screen and (max-width: 500px) {
+      flex-direction: column;
+      span:last-child {
+        margin-left: auto;
+        margin-top: 8px;
+      }
+    }
   }
 
   &__buttons {
     margin-left: auto;
     width: max-content;
+    @media screen and (max-width: 500px) {
+      display: flex;
+      margin-left: 0;
+      flex-direction: column;
+      align-self: center;
+      button:first-child {
+        margin-bottom: 8px;
+      }
+    }
   }
 }

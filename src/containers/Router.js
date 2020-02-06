@@ -18,6 +18,7 @@ import Landing_page from "./Landing-page";
 import MedicinePage from "./MedicinePage";
 import ShoppingCart from "./orders/shoppingCart";
 import OrderPrescription from "./orders/OrderPrescription";
+import SavePage from "./SavePage";
 
 const Router = () => (
   <BrowserRouter>
@@ -44,6 +45,7 @@ const Router = () => (
               path="/OrderPrescription"
               component={OrderPrescription}
             />
+            <Route exact path="/savepage" component={SavePage} />
           </Switch>
         </Layout>
       </Switch>

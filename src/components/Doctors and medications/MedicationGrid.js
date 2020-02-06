@@ -5,7 +5,7 @@ import Button from "../Button";
 import Favourite from "../../assets/svg/favourite.svg";
 
 const MedicationGrid = props => (
-  <div className="medicationGrid mb-40">
+  <div className="medicationGrid">
     {props.medications.map((medication, i) => (
       <div className="medicationCard" key={i}>
         <div className="medicationCard__main">

@@ -54,7 +54,7 @@ const NavigationBar = () => (
       </li>
 
       <div className="NavigationBar__icons">
-        <NavLink to="/">
+        <NavLink to="/savepage">
           <img
             className="NavigationBar__icon"
             src={require("../../assets/svg/heart.svg")}
