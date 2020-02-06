@@ -2,111 +2,114 @@ import React, { Component } from "react";
 import MedicationGrid from "../components/Doctors and medications/MedicationGrid";
 import Search from "../components/Doctors and medications/Search";
 import Filter from "../components/Doctors and medications/Filter";
+import Button from "../components/Button";
 
-const medications = [
-  {
-    name: "Antinal",
-    price: 12,
-    isFavourite: true,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    isFavourite: true,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    isFavourite: true,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    isFavourite: true,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    isFavourite: true,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    isFavourite: true,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  }
-];
+// const medications = [
+//   {
+//     name: "Antinal",
+//     price: 12,
+//     isFavourite: true,
+//     description:
+//       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+//   },
+//   {
+//     name: "Antinal",
+//     price: 12,
+//     description:
+//       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+//   },
+//   {
+//     name: "Antinal",
+//     price: 12,
+//     isFavourite: true,
+//     description:
+//       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+//   },
+//   {
+//     name: "Antinal",
+//     price: 12,
+//     description:
+//       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+//   },
+//   {
+//     name: "Antinal",
+//     price: 12,
+//     description:
+//       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+//   },
+//   {
+//     name: "Antinal",
+//     price: 12,
+//     description:
+//       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+//   },
+//   {
+//     name: "Antinal",
+//     price: 12,
+//     description:
+//       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+//   },
+//   {
+//     name: "Antinal",
+//     price: 12,
+//     description:
+//       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+//   },
+//   {
+//     name: "Antinal",
+//     price: 12,
+//     description:
+//       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+//   },
+//   {
+//     name: "Antinal",
+//     price: 12,
+//     isFavourite: true,
+//     description:
+//       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+//   },
+//   {
+//     name: "Antinal",
+//     price: 12,
+//     isFavourite: true,
+//     description:
+//       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+//   },
+//   {
+//     name: "Antinal",
+//     price: 12,
+//     isFavourite: true,
+//     description:
+//       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+//   },
+//   {
+//     name: "Antinal",
+//     price: 12,
+//     description:
+//       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+//   },
+//   {
+//     name: "Antinal",
+//     price: 12,
+//     description:
+//       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+//   },
+//   {
+//     name: "Antinal",
+//     price: 12,
+//     description:
+//       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+//   },
+//   {
+//     name: "Antinal",
+//     price: 12,
+//     isFavourite: true,
+//     description:
+//       "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
+//   }
+// ];
+
+const medications = []
 
 const Filters = [
   "Injection",
@@ -146,10 +149,23 @@ class Medications extends Component {
           placeholder="Search Medication, desease...etc"
           type="medications"
           openFilterBox={this.openFilterBox}
+          withFilter
         />
-        <section className="topDoctors">
-          <div className="topDoctors__container">
-            <MedicationGrid medications={medications} />
+        <section className="topMedications">
+          <div className="topMedications__container">
+            {medications.length ? (
+              <MedicationGrid medications={medications} />
+            ) : (
+              <div className="topMedications__container--no-medication">
+                <p>
+                  OPPS, This medication isn't found at any any pharmacy in your
+                  district
+                </p>
+                <Button className="btn btn-green btn-lg">
+                  Request the medication
+                </Button>
+              </div>
+            )}
           </div>
         </section>
       </div>

@@ -6,9 +6,7 @@ const Search = props => {
     <header className="Searchbar">
       <div
         className={`${
-          !props.withFilter && props.type !== "medications"
-            ? "Searchbar__input--no-filter"
-            : "Searchbar__input"
+          props.withFilter ? "Searchbar__input" : "Searchbar__input--no-filter"
         }`}
       >
         <input type="text" placeholder={props.placeholder} />
