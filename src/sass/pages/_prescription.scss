@@ -1,0 +1,106 @@
+.Prescription {
+  width: 85%;
+  margin: 0 auto;
+  padding: 6.4rem 0;
+
+  button.btn {
+    display: block;
+    margin-bottom: 4rem;
+    margin-left: auto;
+  }
+
+  &__container {
+    @extend .doctorsGrid;
+    &__card {
+      position: relative;
+      padding: 2rem;
+      box-shadow: 0 3px 6px $color-light-3;
+      header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 2.4rem;
+        h2 {
+          font-size: 2.4rem;
+          color: $color-dark;
+          font-family: $bold-font;
+        }
+        .menu-btn {
+          border: none;
+          background-color: transparent;
+          outline: none;
+        }
+      }
+      h3 {
+        font-size: 1.6rem;
+        font-family: $semi-bold-font;
+        color: $color-dark;
+        margin: 0.8rem 0 0.4rem;
+      }
+      &__frequency {
+        color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+        font-size: 1.6rem;
+        span {
+          font-family: $semi-bold-font;
+        }
+      }
+      &__days {
+        display: flex;
+        span {
+          width: 2.8rem;
+          height: 3.2rem;
+          background-color: $color-light-1;
+          border-radius: 5px;
+          font-size: 1.6rem;
+          color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          &:not(:last-of-type) {
+            margin-right: 0.4rem;
+          }
+        }
+      }
+      &__dosing {
+        list-style: none;
+        li {
+          font-size: 1.6rem;
+          color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+          &:not(:last-of-type) {
+            margin-bottom: 0.4rem;
+          }
+        }
+      }
+      &__menu {
+        position: absolute;
+        top: 3.2rem;
+        right: 3.2rem;
+        padding: 1.6rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        box-shadow: 0 3px 6px $color-light-3;
+        visibility: hidden;
+        opacity: 0;
+        transition: $transition;
+        background-color: $color-white;
+        button {
+          border: none;
+          background-color: transparent;
+          font-size: 1.6rem;
+          color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+          cursor: pointer;
+          img {
+            margin-right: 0.4rem;
+          }
+          &:first-of-type {
+            margin-bottom: 0.8rem;
+          }
+        }
+        &.visible {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

@@ -19,6 +19,7 @@ import MedicinePage from "./MedicinePage";
 import ShoppingCart from "./orders/shoppingCart";
 import OrderPrescription from "./orders/OrderPrescription";
 import SavePage from "./SavePage";
+import Prescription from "./Prescription";
 
 const Router = () => (
   <BrowserRouter>
@@ -46,6 +47,7 @@ const Router = () => (
               component={OrderPrescription}
             />
             <Route exact path="/savepage" component={SavePage} />
+            <Route exact path="/prescriptions" component={Prescription} />
           </Switch>
         </Layout>
       </Switch>
