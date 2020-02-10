@@ -1,0 +1,94 @@
+.bookingDoctorContainer {
+  @extend .shoppingCartContainer;
+  justify-content: start;
+  padding: 6.4rem 3rem;
+
+  @media (max-width: 1000px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.doctorBox {
+  flex-basis: 35%;
+  margin-right: 5rem;
+  display: flex;
+
+  position: sticky;
+  left: 3rem;
+  top: 6.4rem;
+
+  @media (max-width: 1200px) {
+    margin-right: 0;
+  }
+
+  @media (max-width: 1000px) {
+    position: static;
+    margin-bottom: 4rem;
+  }
+  &__img {
+    box-shadow: 0 0 0 6px #07a3a4, 0 0 0 12px rgba(7, 163, 164, 0.4),
+      0 0 0 19px #fff, 0 0 0 20px rgba(7, 163, 164, 0.1);
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 2.6rem;
+  }
+
+  p {
+    color: $color-dark;
+    opacity: $very-high-opacity;
+    font-size: 1.6rem;
+    margin-top: 0.4rem;
+  }
+
+  &__price {
+    font-size: 3.2rem;
+    font-family: $bold-font;
+  }
+}
+
+.availableAppointments {
+  background-color: $color-light-1;
+  padding: 3.2rem;
+  flex-basis: 65%;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    color: $color-green;
+    font-size: 1.6rem;
+    margin-bottom: 4rem;
+  }
+
+  .appointmentsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 3.2rem;
+
+    &__box {
+      background-color: $color-white;
+      padding: 2rem;
+      font-size: 1.6rem;
+
+      h3 {
+        font-family: $regular-font;
+        margin-bottom: 2.6rem;
+      }
+      .appointment {
+        display: flex;
+        justify-content: space-between;
+        &:not(:last-child) {
+          margin-bottom: 1.6rem;
+        }
+        span {
+          color: $color-dark;
+          opacity: $very-high-opacity;
+        }
+        button {
+          width: 9.6rem;
+          height: 2.4rem;
+        }
+      }
+    }
+  }
+}
