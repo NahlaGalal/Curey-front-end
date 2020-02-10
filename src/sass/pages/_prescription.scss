@@ -46,12 +46,11 @@
       &__days {
         display: flex;
         span {
+          @extend .Prescription__container__card__frequency;
           width: 2.8rem;
           height: 3.2rem;
           background-color: $color-light-1;
           border-radius: 5px;
-          font-size: 1.6rem;
-          color: rgba($color: $color-dark, $alpha: $very-high-opacity);
           display: flex;
           justify-content: center;
           align-items: center;
@@ -63,8 +62,7 @@
       &__dosing {
         list-style: none;
         li {
-          font-size: 1.6rem;
-          color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+          @extend .Prescription__container__card__frequency;
           &:not(:last-of-type) {
             margin-bottom: 0.4rem;
           }
@@ -84,10 +82,9 @@
         transition: $transition;
         background-color: $color-white;
         button {
+          @extend .Prescription__container__card__frequency;
           border: none;
           background-color: transparent;
-          font-size: 1.6rem;
-          color: rgba($color: $color-dark, $alpha: $very-high-opacity);
           cursor: pointer;
           img {
             margin-right: 0.4rem;
