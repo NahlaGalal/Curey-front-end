@@ -33,22 +33,22 @@ const NavigationBar = () => (
 
     <ul className="NavigationBar__links">
       <li className="NavigationBar__item">
-        <NavLink to="/" className="NavigationBar__link">
+        <NavLink to="/home" className="NavigationBar__link">
           Appointments
         </NavLink>
       </li>
       <li className="NavigationBar__item">
-        <NavLink to="/" className="NavigationBar__link">
+        <NavLink to="/prescriptions" className="NavigationBar__link">
           Prescriptions
         </NavLink>
       </li>
       <li className="NavigationBar__item">
-        <NavLink to="/" className="NavigationBar__link">
+        <NavLink to="/home" className="NavigationBar__link">
           Orders
         </NavLink>
       </li>
       <li className="NavigationBar__item NavigationBar__item--unique ">
-        <NavLink to="/" className="NavigationBar__link ">
+        <NavLink to="/home" className="NavigationBar__link ">
           Medical wallet
         </NavLink>
       </li>
