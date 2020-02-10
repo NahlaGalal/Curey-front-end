@@ -2,7 +2,7 @@ import React from "react";
 import DoctorBox from "./DoctorBox";
 import AvailableAppointments from "./AvailabeAppointments";
 
-const CallDoctor = () => (
+const VisitDoctor = () => (
   <React.Fragment>
     <div className="pageHeader">
       <h2 className="heading-2">Home visit service</h2>
@@ -21,4 +21,4 @@ const CallDoctor = () => (
   </React.Fragment>
 );
 
-export default CallDoctor;
+export default VisitDoctor;

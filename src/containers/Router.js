@@ -20,7 +20,7 @@ import ShoppingCart from "./orders/shoppingCart";
 import OrderPrescription from "./orders/OrderPrescription";
 import SavePage from "./SavePage";
 import BookingDoctor from "../components/Doctors and medications/BookingDoctor";
-import CallDoctor from "../components/Doctors and medications/CallDoctor";
+import VisitDoctor from "../components/Doctors and medications/VisitDoctor";
 
 const Router = () => (
   <BrowserRouter>
@@ -48,8 +48,8 @@ const Router = () => (
               component={OrderPrescription}
             />
             <Route exact path="/savepage" component={SavePage} />
-            <Route exact path="/bookingDoctor" component={BookingDoctor} />
-            <Route exact path="/callDoctor" component={CallDoctor} />
+            <Route exact path="/bookingDoctor/:id" component={BookingDoctor} />
+            <Route exact path="/homeVisitDoctor/:id" component={VisitDoctor} />
           </Switch>
         </Layout>
       </Switch>

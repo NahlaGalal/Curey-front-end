@@ -1,5 +1,6 @@
 // @ts-check
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import ManWearingaBeanie from "../assets/images/man-wearing-a-beanie.png";
 import Marker from "../assets/svg/marker.svg";
 import { Rate } from "../util/rate";
@@ -80,7 +81,7 @@ class DoctorProfile extends Component {
                   </div>
                   <p>
                     <span>1234</span> Bookings,
-                    <span>16</span> Call ups
+                    <span>16</span> Home visits
                   </p>
                 </div>
                 <div style={{ flexGrow: 5 }} />
@@ -131,10 +132,10 @@ class DoctorProfile extends Component {
             </div>
             <div className="profile__header__box" ref={this.boxRef}>
               <Button className="btn btn-lg btn-green" type="button">
-                Book now 129 L.E
+                <Link to="/bookingDoctor/1">Book now 129 L.E</Link>
               </Button>
               <Button className="btn btn-lg btn-green" type="button">
-                Call up 255 L.E
+                <Link to="/homeVisitDoctor/1">Home visit 255 L.E</Link>
               </Button>
             </div>
           </div>

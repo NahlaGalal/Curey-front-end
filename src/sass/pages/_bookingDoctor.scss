@@ -1,7 +1,7 @@
 .bookingDoctorContainer {
   @extend .shoppingCartContainer;
   justify-content: start;
-  padding: 6.4rem 3rem;
+  padding-left: 1rem;
 
   @media (max-width: 1000px) {
     flex-direction: column;
@@ -11,24 +11,21 @@
 
 .doctorBox {
   flex-basis: 35%;
-  margin-right: 5rem;
+  margin-right: 4rem;
   display: flex;
 
   position: sticky;
   left: 3rem;
   top: 6.4rem;
 
-  @media (max-width: 1200px) {
-    margin-right: 0;
-  }
-
   @media (max-width: 1000px) {
     position: static;
     margin-bottom: 4rem;
   }
   &__img {
-    box-shadow: 0 0 0 6px #07a3a4, 0 0 0 12px rgba(7, 163, 164, 0.4),
-      0 0 0 19px #fff, 0 0 0 20px rgba(7, 163, 164, 0.1);
+    width: 6.7rem;
+    box-shadow: 0 0 0 3.14px #07a3a4, 0 0 0 6.29px rgba(7, 163, 164, 0.4),
+      0 0 0 9.48px #fff, 0 0 0 10.48px rgba(7, 163, 164, 0.1);
     object-fit: cover;
     border-radius: 50%;
     margin-right: 2.6rem;
@@ -58,12 +55,22 @@
     color: $color-green;
     font-size: 1.6rem;
     margin-bottom: 4rem;
+    @media screen and (max-width: 500px){
+      flex-direction: column;
+      h3 {
+        margin-bottom: 2.4rem;
+      }
+    }
   }
 
   .appointmentsGrid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 3.2rem;
+
+    @media screen and (max-width: 500px){
+      grid-template-columns: 1fr;
+    }
 
     &__box {
       background-color: $color-white;
@@ -72,7 +79,7 @@
 
       h3 {
         font-family: $regular-font;
-        margin-bottom: 2.6rem;
+        margin-bottom: 2.4rem;
       }
       .appointment {
         display: flex;
