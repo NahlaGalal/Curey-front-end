@@ -190,6 +190,11 @@
         padding-left: 0;
       }
     }
+
+    .active {
+      color: $color-green;
+      font-family: $semi-bold-font;
+    }
   }
   &__link {
     text-decoration: none;
