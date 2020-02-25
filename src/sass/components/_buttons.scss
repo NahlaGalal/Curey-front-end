@@ -9,6 +9,11 @@
   box-shadow: 0 0.3rem 0.6rem $color-light-3;
 }
 
+.btn-xxs {
+  height: 3.2rem;
+  width: 11.2rem;
+}
+
 .btn-xs {
   height: 4rem;
   width: 12.8rem;
@@ -71,4 +76,14 @@
   background-color: #fff;
   color: $color-dark;
   border: 2px solid $color-dark;
+}
+
+.btn-filter {
+  background-color: transparent;
+  width: 100%;
+  height: 4.8rem;
+  &:hover, &.active {
+    background-color: $color-blue;
+    color: white;
+  }
 }

@@ -43,7 +43,7 @@ const NavigationBar = () => (
         </NavLink>
       </li>
       <li className="NavigationBar__item">
-        <NavLink to="/home" className="NavigationBar__link">
+        <NavLink to="/orders" className="NavigationBar__link">
           Orders
         </NavLink>
       </li>
