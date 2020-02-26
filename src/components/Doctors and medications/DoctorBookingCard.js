@@ -21,17 +21,19 @@ const DoctorBookingCard = props => (
       </div>
     </div>
     <hr />
-    <div className="flex">
+    <footer>
+      <div className="flex">
+        <p>
+          <img src={CalendarIcon} alt="Calendar Icon" className="icon" />
+          {props.date}
+        </p>
+        <span>{props.status}</span>
+      </div>
       <p>
-        <img src={CalendarIcon} alt="Calendar Icon" className="icon" />
-        {props.date}
+        <img src={ClockIcon} alt="Clock Icon" className="icon" />
+        {props.time}
       </p>
-      <span>{props.status}</span>
-    </div>
-    <p>
-      <img src={ClockIcon} alt="Clock Icon" className="icon" />
-      {props.time}
-    </p>
+    </footer>
   </div>
 );
 

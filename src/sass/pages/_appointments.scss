@@ -13,11 +13,10 @@
 
 .DoctorBookingCard {
   box-shadow: 0px 3px 6px $color-light-3;
-  padding: 2rem;
 
   &__img {
-    box-shadow: 0 0 0 3.14px #07a3a4, 0 0 0 6.29px rgba(7, 163, 164, 0.4),
-      0 0 0 9.48px #fff, 0 0 0 10.48px rgba(7, 163, 164, 0.1);
+    box-shadow: 0 0 0 2.68px #07a3a4, 0 0 0 5.63px rgba(7, 163, 164, 0.4),
+      0 0 0 8.93px #fff, 0 0 0 9.93px rgba(7, 163, 164, 0.1);
     object-fit: cover;
     border-radius: 50%;
     margin-right: 2.4rem;
@@ -28,6 +27,7 @@
 
   &__info {
     display: flex;
+    margin: 2rem;
 
     &__text {
       flex-grow: 1;
@@ -41,17 +41,20 @@
     margin-bottom: 0.4rem;
   }
   p {
-    color: $color-green;
-    margin-bottom: 0.2rem;
+    color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+    margin-bottom: 0.4rem;
   }
   hr {
-    margin: 2.2rem 0;
     background-color: $color-dark;
+    border-bottom: 0;
   }
   .icon {
-    margin-right: 0.5rem;
+    margin-right: 0.4rem;
   }
   span {
     font-family: $semi-bold-font;
+  }
+  footer {
+    margin: 2rem;
   }
 }
