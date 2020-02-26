@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import MedicationGrid from "../components/Doctors and medications/MedicationGrid";
+import MedicineCard from "../components/Doctors and medications/MedicineCard";
 
 const medications = [
   {
@@ -55,6 +55,12 @@ const medications = [
 ];
 
 export class SavePage extends Component {
+  state = { hovered: [] };
+
+  componentDidMount() {
+    this.setState({hovered: new Array(medications.length).fill(false)})
+  }
+
   render() {
     return (
       <Fragment>
@@ -63,7 +69,29 @@ export class SavePage extends Component {
         </div>
         <section className="topMedications">
           <div className="topMedications__container">
-            <MedicationGrid medications={medications} />
+            <div className="medicationGrid">
+              {medications.map((medication, i) => (
+                <MedicineCard
+                  key={i}
+                  name={medication.name}
+                  price={medication.price}
+                  description={medication.description}
+                  isFavourite={medication.isFavourite}
+                  onMouseMove={() =>
+                    this.setState({
+                      hovered: this.state.hovered.fill(true, i, i + 1)
+                    })
+                  }
+                  onMouseLeave={() =>
+                    this.setState({
+                      hovered: this.state.hovered.fill(false, i, i + 1)
+                    })
+                  }
+                  hovered={this.state.hovered[i]}
+                  link
+                />
+              ))}
+            </div>
           </div>
         </section>
       </Fragment>

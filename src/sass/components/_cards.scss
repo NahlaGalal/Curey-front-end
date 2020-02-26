@@ -98,8 +98,19 @@
     position: relative;
     &--favourite {
       position: absolute;
-      right: 2rem;
-      top: 0.8rem;
+      width: calc(100% - 2.4rem);
+      height: 100%;
+      background-color: rgba($color: $color-dark, $alpha: 0.2);
+      right: 1.2rem;
+      background-size: 2.4rem 2.079rem;
+      background-repeat: no-repeat;
+      background-position: right 0.8rem top 0.8rem;
+      &.fav {
+        background-image: url("../../assets/svg/favourite.svg");
+      }
+      &.not-fav {
+        background-image: url("../../assets/svg/favourite-regular.svg");
+      }
     }
     &__medicationImg {
       width: calc(100% - 2 * 1.2rem);

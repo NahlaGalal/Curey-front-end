@@ -274,19 +274,20 @@ class Signup extends Component {
             </h1>
             <div
               className={
-                "signup__container__forms__toggler active-" + this.state.formNo
+                "signup__container__forms__toggler toggler active-" +
+                this.state.formNo
               }
             >
               {user_types.map((type, i) => (
-                <button
+                <Button
+                  className="btn"
                   key={i}
-                  type="button"
                   onClick={() => {
                     this.toggleUserForm(i + 1);
                   }}
                 >
                   {type}
-                </button>
+                </Button>
               ))}
               <span className="signup__container__forms__toggler__pointer"></span>
             </div>

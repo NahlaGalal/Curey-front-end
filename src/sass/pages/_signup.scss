@@ -43,33 +43,6 @@
       }
 
       &__toggler {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 1rem;
-        overflow: hidden;
-        height: 5rem;
-        border: 0.1rem solid $color-dark;
-        position: relative;
-        z-index: 1;
-        background-color: $color-white;
-        backface-visibility: hidden;
-        margin-bottom: 2.5rem;
-
-        > button {
-          cursor: pointer;
-          flex-basis: calc(100% / 3);
-          background: none;
-          height: 100%;
-          border: none;
-          z-index: 3;
-          background: none;
-          outline: none;
-          font-size: 1.6rem;
-          font-family: $semi-bold-font;
-          transition: $transition;
-        }
 
         &__pointer {
           backface-visibility: hidden;

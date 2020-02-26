@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import DoctorsGrid from "../components/Doctors and medications/DoctorsGrid";
-import MedicationGrid from "../components/Doctors and medications/MedicationGrid";
+import MedicineCard from "../components/Doctors and medications/MedicineCard";
 import Button from "../components/Button";
 
 const doctors = [
@@ -98,6 +98,14 @@ const medications = [
 ];
 
 export class Home extends Component {
+  state = { hovered: [] };
+
+  componentDidMount() {
+    this.setState({
+      hovered: new Array(medications.length).fill(false)
+    });
+  }
+
   render() {
     return (
       <section className="topDoctors">
@@ -113,11 +121,33 @@ export class Home extends Component {
 
         <div className="topMedications__container">
           <h2 className="heading-2 mb-52">Top medications</h2>
-          <MedicationGrid medications={medications} />
+          <div className="medicationGrid mb-40">
+            {medications.map((medication, i) => (
+              <MedicineCard
+                key={i}
+                name={medication.name}
+                price={medication.price}
+                description={medication.description}
+                isFavourite={medication.isFavourite}
+                onMouseMove={() =>
+                  this.setState({
+                    hovered: this.state.hovered.fill(true, i, i + 1)
+                  })
+                }
+                onMouseLeave={() =>
+                  this.setState({
+                    hovered: this.state.hovered.fill(false, i, i + 1)
+                  })
+                }
+                hovered={this.state.hovered[i]}
+                link
+              />
+            ))}
+          </div>
+          <Link to="/medications">
+            <Button className="btn btn-lg btn-green center">See more</Button>
+          </Link>
         </div>
-        <Link to="/medications">
-          <Button className="btn btn-lg btn-green center">See more</Button>
-        </Link>
       </section>
     );
   }

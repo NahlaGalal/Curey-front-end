@@ -131,59 +131,50 @@ export class Orders extends Component {
     this.state = {
       orders,
       filter: "All"
-    }
+    };
   }
 
   filterOrders = filter => {
-    if(filter === "All") return this.setState({orders, filter});
-    return this.setState({orders: orders.filter(order => order.state === filter), filter})
-  }
+    if (filter === "All") return this.setState({ orders, filter });
+    return this.setState({
+      orders: orders.filter(order => order.state === filter),
+      filter
+    });
+  };
 
   render() {
     return (
       <div className="Orders">
-        <ul className="Orders__filter">
-          <li>
-            <Button
-              className={`btn btn-filter ${
-                this.state.filter === "All" ? "active" : ""
-              }`}
-              onClick={() => this.filterOrders("All")}
-            >
-              All
-            </Button>
-          </li>
-          <li>
-            <Button
-              className={`btn btn-filter ${
-                this.state.filter === "Delivered" ? "active" : ""
-              }`}
-              onClick={() => this.filterOrders("Delivered")}
-            >
-              Delivered
-            </Button>
-          </li>
-          <li>
-            <Button
-              className={`btn btn-filter ${
-                this.state.filter === "Pending" ? "active" : ""
-              }`}
-              onClick={() => this.filterOrders("Pending")}
-            >
-              Pending
-            </Button>
-          </li>
-          <li>
-            <Button
-              className={`btn btn-filter ${
-                this.state.filter === "Failed" ? "active" : ""
-              }`}
-              onClick={() => this.filterOrders("Failed")}
-            >
-              Failed
-            </Button>
-          </li>
-        </ul>
+        <div className="toggler">
+          <Button
+            className={`btn ${this.state.filter === "All" ? "active" : ""}`}
+            onClick={() => this.filterOrders("All")}
+          >
+            All
+          </Button>
+          <Button
+            className={`btn ${
+              this.state.filter === "Delivered" ? "active" : ""
+            }`}
+            onClick={() => this.filterOrders("Delivered")}
+          >
+            Delivered
+          </Button>
+          <Button
+            className={`btn ${this.state.filter === "Pending" ? "active" : ""}`}
+            onClick={() => this.filterOrders("Pending")}
+          >
+            Pending
+          </Button>
+          <Button
+            className={`btn btn-filter ${
+              this.state.filter === "Failed" ? "active" : ""
+            }`}
+            onClick={() => this.filterOrders("Failed")}
+          >
+            Failed
+          </Button>
+        </div>
         <main className="Orders__container">
           {this.state.orders.map((order, i) => (
             <section className="Orders__container__box" key={i}>

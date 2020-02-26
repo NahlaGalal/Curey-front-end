@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import MedicationGrid from "../components/Doctors and medications/MedicationGrid";
+import MedicineCard from "../components/Doctors and medications/MedicineCard";
 import Search from "../components/Doctors and medications/Search";
 import Filter from "../components/Doctors and medications/Filter";
 import Button from "../components/Button";
@@ -128,12 +128,19 @@ const Filters = [
 
 class Medications extends Component {
   state = {
-    filterShown: "hidden"
+    filterShown: "hidden",
+    hovered: []
   };
+
+  componentDidMount() {
+    this.setState({ hovered: new Array(medications.length).fill(false) });
+  }
 
   openFilterBox = () => this.setState({ filterShown: "visible" });
   cancelFilters = () => this.setState({ filterShown: "hidden" });
-  applyFilters = filters => {this.setState({ filterShown: "hidden" })};
+  applyFilters = filters => {
+    this.setState({ filterShown: "hidden" });
+  };
 
   render() {
     return (
@@ -154,7 +161,29 @@ class Medications extends Component {
         <section className="topMedications">
           <div className="topMedications__container">
             {medications.length ? (
-              <MedicationGrid medications={medications} />
+              <div className="medicationGrid">
+                {medications.map((medication, i) => (
+                  <MedicineCard
+                    key={i}
+                    name={medication.name}
+                    price={medication.price}
+                    description={medication.description}
+                    isFavourite={medication.isFavourite}
+                    onMouseMove={() =>
+                      this.setState({
+                        hovered: this.state.hovered.fill(true, i, i + 1)
+                      })
+                    }
+                    onMouseLeave={() =>
+                      this.setState({
+                        hovered: this.state.hovered.fill(false, i, i + 1)
+                      })
+                    }
+                    hovered={this.state.hovered[i]}
+                    link
+                  />
+                ))}
+              </div>
             ) : (
               <div className="topMedications__container--no-medication">
                 <p>

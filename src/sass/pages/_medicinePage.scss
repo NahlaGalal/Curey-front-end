@@ -35,8 +35,10 @@
         width: calc(100% - 2 * 2.6rem);
       }
       &--favourite {
-        right: 4.17rem;
-        top: 1.6rem;
+        width: calc(100% - 5.2rem);
+        right: 2.6rem;
+        background-position: right 1.6rem top 1.6rem;
+        background-size: 3.2rem 2.72rem;
       }
     }
     &__price {

@@ -1,16 +1,18 @@
 import React from "react";
-import Favourite from "../../assets/svg/favourite.svg";
+import { Link } from "react-router-dom";
+import Button from "../Button";
 import Med from "../../assets/images/med1.png";
 
 const MedicineCard = props => (
-  <div className="medicationCard">
+  <div
+    className="medicationCard"
+    onMouseMove={props.onMouseMove}
+    onMouseLeave={props.onMouseLeave}
+  >
     <div className="medicationCard__main">
-      {props.isFavourite ? (
-        <img
-          src={Favourite}
-          alt={`${props.name} is favourite`}
-          className="medicationCard__main--favourite"
-        />
+      {props.hovered ? (
+        <div className={`medicationCard__main--favourite ${props.isFavourite ? "fav" : "not-fav"}`}>
+        </div>
       ) : null}
       <img
         alt={props.name}
@@ -30,6 +32,11 @@ const MedicineCard = props => (
         </div>
       ) : null}
     </div>
+    {props.link ? (
+      <Link to="/medicine/1">
+        <Button className="btn btn-lg btn-green center">Shop now</Button>
+      </Link>
+    ) : null}
   </div>
 );
 

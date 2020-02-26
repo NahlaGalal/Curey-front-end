@@ -54,7 +54,7 @@ const Router = () => (
             <Route exact path="/savepage" component={SavePage} />
             <Route
               exact
-              path="/appointments-bookings"
+              path="/appointments"
               component={Appointments}
             />
             <Route exact path="/bookingDoctor/:id" component={BookingDoctor} />
