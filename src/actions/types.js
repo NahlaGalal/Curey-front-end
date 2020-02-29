@@ -1,0 +1,2 @@
+export const SCAN_PRESCRIPTION = "SCAN_PRESCRIPTION";
+export const SCAN_IMAGE = "SCAN_IMAGE";

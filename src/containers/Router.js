@@ -25,7 +25,6 @@ import VisitDoctor from "../components/Doctors and medications/VisitDoctor";
 import Prescription from "./Prescription";
 import Orders from "./orders/Orders";
 import Payment from "./Payment";
-import Ai from "../components/Ai";
 
 const Router = () => (
   <BrowserRouter>
@@ -63,7 +62,6 @@ const Router = () => (
             <Route exact path="/prescriptions" component={Prescription} />
             <Route exact path="/orders" component={Orders} />
             <Route exact path="/payment-method" component={Payment} />
-            <Route exact path="/ai" component={Ai} />
           </Switch>
         </Layout>
       </Switch>

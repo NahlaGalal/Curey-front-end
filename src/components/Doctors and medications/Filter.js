@@ -1,15 +1,18 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { scanPrescription } from "../../actions/prescriptionAction";
 import Button from "../Button";
 import SelectBox from "../SelectBox";
 
-export default class Filter extends Component {
+class Filter extends Component {
   state = {
     filtersChecked: [],
     citiesChecked: [],
     specialitiesChecked: [],
     filtersOptionsClass: [],
     cityBoxOpened: false,
-    specialityBoxOpened: false
+    specialityBoxOpened: false,
+    scanningOutcomeOpened: false
   };
 
   citiesContainerRef = React.createRef();
@@ -19,6 +22,12 @@ export default class Filter extends Component {
     let filtersOptionsClass = [];
     this.props.filters.forEach(filter => filtersOptionsClass.push(false));
     this.setState({ filtersOptionsClass });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.prescription !== this.props.prescription) {
+      this.setState({ scanningOutcomeOpened: true });
+    }
   }
 
   checkFilter = (e, i) => {
@@ -99,6 +108,23 @@ export default class Filter extends Component {
     });
   };
 
+  scanPrescription = e => {
+    let formData = new FormData();
+    formData.append("image", e.target.files[0]);
+    this.props.scanPrescription(formData);
+  };
+
+  cancelScanning = () => {
+    this.setState({ scanningOutcomeOpened: false });
+  };
+
+  applyScanning = () => {
+    this.setState({
+      filtersChecked: [...this.state.filtersChecked, ...this.props.prescription],
+      scanningOutcomeOpened: false
+    });
+  };
+
   render() {
     const cityList = ["Cairo", "Mansoura", "El-Mahalla", "Bilqas"];
     const keywords = [
@@ -125,6 +151,20 @@ export default class Filter extends Component {
               </Button>
             ))}
           </div>
+          {this.props.type === "medications" ? (
+            <form className="Filter__prescription">
+              <input
+                type="file"
+                name="image"
+                id="prescription"
+                hidden
+                onChange={e => this.scanPrescription(e)}
+              />
+              <label htmlFor="prescription" className="btn checkout-btn">
+                Filter by prescription
+              </label>
+            </form>
+          ) : null}
           <div className="Filter__options">
             <h3> Common search </h3>
             {this.props.filters.map((filter, i) => (
@@ -172,14 +212,14 @@ export default class Filter extends Component {
           ) : null}
           <div className="Filter__buttons">
             <Button
-              className="btn btn-popup btn-apply"
+              className="btn btn-popup btn-apply btn-xxs"
               onClick={() => this.props.applyFilters(this.state.filtersChecked)}
             >
               {" "}
               Apply{" "}
             </Button>
             <Button
-              className="btn btn-transparent btn-cancel"
+              className="btn btn-transparent btn-cancel btn-xxs"
               onClick={this.props.cancelFilters}
             >
               {" "}
@@ -187,7 +227,43 @@ export default class Filter extends Component {
             </Button>
           </div>
         </section>
+        <div
+          className={`Filter__scanning-outcome ${
+            this.state.scanningOutcomeOpened ? "visible" : ""
+          }`}
+        >
+          <h2 className="heading-2">Prescription scanning outcome</h2>
+          <ul>
+            {this.props.prescription.map((medication, i) => (
+              <li key={i}>{medication}</li>
+            ))}
+          </ul>
+          <div className="Filter__buttons">
+            <Button
+              className="btn btn-green-dark btn-xxs btn-apply"
+              onClick={this.applyScanning}
+            >
+              Confirm
+            </Button>
+            <Button
+              className="btn btn-transparent btn-xxs btn-cancel"
+              onClick={this.cancelScanning}
+            >
+              Cancel
+            </Button>
+          </div>
+        </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  prescription: state.prescription.medications || []
+});
+
+const mapDispatchToProps = dispatch => ({
+  scanPrescription: file => dispatch(scanPrescription(file))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);

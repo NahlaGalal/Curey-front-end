@@ -1,10 +1,4 @@
 import { combineReducers } from "redux";
+import { prescription } from "./prescriptionReducer";
 
-function start(state = [], action) {
-  switch (action.type) {
-    default:
-      return state;
-  }
-}
-
-export default combineReducers({ start });
+export default combineReducers({ prescription });
