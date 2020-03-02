@@ -48,7 +48,7 @@ const NavigationBar = () => (
         </NavLink>
       </li>
       <li className="NavigationBar__item NavigationBar__item--unique ">
-        <NavLink to="/home" className="NavigationBar__link ">
+        <NavLink to="/medicalwallet" className="NavigationBar__link ">
           Medical wallet
         </NavLink>
       </li>
