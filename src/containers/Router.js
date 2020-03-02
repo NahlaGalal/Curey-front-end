@@ -22,6 +22,7 @@ import SavePage from "./SavePage";
 import BookingDoctor from "../components/Doctors and medications/BookingDoctor";
 import VisitDoctor from "../components/Doctors and medications/VisitDoctor";
 import Prescription from "./Prescription";
+import MedicalWallet from "./MedicalWallet";
 
 const Router = () => (
   <BrowserRouter>
@@ -52,6 +53,7 @@ const Router = () => (
             <Route exact path="/bookingDoctor/:id" component={BookingDoctor} />
             <Route exact path="/homeVisitDoctor/:id" component={VisitDoctor} />
             <Route exact path="/prescriptions" component={Prescription} />
+            <Route exact path="/medicalwallet" component={MedicalWallet} />
           </Switch>
         </Layout>
       </Switch>

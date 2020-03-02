@@ -1,0 +1,13 @@
+.medicalWallet {
+  width: 85%;
+  margin: 0 auto;
+  padding: 6.4rem 0;
+
+  .medicalWalletPointer {
+    width: calc(100% / 2) !important;
+  }
+
+  .signup__container__forms__toggler.active-2 > span {
+    left: calc(100% / 2) !important;
+  }
+}
