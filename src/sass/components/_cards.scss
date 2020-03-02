@@ -163,4 +163,30 @@
   h4 {
     margin: 1.6rem 0;
   }
+  span {
+    font-weight: bold;
+  }
+}
+
+/*******************************/
+// Radiology card
+.RadiologyCard {
+  box-shadow: 0px 3px 6px $color-light-3;
+  color: rgba($color-dark, $very-high-opacity);
+  font-size: 1.6rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+
+  &__img {
+    box-shadow: 0 0 0 3.14px #07a3a4, 0 0 0 6.29px rgba(7, 163, 164, 0.4),
+      0 0 0 9.48px #fff, 0 0 0 10.48px rgba(7, 163, 164, 0.1);
+  }
+
+  h3 {
+    margin: 1.6rem 0 0.8rem 0;
+  }
+  .icon {
+    margin-right: 0.5rem;
+  }
 }

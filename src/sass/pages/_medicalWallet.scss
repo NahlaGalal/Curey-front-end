@@ -17,4 +17,16 @@
     grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
     grid-gap: 4rem;
   }
+
+  ///////////////////////// Radiology Reports page
+  .RadiologyReports {
+    .btn-green-dark {
+      margin-left: auto;
+      display: block;
+    }
+
+    .RadiologyGrid {
+      @extend .DoctorsPrescriptions;
+    }
+  }
 }

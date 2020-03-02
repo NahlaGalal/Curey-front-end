@@ -45,8 +45,7 @@ const PrescriptionItem = props => (
       <p>{props.medicineName}</p>
       <p>
         <img src={ClockIcon} alt="clock icon" className="icon" />
-        {props.times} times every
-        {props.period}
+        <span>{props.times}</span>` times every `<span>{props.period}</span>
       </p>
     </div>
   </div>
