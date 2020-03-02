@@ -19,7 +19,6 @@ const PrescriptionCard = props => (
     </div>
 
     <hr />
-    {console.log(props.medications)}
 
     <h4>Prescription details</h4>
 
@@ -45,7 +44,7 @@ const PrescriptionItem = props => (
       <p>{props.medicineName}</p>
       <p>
         <img src={ClockIcon} alt="clock icon" className="icon" />
-        <span>{props.times}</span>` times every `<span>{props.period}</span>
+        <span>{props.times}</span> times every <span>{props.period}</span>
       </p>
     </div>
   </div>

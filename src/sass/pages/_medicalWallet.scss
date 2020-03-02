@@ -7,6 +7,10 @@
     width: calc(100% / 2) !important;
   }
 
+  .medicalWalletTogglers {
+    flex-basis: calc(100% / 2);
+  }
+
   .signup__container__forms__toggler.active-2 > span {
     left: calc(100% / 2) !important;
   }
