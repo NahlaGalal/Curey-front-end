@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import DoctorsPrescriptions from "../components/DoctorsPrescriptions";
 import RadiologyReports from "../components/RadiologyReports";
+import Button from "../components/Button";
 
 class MedicalWallet extends Component {
   state = {
@@ -21,21 +22,20 @@ class MedicalWallet extends Component {
       <div className="medicalWallet">
         <div
           className={
-            "mb-48 signup__container__forms__toggler active-" +
+            "mb-48 signup__container__forms__toggler toggler active-" +
             this.state.pageNum
           }
         >
           {currentPage.map((type, i) => (
-            <button
+            <Button
               key={i}
-              type="button"
-              className="medicalWalletTogglers"
+              className="medicalWalletTogglers btn"
               onClick={() => {
                 this.togglePageNumber(i + 1);
               }}
             >
               {type}
-            </button>
+            </Button>
           ))}
           <span className="signup__container__forms__toggler__pointer medicalWalletPointer"></span>
         </div>
