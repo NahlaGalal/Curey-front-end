@@ -35,7 +35,7 @@
   &__prescription {
     border-bottom: 1px solid rgba($color: $color-dark, $alpha: $medium-opacity);
     padding: 2.4rem;
-    label {
+    &__label {
       display: flex;
       justify-content: center;
       align-items: center;

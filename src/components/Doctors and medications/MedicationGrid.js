@@ -9,9 +9,6 @@ const MedicationGrid = props => (
         price={medication.price}
         description={medication.description}
         isFavourite={medication.isFavourite}
-        // onMouseMove={() => this.setState({ hovered: true })}
-        // onMouseLeave={() => this.setState({ hovered: false })}
-        // hovered={this.state.hovered}
       />
     ))}
   </div>

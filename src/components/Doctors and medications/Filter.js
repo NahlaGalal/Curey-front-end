@@ -193,7 +193,7 @@ class Filter extends Component {
                 accept="image/*"
                 onChange={e => this.scanPrescription(e)}
               />
-              <label htmlFor="prescription" className="btn checkout-btn">
+              <label htmlFor="prescription" className="btn checkout-btn Filter__prescription__label">
                 Filter by prescription
               </label>
             </form>

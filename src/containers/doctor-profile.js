@@ -131,12 +131,16 @@ class DoctorProfile extends Component {
               </div>
             </div>
             <div className="profile__header__box" ref={this.boxRef}>
-              <Button className="btn btn-lg btn-green" type="button">
-                <Link to="/bookingDoctor/1">Book now 129 L.E</Link>
-              </Button>
-              <Button className="btn btn-lg btn-green" type="button">
-                <Link to="/homeVisitDoctor/1">Home visit 255 L.E</Link>
-              </Button>
+              <Link to="/bookingDoctor/1">
+                <Button className="btn btn-lg btn-green" type="button">
+                  Book now 129 L.E
+                </Button>
+              </Link>
+              <Link to="/homeVisitDoctor/1">
+                <Button className="btn btn-lg btn-green" type="button">
+                  Home visit 255 L.E
+                </Button>
+              </Link>
             </div>
           </div>
         </section>

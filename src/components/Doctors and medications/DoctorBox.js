@@ -8,7 +8,7 @@ const DoctorBox = props => (
       <img src={DoctorImg} alt="doctor" className="doctorBox__img" />
     </div>
     <div>
-      <h3 class="doctorCard__name">{props.name}</h3>
+      <h3 className="doctorCard__name">{props.name}</h3>
       <p>{props.speciality}</p>
       <p>
         <img alt="location icon" src={LocationIcon} />
