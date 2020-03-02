@@ -141,3 +141,96 @@
     @extend .doctorCard__price;
   }
 }
+
+/*****************************/
+// PrescriptionCard
+
+.PrescriptionCard {
+  box-shadow: 0px 3px 6px $color-light-3;
+  font-size: 1.6rem;
+  padding-bottom: 2rem;
+
+  &__head {
+    display: flex;
+    margin: 2rem;
+    margin-left: 2.9rem;
+    .doctorBox__img {
+      width: 5.7rem;
+      height: 5.7rem;
+      box-shadow: 0 0 0 2.68px #07a3a4, 0 0 0 5.36px rgba(7, 163, 164, 0.4),
+        0 0 0 7.93px #fff, 0 0 0 8.93px rgba(7, 163, 164, 0.1);
+      margin-right: 2.5rem;
+      margin-top: 8.93px;
+    }
+    .doctorInfo {
+      p:first-of-type {
+        margin: 0.4rem 0;
+      }
+      p {
+        color: rgba($color-dark, $very-high-opacity);
+        .icon {
+          margin-right: 0.4rem;
+        }
+      }
+    }
+  }
+
+  h4 {
+    margin: 2rem 2rem 1.6rem;
+    color: $color-dark;
+  }
+
+  hr {
+    border-bottom: 0;
+    color: rgba($color-green, $medium-opacity);
+  }
+
+  .PrescriptionItem {
+    display: flex;
+    align-items: center;
+    margin: 0 2rem 0.8rem;
+    > img {
+      margin-right: 0.8rem;
+      width: 4.2rem;
+      height: 4.2rem;
+      object-fit: cover;
+    }
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+    p {
+      color: rgba($color-dark, $very-high-opacity);
+      > img {
+        margin-right: 0.4rem;
+      }
+      span {
+        font-family: $semi-bold-font;
+      }
+      &:first-of-type {
+        margin-bottom: 4px;
+      }
+    }
+  }
+}
+
+/*******************************/
+// Radiology card
+.RadiologyCard {
+  box-shadow: 0px 3px 6px $color-light-3;
+  color: rgba($color-dark, $very-high-opacity);
+  font-size: 1.6rem;
+  padding: 3.2rem 3.2rem 2rem;
+  display: flex;
+  flex-direction: column;
+
+  &__img {
+    box-shadow: 0 0 0 6px #07a3a4, 0 0 0 12px rgba(7, 163, 164, 0.4);
+  }
+
+  h3 {
+    margin: 2.8rem 0 0.8rem 0;
+  }
+  .icon {
+    margin-right: 0.4rem;
+  }
+}

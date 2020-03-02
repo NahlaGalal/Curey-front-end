@@ -1,0 +1,36 @@
+.medicalWallet {
+  width: 85%;
+  margin: 0 auto;
+  padding: 6.4rem 0;
+
+  .medicalWalletPointer {
+    width: calc(100% / 2) !important;
+  }
+
+  .medicalWalletTogglers {
+    flex-basis: calc(100% / 2);
+  }
+
+  .signup__container__forms__toggler.active-2 > span {
+    left: calc(100% / 2) !important;
+  }
+
+  ////////////////////////// Doctors Prescriptions page
+  .DoctorsPrescriptions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    grid-gap: 4rem;
+  }
+
+  ///////////////////////// Radiology Reports page
+  .RadiologyReports {
+    .btn-green-dark {
+      margin-left: auto;
+      display: block;
+    }
+
+    .RadiologyGrid {
+      @extend .DoctorsPrescriptions;
+    }
+  }
+}
