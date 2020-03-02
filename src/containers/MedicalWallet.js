@@ -21,7 +21,8 @@ class MedicalWallet extends Component {
       <div className="medicalWallet">
         <div
           className={
-            "signup__container__forms__toggler active-" + this.state.pageNum
+            "mb-48 signup__container__forms__toggler active-" +
+            this.state.pageNum
           }
         >
           {currentPage.map((type, i) => (

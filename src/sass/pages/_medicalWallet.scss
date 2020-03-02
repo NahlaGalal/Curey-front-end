@@ -10,4 +10,11 @@
   .signup__container__forms__toggler.active-2 > span {
     left: calc(100% / 2) !important;
   }
+
+  ////////////////////////// Doctors Prescriptions page
+  .DoctorsPrescriptions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    grid-gap: 4rem;
+  }
 }
