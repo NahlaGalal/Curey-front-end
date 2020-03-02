@@ -25,7 +25,10 @@ class Filter extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.prescription !== this.props.prescription) {
+    if (
+      JSON.stringify(prevProps.prescription) !==
+      JSON.stringify(this.props.prescription)
+    ) {
       this.setState({ scanningOutcomeOpened: true });
     }
   }
@@ -36,30 +39,54 @@ class Filter extends Component {
     const isChecked = filtersChecked.findIndex(
       filterChecked => filter.trim() === filterChecked
     );
+    // Uncheck filter
     if (i === -1) {
+      // If filter from common search
       i = this.props.filters.findIndex(filterOption => filter === filterOption);
       if (i === -1) {
+        // If filter from cities
         let cityIndex = this.state.citiesChecked.findIndex(
           city => filter === city
         );
-        console.log(cityIndex);
         if (cityIndex === -1) {
+          // If filter from specialities
           let specialityIndex = this.state.specialitiesChecked.findIndex(
             speciality => filter === speciality
           );
-          console.log(specialityIndex);
+          if (specialityIndex === -1) {
+            // If filter from scanning prescription
+            filtersChecked = filtersChecked
+              .slice(0, isChecked)
+              .concat(filtersChecked.slice(isChecked + 1));
+            this.setState({ filtersChecked });
+            return;
+          }
           let { specialitiesChecked } = this.state;
+          // Remove selected filter (speciality)
           specialitiesChecked = specialitiesChecked
             .slice(0, specialityIndex)
             .concat(specialitiesChecked.slice(specialityIndex + 1));
           this.setState({ specialitiesChecked });
+          // Uncheck selected filter (speciality)
+          Array.from(
+            this.specialitiesContainerRef.current.querySelectorAll(
+              "input[type=checkbox]"
+            )
+          ).filter(input => input.value === filter)[0].checked = false;
           return;
         }
         let { citiesChecked } = this.state;
+        // Remove selected filter (city)
         citiesChecked = citiesChecked
           .slice(0, cityIndex)
           .concat(citiesChecked.slice(cityIndex + 1));
         this.setState({ citiesChecked });
+        // Uncheck selected filter (city)
+        Array.from(
+          this.citiesContainerRef.current.querySelectorAll(
+            "input[type=checkbox]"
+          )
+        ).filter(input => input.value === filter)[0].checked = false;
         return;
       }
     }
@@ -109,9 +136,11 @@ class Filter extends Component {
   };
 
   scanPrescription = e => {
-    let formData = new FormData();
-    formData.append("image", e.target.files[0]);
-    this.props.scanPrescription(formData);
+    if (e.target.files.length) {
+      let formData = new FormData();
+      formData.append("image", e.target.files[0]);
+      this.props.scanPrescription(formData);
+    }
   };
 
   cancelScanning = () => {
@@ -120,7 +149,10 @@ class Filter extends Component {
 
   applyScanning = () => {
     this.setState({
-      filtersChecked: [...this.state.filtersChecked, ...this.props.prescription],
+      filtersChecked: [
+        ...this.state.filtersChecked,
+        ...this.props.prescription
+      ],
       scanningOutcomeOpened: false
     });
   };
@@ -158,6 +190,7 @@ class Filter extends Component {
                 name="image"
                 id="prescription"
                 hidden
+                accept="image/*"
                 onChange={e => this.scanPrescription(e)}
               />
               <label htmlFor="prescription" className="btn checkout-btn">
