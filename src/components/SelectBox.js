@@ -15,7 +15,7 @@ const SelectBox = props => {
       </span>
       <div
         onClick={e => {
-          e.stopPropagation();
+          e.stopPropagation();  
         }}
         className={`select--options ${props.boxOpened ? "active" : ""}`}
         ref={props.optionsContainerRef}
@@ -25,7 +25,7 @@ const SelectBox = props => {
           const key = type.split(" ").join("");
           return (
             <div className="option" key={key}>
-              <input type="checkbox" id={key} hidden value={type}/>
+              <input type={`${props.multiple ? "checkbox" : "radio"}`} id={key} hidden value={type} name="city"/>
               <label htmlFor={key}>{type}</label>
             </div>
           );

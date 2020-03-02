@@ -111,6 +111,11 @@ $active-option-color: #09cacb;
       input:checked + label::before {
         transform: translateY(-50%) scale(1);
       }
+
+      input[type="radio"] + label::before,
+      input[type="radio"] + label::after {
+        border-radius: 50%;
+      }
     }
 
     &.active {

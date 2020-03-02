@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import ReactLoading from "react-loading";
 import { scanPrescription } from "../../actions/prescriptionAction";
 import Button from "../Button";
 import SelectBox from "../SelectBox";
@@ -24,14 +25,14 @@ class Filter extends Component {
     this.setState({ filtersOptionsClass });
   }
 
-  componentDidUpdate(prevProps) {
-    if (
-      JSON.stringify(prevProps.prescription) !==
-      JSON.stringify(this.props.prescription)
-    ) {
-      this.setState({ scanningOutcomeOpened: true });
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (
+  //     JSON.stringify(prevProps.prescription) !==
+  //     JSON.stringify(this.props.prescription)
+  //   ) {
+  //     this.setState({ scanningOutcomeOpened: true });
+  //   }
+  // }
 
   checkFilter = (e, i) => {
     let { filtersChecked, filtersOptionsClass } = this.state;
@@ -140,6 +141,7 @@ class Filter extends Component {
       let formData = new FormData();
       formData.append("image", e.target.files[0]);
       this.props.scanPrescription(formData);
+      this.setState({ scanningOutcomeOpened: true });
     }
   };
 
@@ -193,7 +195,10 @@ class Filter extends Component {
                 accept="image/*"
                 onChange={e => this.scanPrescription(e)}
               />
-              <label htmlFor="prescription" className="btn checkout-btn Filter__prescription__label">
+              <label
+                htmlFor="prescription"
+                className="btn checkout-btn Filter__prescription__label"
+              >
                 Filter by prescription
               </label>
             </form>
@@ -226,6 +231,7 @@ class Filter extends Component {
                   boxOpened={this.state.cityBoxOpened}
                   list={cityList}
                   optionsContainerRef={this.citiesContainerRef}
+                  multiple={true}
                 />
               </div>
               <div>
@@ -239,6 +245,7 @@ class Filter extends Component {
                   boxOpened={this.state.specialityBoxOpened}
                   list={specialityList}
                   optionsContainerRef={this.specialitiesContainerRef}
+                  multiple={true}
                 />
               </div>
             </div>
@@ -266,25 +273,31 @@ class Filter extends Component {
           }`}
         >
           <h2 className="heading-2">Prescription scanning outcome</h2>
-          <ul>
-            {this.props.prescription.map((medication, i) => (
-              <li key={i}>{medication}</li>
-            ))}
-          </ul>
-          <div className="Filter__buttons">
-            <Button
-              className="btn btn-green-dark btn-xxs btn-apply"
-              onClick={this.applyScanning}
-            >
-              Confirm
-            </Button>
-            <Button
-              className="btn btn-transparent btn-xxs btn-cancel"
-              onClick={this.cancelScanning}
-            >
-              Cancel
-            </Button>
-          </div>
+          {this.props.prescription.length ? (
+            <React.Fragment>
+              <ul>
+                {this.props.prescription.map((medication, i) => (
+                  <li key={i}>{medication}</li>
+                ))}
+              </ul>
+              <div className="Filter__buttons">
+                <Button
+                  className="btn btn-green-dark btn-xxs btn-apply"
+                  onClick={this.applyScanning}
+                >
+                  Confirm
+                </Button>
+                <Button
+                  className="btn btn-transparent btn-xxs btn-cancel"
+                  onClick={this.cancelScanning}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </React.Fragment>
+          ) : (
+            <ReactLoading type="spokes" color="#0066ff" className="loading"/>
+          )}
         </div>
       </div>
     );

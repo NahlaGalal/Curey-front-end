@@ -13,9 +13,9 @@ class FieldInput extends Component {
                     value={value}
                     onChange={onChange}
                 />
-                <span className={value && value.length ? "active" : null}>
+                <label className={value && value.length ? "active" : null}>
                     {placeholder}
-                </span>
+                </label>
             </div>
         );
     }

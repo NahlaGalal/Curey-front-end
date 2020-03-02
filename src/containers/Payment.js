@@ -2,6 +2,9 @@ import React, { Component, createRef } from "react";
 import Payment from "payment";
 // import SelectBox from "../components/SelectBox";
 import Button from "../components/Button";
+import SelectBox from "../components/SelectBox";
+
+const cities = ["Cairo", "Mansoura", "Bilqas", "El-Mahallah"];
 
 export class PaymentForm extends Component {
   constructor(props) {
@@ -10,6 +13,17 @@ export class PaymentForm extends Component {
     this.cardExpiry = createRef();
     this.cardCVC = createRef();
     this.zipCode = createRef();
+    this.optionsContainerRef = createRef();
+
+    this.state = {
+      cardNumber: "",
+      cardName: "",
+      cardExpiry: "",
+      cardCVC: "",
+      zipCode: "",
+      city: [],
+      selectBoxOpened: false
+    };
   }
 
   componentDidMount() {
@@ -18,6 +32,28 @@ export class PaymentForm extends Component {
     Payment.formatCardCVC(this.cardCVC.current);
     Payment.restrictNumeric(this.zipCode.current);
   }
+
+  onChangeHandler = ({ target: { value, name } }) => {
+    this.setState({
+      [name]: value
+    });
+  };
+
+  toggleSelectBox = () => {
+    const prev = this.state.selectBoxOpened;
+    let city = [];
+    if (prev) {
+      city = Array.from(
+        this.optionsContainerRef.current.querySelectorAll("input[type=radio]")
+      )
+        .filter(input => input.checked)
+        .map(el => el.value);
+    }
+    this.setState({
+      selectBoxOpened: !prev,
+      city
+    });
+  };
 
   render() {
     return (
@@ -28,7 +64,12 @@ export class PaymentForm extends Component {
         <form className="Payment__form">
           <div className="Payment__form__inputs">
             <div className="Payment__form__inputs--radio">
-              <input type="radio" name="payment-method" id="new-card" defaultChecked/>
+              <input
+                type="radio"
+                name="payment-method"
+                id="new-card"
+                defaultChecked
+              />
               <label htmlFor="new-card">New payment card</label>
             </div>
             <div className="Payment__form__inputs--radio">
@@ -42,47 +83,130 @@ export class PaymentForm extends Component {
               </label>
             </div>
             <div className="Payment__form__inputs--text">
-              <input
-                type="text"
-                name="cardName"
-                id="card-name"
-                placeholder="Card name"
-              />
-              <input
-                type="text"
-                ref={this.cardNum}
-                name="cardNumber"
-                id="card-number"
-                placeholder="Card number"
-              />
-              <div className="Payment__form__inputs--text--row">
+              <div className="fieldinput">
                 <input
+                  className="fieldinput__input"
                   type="text"
-                  ref={this.cardExpiry}
-                  name="cardExpiry"
-                  id="card-expiry"
-                  placeholder="MM / YY"
+                  name="cardName"
+                  id="card-name"
+                  value={this.state.cardName}
+                  onChange={this.onChangeHandler}
                 />
+                <label
+                  htmlFor="card-name"
+                  className={
+                    this.state.cardName && this.state.cardName.length
+                      ? "active"
+                      : null
+                  }
+                >
+                  Card name
+                </label>
+              </div>
+              <div className="fieldinput">
                 <input
+                  className="fieldinput__input"
                   type="text"
-                  ref={this.cardCVC}
-                  name="cardCode"
-                  id="card-code"
-                  placeholder="Security code"
+                  ref={this.cardNum}
+                  name="cardNumber"
+                  id="card-number"
+                  value={this.state.cardNumber}
+                  onChange={this.onChangeHandler}
                 />
+                <label
+                  htmlFor="card-number"
+                  className={
+                    this.state.cardNumber && this.state.cardNumber.length
+                      ? "active"
+                      : null
+                  }
+                >
+                  Card number
+                </label>
               </div>
               <div className="Payment__form__inputs--text--row">
-                <input type="text" />
-                <input
-                  type="text"
-                  ref={this.zipCode}
-                  name="zipCode"
-                  id="zip-code"
-                  placeholder="ZIP / Postal code"
+                <div className="fieldinput">
+                  <input
+                    className="fieldinput__input"
+                    type="text"
+                    ref={this.cardExpiry}
+                    name="cardExpiry"
+                    id="card-expiry"
+                    value={this.state.cardExpiry}
+                    onChange={this.onChangeHandler}
+                  />
+                  <label
+                    htmlFor="card-expiry"
+                    className={
+                      this.state.cardExpiry && this.state.cardExpiry.length
+                        ? "active"
+                        : null
+                    }
+                  >
+                    MM / YY
+                  </label>
+                </div>
+                <div className="fieldinput">
+                  <input
+                    className="fieldinput__input"
+                    type="text"
+                    ref={this.cardCVC}
+                    name="cardCVC"
+                    id="card-cvc"
+                    value={this.state.cardCVC}
+                    onChange={this.onChangeHandler}
+                  />
+                  <label
+                    htmlFor="card-cvc"
+                    className={
+                      this.state.cardCVC && this.state.cardCVC.length
+                        ? "active"
+                        : null
+                    }
+                  >
+                    Security code
+                  </label>
+                </div>
+              </div>
+              <div className="Payment__form__inputs--text--row">
+                <SelectBox
+                  onClick={this.toggleSelectBox}
+                  className={this.state.city.length ? "hasValue" : null}
+                  listChecked={this.state.city || []}
+                  header="Country"
+                  boxOpened={this.state.selectBoxOpened}
+                  list={cities}
+                  optionsContainerRef={this.optionsContainerRef}
+                  multiple={false}
+                  name="city"
                 />
+                <div className="fieldinput">
+                  <input
+                    className="fieldinput__input"
+                    type="text"
+                    ref={this.zipCode}
+                    name="zipCode"
+                    id="zip-code"
+                    value={this.state.zipCode}
+                    onChange={this.onChangeHandler}
+                  />
+                  <label
+                    htmlFor="zip-code"
+                    className={
+                      this.state.zipCode && this.state.zipCode.length
+                        ? "active"
+                        : null
+                    }
+                  >
+                    ZIP / Postal code
+                  </label>
+                </div>
               </div>
               <input type="checkbox" name="rememberCard" id="remember" />
-              <label htmlFor="remember"> Remember this card </label>
+              <label htmlFor="remember" className="remember-password">
+                {" "}
+                Remember this card{" "}
+              </label>
             </div>
           </div>
           <div className="Payment__form__details">

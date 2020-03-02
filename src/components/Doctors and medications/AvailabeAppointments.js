@@ -1,13 +1,14 @@
 import React from "react";
 import EditIcon from "../../assets/svg/Union-3.svg";
+import { Link } from 'react-router-dom';
 
 const AvailableAppointments = () => (
   <div className="availableAppointments">
     <div className="availableAppointments__header">
       <h3 className="heading-3">Available appointments</h3>
-      <span>
+      <Link to="/payment-method">
         <img src={EditIcon} alt="edit icon" /> Edit payment method
-      </span>
+      </Link>
     </div>
     <div className="appointmentsGrid">
       <div className="appointmentsGrid__box">
