@@ -76,7 +76,7 @@ export class SavePage extends Component {
                   name={medication.name}
                   price={medication.price}
                   description={medication.description}
-                  isFavourite={medication.isFavourite}
+                  isFavourite={true}
                   onMouseMove={() =>
                     this.setState({
                       hovered: this.state.hovered.fill(true, i, i + 1)

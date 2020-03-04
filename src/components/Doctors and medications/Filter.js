@@ -4,35 +4,31 @@ import ReactLoading from "react-loading";
 import { scanPrescription } from "../../actions/prescriptionAction";
 import Button from "../Button";
 import SelectBox from "../SelectBox";
+import editIcon from "../../assets/svg/edit-blue.svg";
+import deleteIcon from "../../assets/svg/delete-red.svg";
 
 class Filter extends Component {
-  state = {
-    filtersChecked: [],
-    citiesChecked: [],
-    specialitiesChecked: [],
-    filtersOptionsClass: [],
-    cityBoxOpened: false,
-    specialityBoxOpened: false,
-    scanningOutcomeOpened: false
-  };
-
-  citiesContainerRef = React.createRef();
-  specialitiesContainerRef = React.createRef();
+  constructor(props) {
+    super(props);
+    this.state = {
+      filtersChecked: [],
+      citiesChecked: [],
+      specialitiesChecked: [],
+      filtersOptionsClass: [],
+      cityBoxOpened: false,
+      specialityBoxOpened: false,
+      scanningOutcomeOpened: false
+    };
+    this.citiesContainerRef = React.createRef();
+    this.specialitiesContainerRef = React.createRef();
+    this.prescriptionScanned = React.createRef();
+  }
 
   componentDidMount() {
     let filtersOptionsClass = [];
     this.props.filters.forEach(filter => filtersOptionsClass.push(false));
     this.setState({ filtersOptionsClass });
   }
-
-  // componentDidUpdate(prevProps) {
-  //   if (
-  //     JSON.stringify(prevProps.prescription) !==
-  //     JSON.stringify(this.props.prescription)
-  //   ) {
-  //     this.setState({ scanningOutcomeOpened: true });
-  //   }
-  // }
 
   checkFilter = (e, i) => {
     let { filtersChecked, filtersOptionsClass } = this.state;
@@ -150,14 +146,24 @@ class Filter extends Component {
   };
 
   applyScanning = () => {
+    const medications = Array.from(
+      this.prescriptionScanned.current.children
+    ).map(element => element.textContent);
     this.setState({
-      filtersChecked: [
-        ...this.state.filtersChecked,
-        ...this.props.prescription
-      ],
+      filtersChecked: [...this.state.filtersChecked, ...medications],
       scanningOutcomeOpened: false
     });
   };
+
+  deleteMedication = e => {
+    const element = e.target.parentNode.parentNode;
+    element.parentNode.removeChild(element);
+  };
+
+  editMedication = e => {
+    const medication = e.target.parentNode.parentNode.children[0];
+    medication.contentEditable = (medication.contentEditable === "true") ? false : true;
+  }
 
   render() {
     const cityList = ["Cairo", "Mansoura", "El-Mahalla", "Bilqas"];
@@ -272,32 +278,42 @@ class Filter extends Component {
             this.state.scanningOutcomeOpened ? "visible" : ""
           }`}
         >
-          <h2 className="heading-2">Prescription scanning outcome</h2>
-          {this.props.prescription.length ? (
-            <React.Fragment>
-              <ul>
-                {this.props.prescription.map((medication, i) => (
-                  <li key={i}>{medication}</li>
-                ))}
-              </ul>
-              <div className="Filter__buttons">
-                <Button
-                  className="btn btn-green-dark btn-xxs btn-apply"
-                  onClick={this.applyScanning}
-                >
-                  Confirm
-                </Button>
-                <Button
-                  className="btn btn-transparent btn-xxs btn-cancel"
-                  onClick={this.cancelScanning}
-                >
-                  Cancel
-                </Button>
-              </div>
-            </React.Fragment>
-          ) : (
-            <ReactLoading type="spokes" color="#0066ff" className="loading"/>
-          )}
+          <div className="Filter__scanning-outcome__box">
+            <h2 className="heading-2">Prescription scanning outcome</h2>
+            {this.props.prescription.length ? (
+              <React.Fragment>
+                <ul ref={this.prescriptionScanned}>
+                  {this.props.prescription.map((medication, i) => (
+                    <li key={i}>
+                      <span>{medication}</span>
+                      <button onClick={this.editMedication}>
+                        <img src={editIcon} alt={`edit ${medication}`} />
+                      </button>
+                      <button onClick={this.deleteMedication}>
+                        <img src={deleteIcon} alt={`delete ${medication}`} />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                <div className="Filter__buttons">
+                  <Button
+                    className="btn btn-green-dark btn-xxs btn-apply"
+                    onClick={this.applyScanning}
+                  >
+                    Confirm
+                  </Button>
+                  <Button
+                    className="btn btn-transparent btn-xxs btn-cancel"
+                    onClick={this.cancelScanning}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </React.Fragment>
+            ) : (
+              <ReactLoading type="spokes" color="#0066ff" className="loading" />
+            )}
+          </div>
         </div>
       </div>
     );
