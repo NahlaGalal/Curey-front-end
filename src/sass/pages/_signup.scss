@@ -43,6 +43,33 @@
       }
 
       &__toggler {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 1rem;
+        overflow: hidden;
+        height: 5rem;
+        border: 0.1rem solid $color-dark;
+        position: relative;
+        z-index: 1;
+        background-color: $color-white;
+        backface-visibility: hidden;
+        margin-bottom: 2.5rem;
+
+        > button {
+          cursor: pointer;
+          flex-basis: calc(100% / 3);
+          background: none;
+          height: 100%;
+          border: none;
+          z-index: 3;
+          background: none;
+          outline: none;
+          font-size: 1.6rem;
+          font-family: $semi-bold-font;
+          transition: $transition;
+        }
 
         &__pointer {
           backface-visibility: hidden;
@@ -56,7 +83,7 @@
           transition: $transition;
         }
 
-        &.active-1 {
+        &.active-3 {
           > button:first-of-type {
             color: $color-white;
           }
@@ -66,7 +93,7 @@
           }
         }
 
-        &.active-2 {
+        &.active-1 {
           > button:nth-of-type(2) {
             color: $color-white;
           }
@@ -76,7 +103,7 @@
           }
         }
 
-        &.active-3 {
+        &.active-2 {
           > button:last-of-type {
             color: $color-white;
           }
@@ -99,18 +126,6 @@
               height: 100%;
             }
           }
-        }
-      }
-
-      &__slider {
-        > section {
-          display: none;
-        }
-
-        &.active-1 section:first-of-type,
-        &.active-2 section:nth-of-type(2),
-        &.active-3 section:last-of-type {
-          display: block;
         }
       }
     }

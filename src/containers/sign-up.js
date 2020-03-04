@@ -9,12 +9,21 @@ import SelectBox from "../components/SelectBox";
 
 class SignupUser extends Component {
   state = {
-    firstName: "",
-    lastName: "",
+    cityBoxOpened: false,
+    username: "",
     email: "",
     password: "",
-    repeatPassword: ""
+    confirm_password: "",
+    city: "",
+    errors: {
+      username: "",
+      email: "",
+      password: "",
+      confirm_password: ""
+    }
   };
+
+  citiesContainerRef = React.createRef();
 
   onChangeHandler = ({ target: { value, name } }) => {
     this.setState({
@@ -22,197 +31,36 @@ class SignupUser extends Component {
     });
   };
 
+  toggleCitySelectBox = () => {
+    const prev = this.state.cityBoxOpened;
+    let city = "";
+    if (prev) {
+      const inputChecked = Array.from(
+        this.citiesContainerRef.current.querySelectorAll("input[type=radio]")
+      ).filter(input => input.checked)[0];
+      city = inputChecked ? inputChecked.value : "";
+    }
+    this.setState({
+      cityBoxOpened: !prev,
+      city
+    });
+  };
+
   render() {
+    const cityList = ["Mansoura", "El-Mahalla", "Bilqas", "El-Manzalah"];
+
     return (
       <section className="signup__container__forms__user">
-        <form>
-          <div className="multi-inputs">
-            <FieldInput
-              type="text"
-              name="firstName"
-              value={this.state.firstName}
-              onChange={this.onChangeHandler}
-              placeholder="First name"
-            />
-            <FieldInput
-              type="text"
-              name="lastName"
-              value={this.state.lastName}
-              onChange={this.onChangeHandler}
-              placeholder="Last name"
-            />
-          </div>
-          <FieldInput
-            type="email"
-            name="email"
-            value={this.state.email}
-            onChange={this.onChangeHandler}
-            placeholder="Email address"
-          />
-
-          <FieldInput
-            type="password"
-            name="password"
-            value={this.state.password}
-            onChange={this.onChangeHandler}
-            placeholder="Password"
-          />
-          <FieldInput
-            type="password"
-            name="repeatPassword"
-            value={this.state.repeatPassword}
-            onChange={this.onChangeHandler}
-            placeholder="Repeat password"
-          />
-          <Button className="btn btn-md btn-green">Signup</Button>
-        </form>
-      </section>
-    );
-  }
-}
-
-class SignupDoctor extends Component {
-  state = {
-    specialtyOpened: false,
-    form: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      specialty: [],
-      password: "",
-      repeatPassword: ""
-    }
-  };
-
-  optionsContainerRef = React.createRef();
-
-  onChangeHandler = ({ target: { value, name } }) => {
-    this.setState({
-      form: {
-        ...this.state.form,
-        [name]: value
-      }
-    });
-  };
-
-  toggleSpec = () => {
-    const prev = this.state.specialtyOpened;
-    let specialty = [];
-    if (prev) {
-      specialty = Array.from(
-        this.optionsContainerRef.current.querySelectorAll(
-          "input[type=checkbox]"
-        )
-      )
-        .filter(input => input.checked)
-        .map(el => el.value);
-    }
-    this.setState({
-      specialtyOpened: !prev,
-      form: {
-        ...this.state.form,
-        specialty
-      }
-    });
-  };
-
-  render() {
-    const surgeryList = [
-      "Spinal Surgery",
-      "Plastic Surgery",
-      "Pediatric Surgery",
-      "Thoracic Surgery",
-      "Neurological Surgery"
-    ];
-
-    return (
-      <section className="signup__container__forms__doctor">
-        <form>
-          <div className="multi-inputs">
-            <FieldInput
-              type="text"
-              name="firstName"
-              value={this.state.form.firstName}
-              onChange={this.onChangeHandler}
-              placeholder="First name"
-            />
-            <FieldInput
-              type="text"
-              name="lastName"
-              value={this.state.form.lastName}
-              onChange={this.onChangeHandler}
-              placeholder="Last name"
-            />
-          </div>
-          <FieldInput
-            type="email"
-            name="email"
-            value={this.state.form.email}
-            onChange={this.onChangeHandler}
-            placeholder="Email address"
-          />
-          <SelectBox
-            onClick={this.toggleSpec}
-            className={this.state.form.specialty.length ? "hasValue" : null}
-            listChecked={this.state.form.specialty}
-            header="Specialty"
-            boxOpened={this.state.specialtyOpened}
-            list={surgeryList}
-            optionsContainerRef={this.optionsContainerRef}
-          />
-          <FieldInput
-            type="password"
-            name="password"
-            value={this.state.form.password}
-            onChange={this.onChangeHandler}
-            placeholder="Password"
-          />
-          <FieldInput
-            type="password"
-            name="repeatPassword"
-            value={this.state.form.repeatPassword}
-            onChange={this.onChangeHandler}
-            placeholder="Repeat password"
-          />
-          <Button className="btn btn-md btn-green">Signup</Button>
-        </form>
-      </section>
-    );
-  }
-}
-
-class SignupPharmacy extends Component {
-  state = {
-    pharmacyName: "",
-    pharmacyAddress: "",
-    email: "",
-    password: "",
-    repeatPassword: ""
-  };
-
-  onChangeHandler = ({ target: { value, name } }) => {
-    this.setState({
-      [name]: value
-    });
-  };
-
-  render() {
-    return (
-      <section className="signup__container__forms__pharmacy">
-        <form>
+        <form noValidate>
           <FieldInput
             type="text"
-            name="pharmacyName"
-            value={this.state.pharmacyName}
+            name="username"
+            value={this.state.username}
             onChange={this.onChangeHandler}
-            placeholder="Pharmacy name"
-          />
-          <FieldInput
-            type="text"
-            name="pharmacyAddress"
-            value={this.state.pharmacyAddress}
-            onChange={this.onChangeHandler}
-            placeholder="Pharmacy address"
+            placeholder={
+              this.props.role_id === 2 ? "Pharmacy name" : "Full name"
+            }
+            error={this.state.errors.username}
           />
           <FieldInput
             type="email"
@@ -220,20 +68,38 @@ class SignupPharmacy extends Component {
             value={this.state.email}
             onChange={this.onChangeHandler}
             placeholder="Email address"
+            error={this.state.errors.email}
           />
+          {this.props.role_id === 1 ? (
+            <div>
+              <SelectBox
+                name="city_id"
+                onClick={this.toggleCitySelectBox}
+                className={`${this.state.city ? "hasValue" : null}`}
+                listChecked={this.state.city ? [this.state.city] : []}
+                header="City"
+                boxOpened={this.state.cityBoxOpened}
+                list={cityList}
+                optionsContainerRef={this.citiesContainerRef}
+                multiSelect={false}
+              />
+            </div>
+          ) : null}
           <FieldInput
             type="password"
             name="password"
             value={this.state.password}
             onChange={this.onChangeHandler}
             placeholder="Password"
+            error={this.state.errors.password}
           />
           <FieldInput
             type="password"
-            name="repeatPassword"
-            value={this.state.repeatPassword}
+            name="confirm_password"
+            value={this.state.confirm_password}
             onChange={this.onChangeHandler}
             placeholder="Repeat password"
+            error={this.state.errors.confirm_password}
           />
           <Button className="btn btn-md btn-green">Signup</Button>
         </form>
@@ -244,19 +110,19 @@ class SignupPharmacy extends Component {
 
 class Signup extends Component {
   state = {
-    formNo: 1
+    role_id: 1
   };
 
-  toggleUserForm = formNo => {
-    if (this.state.formNo !== formNo) {
+  toggleUserForm = role_id => {
+    if (this.state.role_id !== role_id) {
       this.setState({
-        formNo
+        role_id
       });
     }
   };
 
   render() {
-    const user_types = ["I'm a user", "I'm a doctor", "I'm a Pharmacy"];
+    const user_types = ["I'm a doctor", "I'm a user", "I'm a Pharmacy"];
 
     return (
       <section className="signup">
@@ -275,7 +141,7 @@ class Signup extends Component {
             <div
               className={
                 "signup__container__forms__toggler toggler active-" +
-                this.state.formNo
+                this.state.role_id
               }
             >
               {user_types.map((type, i) => (
@@ -283,7 +149,7 @@ class Signup extends Component {
                   className="btn"
                   key={i}
                   onClick={() => {
-                    this.toggleUserForm(i + 1);
+                    this.toggleUserForm(i || 3);
                   }}
                 >
                   {type}
@@ -295,12 +161,10 @@ class Signup extends Component {
             <Dividor />
             <div
               className={
-                "signup__container__forms__slider active-" + this.state.formNo
+                "signup__container__forms__slider"
               }
             >
-              <SignupUser />
-              <SignupDoctor />
-              <SignupPharmacy />
+              <SignupUser role_id={this.state.role_id} />
             </div>
           </section>
           <footer className="signup__container__footer">
