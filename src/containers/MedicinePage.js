@@ -3,6 +3,7 @@ import MedicineCard from "../components/Doctors and medications/MedicineCard";
 import Button from "../components/Button";
 import PharmacyItem from "../components/PharmacyItem";
 import LocationIcon from "../assets/svg/location.svg";
+import ChangeAddress from "../components/Pop-ups/ChangeAddress";
 
 const medicine = {
   name: "Antinal",
@@ -10,11 +11,61 @@ const medicine = {
   isFavourite: false,
   description:
     "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis",
-  hovered: false
+  hovered: false,
+  pharmacies: [
+    {
+      name: "Roshdy pharmacies",
+      rate: 4,
+      reviews: 12,
+      address: "Mansoura City, Gehan St"
+    },
+    {
+      name: "Roshdy pharmacies",
+      rate: 4,
+      reviews: 12,
+      address: "Mansoura City, Gehan St"
+    },
+    {
+      name: "Roshdy pharmacies",
+      rate: 4,
+      reviews: 12,
+      address: "Mansoura City, Gehan St"
+    },
+    {
+      name: "Roshdy pharmacies",
+      rate: 4,
+      reviews: 12,
+      address: "Mansoura City, Gehan St"
+    },
+    {
+      name: "Roshdy pharmacies",
+      rate: 4,
+      reviews: 12,
+      address: "Mansoura City, Gehan St"
+    },
+    {
+      name: "Roshdy pharmacies",
+      rate: 4,
+      reviews: 12,
+      address: "Mansoura City, Gehan St"
+    },
+    {
+      name: "Roshdy pharmacies",
+      rate: 4,
+      reviews: 12,
+      address: "Mansoura City, Gehan St"
+    },
+    {
+      name: "Roshdy pharmacies",
+      rate: 4,
+      reviews: 12,
+      address: "Mansoura City, Gehan St"
+    }
+  ]
 };
 
 class MedicinePage extends Component {
-  state = { hovered: false };
+  state = { hovered: false, changeAddressBox: false };
 
   render() {
     return (
@@ -43,7 +94,10 @@ class MedicinePage extends Component {
                 <img src={LocationIcon} alt="location-icon" /> Mansoura City,
                 Gehan St
               </span>
-              <Button className="btn btn-green-dark btn-lg delivery__container__btn">
+              <Button
+                className="btn btn-green-dark btn-lg delivery__container__btn"
+                onClick={() => this.setState({ changeAddressBox: true })}
+              >
                 Change address
               </Button>
             </div>
@@ -51,56 +105,26 @@ class MedicinePage extends Component {
           <div className="medicinePage__contianer__pharmacy">
             <div className="pharmacies__container">
               <h2 className="heading-2">Pharmacies list</h2>
-              <PharmacyItem
-                name="Roshdy pharmacies"
-                rate={4}
-                reviews={12}
-                address="Mansoura City, Gehan St"
-              />
-              <PharmacyItem
-                name="Roshdy pharmacies"
-                rate={4}
-                reviews={12}
-                address="Mansoura City, Gehan St"
-              />
-              <PharmacyItem
-                name="Roshdy pharmacies"
-                rate={4}
-                reviews={12}
-                address="Mansoura City, Gehan St"
-              />
-              <PharmacyItem
-                name="Roshdy pharmacies"
-                rate={4}
-                reviews={12}
-                address="Mansoura City, Gehan St"
-              />
-              <PharmacyItem
-                name="Roshdy pharmacies"
-                rate={4}
-                reviews={12}
-                address="Roshdy pharmacies"
-              />
-              <PharmacyItem
-                name="Roshdy pharmacies"
-                rate={4}
-                reviews={12}
-                address="Roshdy pharmacies"
-              />
-              <PharmacyItem
-                name="Roshdy pharmacies"
-                rate={4}
-                reviews={12}
-                address="Roshdy pharmacies"
-              />
-              <PharmacyItem
-                name="Roshdy pharmacies"
-                rate={4}
-                reviews={12}
-                address="Roshdy pharmacies"
-              />
+              {medicine.pharmacies.map((pharmacy, i) => (
+                <PharmacyItem
+                  key={i}
+                  name={pharmacy.name}
+                  rate={pharmacy.rate}
+                  reviews={pharmacy.reviews}
+                  address={pharmacy.address}
+                  medication={{
+                    name: medicine.name,
+                    price: medicine.price
+                  }}
+                />
+              ))}
             </div>
           </div>
+          {this.state.changeAddressBox && (
+            <ChangeAddress
+              closePopup={() => this.setState({ changeAddressBox: false })}
+            />
+          )}
         </main>
       </React.Fragment>
     );

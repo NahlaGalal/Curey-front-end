@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import ReactLoading from "react-loading";
 import { scanPrescription } from "../../actions/prescriptionAction";
 import Button from "../Button";
 import SelectBox from "../SelectBox";
-import editIcon from "../../assets/svg/edit-blue.svg";
-import deleteIcon from "../../assets/svg/delete-red.svg";
+import FilterScanning from "../Pop-ups/FilterScanning";
 
 class Filter extends Component {
   constructor(props) {
@@ -162,8 +160,9 @@ class Filter extends Component {
 
   editMedication = e => {
     const medication = e.target.parentNode.parentNode.children[0];
-    medication.contentEditable = (medication.contentEditable === "true") ? false : true;
-  }
+    medication.contentEditable =
+      medication.contentEditable === "true" ? false : true;
+  };
 
   render() {
     const cityList = ["Cairo", "Mansoura", "El-Mahalla", "Bilqas"];
@@ -258,7 +257,7 @@ class Filter extends Component {
           ) : null}
           <div className="Filter__buttons">
             <Button
-              className="btn btn-popup btn-apply btn-xxs"
+              className="btn btn-green-dark btn-apply btn-xxs"
               onClick={() => this.props.applyFilters(this.state.filtersChecked)}
             >
               {" "}
@@ -273,48 +272,16 @@ class Filter extends Component {
             </Button>
           </div>
         </section>
-        <div
-          className={`Filter__scanning-outcome ${
-            this.state.scanningOutcomeOpened ? "visible" : ""
-          }`}
-        >
-          <div className="Filter__scanning-outcome__box">
-            <h2 className="heading-2">Prescription scanning outcome</h2>
-            {this.props.prescription.length ? (
-              <React.Fragment>
-                <ul ref={this.prescriptionScanned}>
-                  {this.props.prescription.map((medication, i) => (
-                    <li key={i}>
-                      <span>{medication}</span>
-                      <button onClick={this.editMedication}>
-                        <img src={editIcon} alt={`edit ${medication}`} />
-                      </button>
-                      <button onClick={this.deleteMedication}>
-                        <img src={deleteIcon} alt={`delete ${medication}`} />
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-                <div className="Filter__buttons">
-                  <Button
-                    className="btn btn-green-dark btn-xxs btn-apply"
-                    onClick={this.applyScanning}
-                  >
-                    Confirm
-                  </Button>
-                  <Button
-                    className="btn btn-transparent btn-xxs btn-cancel"
-                    onClick={this.cancelScanning}
-                  >
-                    Cancel
-                  </Button>
-                </div>
-              </React.Fragment>
-            ) : (
-              <ReactLoading type="spokes" color="#0066ff" className="loading" />
-            )}
-          </div>
-        </div>
+        {this.state.scanningOutcomeOpened && (
+          <FilterScanning
+            prescription={this.props.prescription}
+            prescriptionScanned={this.prescriptionScanned}
+            editMedication={this.editMedication}
+            deleteMedication={this.deleteMedication}
+            applyScanning={this.applyScanning}
+            cancelScanning={this.cancelScanning}
+          />
+        )}
       </div>
     );
   }

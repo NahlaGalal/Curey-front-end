@@ -1,0 +1,182 @@
+.Popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+  z-index: 10000;
+  background-color: rgba($color: $color-white, $alpha: $medium-opacity);
+  hr {
+    border-bottom: 0;
+    color: rgba($color: $color-dark, $alpha: $medium-opacity);
+  }
+  &__box {
+    width: 60rem;
+    padding: 2.4rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $color-white;
+    box-shadow: $color-light-3 0px 3px 6px;
+    @media screen and (max-width: 600px) {
+      width: 90%;
+    }
+    .heading-2 {
+      font-size: 3.2rem;
+      margin-bottom: 2.4rem;
+    }
+    .fades {
+      color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+      font-family: $regular-font;
+    }
+    .semi-bold {
+      color: $color-dark;
+      font-family: $semi-bold-font;
+    }
+    &__toggler {
+      border-radius: 0;
+      button {
+        border-radius: 0;
+      }
+    }
+    &__header {
+      display: grid;
+      grid-template-columns: 4rem auto;
+      grid-gap: 8px;
+      align-items: center;
+      img {
+        width: 4rem;
+        height: 4rem;
+        object-fit: cover;
+      }
+      &__info {
+        color: $color-dark;
+        font-size: 1.6rem;
+        font-family: $semi-bold-font;
+      }
+      &__time {
+        font-size: 1.2rem;
+        color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+      }
+    }
+    &__details {
+      margin: 2.4rem 0;
+      &__header {
+        margin-bottom: 1.6rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.6rem;
+        font-family: $semi-bold-font;
+        color: $color-dark;
+        > img {
+          width: 4.2rem;
+          height: 4.2rem;
+          object-fit: cover;
+          margin-right: 0.8rem;
+        }
+        div {
+          margin-right: auto;
+          p:first-of-type {
+            margin-bottom: 4px;
+          }
+        }
+        h2 {
+          font-size: 1.6rem;
+        }
+        .icon {
+          margin-right: 4px;
+        }
+      }
+      &__note {
+        font-size: 1.6rem;
+        margin: 3.2rem 0 1.2rem 0;
+      }
+      &__content {
+        margin-left: 5rem;
+        .heading-4 {
+          font-family: $semi-bold-font;
+        }
+        li {
+          margin-top: 4px;
+          font-size: 1.6rem;
+        }
+      }
+      &__medication {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.8rem;
+        font-size: 1.6rem;
+        color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+        .semi-bold {
+          margin-right: 4px;
+        }
+        button {
+          display: none;
+        }
+        &:hover {
+          button {
+            display: inline;
+            background-color: transparent;
+            border: 0;
+            cursor: pointer;
+            &:first-of-type {
+              margin: 0 4px 0 8px;
+            }
+          }
+        }
+        &__img {
+          width: 4.2rem;
+          height: 4.2rem;
+          object-fit: cover;
+          margin-right: 0.8rem;
+        }
+        p {
+          display: flex;
+          flex-direction: column;
+          .semi-bold {
+            font-family: $semi-bold-font;
+          }
+        }
+      }
+    }
+    &__footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      &.buttons {
+        justify-content: flex-end;
+      }
+      a {
+        color: $color-green-light;
+        font-size: 1.6rem;
+      }
+      img {
+        margin-right: 4px;
+      }
+      .btn {
+        &-apply {
+          margin-right: 1.6rem;
+        }
+        &-cancel {
+          box-shadow: none;
+          color: $color-green;
+          &:hover,
+          &:focus,
+          &:active {
+            background-color: $color-green;
+            color: $color-white;
+            border: none;
+          }
+        }
+      }
+    }
+    .loading {
+      margin: 2.4rem auto 0;
+    }
+  }
+}

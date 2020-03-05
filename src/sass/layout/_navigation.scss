@@ -205,6 +205,14 @@
     display: flex;
     align-items: center;
 
+    .btn {
+      background-color: transparent;
+      box-shadow: none;
+      &:first-of-type {
+        margin-right: 2.4rem;
+      }
+    }
+
     a{
       margin-right: 2.4rem;
       width: 2.4rem;

@@ -1,0 +1,109 @@
+.Notifications {
+  width: max-content;
+  position: absolute;
+  right: 8.2rem;
+  top: 6.8rem;
+  z-index: 100;
+  background-color: $color-white;
+  padding: 1.6rem;
+  filter: drop-shadow(0px 3px 6px $color-light-3);
+  &:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-bottom: 8px solid $color-white;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    top: -8px;
+    right: 18px;
+  }
+  &__notification {
+    background-color: transparent;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    margin: 0.8rem 0;
+    text-align: left;
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+    &:first-of-type {
+      margin-top: 0;
+    }
+    img {
+      width: 4rem;
+      height: 4rem;
+      object-fit: cover;
+      margin-right: 0.8rem;
+    }
+    span {
+      font-family: $regular-font;
+      color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+    }
+    &__time {
+      font-family: $regular-font;
+      color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+      font-size: 1.2rem;
+    }
+  }
+  hr {
+    border-bottom: 0;
+    border-color: rgba($color: $color-dark, $alpha: $medium-opacity);
+  }
+}
+
+.Thumbnail {
+  @extend .Notifications;
+  right: 2.4rem;
+  padding: 2.4rem;
+  header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.6rem;
+    img {
+      width: 5.2rem;
+      height: 5.2rem;
+      margin-right: 1.6rem;
+      object-fit: cover;
+    }
+    .user {
+      &-name {
+        font-size: 2.4rem;
+        color: $color-dark;
+        font-family: $bold-font;
+      }
+      &-email {
+        font-size: 1.6rem;
+        color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+      }
+    }
+  }
+  hr {
+    border-bottom: 0;
+    border-color: rgba($color: $color-dark, $alpha: $medium-opacity);
+  }
+  &__settings {
+    margin: 1.6rem 0;
+    h4 {
+      margin-bottom: 0.8rem;
+    }
+    a {
+      color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+      font-size: 1.6rem;
+      margin-bottom: 0.4rem;
+      display: block;
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+  footer {
+    margin-top: 1.6rem;
+    .btn {
+      background-color: transparent;
+      box-shadow: none;
+      color: $warning-color;
+    }
+  }
+}

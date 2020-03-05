@@ -28,7 +28,7 @@ const Search = props => {
 
       {props.withFilter ? (
         <Button
-          className="btn btn-search btn-popup btn-filter"
+          className="btn btn-search btn-green-dark btn-filter"
           onClick={props.openFilterBox}
         >
           Filter

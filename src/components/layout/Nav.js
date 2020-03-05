@@ -12,7 +12,7 @@ const Navbar = () => (
     </NavLink>
     <NavLink to="/medications" className="sNav__link">
       <img src={medications_icon} alt="medications icon" />
-      <span className="sNav__text">medication</span>
+      <span className="sNav__text">Medications</span>
     </NavLink>
   </nav>
 );

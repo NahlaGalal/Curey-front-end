@@ -3,6 +3,7 @@ import MedicineCard from "../components/Doctors and medications/MedicineCard";
 import Search from "../components/Doctors and medications/Search";
 import Filter from "../components/Doctors and medications/Filter";
 import Button from "../components/Button";
+import RequestMedication from "../components/Pop-ups/RequestMedication";
 
 const medications = [
   {
@@ -109,7 +110,7 @@ const medications = [
   }
 ];
 
-// const medications = []
+// const medications = [];
 
 const Filters = [
   "Injection",
@@ -129,7 +130,8 @@ const Filters = [
 class Medications extends Component {
   state = {
     filterShown: "hidden",
-    hovered: []
+    hovered: [],
+    requestMedicationBox: false
   };
 
   componentDidMount() {
@@ -190,13 +192,21 @@ class Medications extends Component {
                   OPPS, This medication isn't found at any any pharmacy in your
                   district
                 </p>
-                <Button className="btn btn-green btn-lg">
+                <Button
+                  className="btn btn-green btn-lg"
+                  onClick={() => this.setState({ requestMedicationBox: true })}
+                >
                   Request the medication
                 </Button>
               </div>
             )}
           </div>
         </section>
+        {this.state.requestMedicationBox && (
+          <RequestMedication
+            closePopup={() => this.setState({ requestMedicationBox: false })}
+          />
+        )}
       </div>
     );
   }
