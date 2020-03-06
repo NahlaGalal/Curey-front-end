@@ -213,7 +213,7 @@
       }
     }
 
-    a{
+    a {
       margin-right: 2.4rem;
       width: 2.4rem;
       height: 2.4rem;
@@ -240,9 +240,31 @@
     color: rgba($color-dark, 0.7);
     display: flex;
     align-items: center;
-
+    position: relative;
+    &::before {
+      content: "";
+      position: absolute;
+      width: 1.6rem;
+      height: 1.6rem;
+      left: -1.6rem;
+    }
+    &.doctors::before {
+      @include image("../../assets/svg/heartbeat.svg");
+    }
+    &.medications::before {
+      @include image("../../assets/svg/pill.svg");
+    }
     &:not(:last-child) {
-      margin-right: 2.4rem;
+      margin-right: 3.2rem;
+    }
+    &.active {
+      color: $color-green;
+      &.doctors::before {
+        @include image("../../assets/svg/heartbeat-green.svg");
+      }
+      &.medications::before {
+        @include image("../../assets/svg/pill-green.svg");
+      }
     }
   }
 

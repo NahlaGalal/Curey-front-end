@@ -3,8 +3,24 @@
   margin: 0 auto;
   padding: 6.4rem 0;
 
-  .medicalWalletPointer {
-    width: calc(100% / 2) !important;
+  .toggler {
+    &.active-1 {
+      button {
+        color: $color-dark;
+        &:hover {
+          color: $color-white;
+        }
+      }
+      > button:first-of-type {
+        color: $color-white;
+      }
+      .medicalWalletPointer {
+        left: -1px;
+      }
+    }
+    .medicalWalletPointer {
+      width: calc(100% / 2);
+    }
   }
 
   .medicalWalletTogglers {
