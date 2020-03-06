@@ -8,7 +8,7 @@
     grid-template-columns: repeat(auto-fit, minmax(35.5rem, 1fr));
     grid-gap: 4rem;
     &__box {
-      box-shadow: 0 3px 6px $color-light-3;
+      box-shadow: $shadow;
       display: flex;
       flex-direction: column;
       &__header {

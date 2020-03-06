@@ -88,6 +88,7 @@
         &:active {
           background-color: $color-white;
           color: $color-dark;
+          box-shadow: none;
         }
       }
     }

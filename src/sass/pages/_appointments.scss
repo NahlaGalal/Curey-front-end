@@ -12,7 +12,7 @@
 }
 
 .DoctorBookingCard {
-  box-shadow: 0px 3px 6px $color-light-3;
+  box-shadow: $shadow;
 
   &__img {
     box-shadow: 0 0 0 2.68px #07a3a4, 0 0 0 5.63px rgba(7, 163, 164, 0.4),

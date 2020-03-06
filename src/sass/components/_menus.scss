@@ -31,6 +31,9 @@
     &:first-of-type {
       margin-top: 0;
     }
+    &:hover {
+      box-shadow: none;
+    }
     img {
       width: 4rem;
       height: 4rem;
@@ -104,6 +107,9 @@
       background-color: transparent;
       box-shadow: none;
       color: $warning-color;
+      &:hover {
+        box-shadow: none;
+      }
     }
   }
 }

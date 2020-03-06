@@ -22,3 +22,7 @@ $very-high-opacity: 0.7;
 
 // Transitions
 $transition: all 0.3s ease-in-out;
+
+// Shadows
+$shadow: 0 3px 6px $color-light-3;
+$shadow-hover: 0 3px 6px rgba($color-dark, $medium-opacity);

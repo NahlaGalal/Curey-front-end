@@ -14,7 +14,7 @@
     &__card {
       position: relative;
       padding: 2rem;
-      box-shadow: 0 3px 6px $color-light-3;
+      box-shadow: $shadow;
       header {
         display: flex;
         justify-content: space-between;
@@ -76,7 +76,7 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        box-shadow: 0 3px 6px $color-light-3;
+        box-shadow: $shadow;
         visibility: hidden;
         opacity: 0;
         transition: $transition;

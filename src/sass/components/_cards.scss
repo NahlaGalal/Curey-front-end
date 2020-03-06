@@ -1,7 +1,7 @@
 .doctorCard {
   position: relative;
   background-color: $color-white;
-  box-shadow: 0px 3px 6px rgba($color-dark, $low-opacity);
+  box-shadow: $shadow;
   padding: 2rem;
   font-size: 1.6rem;
   //width: 27rem;
@@ -146,7 +146,7 @@
 // PrescriptionCard
 
 .PrescriptionCard {
-  box-shadow: 0px 3px 6px $color-light-3;
+  box-shadow: $shadow;
   font-size: 1.6rem;
   padding-bottom: 2rem;
 
@@ -216,7 +216,7 @@
 /*******************************/
 // Radiology card
 .RadiologyCard {
-  box-shadow: 0px 3px 6px $color-light-3;
+  box-shadow: $shadow;
   color: rgba($color-dark, $very-high-opacity);
   font-size: 1.6rem;
   padding: 3.2rem 3.2rem 2rem;

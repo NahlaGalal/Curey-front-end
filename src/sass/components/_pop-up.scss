@@ -1,5 +1,5 @@
 .Popup {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -13,12 +13,14 @@
   &__box {
     width: 60rem;
     padding: 2.4rem;
-    position: fixed;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: $color-white;
     box-shadow: $color-light-3 0px 3px 6px;
+    overflow: auto;
+    max-height: calc(100vh - 32px);
     @media screen and (max-width: 600px) {
       width: 90%;
     }
@@ -168,9 +170,9 @@
           &:hover,
           &:focus,
           &:active {
-            background-color: $color-green;
-            color: $color-white;
-            border: none;
+            background-color: $color-white;
+            color: $color-green;
+            box-shadow: none;
           }
         }
       }

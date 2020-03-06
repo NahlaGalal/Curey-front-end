@@ -211,6 +211,9 @@
       &:first-of-type {
         margin-right: 2.4rem;
       }
+      &:hover {
+        box-shadow: none;
+      }
     }
 
     a {
