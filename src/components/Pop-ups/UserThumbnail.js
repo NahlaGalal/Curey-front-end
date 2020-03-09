@@ -4,7 +4,7 @@ import Button from "../Button";
 
 const UserThumbnail = props => {
   return (
-    <div className="Thumbnail">
+    <div className="Thumbnail" onClick={e => e.stopPropagation()}>
       <header>
         <img src={props.userImg} alt={props.userName} />
         <div>
@@ -15,9 +15,9 @@ const UserThumbnail = props => {
       <hr />
       <div className="Thumbnail__settings">
         <h4 className="heading-4">Settings</h4>
-        <Link to="/">Account</Link>
-        <Link to="/">Personal</Link>
-        <Link to="/payment-method">Online payment method</Link>
+        <Link to="/" onClick={props.hideLists}>Account</Link>
+        <Link to="/" onClick={props.hideLists}>Personal</Link>
+        <Link to="/payment-method" onClick={props.hideLists}>Online payment method</Link>
       </div>
       <hr />
       <footer>

@@ -7,7 +7,7 @@ const PopupFooter = props => {
   return (
     <div className="Popup__box__footer">
       <p>
-        <Link to="/payment-method">
+        <Link to="/payment-method" onClick={props.closePopup}>
           <img src={editIcon} alt="edit icon" /> Edit payment method
         </Link>
       </p>
