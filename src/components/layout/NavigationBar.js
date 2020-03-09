@@ -6,11 +6,6 @@ import UserThumbnail from "../Pop-ups/UserThumbnail";
 import UserImg from "../../assets/images/Hassan.png";
 
 export default class NavigationBar extends Component {
-  state = {
-    notificationList: false,
-    userThumbnailList: false
-  };
-
   render() {
     return (
       <React.Fragment>
@@ -82,11 +77,7 @@ export default class NavigationBar extends Component {
               </NavLink>
               <Button
                 className="btn"
-                onClick={() =>
-                  this.setState({
-                    notificationList: !this.state.notificationList
-                  })
-                }
+                onClick={this.props.toggleNotifocationsList}
               >
                 <img
                   className="NavigationBar__icon"
@@ -96,11 +87,7 @@ export default class NavigationBar extends Component {
               </Button>
               <Button
                 className="btn"
-                onClick={() =>
-                  this.setState({
-                    userThumbnailList: !this.state.userThumbnailList
-                  })
-                }
+                onClick={this.props.toggleUserThumbnailList}
               >
                 <img
                   src={UserImg}
@@ -111,8 +98,8 @@ export default class NavigationBar extends Component {
             </div>
           </ul>
         </nav>
-        {this.state.notificationList && <NotificationList />}
-        {this.state.userThumbnailList && (
+        {this.props.notificationList && <NotificationList />}
+        {this.props.userThumbnailList && (
           <UserThumbnail
             userImg={UserImg}
             userName="Hassan Ali"

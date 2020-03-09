@@ -5,8 +5,8 @@ import FacebookLogo from "../../assets/svg/facebook-logo.svg";
 import TwitterLogo from "../../assets/svg/twitter.svg";
 import InstagramLogo from "../../assets/svg/instagram.svg";
 
-const Footer = () => (
-  <footer className="footer">
+const Footer = (props) => (
+  <footer className="footer" onClick={props.onClick}>
     <div className="footer__container">
       <img src={CureyLogo} alt="Curey logo" className="footer__logo" />
       <p className="footer__copyright">All rights reserved © Curey</p>
