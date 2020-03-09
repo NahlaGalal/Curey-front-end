@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { Link } from "react-router-dom";
 import { Rate } from "../util/rate";
 import Logo from "../assets/images/roshdy.png";
 import LocationIcon from "../assets/svg/location.svg";
@@ -7,7 +8,12 @@ import OrderMedication from "./Pop-ups/OrderMedication";
 
 class PharmacyItem extends Component {
   state = {
-    orderMedicationBox: false
+    orderMedicationBox: false,
+    addedToCart: false
+  };
+
+  addToCart = e => {
+    this.setState({ addedToCart: !this.state.addedToCart });
   };
 
   render() {
@@ -36,7 +42,22 @@ class PharmacyItem extends Component {
               >
                 Order
               </Button>
-              <Button className="btn btn-dark btn-xs">Add to cart</Button>
+              <Button
+                className={`btn btn-dark btn-xs ${!this.state.addedToCart &&
+                  "visible"}`}
+                onClick={this.addToCart}
+              >
+                Add to cart
+              </Button>
+              <Link to="/shoppingcart">
+                <Button
+                  className={`btn btn-dark btn-xs btn-cart ${this.state.addedToCart &&
+                    "visible"}`}
+                  onClick={this.addToCart}
+                >
+                  Go to cart
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

@@ -9,24 +9,26 @@
   hr {
     border-bottom: 0;
     color: rgba($color: $color-dark, $alpha: $medium-opacity);
+    margin: 0 2.4rem;
   }
   &__box {
     width: 60rem;
-    padding: 2.4rem;
+    padding: 2.4rem 0;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: $color-white;
     box-shadow: $color-light-3 0px 3px 6px;
-    overflow: auto;
     max-height: calc(100vh - 32px);
+    overflow: auto;
+    height: max-content;
     @media screen and (max-width: 600px) {
       width: 90%;
     }
     .heading-2 {
       font-size: 3.2rem;
-      margin-bottom: 2.4rem;
+      margin: 0 2.4rem 2.4rem;
     }
     .fades {
       color: rgba($color: $color-dark, $alpha: $very-high-opacity);
@@ -38,6 +40,9 @@
     }
     &__toggler {
       border-radius: 0;
+      &.address-toggler {
+        border: 0;
+      }
       button {
         border-radius: 0;
       }
@@ -47,6 +52,7 @@
       grid-template-columns: 4rem auto;
       grid-gap: 8px;
       align-items: center;
+      margin: 0 2.4rem;
       img {
         width: 4rem;
         height: 4rem;
@@ -63,7 +69,10 @@
       }
     }
     &__details {
-      margin: 2.4rem 0;
+      margin: 2.4rem;
+      .select--options {
+        top: 0;
+      }
       &__header {
         margin-bottom: 1.6rem;
         display: flex;
@@ -93,7 +102,7 @@
       }
       &__note {
         font-size: 1.6rem;
-        margin: 3.2rem 0 1.2rem 0;
+        margin: 3.2rem 2.4rem 1.2rem;
       }
       &__content {
         margin-left: 5rem;
@@ -111,6 +120,10 @@
         margin-bottom: 0.8rem;
         font-size: 1.6rem;
         color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+        span.editable {
+          outline: 1px solid $color-dark;
+          padding: 0.4rem;
+        }
         &:last-of-type {
           margin-bottom: 0;
         }
@@ -150,6 +163,7 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
+      margin: 0 2.4rem;
       &.buttons {
         justify-content: flex-end;
       }

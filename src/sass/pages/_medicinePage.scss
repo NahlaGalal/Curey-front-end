@@ -159,5 +159,15 @@
         margin-bottom: 8px;
       }
     }
+    .btn-dark {
+      display: none;
+      &.visible {
+        display: inline-block;
+      }
+      &.btn-cart {
+        color: $color-green-light;
+        border-color: $color-green-light;
+      }
+    }
   }
 }

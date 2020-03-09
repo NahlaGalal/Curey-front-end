@@ -160,6 +160,7 @@ class Filter extends Component {
 
   editMedication = e => {
     const medication = e.target.parentNode.parentNode.children[0];
+    medication.classList.toggle("editable");
     medication.contentEditable =
       medication.contentEditable === "true" ? false : true;
   };

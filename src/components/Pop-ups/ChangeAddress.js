@@ -44,7 +44,7 @@ class ChangeAddress extends Component {
       <section className="Popup">
         <div className="Popup__box">
           <h2 className="heading-2">Change address</h2>
-          <div className="Popup__box__toggler toggler">
+          <div className="Popup__box__toggler toggler address-toggler">
             <Button
               className={this.state.activeToggler ? "btn" : "btn active"}
               onClick={() => this.setState({ activeToggler: 0 })}
