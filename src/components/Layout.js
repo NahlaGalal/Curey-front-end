@@ -9,22 +9,35 @@ class Layout extends Component {
     userThumbnailList: false
   };
 
-  hideLists = () => this.setState({userThumbnailList: false, notificationList: false})
+  hideLists = () =>
+    this.setState({ userThumbnailList: false, notificationList: false });
 
   render() {
     return (
-      <Fragment>
+      <div onClick={this.hideLists}>
         <NavigationBar
           notificationList={this.state.notificationList}
           userThumbnailList={this.state.userThumbnailList}
-          toggleNotifocationsList={() => this.setState({notificationList: !this.state.notificationList})}
-          toggleUserThumbnailList={() => this.setState({userThumbnailList: !this.state.userThumbnailList})}
-          onClick={this.hideLists}
+          toggleNotifocationsList={e => {
+            e.stopPropagation();
+            this.setState({
+              notificationList: !this.state.notificationList,
+              userThumbnailList: false
+            });
+          }}
+          toggleUserThumbnailList={e => {
+            e.stopPropagation();
+            this.setState({
+              userThumbnailList: !this.state.userThumbnailList,
+              notificationList: false
+            });
+          }}
+          hideLists={this.hideLists}
         />
-        <Navbar onClick={this.hideLists}/>
+        <Navbar />
         {this.props.children}
-        <Footer onClick={this.hideLists}/>
-      </Fragment>
+        <Footer />
+      </div>
     );
   }
 }

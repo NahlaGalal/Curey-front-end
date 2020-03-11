@@ -34,7 +34,7 @@ class NotificationList extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="Notifications">
+        <div className="Notifications" onClick={e => e.stopPropagation()}>
           {notifications.map((notification, i) => (
             <React.Fragment key={i}>
               <Button
@@ -58,7 +58,10 @@ class NotificationList extends Component {
         </div>
         {this.state.confirmPrescriptionBox && (
           <ConfirmPrescription
-            closePopup={() => this.setState({ confirmPrescriptionBox: false })}
+            closePopup={() => {
+              this.setState({ confirmPrescriptionBox: false });
+              this.props.hideLists();
+            }}
           />
         )}
       </React.Fragment>

@@ -38,7 +38,7 @@ const prescription = {
 };
 
 const ConfirmPrescription = props => (
-  <section className="Popup">
+  <section className="Popup" onClick={e => e.stopPropagation()}>
     <div className="Popup__box">
       <header className="Popup__box__header">
         <img

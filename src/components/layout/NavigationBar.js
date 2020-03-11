@@ -98,9 +98,12 @@ export default class NavigationBar extends Component {
             </div>
           </ul>
         </nav>
-        {this.props.notificationList && <NotificationList />}
+        {this.props.notificationList && (
+          <NotificationList hideLists={this.props.hideLists} />
+        )}
         {this.props.userThumbnailList && (
           <UserThumbnail
+            hideLists={this.props.hideLists}
             userImg={UserImg}
             userName="Hassan Ali"
             userEmail="hassanqasem000@gmail.com"
