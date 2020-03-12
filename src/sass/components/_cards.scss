@@ -93,6 +93,8 @@
 
 .medicationCard {
   @extend .doctorCard;
+  position: relative;
+  max-width: 45rem;
 
   &__main {
     position: relative;
@@ -139,6 +141,29 @@
 
   &__price {
     @extend .doctorCard__price;
+  }
+
+  &:hover > &__close {
+    opacity: 1;
+  }
+
+  &__close {
+    position: absolute;
+    right: -2rem;
+    top: -1rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: all 0.4s;
+    box-shadow: inherit;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 

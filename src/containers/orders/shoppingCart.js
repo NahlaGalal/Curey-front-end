@@ -4,46 +4,54 @@ import Button from "../../components/Button";
 import OrderDetails from "../../components/Pop-ups/OrderDetails";
 import PharmacyIcon from "../../assets/images/roshdy.png";
 
-const medications = [
-  {
-    name: "Antinal",
-    price: 20,
-    pharmacyName: "Roshdy pharmacy",
-    pharmacyAddress: "Mansoura, Gehan St"
-  },
-  {
-    name: "Antinal",
-    price: 15,
-    pharmacyName: "Roshdy pharmacy",
-    pharmacyAddress: "Mansoura, Gehan St"
-  },
-  {
-    name: "Antinal",
-    price: 15.5,
-    pharmacyName: "Roshdy pharmacy",
-    pharmacyAddress: "Mansoura, Gehan St"
-  },
-  {
-    name: "Antinal",
-    price: 123,
-    pharmacyName: "Roshdy pharmacy",
-    pharmacyAddress: "Mansoura, Gehan St"
-  },
-  {
-    name: "Antinal",
-    price: 1,
-    pharmacyName: "Roshdy pharmacy",
-    pharmacyAddress: "Mansoura, Gehan St"
-  }
-];
-
 export default class ShoppingCart extends Component {
   state = {
-    orderDetailsBox: false
+    orderDetailsBox: false,
+    medications: [
+      {
+        name: "Antinal",
+        price: 20,
+        pharmacyName: "Roshdy pharmacy",
+        pharmacyAddress: "Mansoura, Gehan St"
+      },
+      {
+        name: "Antinal",
+        price: 15,
+        pharmacyName: "Roshdy pharmacy",
+        pharmacyAddress: "Mansoura, Gehan St"
+      },
+      {
+        name: "Antinal",
+        price: 15.5,
+        pharmacyName: "Roshdy pharmacy",
+        pharmacyAddress: "Mansoura, Gehan St"
+      },
+      {
+        name: "Antinal",
+        price: 123,
+        pharmacyName: "Roshdy pharmacy",
+        pharmacyAddress: "Mansoura, Gehan St"
+      },
+      {
+        name: "Antinal",
+        price: 1,
+        pharmacyName: "Roshdy pharmacy",
+        pharmacyAddress: "Mansoura, Gehan St"
+      }
+    ]
+  };
+
+  removeMedication = (index, medications) => {
+    const newMedications = medications.filter(
+      item => index !== medications.indexOf(item)
+    );
+    this.setState({
+      medications: [...newMedications]
+    });
   };
 
   render() {
-    const totalPrice = medications
+    const totalPrice = this.state.medications
       .map(medication => medication.price)
       .reduce((total, price) => (total += price), 0);
 
@@ -54,47 +62,55 @@ export default class ShoppingCart extends Component {
         </div>
         <div className="shoppingCartContainer">
           <div className="medicationsContainer medicationGrid">
-            {medications.map((medication, i) => (
+            {this.state.medications.map((medication, i) => (
               <Order
                 key={i}
                 name={medication.name}
                 price={medication.price}
                 pharmacy={medication.pharmacyName}
                 address={medication.pharmacyAddress}
+                remove={() => this.removeMedication(i, this.state.medications)}
               />
             ))}
           </div>
           <div className="totalPriceCard">
             <h3>Total price</h3>
             <p>{totalPrice} L.E</p>
-            <Button className="btn checkout-btn" onClick={() => this.setState({orderDetailsBox: true})}>Checkout</Button>
+            <Button
+              className="btn checkout-btn"
+              onClick={() => this.setState({ orderDetailsBox: true })}
+            >
+              Checkout
+            </Button>
           </div>
         </div>
         {this.state.orderDetailsBox && (
           <OrderDetails
             closePopup={() => this.setState({ orderDetailsBox: false })}
-            orders={
-              [
-                {
-                  totalPrice,
-                  medications: medications.map(medication => medication.name),
-                  pharmacy: {
-                    name: "Roshdy pharmacies",
-                    logo: PharmacyIcon,
-                    address: "Mansoura, Gehan St"
-                  }
-                },
-                {
-                  totalPrice,
-                  medications: medications.map(medication => medication.name),
-                  pharmacy: {
-                    name: "Roshdy pharmacies",
-                    logo: PharmacyIcon,
-                    address: "Mansoura, Gehan St"
-                  }
+            orders={[
+              {
+                totalPrice,
+                medications: this.state.medications.map(
+                  medication => medication.name
+                ),
+                pharmacy: {
+                  name: "Roshdy pharmacies",
+                  logo: PharmacyIcon,
+                  address: "Mansoura, Gehan St"
                 }
-              ]
-            }
+              },
+              {
+                totalPrice,
+                medications: this.state.medications.map(
+                  medication => medication.name
+                ),
+                pharmacy: {
+                  name: "Roshdy pharmacies",
+                  logo: PharmacyIcon,
+                  address: "Mansoura, Gehan St"
+                }
+              }
+            ]}
           />
         )}
       </React.Fragment>
