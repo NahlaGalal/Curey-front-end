@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import DoctorsGrid from "../components/Doctors and medications/DoctorsGrid";
 import MedicineCard from "../components/Doctors and medications/MedicineCard";
 import Button from "../components/Button";
+import {loadState} from "../configureStore";
+import LandingPage from "./Landing-page";
 
 const doctors = [
   {
@@ -107,7 +109,8 @@ export class Home extends Component {
   }
 
   render() {
-    return (
+    const isAuthenticated = loadState().api_token;
+    return (isAuthenticated ? (
       <section className="topDoctors">
         <div className="topDoctors__container">
           <h2 className="heading-2 mb-52">Top doctors</h2>
@@ -118,7 +121,6 @@ export class Home extends Component {
             </Button>
           </Link>
         </div>
-
         <div className="topMedications__container">
           <h2 className="heading-2 mb-52">Top medications</h2>
           <div className="medicationGrid mb-40">
@@ -149,7 +151,7 @@ export class Home extends Component {
           </Link>
         </div>
       </section>
-    );
+    ): <LandingPage />);
   }
 }
 

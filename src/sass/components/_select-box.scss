@@ -11,7 +11,7 @@ $active-option-color: #09cacb;
   &::after {
     content: "";
     position: absolute;
-    top: calc(50% - 0.6rem);
+    top: 1.45rem;
     right: 1.5rem;
     height: 0;
     width: 0;
@@ -37,9 +37,8 @@ $active-option-color: #09cacb;
   }
   span {
     position: absolute;
-    top: 50%;
+    top: 1.45rem;
     left: 1.6rem;
-    transform: translateY(-50%);
     font-size: 1.6rem;
     color: rgba($color-dark, $very-high-opacity);
     z-index: 1;

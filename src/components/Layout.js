@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from "react";
+import React, { Component } from "react";
 import NavigationBar from "./layout/NavigationBar";
 import Footer from "./layout/Footer";
 import Navbar from "./layout/Nav";

@@ -3,9 +3,11 @@ import { NavLink } from "react-router-dom";
 import Button from "../Button";
 import NotificationList from "../Pop-ups/NotificationList";
 import UserThumbnail from "../Pop-ups/UserThumbnail";
-import UserImg from "../../assets/images/Hassan.png";
+import UserImg from "../../assets/svg/user.svg";
+import { connect } from "react-redux";
+import { postLogout } from "../../actions/userRegisterAction";
 
-export default class NavigationBar extends Component {
+class NavigationBar extends Component {
   render() {
     return (
       <React.Fragment>
@@ -86,11 +88,11 @@ export default class NavigationBar extends Component {
                 />
               </Button>
               <Button
-                className="btn"
+                className="btn NavigationBar__profile-btn"
                 onClick={this.props.toggleUserThumbnailList}
               >
                 <img
-                  src={UserImg}
+                  src={this.props.image || UserImg}
                   alt="profile"
                   className="NavigationBar__img"
                 />
@@ -104,12 +106,26 @@ export default class NavigationBar extends Component {
         {this.props.userThumbnailList && (
           <UserThumbnail
             hideLists={this.props.hideLists}
-            userImg={UserImg}
-            userName="Hassan Ali"
-            userEmail="hassanqasem000@gmail.com"
+            userImg={this.props.image || UserImg}
+            userName={this.props.full_name}
+            userEmail={this.props.email || ""}
+            logout={() => this.props.postLogout(this.props.api_token)}
           />
         )}
       </React.Fragment>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  api_token: state.user.api_token,
+  full_name: state.user.full_name,
+  image: state.user.image,
+  email: state.user.email
+});
+
+const mapDispatchToProps = dispatch => ({
+  postLogout: token => dispatch(postLogout(token))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationBar);

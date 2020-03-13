@@ -8,7 +8,6 @@
 
     &__input {
         border-radius: 1rem;
-        padding: 1rem;
         width: 100%;
         display: block;
         outline: none !important;
@@ -28,9 +27,8 @@
 
     label {
         position: absolute;
-        top: 50%;
+        top: 1.45rem;
         left: 1.6rem;
-        transform: translateY(-50%);
         font-size: 1.6rem;
         color: rgba($color-dark, $very-high-opacity);
         z-index: 1;
@@ -44,5 +42,11 @@
             z-index: 4;
             padding: 0 0.5rem;
         }
+    }
+
+    &__error {
+        color: $warning-color;
+        font-size: 1.2rem;
+        margin-top: 0.8rem;
     }
 }

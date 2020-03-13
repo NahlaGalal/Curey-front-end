@@ -1,12 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Button from "../Button";
+import {deleteState} from '../../configureStore';
 
 const UserThumbnail = props => {
+  const logout = () => {
+    deleteState();
+    props.logout();
+  }
+
   return (
     <div className="Thumbnail" onClick={e => e.stopPropagation()}>
       <header>
-        <img src={props.userImg} alt={props.userName} />
+        <div className="Thumbnail__profile-img">
+          <img src={props.userImg} alt={props.userName} />
+        </div>
         <div>
           <p className="user-name">{props.userName}</p>
           <p className="user-email">{props.userEmail}</p>
@@ -21,7 +29,7 @@ const UserThumbnail = props => {
       </div>
       <hr />
       <footer>
-        <Button className="btn"> Logout </Button>
+        <Button className="btn" onClick={logout}> Logout </Button>
       </footer>
     </div>
   );

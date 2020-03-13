@@ -1,2 +1,11 @@
 export const SCAN_PRESCRIPTION = "SCAN_PRESCRIPTION";
 export const SCAN_IMAGE = "SCAN_IMAGE";
+
+export const SAGA_SIGNUP_USER = "SAGA_SIGNUP_USER";
+export const SIGNUP_USER = "SIGNUP_USER";
+export const SAGA_GET_CITIES = "SAGA_GET_CITIES";
+export const GET_CITIES = "GET_CITIES";
+export const SAGA_LOGIN_USER = "SAGA_LOGIN_USER";
+export const LOGIN_USER = "LOGIN_USER";
+export const LOGOUT_USER = "LOGOUT_USER";
+export const SAGA_LOGOUT_USER = "SAGA_LOGOUT_USER";

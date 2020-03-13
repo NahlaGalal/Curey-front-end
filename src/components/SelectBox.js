@@ -21,16 +21,15 @@ const SelectBox = props => {
         ref={props.optionsContainerRef}
       >
         <h3>{props.header}</h3>
-        {props.list.map(type => {
-          const key = type.split(" ").join("");
-          return (
-            <div className="option" key={key}>
-              <input type={`${props.multiple ? "checkbox" : "radio"}`} id={key} hidden value={type} name="city"/>
-              <label htmlFor={key}>{type}</label>
+        {props.list.map(type => (
+            <div className="option" key={type.id}>
+              <input type={`${props.multiple ? "checkbox" : "radio"}`} id={type.id} hidden value={type.name} name="city"/>
+              <label htmlFor={type.id}>{type.name}</label>
             </div>
-          );
-        })}
+          )
+        )}
       </div>
+      {props.error && <p className="fieldinput__error">{props.error}</p>}
     </div>
   );
 };

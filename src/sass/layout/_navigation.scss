@@ -171,6 +171,18 @@
     }
   }
 
+  &__profile-btn {
+    width: 4.8rem;
+    height: 4.8rem;
+    border-radius: 50%;
+    border: 1px solid $color-dark;
+    img {
+      width: 3.2rem;
+      height: 3.2rem;
+      object-fit: cover;
+    }
+  }
+
   &__item {
     display: flex;
     margin-right: 2.4rem;
