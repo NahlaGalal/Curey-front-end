@@ -39,12 +39,26 @@ class SignupUser extends Component {
     if (prevProps.cities.length !== this.props.cities.length) {
       this.setState({ cityList: this.props.cities });
     }
-    if (prevProps.signupSuccess !== this.props.signupSuccess && this.props.signupSuccess) {
+    if (
+      prevProps.signupSuccess !== this.props.signupSuccess &&
+      this.props.signupSuccess
+    ) {
       this.props.redirectToLogin();
     }
-    if (prevProps.signupErrors !== this.props.signupErrors) {
-      console.log(this.props.signupErrors);
-      // TODO: errors object or array ??
+    if (
+      JSON.stringify(prevProps.signupErrors) !==
+      JSON.stringify(this.props.signupErrors)
+    ) {
+      const errors = { full_name: "", password: "", email: "", city: "" };
+      if (this.props.signupErrors.full_name)
+        errors.full_name = this.props.signupErrors.full_name;
+      if (this.props.signupErrors.password)
+        errors.password = this.props.signupErrors.password;
+      if (this.props.signupErrors.email)
+        errors.email = this.props.signupErrors.email;
+      if (this.props.signupErrors.city)
+        errors.city = this.props.signupErrors.city;
+      this.setState({errors})
     }
   }
 
@@ -88,13 +102,13 @@ class SignupUser extends Component {
       })
     )
       errors.email = "Your email must be a valid email";
-    if (
-      !validator.isLength(this.state.full_name, {
-        max: 50,
-        min: 6
-      })
-    )
-      errors.full_name = "Your name must be between 6 and 50 characters";
+    // if (
+    //   !validator.isLength(this.state.full_name, {
+    //     max: 50,
+    //     min: 6
+    //   })
+    // )
+    //   errors.full_name = "Your name must be between 6 and 50 characters";
     if (
       !validator.isLength(this.state.password, {
         max: 50,

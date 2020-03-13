@@ -21,6 +21,18 @@ class Login extends Component {
 
   componentDidUpdate(prevProps) {
     if (
+      JSON.stringify(prevProps.user.errors) !==
+      JSON.stringify(this.props.user.errors)
+    ) {
+      const errors = {user: "", password: ""};
+      this.props.user.errors.user
+        ? (errors.user = this.props.user.errors.user)
+        : this.props.user.errors.password
+        ? (errors.password = this.props.user.errors.password)
+        : errors.password = "";
+      this.setState({errors})
+    }
+    if (
       prevProps.user.api_token !== this.props.user.api_token &&
       this.props.user.api_token
     )
