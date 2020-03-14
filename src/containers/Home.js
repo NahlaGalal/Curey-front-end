@@ -7,6 +7,7 @@ import { loadState } from "../configureStore";
 import LandingPage from "./Landing-page";
 import { connect } from "react-redux";
 import * as actions from "../actions/types";
+import ReactLoading from "react-loading";
 
 const medications = [
   {
@@ -62,7 +63,16 @@ export class Home extends Component {
       <section className="topDoctors">
         <div className="topDoctors__container">
           <h2 className="heading-2 mb-52">Top doctors</h2>
-          <DoctorsGrid doctors={this.props.topDoctors} />
+          {this.props.topDoctors.length ? (
+            <DoctorsGrid doctors={this.props.topDoctors} />
+          ) : (
+            <ReactLoading
+              type="spokes"
+              color="#0066ff"
+              className="loading center mb-40"
+            />
+          )}
+
           <Link to="/doctors">
             <Button className="btn btn-lg btn-green center mb-56">
               See more
