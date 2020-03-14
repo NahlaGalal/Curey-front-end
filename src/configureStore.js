@@ -15,6 +15,11 @@ const defaultState = {
     full_name: "",
     image: null,
     email: ""
+  },
+  homeData: {
+    user_data: { name: "", image: null },
+    top_doctors: [],
+    top_products: []
   }
 };
 
@@ -39,8 +44,7 @@ export const saveState = state =>
     })
   );
 
-export const deleteState = () =>
-  localStorage.removeItem("curey-state")
+export const deleteState = () => localStorage.removeItem("curey-state");
 
 const initialState = () => {
   return {

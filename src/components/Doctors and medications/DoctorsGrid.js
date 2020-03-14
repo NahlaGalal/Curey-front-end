@@ -3,27 +3,37 @@ import { Link } from "react-router-dom";
 import Doctor from "../../assets/images/doctor1.png";
 import Home_icon from "../../assets/svg/home.svg";
 import Button from "../Button";
-import { Rate } from '../../util/rate';
+import { Rate } from "../../util/rate";
 
 class DoctorsGrid extends React.Component {
-  state = {isCallupInfo: [] };
+  state = { isCallupInfo: [] };
 
   componentDidMount() {
     let isCallupInfo = [];
-    this.props.doctors.map((doctor, index) => isCallupInfo.push("hidden"))
+    this.props.doctors.map((doctor, index) => isCallupInfo.push("hidden"));
     this.setState({ isCallupInfo });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      JSON.stringify(prevProps.doctors) !== JSON.stringify(this.props.doctors)
+    ) {
+      let isCallupInfo = [];
+      this.props.doctors.map(() => isCallupInfo.push("hidden"));
+      this.setState({ isCallupInfo });
+    }
   }
 
   hideCallupInfo = i => {
     const { isCallupInfo } = this.state;
     isCallupInfo[i] = "visible";
-    this.setState({isCallupInfo});
-  }
+    this.setState({ isCallupInfo });
+  };
   showCallupInfo = i => {
     const { isCallupInfo } = this.state;
     isCallupInfo[i] = "hidden";
-    this.setState({isCallupInfo});
-  }
+    this.setState({ isCallupInfo });
+  };
 
   render() {
     return (
@@ -32,14 +42,14 @@ class DoctorsGrid extends React.Component {
           <div className="doctorCard" key={i}>
             <div className="doctorCard__main">
               <img
-                alt={doctor.name}
+                alt={doctor.full_name}
                 src={Doctor}
                 className="center doctorCard__main__doctorImg"
               />
-              {doctor.isCallup ? (
+              {doctor.offers_callup ? (
                 <img
                   src={Home_icon}
-                  alt={`${doctor.name} is available for home servicies`}
+                  alt={`${doctor.full_name} is available for home servicies`}
                   onMouseMove={() => this.hideCallupInfo(i)}
                   onMouseOut={() => this.showCallupInfo(i)}
                 />
@@ -47,17 +57,19 @@ class DoctorsGrid extends React.Component {
             </div>
 
             <div className="doctorCard__info">
-              <h3 className="doctorCard__name">{doctor.name}</h3>
-              <span className="doctorCard__price">{doctor.price} L.E.</span>
+              <h3 className="doctorCard__name">{doctor.full_name}</h3>
+              <span className="doctorCard__price">{doctor.fees} L.E.</span>
             </div>
             <p className="doctorCard__speciality">{doctor.speciality}</p>
             <div className="doctorCard__rate">
-              <Rate rate={doctor.star} />
+              <Rate rate={doctor.overall_rating} />
             </div>
             <Link to="/doctor-profile/1">
               <Button className="btn btn-lg btn-green center">choose</Button>
             </Link>
-            <div className={`iscallup-doctor-info ${this.state.isCallupInfo[i]}`}>
+            <div
+              className={`iscallup-doctor-info ${this.state.isCallupInfo[i]}`}
+            >
               <p>This doctor is available for home services</p>
             </div>
           </div>
@@ -68,3 +80,12 @@ class DoctorsGrid extends React.Component {
 }
 
 export default DoctorsGrid;
+
+// id: 1
+// full_name: "Chris Mertz V"
+// speciality: "Brain Surgeon"
+// image: null
+// city_id: 2
+// offers_callup: false
+// fees: "450"
+// overall_rating: 1.8888888888888886

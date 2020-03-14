@@ -5,7 +5,7 @@ export function homeData(state = {}, action) {
     case actions.RECIEVE_HOME_DATA:
       return {
         ...state,
-        homeData: action.payload
+        ...action.payload
       };
     default:
       return state;
