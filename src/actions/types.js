@@ -9,3 +9,6 @@ export const SAGA_LOGIN_USER = "SAGA_LOGIN_USER";
 export const LOGIN_USER = "LOGIN_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const SAGA_LOGOUT_USER = "SAGA_LOGOUT_USER";
+
+export const REQUEST_HOME_DATA = "REQUEST_HOME_DATA";
+export const RECIEVE_HOME_DATA = "RECIEVE_HOME_DATA";

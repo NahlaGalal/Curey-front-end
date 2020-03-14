@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import DoctorsGrid from "../components/Doctors and medications/DoctorsGrid";
 import MedicineCard from "../components/Doctors and medications/MedicineCard";
 import Button from "../components/Button";
-import {loadState} from "../configureStore";
+import { loadState } from "../configureStore";
 import LandingPage from "./Landing-page";
+import { connect } from "react-redux";
+import * as actions from "../actions/types";
 
 const doctors = [
   {
@@ -106,15 +108,18 @@ export class Home extends Component {
     this.setState({
       hovered: new Array(medications.length).fill(false)
     });
+    this.props.onRequestData();
   }
 
   render() {
     const isAuthenticated = loadState().api_token;
-    return (isAuthenticated ? (
+    return isAuthenticated ? (
       <section className="topDoctors">
         <div className="topDoctors__container">
           <h2 className="heading-2 mb-52">Top doctors</h2>
           <DoctorsGrid doctors={doctors} />
+          {console.log(this.props.data)}
+          {/* {console.log(this.props.topMedications)} */}
           <Link to="/doctors">
             <Button className="btn btn-lg btn-green center mb-56">
               See more
@@ -151,8 +156,21 @@ export class Home extends Component {
           </Link>
         </div>
       </section>
-    ): <LandingPage />);
+    ) : (
+      <LandingPage />
+    );
   }
 }
+const mapStateToProps = state => {
+  return {
+    data: state.homeData.homeData
+  };
+};
 
-export default Home;
+const mapDispatchToProps = dispatch => {
+  return {
+    onRequestData: () => dispatch({ type: actions.REQUEST_HOME_DATA })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
