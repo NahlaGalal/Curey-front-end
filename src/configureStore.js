@@ -15,6 +15,16 @@ const defaultState = {
     full_name: "",
     image: null,
     email: ""
+  },
+  doctors: {
+    doctorsData: [],
+    specialities: [],
+    cities: [],
+    doctorsSearch: [],
+    doctorData: {
+      degrees: [],
+      reviews: []
+    }
   }
 };
 

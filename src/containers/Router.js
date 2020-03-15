@@ -37,7 +37,10 @@ const Router = () => (
               component={Forgot}
             />
             <Route exact path="/signup" component={Signup} />
-            <Route exact path="/home" component={Home} />
+            <Layout>
+              <Route exact path="/home" component={Home} />
+            </Layout>
+            <Redirect exact to="/" />
           </Switch>
         ) : (
           <Layout>

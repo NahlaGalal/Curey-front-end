@@ -9,3 +9,10 @@ export const SAGA_LOGIN_USER = "SAGA_LOGIN_USER";
 export const LOGIN_USER = "LOGIN_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const SAGA_LOGOUT_USER = "SAGA_LOGOUT_USER";
+
+export const SAGA_GET_DOCTORS = "SAGA_GET_DOCTORS";
+export const GET_DOCTORS = "GET_DOCTORS";
+export const SAGA_SEARCH_DOCTORS = "SAGA_SEARCH_DOCTORS";
+export const SEARCH_DOCTORS = "SEARCH_DOCTORS";
+export const SAGA_GET_DOCTOR = "SAGA_GET_DOCTOR";
+export const GET_DOCTOR = "GET_DOCTOR";

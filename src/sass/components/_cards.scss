@@ -4,6 +4,8 @@
   box-shadow: $shadow;
   padding: 2rem;
   font-size: 1.6rem;
+  display: flex;
+  flex-direction: column;
   //width: 27rem;
   width: 100%;
   &__main {
@@ -31,6 +33,7 @@
     font-size: 2.4rem;
     color: $color-dark;
     font-family: $bold-font;
+    flex-basis: 70%;
   }
   &__price {
     font-size: 1.6rem;
@@ -55,6 +58,9 @@
     &:last-of-type {
       margin-right: 0.6rem;
     }
+  }
+  &__link {
+    margin-top: auto;
   }
   .iscallup-doctor-info {
     position: absolute;

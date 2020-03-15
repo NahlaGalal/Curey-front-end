@@ -15,19 +15,24 @@ const SelectBox = props => {
       </span>
       <div
         onClick={e => {
-          e.stopPropagation();  
+          e.stopPropagation();
         }}
         className={`select--options ${props.boxOpened ? "active" : ""}`}
         ref={props.optionsContainerRef}
       >
         <h3>{props.header}</h3>
         {props.list.map(type => (
-            <div className="option" key={type.id}>
-              <input type={`${props.multiple ? "checkbox" : "radio"}`} id={type.id} hidden value={type.name} name="city"/>
-              <label htmlFor={type.id}>{type.name}</label>
-            </div>
-          )
-        )}
+          <div key={type.id} className="option">
+            <input
+              type={`${props.multiple ? "checkbox" : "radio"}`}
+              id={`${type.id}_${type.name}`}
+              hidden
+              value={type.name}
+              name={props.header}
+            />
+            <label htmlFor={`${type.id}_${type.name}`}>{type.name}</label>
+          </div>
+        ))}
       </div>
       {props.error && <p className="fieldinput__error">{props.error}</p>}
     </div>

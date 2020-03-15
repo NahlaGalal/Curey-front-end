@@ -77,7 +77,7 @@ class SignupUser extends Component {
         this.citiesContainerRef.current.querySelectorAll("input[type=radio]")
       ).filter(input => input.checked)[0];
       city = inputChecked ? inputChecked.value : "";
-      city_id = inputChecked ? inputChecked.id : "";
+      city_id = inputChecked ? inputChecked.id.split("_")[0] : "";
     }
     this.setState({
       cityBoxOpened: !prev,
@@ -102,13 +102,13 @@ class SignupUser extends Component {
       })
     )
       errors.email = "Your email must be a valid email";
-    // if (
-    //   !validator.isLength(this.state.full_name, {
-    //     max: 50,
-    //     min: 6
-    //   })
-    // )
-    //   errors.full_name = "Your name must be between 6 and 50 characters";
+    if (
+      !validator.isLength(this.state.full_name, {
+        max: 50,
+        min: 6
+      })
+    )
+      errors.full_name = "Your name must be between 6 and 50 characters";
     if (
       !validator.isLength(this.state.password, {
         max: 50,
@@ -126,7 +126,7 @@ class SignupUser extends Component {
         full_name: this.state.full_name,
         email: this.state.email,
         password: this.state.password,
-        city_id: +this.state.city
+        city_id: +this.state.city_id
       });
     }
     e.target.disabled = true;

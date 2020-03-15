@@ -99,34 +99,18 @@ $border: #07a3a4;
                         height: 12rem;
                         width: 12rem;
                         border-radius: 50%;
-                        border: 1px solid rgba($border, $low-opacity);
                         background-color: $color-white;
                         position: relative;
-                        &::after,
-                        &::before {
-                            content: "";
-                            position: absolute;
-                            top: 50%;
-                            left: 50%;
-                            transform: translate(-50%, -50%);
-                            height: 9.5rem;
-                            width: 9.5rem;
-                            background-color: $border;
-                            border-radius: 50%;
-                        }
-
-                        &::before {
-                            height: 10.5rem;
-                            width: 10.5rem;
-                            background-color: rgba($border, $medium-opacity);
-                        }
-
                         img {
                             position: relative;
                             z-index: 999;
                             height: 8.5rem;
                             width: 8.5rem;
                             border-radius: 50%;
+                            box-shadow: 0 0 0 4px $color-green,
+                            0 0 0 8px rgba($color: $color-green, $alpha: $medium-opacity),
+                            0 0 0 13px $color-white,
+                            0 0 0 14px rgba($color: $color-green, $alpha: $low-opacity),
                         }
                     }
 

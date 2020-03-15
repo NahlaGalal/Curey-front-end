@@ -20,3 +20,10 @@ ul,
 ol {
   list-style: none;
 }
+
+.loading {
+  margin: 0 auto;
+  &-doctor-profile {
+    margin: 2.4rem auto;
+  }
+}

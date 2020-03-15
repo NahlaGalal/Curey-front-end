@@ -11,6 +11,7 @@ class Filter extends Component {
     this.state = {
       filtersChecked: [],
       citiesChecked: [],
+      citiesChecked_id: [],
       specialitiesChecked: [],
       filtersOptionsClass: [],
       cityBoxOpened: false,
@@ -70,12 +71,15 @@ class Filter extends Component {
           ).filter(input => input.value === filter)[0].checked = false;
           return;
         }
-        let { citiesChecked } = this.state;
+        let { citiesChecked, citiesChecked_id } = this.state;
         // Remove selected filter (city)
         citiesChecked = citiesChecked
           .slice(0, cityIndex)
           .concat(citiesChecked.slice(cityIndex + 1));
-        this.setState({ citiesChecked });
+        citiesChecked_id = citiesChecked_id
+          .slice(0, cityIndex)
+          .concat(citiesChecked_id.slice(cityIndex + 1));
+        this.setState({ citiesChecked, citiesChecked_id });
         // Uncheck selected filter (city)
         Array.from(
           this.citiesContainerRef.current.querySelectorAll(
@@ -98,17 +102,24 @@ class Filter extends Component {
 
   toggleCitySelectBox = () => {
     const { cityBoxOpened } = this.state;
-    let citiesChecked = [];
+    let citiesChecked = [],
+      citiesChecked_id = [];
     if (cityBoxOpened) {
       citiesChecked = Array.from(
         this.citiesContainerRef.current.querySelectorAll("input[type=checkbox]")
       )
         .filter(input => input.checked)
         .map(el => el.value);
+      citiesChecked_id = Array.from(
+        this.citiesContainerRef.current.querySelectorAll("input[type=checkbox]")
+      )
+        .filter(input => input.checked)
+        .map(el => el.id.split("_")[0]);
     }
     this.setState({
       cityBoxOpened: !cityBoxOpened,
-      citiesChecked
+      citiesChecked,
+      citiesChecked_id
     });
   };
 
@@ -166,13 +177,11 @@ class Filter extends Component {
   };
 
   render() {
-    const cityList = ["Cairo", "Mansoura", "El-Mahalla", "Bilqas"];
     const keywords = [
       ...this.state.filtersChecked,
       ...this.state.citiesChecked,
       ...this.state.specialitiesChecked
     ];
-    const specialityList = ["Surgery1", "Children1", "Dental1"];
 
     return (
       <div className={`Filter ${this.props.display}`}>
@@ -235,7 +244,7 @@ class Filter extends Component {
                   listChecked={this.state.citiesChecked}
                   header="Cities"
                   boxOpened={this.state.cityBoxOpened}
-                  list={cityList}
+                  list={this.props.cities}
                   optionsContainerRef={this.citiesContainerRef}
                   multiple={true}
                 />
@@ -243,13 +252,13 @@ class Filter extends Component {
               <div>
                 <SelectBox
                   onClick={this.toggleSpecialitySelectBox}
-                  className={
+                  className={`${
                     this.state.specialitiesChecked.length ? "hasValue" : null
-                  }
+                  }`}
                   listChecked={this.state.specialitiesChecked}
                   header="Specialities"
                   boxOpened={this.state.specialityBoxOpened}
-                  list={specialityList}
+                  list={this.props.specialities}
                   optionsContainerRef={this.specialitiesContainerRef}
                   multiple={true}
                 />
@@ -259,7 +268,12 @@ class Filter extends Component {
           <div className="Filter__buttons">
             <Button
               className="btn btn-green-dark btn-apply btn-xxs"
-              onClick={() => this.props.applyFilters(this.state.filtersChecked)}
+              onClick={() =>
+                this.props.applyFilters({
+                  cities: [...this.state.citiesChecked_id] || [],
+                  specialities: [...this.state.specialitiesChecked] || []
+                })
+              }
             >
               {" "}
               Apply{" "}
