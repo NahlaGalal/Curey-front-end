@@ -6,7 +6,7 @@ export function homeData(state = {}, action) {
       return {
         ...state,
         top_doctors: !action.isFailed ? action.payload.top_doctors : [],
-        top_medications: !action.isFailed ? action.payload.top_medications : [],
+        top_products: !action.isFailed ? action.payload.top_products : [],
         errors: action.isFailed ? action.payload : []
       };
     default:
