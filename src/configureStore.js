@@ -34,6 +34,10 @@ const defaultState = {
   medicationsData: {
     products: [],
     keywords: []
+  },
+  medicationInfo: {
+    product: {},
+    pharmacies: []
   }
 };
 
