@@ -4,6 +4,8 @@ import Button from "../components/Button";
 import PharmacyItem from "../components/PharmacyItem";
 import LocationIcon from "../assets/svg/location.svg";
 import ChangeAddress from "../components/Pop-ups/ChangeAddress";
+import { connect } from "react-redux";
+import * as actions from "../actions/types";
 
 const medicine = {
   name: "Antinal",
@@ -65,7 +67,11 @@ const medicine = {
 };
 
 class MedicinePage extends Component {
-  state = { hovered: false, changeAddressBox: false };
+  state = { hovered: false, changeAddressBox: false, productID: 50 };
+
+  componentDidMount() {
+    this.props.requestMedicineData(this.props.api_token, this.state.productID);
+  }
 
   render() {
     return (
@@ -131,4 +137,13 @@ class MedicinePage extends Component {
   }
 }
 
-export default MedicinePage;
+const mapStateToProps = state => ({
+  api_token: state.user.api_token
+});
+
+const mapDispatchToProps = dispatch => ({
+  requestMedicineData: (api_token, id) =>
+    dispatch({ type: actions.REQUEST_MEDICATION, api_token, id })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MedicinePage);

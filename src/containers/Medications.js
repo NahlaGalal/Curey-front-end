@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import MedicineCard from "../components/Doctors and medications/MedicineCard";
 import Search from "../components/Doctors and medications/Search";
 import Filter from "../components/Doctors and medications/Filter";
-import Button from "../components/Button";
+// import Button from "../components/Button";
 import RequestMedication from "../components/Pop-ups/RequestMedication";
 import { connect } from "react-redux";
 import * as actions from "../actions/types";
