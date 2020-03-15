@@ -4,6 +4,8 @@ import Search from "../components/Doctors and medications/Search";
 import Filter from "../components/Doctors and medications/Filter";
 import Button from "../components/Button";
 import RequestMedication from "../components/Pop-ups/RequestMedication";
+import { connect } from "react-redux";
+import * as actions from "../actions/types";
 
 const medications = [
   {
@@ -136,6 +138,7 @@ class Medications extends Component {
 
   componentDidMount() {
     this.setState({ hovered: new Array(medications.length).fill(false) });
+    this.props.onRequestData(this.props.api_token);
   }
 
   openFilterBox = () => this.setState({ filterShown: "visible" });
@@ -212,4 +215,17 @@ class Medications extends Component {
   }
 }
 
-export default Medications;
+const mapStateToProps = state => {
+  return {
+    api_token: state.user.api_token
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onRequestData: api_token =>
+      dispatch({ type: actions.REQUEST_MEDICATIONS, api_token })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Medications);
