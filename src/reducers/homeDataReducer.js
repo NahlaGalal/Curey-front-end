@@ -5,7 +5,9 @@ export function homeData(state = {}, action) {
     case actions.RECIEVE_HOME_DATA:
       return {
         ...state,
-        ...action.payload
+        top_doctors: !action.isFailed ? action.payload.top_doctors : [],
+        top_medications: !action.isFailed ? action.payload.top_medications : [],
+        errors: action.isFailed ? action.payload : []
       };
     default:
       return state;

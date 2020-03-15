@@ -27,9 +27,9 @@ const defaultState = {
     }
   },
   homeData: {
-    user_data: { name: "", image: null },
     top_doctors: [],
-    top_products: []
+    top_products: [],
+    errors: []
   }
 };
 
