@@ -9,52 +9,14 @@ import { connect } from "react-redux";
 import * as actions from "../actions/types";
 import ReactLoading from "react-loading";
 
-const medications = [
-  {
-    name: "Antinal",
-    price: 12,
-    isFavourite: true
-  },
-  {
-    name: "Antinal",
-    price: 12
-  },
-  {
-    name: "Antinal",
-    price: 12
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    isFavourite: true
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    isFavourite: true
-  },
-  {
-    name: "Antinal",
-    price: 12
-  },
-  {
-    name: "Antinal",
-    price: 12
-  },
-  {
-    name: "Antinal",
-    price: 12
-  }
-];
-
 export class Home extends Component {
   state = { hovered: [] };
 
   componentDidMount() {
     this.setState({
-      hovered: new Array(medications.length).fill(false)
+      // hovered: new Array(medications.length).fill(false)
     });
-    this.props.onRequestData();
+    this.props.onRequestData(this.props.api_token);
   }
 
   render() {
@@ -117,13 +79,14 @@ export class Home extends Component {
 const mapStateToProps = state => {
   return {
     topDoctors: state.homeData.top_doctors,
-    topMedications: state.homeData.top_products
+    topMedications: state.homeData.top_products,
+    api_token: state.user.api_token
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onRequestData: () => dispatch({ type: actions.REQUEST_HOME_DATA })
+    onRequestData: (api_token) => dispatch({ type: actions.REQUEST_HOME_DATA, api_token })
   };
 };
 

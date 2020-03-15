@@ -2,15 +2,23 @@ import axios from "axios";
 import { put, takeEvery, call } from "redux-saga/effects";
 import * as actions from "../actions/types";
 
-function* getHomeData() {
+function* getHomeData({ api_token }) {
   try {
     let result = yield call(() =>
-      axios.get(
-        "/api/web/home?api_token=mWyMg2UhivzahRIYrNzFxwCt7xyBVjZWUPRxISk75cJvBb246tuN15WPRg3CcVlKjdRJJRbAerZ3gMil"
-      )
+      axios.get(`/api/web/home?api_token=${api_token}`)
     );
-    console.log(result.data.data);
-    yield put({ type: actions.RECIEVE_HOME_DATA, payload: result.data.data });
+    if (!result.data.isFailed)
+      yield put({
+        type: actions.RECIEVE_HOME_DATA,
+        payload: result.data.data,
+        isFailed: false
+      });
+    else
+      yield put({
+        type: actions.RECIEVE_HOME_DATA,
+        payload: result.data.errors,
+        isFailed: true
+      });
   } catch (e) {
     console.log(e);
   }
