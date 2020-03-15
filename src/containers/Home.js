@@ -3,118 +3,45 @@ import { Link } from "react-router-dom";
 import DoctorsGrid from "../components/Doctors and medications/DoctorsGrid";
 import MedicineCard from "../components/Doctors and medications/MedicineCard";
 import Button from "../components/Button";
-import {loadState} from "../configureStore";
+import { loadState } from "../configureStore";
 import LandingPage from "./Landing-page";
-
-const doctors = [
-  {
-    name: "Mo Zayan",
-    price: 129,
-    speciality: "Pediatric Surgery",
-    star: 2.5,
-    isCallup: true
-  },
-  {
-    name: "Mo Zayan",
-    price: 129,
-    speciality: "Pediatric Surgery",
-    star: 4,
-    isCallup: true
-  },
-  {
-    name: "Mo Zayan",
-    price: 129,
-    speciality: "Pediatric Surgery",
-    star: 1
-  },
-  {
-    name: "Mo Zayan",
-    price: 129,
-    speciality: "Pediatric Surgery",
-    star: 2.2
-  },
-  {
-    name: "Mo Zayan",
-    price: 129,
-    speciality: "Pediatric Surgery",
-    star: 0,
-    isCallup: true
-  },
-  {
-    name: "Mo Zayan",
-    price: 129,
-    speciality: "Pediatric Surgery",
-    star: 5,
-    isCallup: true
-  },
-  {
-    name: "Mo Zayan",
-    price: 129,
-    speciality: "Pediatric Surgery",
-    star: 5
-  },
-  {
-    name: "Mo Zayan",
-    price: 129,
-    speciality: "Pediatric Surgery",
-    star: 5
-  }
-];
-
-const medications = [
-  {
-    name: "Antinal",
-    price: 12,
-    isFavourite: true
-  },
-  {
-    name: "Antinal",
-    price: 12
-  },
-  {
-    name: "Antinal",
-    price: 12
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    isFavourite: true
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    isFavourite: true
-  },
-  {
-    name: "Antinal",
-    price: 12
-  },
-  {
-    name: "Antinal",
-    price: 12
-  },
-  {
-    name: "Antinal",
-    price: 12
-  }
-];
+import { connect } from "react-redux";
+import * as actions from "../actions/types";
+import ReactLoading from "react-loading";
 
 export class Home extends Component {
   state = { hovered: [] };
 
   componentDidMount() {
-    this.setState({
-      hovered: new Array(medications.length).fill(false)
-    });
+    this.props.onRequestData(this.props.api_token);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      JSON.stringify(prevProps.topMedications) !== JSON.stringify(this.props.topMedications)
+    ) {
+      this.setState({
+        hovered: new Array(this.props.topMedications.length).fill(false)
+      });
+    }
   }
 
   render() {
     const isAuthenticated = loadState().api_token;
-    return (isAuthenticated ? (
+    return isAuthenticated ? (
       <section className="topDoctors">
         <div className="topDoctors__container">
           <h2 className="heading-2 mb-52">Top doctors</h2>
-          <DoctorsGrid doctors={doctors} />
+          {this.props.topDoctors.length ? (
+            <DoctorsGrid doctors={this.props.topDoctors} />
+          ) : (
+            <ReactLoading
+              type="spokes"
+              color="#0066ff"
+              className="loading center mb-40"
+            />
+          )}
+
           <Link to="/doctors">
             <Button className="btn btn-lg btn-green center mb-56">
               See more
@@ -124,35 +51,59 @@ export class Home extends Component {
         <div className="topMedications__container">
           <h2 className="heading-2 mb-52">Top medications</h2>
           <div className="medicationGrid mb-40">
-            {medications.map((medication, i) => (
-              <MedicineCard
-                key={i}
-                name={medication.name}
-                price={medication.price}
-                description={medication.description}
-                isFavourite={medication.isFavourite}
-                onMouseMove={() =>
-                  this.setState({
-                    hovered: this.state.hovered.fill(true, i, i + 1)
-                  })
-                }
-                onMouseLeave={() =>
-                  this.setState({
-                    hovered: this.state.hovered.fill(false, i, i + 1)
-                  })
-                }
-                hovered={this.state.hovered[i]}
-                link
+            {this.props.topMedications.length ? (
+              this.props.topMedications.map((medication, i) => (
+                <MedicineCard
+                  key={i}
+                  name={medication.name}
+                  price={medication.price}
+                  description={medication.description}
+                  isFavourite={medication.is_favourite}
+                  onMouseMove={() =>
+                    this.setState({
+                      hovered: this.state.hovered.fill(true, i, i + 1)
+                    })
+                  }
+                  onMouseLeave={() =>
+                    this.setState({
+                      hovered: this.state.hovered.fill(false, i, i + 1)
+                    })
+                  }
+                  hovered={this.state.hovered[i]}
+                  link
+                />
+              ))
+            ) : (
+              <ReactLoading
+                type="spokes"
+                color="#0066ff"
+                className="loading center mb-40"
               />
-            ))}
+            )}
           </div>
           <Link to="/medications">
             <Button className="btn btn-lg btn-green center">See more</Button>
           </Link>
         </div>
       </section>
-    ): <LandingPage />);
+    ) : (
+      <LandingPage />
+    );
   }
 }
+const mapStateToProps = state => {
+  return {
+    topDoctors: state.homeData.top_doctors,
+    topMedications: state.homeData.top_products,
+    api_token: state.user.api_token
+  };
+};
 
-export default Home;
+const mapDispatchToProps = dispatch => {
+  return {
+    onRequestData: api_token =>
+      dispatch({ type: actions.REQUEST_HOME_DATA, api_token })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

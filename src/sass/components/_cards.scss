@@ -108,6 +108,8 @@
       position: absolute;
       width: calc(100% - 2.4rem);
       height: 100%;
+      margin: 1.2rem 0;
+      height: calc(100% - 2.4rem);
       background-color: rgba($color: $color-dark, $alpha: 0.2);
       right: 1.2rem;
       background-size: 2.4rem 2.079rem;
@@ -123,7 +125,7 @@
     &__medicationImg {
       width: calc(100% - 2 * 1.2rem);
       object-fit: cover;
-      margin: 1.2rem auto 2.8rem;
+      margin: 1.2rem auto;
       box-shadow: 0 0 0 6px $color-green,
         0 0 0 12px rgba($color: $color-green, $alpha: $medium-opacity);
       border-radius: 0;
