@@ -30,6 +30,10 @@ const defaultState = {
     top_doctors: [],
     top_products: [],
     errors: []
+  },
+  medicationsData: {
+    products: [],
+    keywords: []
   }
 };
 
