@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import RequestMedication from "../components/Pop-ups/RequestMedication";
 import { connect } from "react-redux";
 import * as actions from "../actions/types";
+import ReactLoading from "react-loading";
 
 const medications = [
   {
@@ -165,15 +166,15 @@ class Medications extends Component {
         />
         <section className="topMedications">
           <div className="topMedications__container">
-            {medications.length ? (
+            {this.props.medications.length ? (
               <div className="medicationGrid">
-                {medications.map((medication, i) => (
+                {this.props.medications.map((medication, i) => (
                   <MedicineCard
                     key={i}
                     name={medication.name}
                     price={medication.price}
                     description={medication.description}
-                    isFavourite={medication.isFavourite}
+                    isFavourite={medication.is_favourite}
                     onMouseMove={() =>
                       this.setState({
                         hovered: this.state.hovered.fill(true, i, i + 1)
@@ -190,18 +191,24 @@ class Medications extends Component {
                 ))}
               </div>
             ) : (
-              <div className="topMedications__container--no-medication">
-                <p>
-                  OPPS, This medication isn't found at any any pharmacy in your
-                  district
-                </p>
-                <Button
-                  className="btn btn-green btn-lg"
-                  onClick={() => this.setState({ requestMedicationBox: true })}
-                >
-                  Request the medication
-                </Button>
-              </div>
+              //   <div className="topMedications__container--no-medication">
+              //     <p>
+              //       OPPS, This medication isn't found at any any pharmacy in your
+              //       district
+              //     </p>
+              //     <Button
+              //       className="btn btn-green btn-lg"
+              //       onClick={() => this.setState({ requestMedicationBox: true })}
+              //     >
+              //       Request the medication
+              //     </Button>
+              //   </div>
+              // )
+              <ReactLoading
+                type="spokes"
+                color="#0066ff"
+                className="loading center mb-40"
+              />
             )}
           </div>
         </section>
@@ -217,7 +224,9 @@ class Medications extends Component {
 
 const mapStateToProps = state => {
   return {
-    api_token: state.user.api_token
+    api_token: state.user.api_token,
+    medications: state.medicationsData.products,
+    keywords: state.medicationsData.keywords
   };
 };
 
