@@ -134,12 +134,28 @@ class Medications extends Component {
   state = {
     filterShown: "hidden",
     hovered: [],
-    requestMedicationBox: false
+    requestMedicationBox: false,
+    medications: []
   };
 
   componentDidMount() {
     this.setState({ hovered: new Array(medications.length).fill(false) });
     this.props.onRequestData(this.props.api_token);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      JSON.stringify(prevProps.medications) !==
+      JSON.stringify(this.props.medications)
+    ) {
+      this.setState({ medications: this.props.medications });
+    }
+    if (
+      JSON.stringify(prevProps.medicationsSearch) !==
+      JSON.stringify(this.props.medicationsSearch)
+    ) {
+      this.setState({ medications: this.props.medicationsSearch });
+    }
   }
 
   openFilterBox = () => this.setState({ filterShown: "visible" });
@@ -171,9 +187,9 @@ class Medications extends Component {
         />
         <section className="topMedications">
           <div className="topMedications__container">
-            {this.props.medications.length ? (
+            {this.state.medications.length ? (
               <div className="medicationGrid">
-                {this.props.medications.map((medication, i) => (
+                {this.state.medications.map((medication, i) => (
                   <MedicineCard
                     key={i}
                     name={medication.name}
@@ -231,7 +247,8 @@ const mapStateToProps = state => {
   return {
     api_token: state.user.api_token,
     medications: state.medicationsData.products,
-    keywords: state.medicationsData.keywords
+    keywords: state.medicationsData.keywords,
+    medicationsSearch: state.medicationsData.medicationsSearch
   };
 };
 
