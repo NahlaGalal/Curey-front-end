@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import DoctorsGrid from "../components/Doctors and medications/DoctorsGrid";
 import MedicineCard from "../components/Doctors and medications/MedicineCard";
 import Button from "../components/Button";
-import { loadState } from "../configureStore";
 import LandingPage from "./Landing-page";
 import { connect } from "react-redux";
 import * as actions from "../actions/types";

@@ -31,7 +31,7 @@ class Login extends Component {
       const errorsServer = this.state.errorsServer;
       this.props.user.errors.user
         ? (errorsServer.user = this.props.user.errors.user)
-        : (errorsServer.user = "") 
+        : (errorsServer.user = "");
       this.props.user.errors.password && !this.props.user.errors.user
         ? (errorsServer.password = this.props.user.errors.password)
         : (errorsServer.password = "");

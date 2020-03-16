@@ -10,6 +10,9 @@
   &:hover {
     box-shadow: $shadow-hover;
   }
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
 
 .btn-xxs {

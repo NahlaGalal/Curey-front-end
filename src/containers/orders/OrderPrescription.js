@@ -39,11 +39,26 @@ const medications = [
 ];
 
 const pharmacies = [
-  "Roshdy Pharmacy",
-  "Dawaee pharmacies",
-  "Misr pharmacies",
-  "Gardenia pharmacies",
-  "AlShafi pharmacies"
+  {
+    name: "Roshdy Pharmacy",
+    id: 1
+  },
+  {
+    name: "Dawaee pharmacies",
+    id: 2
+  },
+  {
+    name: "Misr pharmacies",
+    id: 3
+  },
+  {
+    name: "Gardenia pharmacies",
+    id: 4
+  },
+  {
+    name: "AlShafi pharmacies",
+    id: 5
+  }
 ];
 
 export default class OrderPrescription extends Component {
