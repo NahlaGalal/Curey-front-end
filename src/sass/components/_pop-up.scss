@@ -73,6 +73,86 @@
       .select--options {
         top: 0;
       }
+      &.prescription {
+        .row {
+          display: flex;
+          .fieldinput {
+            .arrow {
+              position: absolute;
+              right: 1.5rem;
+              top: 2.55rem;
+              height: 0;
+              width: 0;
+              border: 0.8rem solid transparent;
+              border-top-color: rgba($color-dark, $very-high-opacity);
+              cursor: pointer;
+              background-color: transparent;
+              z-index: 100;
+              outline: none;
+              &-up {
+                top: 0.75rem;
+                border-top-color: transparent;
+                border-bottom-color: rgba($color-dark, $very-high-opacity);
+              }
+            }
+            &:first-of-type {
+              margin-right: 2rem;
+            }
+          }
+          .dosing-inputs {
+            width: 100%;
+            margin-right: 2rem;
+            .fieldinput {
+              margin-bottom: 0;
+              &:not(:first-of-type) {
+                margin-top: 1.6rem;
+              }
+              &__hours {
+                position: absolute;
+                width: 9.6rem;
+                height: 4.8rem;
+                top: 0;
+                right: 0;
+                border-left: 1px solid $color-dark;
+                padding: 1.4rem 2.2rem;
+                color: $color-dark;
+                font-size: 1.6rem;
+              }
+            }
+          }
+          .btn-add {
+            width: 4.8rem;
+            height: 4.8rem;
+            background-color: $color-blue;
+            border-radius: 1rem;
+            margin-bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+        .heading-4 {
+          margin-bottom: 0.8rem;
+        }
+        .days {
+          margin-bottom: 2rem;
+        }
+        .btn {
+          width: 2.8rem;
+          height: 3.2rem;
+          background-color: $color-light-1;
+          color: $color-dark;
+          font-family: $regular-font;
+          border-radius: 0.5rem;
+          &:not(:last-of-type) {
+            margin-right: 0.6rem;
+          }
+          &.active {
+            background-color: $color-blue;
+            color: $color-white;
+          }
+        }
+      }
       &__header {
         margin-bottom: 1.6rem;
         display: flex;

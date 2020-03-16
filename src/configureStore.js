@@ -14,7 +14,8 @@ const defaultState = {
     api_token: "",
     full_name: "",
     image: null,
-    email: ""
+    email: "",
+    prescriptions: []
   },
   doctors: {
     doctorsData: [],

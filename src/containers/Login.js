@@ -7,7 +7,7 @@ import FieldInput from "../components/FieldInput";
 import Button from "../components/Button";
 import { connect } from "react-redux";
 import validator from "validator";
-import { postLogin } from "../actions/userRegisterAction";
+import { postLogin } from "../actions/userAction";
 
 class Login extends Component {
   state = {

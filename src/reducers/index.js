@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { prescription } from "./prescriptionReducer";
-import { user } from "./userRegisterReducer";
+import { user } from "./userReducer";
 import { doctors } from "./getDoctorsReducer";
 import { homeData } from "./homeDataReducer";
 
