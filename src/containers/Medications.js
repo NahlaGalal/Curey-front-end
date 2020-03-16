@@ -19,7 +19,10 @@ class Medications extends Component {
 
   componentDidMount() {
     this.props.onRequestData(this.props.api_token);
-    this.setState({ medications: this.props.medications });
+    this.setState({
+      medications: this.props.medications,
+      hovered: new Array(this.props.medications.length).fill(false)
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -53,6 +56,26 @@ class Medications extends Component {
   searchMedications = search => {
     this.setState({ searchResults: false });
     this.props.getMedicationsSearch(this.props.api_token, search);
+  };
+
+  deleteFavouriteMedication = product_id => {
+    this.props.deleteFavouriteMedication(
+      {
+        api_token: this.props.api_token,
+        product_id
+      },
+      "MedicationsPage"
+    );
+  };
+
+  addFavouriteMedication = product_id => {
+    this.props.addFavouriteMedication(
+      {
+        api_token: this.props.api_token,
+        product_id
+      },
+      "MedicationsPage"
+    );
   };
 
   render() {
@@ -95,6 +118,12 @@ class Medications extends Component {
                     }
                     hovered={this.state.hovered[i]}
                     link
+                    deleteFavouriteMedication={() =>
+                      this.deleteFavouriteMedication(medication.id)
+                    }
+                    addFavouriteMedication={() =>
+                      this.addFavouriteMedication(medication.id)
+                    }
                   />
                 ))}
               </div>
@@ -144,7 +173,11 @@ const mapDispatchToProps = dispatch => {
     onRequestData: api_token =>
       dispatch({ type: actions.REQUEST_MEDICATIONS, api_token }),
     getMedicationsSearch: (api_token, search) =>
-      dispatch({ type: actions.SEARCH_MEDICATIONS, api_token, search })
+      dispatch({ type: actions.SEARCH_MEDICATIONS, api_token, search }),
+    deleteFavouriteMedication: (data, source) =>
+      dispatch({ type: actions.SAGA_DELETE_FAVOURITE, data, source }),
+    addFavouriteMedication: (data, source) =>
+      dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source })
   };
 };
 

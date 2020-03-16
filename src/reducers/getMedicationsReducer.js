@@ -25,6 +25,22 @@ export function medicationsData(state = {}, action) {
         },
         errors: action.isFailed ? action.payload : []
       };
+    case actions.ADD_FAVOURITE:
+      return {
+        ...state,
+        errors: action.isFailed ? action.payload : []
+      }
+    case actions.DELETE_FAVOURITE:
+      return {
+        ...state,
+        errors: action.isFailed ? action.payload : []
+      }
+    case actions.GET_FAVOURITES:
+      return {
+        ...state,
+        medicationsSaved: !action.isFailed ? action.payload[0] : [],
+        errors: action.isFailed ? action.payload : []
+      };
     default:
       return state;
   }

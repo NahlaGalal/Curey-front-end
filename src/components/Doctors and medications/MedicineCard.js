@@ -8,12 +8,20 @@ const MedicineCard = props => (
     className="medicationCard"
     onMouseMove={props.onMouseMove}
     onMouseLeave={props.onMouseLeave}
-    style={{maxWidth: "100%"}}
+    style={{ maxWidth: "100%" }}
   >
     <div className="medicationCard__main">
       {props.hovered ? (
-        <div className={`medicationCard__main--favourite ${props.isFavourite ? "fav" : "not-fav"}`}>
-        </div>
+        <div
+          className={`medicationCard__main--favourite ${
+            props.isFavourite ? "fav" : "not-fav"
+          }`}
+          onClick={() =>
+            props.isFavourite
+              ? props.deleteFavouriteMedication()
+              : props.addFavouriteMedication()
+          }
+        ></div>
       ) : null}
       <img
         alt={props.name}

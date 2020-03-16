@@ -1,65 +1,40 @@
 import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { SAGA_GET_FAVOURITES, SAGA_DELETE_FAVOURITE } from "../actions/types";
 import MedicineCard from "../components/Doctors and medications/MedicineCard";
 
-const medications = [
-  {
-    name: "Antinal",
-    price: 12,
-    isFavourite: true,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    isFavourite: true,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  },
-  {
-    name: "Antinal",
-    price: 12,
-    description:
-      "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis"
-  }
-];
-
 export class SavePage extends Component {
-  state = { hovered: [] };
+  state = { hovered: [], medications: [] };
 
   componentDidMount() {
-    this.setState({hovered: new Array(medications.length).fill(false)})
+    this.props.getFavourites(this.props.api_token);
+    this.setState({
+      hovered: new Array(this.props.medications.length).fill(false),
+      medications: this.props.medications
+    });
   }
+
+  componentDidUpdate(prevProps) {
+    if (
+      JSON.stringify(prevProps.medications) !==
+      JSON.stringify(this.props.medications)
+    ) {
+      this.setState({
+        medications: this.props.medications,
+        hovered: new Array(this.props.medications.length).fill(false)
+      });
+    }
+  }
+
+  deleteFavouriteMedication = product_id => {
+    this.props.deleteFavouriteMedication(
+      {
+        api_token: this.props.api_token,
+        product_id
+      },
+      "SavePage"
+    );
+  };
 
   render() {
     return (
@@ -70,11 +45,12 @@ export class SavePage extends Component {
         <section className="topMedications">
           <div className="topMedications__container">
             <div className="medicationGrid">
-              {medications.map((medication, i) => (
+              {this.state.medications.map((medication, i) => (
                 <MedicineCard
                   key={i}
                   name={medication.name}
                   price={medication.price}
+                  image={medication.image}
                   description={medication.description}
                   isFavourite={true}
                   onMouseMove={() =>
@@ -89,6 +65,9 @@ export class SavePage extends Component {
                   }
                   hovered={this.state.hovered[i]}
                   link
+                  deleteFavouriteMedication={() =>
+                    this.deleteFavouriteMedication(medication.id)
+                  }
                 />
               ))}
             </div>
@@ -99,4 +78,16 @@ export class SavePage extends Component {
   }
 }
 
-export default SavePage;
+const mapStateToProps = state => ({
+  api_token: state.user.api_token,
+  medications: state.medicationsData.medicationsSaved
+});
+
+const mapDispatchToProps = dispatch => ({
+  getFavourites: api_token =>
+    dispatch({ type: SAGA_GET_FAVOURITES, api_token }),
+  deleteFavouriteMedication: (data, source) =>
+    dispatch({ type: SAGA_DELETE_FAVOURITE, data, source })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SavePage);

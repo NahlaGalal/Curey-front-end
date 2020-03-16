@@ -73,8 +73,107 @@ function* getMedication({ api_token, id }) {
   }
 }
 
+function* postAddFavourite({ data, source }) {
+  try {
+    let res = yield call(() => axios.post("/api/web/add_favourites", data));
+    if (!res.data.isFailed)
+      if (source === "MedicationPage")
+        yield put({
+          type: actions.REQUEST_MEDICATION,
+          id: data.product_id,
+          api_token: data.api_token,
+          isFailed: false
+        });
+      else if (source === "MedicationsPage")
+        yield put({
+          type: actions.REQUEST_MEDICATIONS,
+          api_token: data.api_token,
+          isFailed: false
+        });
+      else
+        yield put({
+          type: actions.REQUEST_HOME_DATA,
+          api_token: data.api_token,
+          isFailed: false
+        });
+    else
+      yield put({
+        type: actions.ADD_FAVOURITE,
+        payload: res.data.errors,
+        isFailed: true
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function* postDeleteFavourite({ data, source }) {
+  try {
+    let res = yield call(() => axios.post("/api/web/delete_favourites", data));
+    if (!res.data.isFailed)
+      if (source === "SavePage")
+        yield put({
+          type: actions.SAGA_GET_FAVOURITES,
+          api_token: data.api_token,
+          isFailed: false
+        });
+      else if (source === "MedicationPage")
+        yield put({
+          type: actions.REQUEST_MEDICATION,
+          id: data.product_id,
+          api_token: data.api_token,
+          isFailed: false
+        });
+      else if (source === "MedicationsPage")
+        yield put({
+          type: actions.REQUEST_MEDICATIONS,
+          api_token: data.api_token,
+          isFailed: false
+        });
+      else
+        yield put({
+          type: actions.REQUEST_HOME_DATA,
+          api_token: data.api_token,
+          isFailed: false
+        });
+    else
+      yield put({
+        type: actions.DELETE_FAVOURITE,
+        payload: res.data.errors,
+        isFailed: true
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function* getFavourites({ api_token }) {
+  try {
+    let res = yield call(() =>
+      axios.get(`/api/web/favourites?api_token=${api_token}`)
+    );
+    if (!res.data.isFailed)
+      yield put({
+        type: actions.GET_FAVOURITES,
+        payload: res.data.data,
+        isFailed: false
+      });
+    else
+      yield put({
+        type: actions.GET_FAVOURITES,
+        payload: res.data.errors,
+        isFailed: true
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export default function* watchMedications() {
   yield takeEvery(actions.REQUEST_MEDICATIONS, getMedications);
   yield takeEvery(actions.SEARCH_MEDICATIONS, getMedicationsSearch);
   yield takeEvery(actions.REQUEST_MEDICATION, getMedication);
+  yield takeEvery(actions.SAGA_ADD_FAVOURITE, postAddFavourite);
+  yield takeEvery(actions.SAGA_DELETE_FAVOURITE, postDeleteFavourite);
+  yield takeEvery(actions.SAGA_GET_FAVOURITES, getFavourites);
 }

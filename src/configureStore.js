@@ -39,7 +39,8 @@ const defaultState = {
     medicationInfo: {
       product: {},
       pharmacies: []
-    }
+    },
+    medicationsSaved: []
   },
 };
 

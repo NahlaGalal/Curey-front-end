@@ -17,13 +17,34 @@ export class Home extends Component {
 
   componentDidUpdate(prevProps) {
     if (
-      JSON.stringify(prevProps.topMedications) !== JSON.stringify(this.props.topMedications)
+      JSON.stringify(prevProps.topMedications) !==
+      JSON.stringify(this.props.topMedications)
     ) {
       this.setState({
         hovered: new Array(this.props.topMedications.length).fill(false)
       });
     }
   }
+
+  deleteFavouriteMedication = product_id => {
+    this.props.deleteFavouriteMedication(
+      {
+        api_token: this.props.api_token,
+        product_id
+      },
+      "Home"
+    );
+  };
+
+  addFavouriteMedication = product_id => {
+    this.props.addFavouriteMedication(
+      {
+        api_token: this.props.api_token,
+        product_id
+      },
+      "Home"
+    );
+  };
 
   render() {
     const isAuthenticated = true;
@@ -70,6 +91,12 @@ export class Home extends Component {
                   }
                   hovered={this.state.hovered[i]}
                   link
+                  deleteFavouriteMedication={() =>
+                    this.deleteFavouriteMedication(medication.id)
+                  }
+                  addFavouriteMedication={() =>
+                    this.addFavouriteMedication(medication.id)
+                  }
                 />
               ))
             ) : (
@@ -98,11 +125,13 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onRequestData: api_token =>
-      dispatch({ type: actions.REQUEST_HOME_DATA, api_token })
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  onRequestData: api_token =>
+    dispatch({ type: actions.REQUEST_HOME_DATA, api_token }),
+  deleteFavouriteMedication: (data, source) =>
+    dispatch({ type: actions.SAGA_DELETE_FAVOURITE, data, source }),
+  addFavouriteMedication: (data, source) =>
+    dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source })
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

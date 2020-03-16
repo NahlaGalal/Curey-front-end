@@ -15,6 +15,26 @@ class MedicinePage extends Component {
     this.props.requestMedicineData(this.props.api_token, this.state.productID);
   }
 
+  deleteFavouriteMedication = product_id => {
+    this.props.deleteFavouriteMedication(
+      {
+        api_token: this.props.api_token,
+        product_id
+      },
+      "MedicationPage"
+    );
+  };
+
+  addFavouriteMedication = product_id => {
+    this.props.addFavouriteMedication(
+      {
+        api_token: this.props.api_token,
+        product_id
+      },
+      "MedicationPage"
+    );
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -31,6 +51,12 @@ class MedicinePage extends Component {
                   onMouseMove={() => this.setState({ hovered: true })}
                   onMouseLeave={() => this.setState({ hovered: false })}
                   hovered={this.state.hovered}
+                  deleteFavouriteMedication={() =>
+                    this.deleteFavouriteMedication(this.props.medicine.id)
+                  }
+                  addFavouriteMedication={() =>
+                    this.addFavouriteMedication(this.props.medicine.id)
+                  }
                 />
               ) : (
                 <ReactLoading
@@ -113,7 +139,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   requestMedicineData: (api_token, id) =>
-    dispatch({ type: actions.REQUEST_MEDICATION, api_token, id })
+    dispatch({ type: actions.REQUEST_MEDICATION, api_token, id }),
+  deleteFavouriteMedication: (data, source) =>
+    dispatch({ type: actions.SAGA_DELETE_FAVOURITE, data, source }),
+  addFavouriteMedication: (data, source) =>
+    dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MedicinePage);
