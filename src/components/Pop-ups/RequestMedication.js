@@ -4,11 +4,23 @@ import FieldInput from "../FieldInput";
 import SelectBox from "../SelectBox";
 
 const medicationTypes = [
-  "Anti-tussive",
-  "Anti-viral",
-  "Appetizer",
-  "Artificial Sweetner"
-]
+  {
+    name: "Anti-tussive",
+    id: 1
+  },
+  {
+    name: "Anti-viral",
+    id: 2
+  },
+  {
+    name: "Appetizer",
+    id: 3
+  },
+  {
+    name: "Artificial Sweetner",
+    id: 4
+  }
+];
 
 class RequestMedication extends Component {
   constructor(props) {
@@ -18,7 +30,7 @@ class RequestMedication extends Component {
       medicationTypeBox: false,
       medicationType: ""
     };
-  
+
     this.medicationTypeRef = React.createRef();
   }
 

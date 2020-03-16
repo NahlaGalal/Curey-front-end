@@ -8,67 +8,8 @@ import { connect } from "react-redux";
 import * as actions from "../actions/types";
 import ReactLoading from "react-loading";
 
-// const medicine = {
-//   name: "Antinal",
-//   price: 12,
-//   isFavourite: false,
-//   description:
-//     "Broad-spectrum intestinal antiseptic for the treatment of diarrhea & gastroenteritis",
-//   hovered: false,
-//   pharmacies: [
-//     {
-//       name: "Roshdy pharmacies",
-//       rate: 4,
-//       reviews: 12,
-//       address: "Mansoura City, Gehan St"
-//     },
-//     {
-//       name: "Roshdy pharmacies",
-//       rate: 4,
-//       reviews: 12,
-//       address: "Mansoura City, Gehan St"
-//     },
-//     {
-//       name: "Roshdy pharmacies",
-//       rate: 4,
-//       reviews: 12,
-//       address: "Mansoura City, Gehan St"
-//     },
-//     {
-//       name: "Roshdy pharmacies",
-//       rate: 4,
-//       reviews: 12,
-//       address: "Mansoura City, Gehan St"
-//     },
-//     {
-//       name: "Roshdy pharmacies",
-//       rate: 4,
-//       reviews: 12,
-//       address: "Mansoura City, Gehan St"
-//     },
-//     {
-//       name: "Roshdy pharmacies",
-//       rate: 4,
-//       reviews: 12,
-//       address: "Mansoura City, Gehan St"
-//     },
-//     {
-//       name: "Roshdy pharmacies",
-//       rate: 4,
-//       reviews: 12,
-//       address: "Mansoura City, Gehan St"
-//     },
-//     {
-//       name: "Roshdy pharmacies",
-//       rate: 4,
-//       reviews: 12,
-//       address: "Mansoura City, Gehan St"
-//     }
-//   ]
-// };
-
 class MedicinePage extends Component {
-  state = { hovered: false, changeAddressBox: false, productID: 50 };
+  state = { hovered: false, changeAddressBox: false, productID: 5 };
 
   componentDidMount() {
     this.props.requestMedicineData(this.props.api_token, this.state.productID);
@@ -80,10 +21,11 @@ class MedicinePage extends Component {
         <main className="medicinePage__contianer">
           <div className="medicinePage__contianer__medicine">
             <div className="medicine__container">
-              {this.props.pharmacies.length ? (
+              {Object.keys(this.props.medicine).length ? (
                 <MedicineCard
                   name={this.props.medicine.name}
                   price={this.props.medicine.price}
+                  image={this.props.medicine.image}
                   description={this.props.medicine.description}
                   isFavourite={this.props.medicine.is_favourite}
                   onMouseMove={() => this.setState({ hovered: true })}
@@ -122,20 +64,27 @@ class MedicinePage extends Component {
           <div className="medicinePage__contianer__pharmacy">
             <div className="pharmacies__container">
               <h2 className="heading-2">Pharmacies list</h2>
-              {this.props.pharmacies.length ? (
-                this.props.pharmacies.map((pharmacy, i) => (
-                  <PharmacyItem
-                    key={i}
-                    name={pharmacy.name}
-                    rate={pharmacy.overall_rating}
-                    reviews={10}
-                    address={pharmacy.address}
-                    medication={{
-                      name: this.props.medicine.name,
-                      price: this.props.medicine.price
-                    }}
-                  />
-                ))
+              {Object.keys(this.props.medicine).length ? (
+                this.props.pharmacies.length ? (
+                  this.props.pharmacies.map((pharmacy, i) => (
+                    <PharmacyItem
+                      key={i}
+                      name={pharmacy.name}
+                      rate={pharmacy.overall_rating}
+                      reviews={10}
+                      address={pharmacy.address}
+                      medication={{
+                        name: this.props.medicine.name,
+                        price: this.props.medicine.price
+                      }}
+                    />
+                  ))
+                ) : (
+                  <p className="pharmacies__container__error">
+                    {" "}
+                    There are no pharmacies buy this medicine near you
+                  </p>
+                )
               ) : (
                 <ReactLoading
                   type="spokes"
@@ -158,8 +107,8 @@ class MedicinePage extends Component {
 
 const mapStateToProps = state => ({
   api_token: state.user.api_token,
-  medicine: state.medicationInfo.product,
-  pharmacies: state.medicationInfo.pharmacies
+  medicine: state.medicationsData.medicationInfo.product,
+  pharmacies: state.medicationsData.medicationInfo.pharmacies
 });
 
 const mapDispatchToProps = dispatch => ({

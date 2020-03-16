@@ -15,6 +15,16 @@ export function medicationsData(state = {}, action) {
         medicationsSearch: !action.isFailed ? [...action.payload] : [],
         errors: action.isFailed ? action.payload : []
       };
+    case actions.RECIEVE_MEDICATION:
+      return {
+        ...state,
+        medicationInfo: {
+          ...state.medicationInfo,
+          product: !action.isFailed ? action.payload.product : [],
+          pharmacies: !action.isFailed ? [...action.payload.pharmacies] : []
+        },
+        errors: action.isFailed ? action.payload : []
+      };
     default:
       return state;
   }

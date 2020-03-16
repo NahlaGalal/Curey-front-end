@@ -8,6 +8,7 @@ const MedicineCard = props => (
     className="medicationCard"
     onMouseMove={props.onMouseMove}
     onMouseLeave={props.onMouseLeave}
+    style={{maxWidth: "100%"}}
   >
     <div className="medicationCard__main">
       {props.hovered ? (
@@ -16,7 +17,7 @@ const MedicineCard = props => (
       ) : null}
       <img
         alt={props.name}
-        src={Med}
+        src={props.image || Med}
         className="center medicationCard__main__medicationImg"
       />
     </div>

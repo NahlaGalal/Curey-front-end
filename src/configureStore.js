@@ -34,12 +34,12 @@ const defaultState = {
   medicationsData: {
     products: [],
     keywords: [],
-    medicationsSearch: []
+    medicationsSearch: [],
+    medicationInfo: {
+      product: {},
+      pharmacies: []
+    }
   },
-  medicationInfo: {
-    product: {},
-    pharmacies: []
-  }
 };
 
 export const loadState = () =>

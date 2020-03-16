@@ -3,7 +3,18 @@ import Button from "../Button";
 import SelectBox from "../SelectBox";
 import FieldInput from "../FieldInput";
 
-const cityList = ["Mansoura", "El-Mahalla", "Bilqas", "El-Manzalah"];
+const cityList = [
+  {
+    name: "Mansoura",
+    id: 1
+  },
+  {
+    name: "El-Mahalla",
+    id: 2
+  },
+  { name: "Bilqas", id: 3 },
+  { name: "El-Manzalah", id: 4 }
+];
 
 class ChangeAddress extends Component {
   constructor(props) {
