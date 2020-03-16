@@ -24,7 +24,8 @@ class Doctors extends Component {
       this.setState({ doctors: this.props.doctors });
     }
     if (
-      JSON.stringify(prevProps.doctorsSearch) !== JSON.stringify(this.props.doctorsSearch)
+      JSON.stringify(prevProps.doctorsSearch) !==
+      JSON.stringify(this.props.doctorsSearch)
     ) {
       this.setState({ doctors: this.props.doctorsSearch });
     }
@@ -66,7 +67,7 @@ class Doctors extends Component {
           type="doctors"
           openFilterBox={this.openFilterBox}
           withFilter
-          searchDoctor={this.searchDoctor}
+          searchfunction={this.searchDoctor}
         />
         <section className="topDoctors">
           <div className="topDoctors__container">

@@ -148,6 +148,10 @@ class Medications extends Component {
     this.setState({ filterShown: "hidden" });
   };
 
+  searchMedications = search => {
+    this.props.getMedicationsSearch(this.props.api_token, search);
+  };
+
   render() {
     return (
       <div>
@@ -163,6 +167,7 @@ class Medications extends Component {
           type="medications"
           openFilterBox={this.openFilterBox}
           withFilter
+          searchfunction={this.searchMedications}
         />
         <section className="topMedications">
           <div className="topMedications__container">
@@ -233,7 +238,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onRequestData: api_token =>
-      dispatch({ type: actions.REQUEST_MEDICATIONS, api_token })
+      dispatch({ type: actions.REQUEST_MEDICATIONS, api_token }),
+    getMedicationsSearch: (api_token, search) =>
+      dispatch({ type: actions.SEARCH_MEDICATIONS, api_token, search })
   };
 };
 

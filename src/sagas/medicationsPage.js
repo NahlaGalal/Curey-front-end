@@ -25,6 +25,32 @@ function* getMedications({ api_token }) {
   }
 }
 
+function* getMedicationsSearch({ search, api_token }) {
+  try {
+    const res = yield call(() =>
+      axios.get(
+        `/api/web/medications/search?name=${search}&api_token=${api_token}`
+      )
+    );
+    if (!res.data.isFailed) {
+      yield put({
+        type: actions.RECIEVE_SEARCH_MEDICATIONS,
+        payload: res.data.data,
+        isFailed: false
+      });
+      console.log(res.data);
+    } else
+      yield put({
+        type: actions.RECIEVE_SEARCH_MEDICATIONS,
+        payload: res.data.errors,
+        isFailed: true
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export default function* watchMedications() {
   yield takeEvery(actions.REQUEST_MEDICATIONS, getMedications);
+  yield takeEvery(actions.SEARCH_MEDICATIONS, getMedicationsSearch);
 }

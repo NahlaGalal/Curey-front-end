@@ -38,7 +38,7 @@ class Search extends Component {
               }`}
               src={require("../../assets/svg/search.svg")}
               alt="search-doctor"
-              onClick={() => this.props.searchDoctor(this.state.search)}
+              onClick={() => this.props.searchfunction(this.state.search)}
             />
           ) : null}
           {this.props.type === "doctors" ? (
