@@ -27,59 +27,49 @@ const Router = () => (
   <BrowserRouter>
     <Switch>
       <Switch>
-        {!loadState().api_token ? (
+        {!loadState().api_token && (
+          <Route exact path="/" component={Landing_page} />
+        )}
+        {!loadState().api_token && (
+          <Route exact path="/login" component={Login} />
+        )}
+        {!loadState().api_token && (
+          <Route
+            exact
+            path={["/forgot-password", "/verification", "/reset-password"]}
+            component={Forgot}
+          />
+        )}
+        {!loadState().api_token && (
+          <Route exact path="/signup" component={Signup} />
+        )}
+        {/* {!loadState().api_token && (
+          <Redirect to="/" />
+        )} */}
+        <Layout>
           <Switch>
-            <Route exact path="/" component={Landing_page} />
-            <Route exact path="/login" component={Login} />
+            <Route exact path="/home" component={Home} />
+            <Route exact path="/doctors" component={Doctors} />
+            <Route exact path="/medications" component={Medications} />
+            <Route exact path="/doctor-profile/:id" component={DoctorProfile} />
+            <Route exact path="/medicine/:id" component={MedicinePage} />
+            <Route exact path="/shoppingcart" component={ShoppingCart} />
             <Route
               exact
-              path={["/forgot-password", "/verification", "/reset-password"]}
-              component={Forgot}
+              path="/OrderPrescription"
+              component={OrderPrescription}
             />
-            <Route exact path="/signup" component={Signup} />
-            <Layout>
-              <Route exact path="/home" component={Home} />
-            </Layout>
-            <Redirect exact to="/" />
+            <Route exact path="/savepage" component={SavePage} />
+            <Route exact path="/appointments" component={Appointments} />
+            <Route exact path="/bookingDoctor/:id" component={BookingDoctor} />
+            <Route exact path="/homeVisitDoctor/:id" component={VisitDoctor} />
+            <Route exact path="/prescriptions" component={Prescription} />
+            <Route exact path="/orders" component={Orders} />
+            <Route exact path="/payment-method" component={Payment} />
+            <Route exact path="/medicalwallet" component={MedicalWallet} />
+            <Redirect exact to="/home" />
           </Switch>
-        ) : (
-          <Layout>
-            <Switch>
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/doctors" component={Doctors} />
-              <Route exact path="/medications" component={Medications} />
-              <Route
-                exact
-                path="/doctor-profile/:id"
-                component={DoctorProfile}
-              />
-              <Route exact path="/medicine/:id" component={MedicinePage} />
-              <Route exact path="/shoppingcart" component={ShoppingCart} />
-              <Route
-                exact
-                path="/OrderPrescription"
-                component={OrderPrescription}
-              />
-              <Route exact path="/savepage" component={SavePage} />
-              <Route exact path="/appointments" component={Appointments} />
-              <Route
-                exact
-                path="/bookingDoctor/:id"
-                component={BookingDoctor}
-              />
-              <Route
-                exact
-                path="/homeVisitDoctor/:id"
-                component={VisitDoctor}
-              />
-              <Route exact path="/prescriptions" component={Prescription} />
-              <Route exact path="/orders" component={Orders} />
-              <Route exact path="/payment-method" component={Payment} />
-              <Route exact path="/medicalwallet" component={MedicalWallet} />
-              <Redirect to="/home" from="/" exact />
-            </Switch>
-          </Layout>
-        )}
+        </Layout>
       </Switch>
     </Switch>
   </BrowserRouter>

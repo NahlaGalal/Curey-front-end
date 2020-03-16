@@ -13,7 +13,11 @@ class Login extends Component {
   state = {
     user: "",
     password: "",
-    errors: {
+    errorsClient: {
+      user: "",
+      password: ""
+    },
+    errorsServer: {
       user: "",
       password: ""
     }
@@ -24,13 +28,14 @@ class Login extends Component {
       JSON.stringify(prevProps.user.errors) !==
       JSON.stringify(this.props.user.errors)
     ) {
-      const errors = {user: "", password: ""};
+      const errorsServer = this.state.errorsServer;
       this.props.user.errors.user
-        ? (errors.user = this.props.user.errors.user)
-        : this.props.user.errors.password
-        ? (errors.password = this.props.user.errors.password)
-        : errors.password = "";
-      this.setState({errors})
+        ? (errorsServer.user = this.props.user.errors.user)
+        : (errorsServer.user = "") 
+      this.props.user.errors.password && !this.props.user.errors.user
+        ? (errorsServer.password = this.props.user.errors.password)
+        : (errorsServer.password = "");
+      this.setState({ errorsServer });
     }
     if (
       prevProps.user.api_token !== this.props.user.api_token &&
@@ -45,26 +50,37 @@ class Login extends Component {
     });
   };
 
+  checkInput = name => {
+    const { errorsClient } = this.state;
+    if (name === "user") {
+      if (
+        !validator.isEmail(this.state.user) &&
+        !validator.isMobilePhone(this.state.user)
+      )
+        errorsClient.user = "You must type your email or your phone correctly";
+      else errorsClient.user = "";
+    } else {
+      if (
+        !validator.isLength(this.state.password, {
+          max: 50,
+          min: 8
+        })
+      )
+        errorsClient.password =
+          "Your password must be between 8 and 50 characters";
+      else errorsClient.password = "";
+    }
+    this.setState({ errorsClient });
+  };
+
   onSubmitHandler = e => {
     e.preventDefault();
-    const errors = {
-      user: "",
-      password: ""
-    };
+    this.checkInput("user");
+    this.checkInput("password");
     if (
-      !validator.isEmail(this.state.user) &&
-      !validator.isMobilePhone(this.state.user)
-    )
-      errors.user = "You must type your email or your phone correctly";
-    if (
-      !validator.isLength(this.state.password, {
-        max: 50,
-        min: 8
-      })
-    )
-      errors.password = "Your password must be between 8 and 50 characters";
-    this.setState({ errors });
-    if (!Object.values(errors).filter(value => value !== "").length) {
+      !Object.values(this.state.errorsClient).filter(value => value !== "")
+        .length
+    ) {
       this.props.postLogin({
         user: this.state.user,
         password: this.state.password
@@ -98,7 +114,10 @@ class Login extends Component {
                 value={this.state.user}
                 onChange={this.onChangeHandler.bind(this)}
                 placeholder="Email address - Phone number"
-                error={this.state.errors.user}
+                error={
+                  this.state.errorsClient.user || this.state.errorsServer.user
+                }
+                onBlur={() => this.checkInput("user")}
               />
               <FieldInput
                 type="password"
@@ -106,7 +125,11 @@ class Login extends Component {
                 value={this.state.password}
                 onChange={this.onChangeHandler.bind(this)}
                 placeholder="Password"
-                error={this.state.errors.password}
+                error={
+                  this.state.errorsClient.password ||
+                  this.state.errorsServer.password
+                }
+                onBlur={() => this.checkInput("password")}
               />
               <div className="forgot-password">
                 <Link to="/forgot-password">

@@ -19,6 +19,7 @@ class Medications extends Component {
 
   componentDidMount() {
     this.props.onRequestData(this.props.api_token);
+    this.setState({ medications: this.props.medications });
   }
 
   componentDidUpdate(prevProps) {

@@ -3,7 +3,7 @@ import React, { Component } from "react";
 
 class FieldInput extends Component {
   render() {
-    const { type, name, value, onChange, placeholder, error } = this.props;
+    const { type, name, value, onChange, placeholder, error, onBlur } = this.props;
     return (
       <div className="fieldinput">
         <input
@@ -12,6 +12,7 @@ class FieldInput extends Component {
           name={name}
           value={value}
           onChange={onChange}
+          onBlur={onBlur}
         />
         <label className={value && value.length ? "active" : null}>
           {placeholder}

@@ -27,7 +27,7 @@ export class Home extends Component {
   }
 
   render() {
-    const isAuthenticated = loadState().api_token;
+    const isAuthenticated = true;
     return isAuthenticated ? (
       <section className="topDoctors">
         <div className="topDoctors__container">

@@ -6,8 +6,14 @@ import UserThumbnail from "../Pop-ups/UserThumbnail";
 import UserImg from "../../assets/svg/user.svg";
 import { connect } from "react-redux";
 import { postLogout } from "../../actions/userAction";
+import { withRouter } from "react-router-dom";
 
 class NavigationBar extends Component {
+  componentDidUpdate(prevProps) {
+    if (prevProps.api_token !== this.props.api_token)
+      this.props.history.push("/login");
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -87,6 +93,7 @@ class NavigationBar extends Component {
                   alt="logo"
                 />
               </Button>
+              {/* {!this.props.api_token ? <Link to="/login" />} */}
               <Button
                 className="btn NavigationBar__profile-btn"
                 onClick={this.props.toggleUserThumbnailList}
@@ -126,6 +133,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   postLogout: token => dispatch(postLogout(token))
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavigationBar);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(NavigationBar)
+);
