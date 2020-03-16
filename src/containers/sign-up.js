@@ -7,7 +7,7 @@ import FieldInput from "../components/FieldInput";
 import Button from "../components/Button";
 import SelectBox from "../components/SelectBox";
 import { connect } from "react-redux";
-import { getCities, postSignup } from "../actions/userRegisterAction";
+import { getCities, postSignup } from "../actions/userAction";
 import validator from "validator";
 
 class SignupUser extends Component {

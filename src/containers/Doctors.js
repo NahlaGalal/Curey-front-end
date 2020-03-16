@@ -72,7 +72,7 @@ class Doctors extends Component {
         <section className="topDoctors">
           <div className="topDoctors__container">
             {this.state.doctors.length ? (
-              <DoctorGrid doctors={this.state.doctors} />
+              <DoctorGrid doctors={this.state.doctors.slice(0, 16)} />
             ) : (
               <ReactLoading type="spokes" color="#0066ff" className="loading" />
             )}

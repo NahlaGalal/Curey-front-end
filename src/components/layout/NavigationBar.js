@@ -5,7 +5,7 @@ import NotificationList from "../Pop-ups/NotificationList";
 import UserThumbnail from "../Pop-ups/UserThumbnail";
 import UserImg from "../../assets/svg/user.svg";
 import { connect } from "react-redux";
-import { postLogout } from "../../actions/userRegisterAction";
+import { postLogout } from "../../actions/userAction";
 
 class NavigationBar extends Component {
   render() {

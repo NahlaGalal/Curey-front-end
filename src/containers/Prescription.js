@@ -1,89 +1,26 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Button from "../components/Button";
+import {
+  getPrescriptions,
+  postDeletePrescriptions,
+  postAddPrescription
+} from "../actions/userAction";
+import AddPrescription from "../components/Pop-ups/AddPrescription";
 // Icons
 import menuIcon from "../assets/svg/menu.svg";
 import editIcon from "../assets/svg/edit.svg";
 import deleteIcon from "../assets/svg/delete.svg";
 
-const prescriptions = [
-  {
-    name: "Bronchophane",
-    frequency: {
-      times: 3,
-      per: "Day"
-    },
-    Days: ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"],
-    Dosing: ["12:00 AM", "05:00 PM", "10:00 PM"]
-  },
-  {
-    name: "Bronchophane",
-    frequency: {
-      times: 4,
-      per: "Week"
-    },
-    Days: ["Sa", "Su", "Th", "Fr"],
-    Dosing: ["12:00 AM", "10:00 PM"]
-  },
-  {
-    name: "Bronchophane",
-    frequency: {
-      times: 1,
-      per: "Day"
-    },
-    Days: ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"],
-    Dosing: ["10:00 PM"]
-  },
-  {
-    name: "Bronchophane",
-    frequency: {
-      times: 3,
-      per: "Day"
-    },
-    Days: ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"],
-    Dosing: ["12:00 AM", "05:00 PM", "10:00 PM"]
-  },
-  {
-    name: "Bronchophane",
-    frequency: {
-      times: 3,
-      per: "Day"
-    },
-    Days: ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"],
-    Dosing: ["12:00 AM", "05:00 PM", "10:00 PM"]
-  },
-  {
-    name: "Bronchophane",
-    frequency: {
-      times: 3,
-      per: "Day"
-    },
-    Days: ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"],
-    Dosing: ["12:00 AM", "05:00 PM", "10:00 PM"]
-  },
-  {
-    name: "Bronchophane",
-    frequency: {
-      times: 3,
-      per: "Day"
-    },
-    Days: ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"],
-    Dosing: ["12:00 AM", "05:00 PM", "10:00 PM"]
-  },
-  {
-    name: "Bronchophane",
-    frequency: {
-      times: 3,
-      per: "Day"
-    },
-    Days: ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"],
-    Dosing: ["12:00 AM", "05:00 PM", "10:00 PM"]
-  }
-];
-
 export class Prescription extends Component {
   state = {
-    menuVisiblity: -1
+    menuVisiblity: -1,
+    addPrescriptionBox: false
   };
+
+  componentDidMount() {
+    this.props.getPrescriptions(this.props.api_token);
+  }
 
   toggleMenu = i => {
     let menuVisiblity = i;
@@ -91,36 +28,79 @@ export class Prescription extends Component {
     this.setState({ menuVisiblity });
   };
 
+  deletePrescriptions = prescription_id => {
+    this.props.postDeletePrescriptions({
+      api_token: this.props.api_token,
+      prescription_id
+    });
+    this.setState({ menuVisiblity: -1 });
+  };
+
+  addPrescription = data => {
+    let hours = [],
+      date = null,
+      end_date = "";
+    data.dosing.forEach((dose, i) => {
+      if (data.hours[i] === "PM") {
+        dose = dose.replace(dose.slice(0, 2), +dose.slice(0, 2) + 12);
+      }
+      hours.push(`${dose}:00`);
+    });
+    date = new Date(Date.now() + 1000 * 365 * 24 * 60 * 60);
+    end_date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+
+    this.props.postAddPrescription({
+      api_token: this.props.api_token,
+      medicine_name: data.medication_name,
+      dosage: "2 pills",
+      start_hour: hours[0],
+      end_date,
+      frequency: data.frequency,
+      days: data.days,
+      hours,
+      auto: 0
+    });
+  };
+
   render() {
     return (
       <main className="Prescription">
-        <Button className="btn btn-lg btn-green-dark">
+        <Button
+          className="btn btn-lg btn-green-dark"
+          onClick={() => this.setState({ addPrescriptionBox: true })}
+        >
           {" "}
           Add Prescription{" "}
         </Button>
         <div className="Prescription__container">
-          {prescriptions.map((prescription, i) => (
-            <section className="Prescription__container__card" key={i}>
+          {this.props.prescriptions.map((prescription, i) => (
+            <section
+              className="Prescription__container__card"
+              key={prescription.id}
+            >
               <header>
-                <h2>{prescription.name}</h2>
+                <h2>{prescription.medicine}</h2>
                 <Button onClick={() => this.toggleMenu(i)} className="menu-btn">
-                  <img src={menuIcon} alt={`menu button for ${prescription.name}`} />
+                  <img
+                    src={menuIcon}
+                    alt={`menu button for ${prescription.medicine}`}
+                  />
                 </Button>
               </header>
               <h3>Frequency</h3>
               <p className="Prescription__container__card__frequency">
-                <span>{prescription.frequency.times}</span> times per{" "}
-                <span>{prescription.frequency.per}</span>
+                <span>{prescription.frequency}</span> times per{" "}
+                <span>{prescription.Days.length === 7 ? "day" : "week"}</span>
               </p>
               <h3>Days in week</h3>
               <div className="Prescription__container__card__days">
                 {prescription.Days.map(day => (
-                  <span key={day}>{day}</span>
+                  <span key={day}>{day.slice(0, 2)}</span>
                 ))}
               </div>
               <h3>Dosing times</h3>
               <ul className="Prescription__container__card__dosing">
-                {prescription.Dosing.map(dose => (
+                {prescription.dosage_time.map(dose => (
                   <li key={dose}>{dose}</li>
                 ))}
               </ul>
@@ -130,10 +110,15 @@ export class Prescription extends Component {
                 }`}
               >
                 <Button>
-                  <img src={editIcon} alt={`Edit ${prescription.name} medication`} />
+                  <img
+                    src={editIcon}
+                    alt={`Edit ${prescription.name} medication`}
+                  />
                   Edit prescription
                 </Button>
-                <Button>
+                <Button
+                  onClick={() => this.deletePrescriptions(prescription.id)}
+                >
                   <img
                     src={deleteIcon}
                     alt={`Delete ${prescription.name} medication`}
@@ -144,9 +129,26 @@ export class Prescription extends Component {
             </section>
           ))}
         </div>
+        {this.state.addPrescriptionBox && (
+          <AddPrescription
+            closePopup={() => this.setState({ addPrescriptionBox: false })}
+            addPrescription={(data) => this.addPrescription(data)}
+          />
+        )}
       </main>
     );
   }
 }
 
-export default Prescription;
+const mapStateToProps = state => ({
+  api_token: state.user.api_token,
+  prescriptions: state.user.prescriptions
+});
+
+const mapDispatchToProps = dispatch => ({
+  getPrescriptions: api_token => dispatch(getPrescriptions(api_token)),
+  postDeletePrescriptions: data => dispatch(postDeletePrescriptions(data)),
+  postAddPrescription: data => dispatch(postAddPrescription(data))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Prescription);
