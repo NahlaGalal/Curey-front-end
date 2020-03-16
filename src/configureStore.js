@@ -33,7 +33,8 @@ const defaultState = {
   },
   medicationsData: {
     products: [],
-    keywords: []
+    keywords: [],
+    medicationsSearch: []
   },
   medicationInfo: {
     product: {},

@@ -38,7 +38,7 @@ function* getMedicationsSearch({ search, api_token }) {
         payload: res.data.data,
         isFailed: false
       });
-      console.log(res.data);
+      console.log(res.data.data);
     } else
       yield put({
         type: actions.RECIEVE_SEARCH_MEDICATIONS,

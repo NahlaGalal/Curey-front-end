@@ -9,6 +9,12 @@ export function medicationsData(state = {}, action) {
         keywords: !action.isFailed ? action.payload.keywords : [],
         errors: action.isFailed ? action.payload : []
       };
+    case actions.RECIEVE_SEARCH_MEDICATIONS:
+      return {
+        ...state,
+        medicationsSearch: !action.isFailed ? [...action.payload] : [],
+        errors: action.isFailed ? action.payload : []
+      };
     default:
       return state;
   }
