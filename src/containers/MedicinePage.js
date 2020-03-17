@@ -9,7 +9,7 @@ import * as actions from "../actions/types";
 import ReactLoading from "react-loading";
 
 class MedicinePage extends Component {
-  state = { hovered: false, changeAddressBox: false, productID: 5 };
+  state = { hovered: false, changeAddressBox: false, productID: 82 };
 
   componentDidMount() {
     this.props.requestMedicineData(this.props.api_token, this.state.productID);
@@ -34,6 +34,13 @@ class MedicinePage extends Component {
       "MedicationPage"
     );
   };
+
+  submitOrder = () => {
+    this.props.submitMedicineOrder(this.props.api_token, [
+      { id: this.props.pharmacies[0].product_pharmacy_id, amount: 1 }
+    ]);
+  };
+  // product_pharmacy_id
 
   render() {
     return (
@@ -103,6 +110,7 @@ class MedicinePage extends Component {
                         name: this.props.medicine.name,
                         price: this.props.medicine.price
                       }}
+                      onsubmit={this.submitOrder}
                     />
                   ))
                 ) : (
@@ -134,7 +142,8 @@ class MedicinePage extends Component {
 const mapStateToProps = state => ({
   api_token: state.user.api_token,
   medicine: state.medicationsData.medicationInfo.product,
-  pharmacies: state.medicationsData.medicationInfo.pharmacies
+  pharmacies: state.medicationsData.medicationInfo.pharmacies,
+  productId: state.medicationsData.medicationInfo.pharmacies.product_pharmacy_id
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -143,7 +152,9 @@ const mapDispatchToProps = dispatch => ({
   deleteFavouriteMedication: (data, source) =>
     dispatch({ type: actions.SAGA_DELETE_FAVOURITE, data, source }),
   addFavouriteMedication: (data, source) =>
-    dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source })
+    dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source }),
+  submitMedicineOrder: (api_token, data) =>
+    dispatch({ type: actions.SUBMIT_MEDICATION_ORDER, api_token, data })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MedicinePage);

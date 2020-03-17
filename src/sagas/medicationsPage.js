@@ -169,6 +169,23 @@ function* getFavourites({ api_token }) {
   }
 }
 
+function* submitOrder({ api_token, data }) {
+  const obj = { api_token: api_token, products: data };
+  console.log(obj);
+  try {
+    let result = yield call(() => axios.post("/api/web/submit_order", obj));
+
+    console.log(result);
+    if (!result.data.isFailed) {
+      console.log("yes");
+    } else {
+      console.log("no");
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export default function* watchMedications() {
   yield takeEvery(actions.REQUEST_MEDICATIONS, getMedications);
   yield takeEvery(actions.SEARCH_MEDICATIONS, getMedicationsSearch);
@@ -176,4 +193,5 @@ export default function* watchMedications() {
   yield takeEvery(actions.SAGA_ADD_FAVOURITE, postAddFavourite);
   yield takeEvery(actions.SAGA_DELETE_FAVOURITE, postDeleteFavourite);
   yield takeEvery(actions.SAGA_GET_FAVOURITES, getFavourites);
+  yield takeEvery(actions.SUBMIT_MEDICATION_ORDER, submitOrder);
 }
