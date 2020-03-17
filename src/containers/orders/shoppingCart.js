@@ -1,59 +1,51 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Order from "../../components/order";
 import Button from "../../components/Button";
 import OrderDetails from "../../components/Pop-ups/OrderDetails";
-import PharmacyIcon from "../../assets/images/roshdy.png";
+import * as actions from "../../actions/types";
 
-export default class ShoppingCart extends Component {
+class ShoppingCart extends Component {
   state = {
     orderDetailsBox: false,
-    medications: [
-      {
-        name: "Antinal",
-        price: 20,
-        pharmacyName: "Roshdy pharmacy",
-        pharmacyAddress: "Mansoura, Gehan St"
-      },
-      {
-        name: "Antinal",
-        price: 15,
-        pharmacyName: "Roshdy pharmacy",
-        pharmacyAddress: "Mansoura, Gehan St"
-      },
-      {
-        name: "Antinal",
-        price: 15.5,
-        pharmacyName: "Roshdy pharmacy",
-        pharmacyAddress: "Mansoura, Gehan St"
-      },
-      {
-        name: "Antinal",
-        price: 123,
-        pharmacyName: "Roshdy pharmacy",
-        pharmacyAddress: "Mansoura, Gehan St"
-      },
-      {
-        name: "Antinal",
-        price: 1,
-        pharmacyName: "Roshdy pharmacy",
-        pharmacyAddress: "Mansoura, Gehan St"
-      }
-    ]
+    cart: [],
+    orderDetails: []
   };
 
-  removeMedication = (index, medications) => {
-    const newMedications = medications.filter(
-      item => index !== medications.indexOf(item)
-    );
-    this.setState({
-      medications: [...newMedications]
+  componentDidMount() {
+    this.setState({ cart: this.props.cart });
+  }
+
+  removeMedication = index => {
+    const cart = this.state.cart;
+    cart.splice(index, 1);
+    this.setState({ cart });
+    this.props.removeFromCartStorage(this.state.cart);
+  };
+
+  openOrderDetailsBox = () => {
+    const orderDetails = [];
+    this.state.cart.forEach(item => {
+      const orderIndex = orderDetails.findIndex(
+        order => order.pharmacy.name === item.pharmacy.name
+      );
+      if (orderIndex === -1) {
+        orderDetails.push({
+          pharmacy: {...item.pharmacy},
+          medications: [{...item.medication}]
+        })
+      }else {
+        orderDetails[orderIndex].medications.push({...item.medication});
+      }
     });
+    this.setState({ orderDetailsBox: true, orderDetails });
   };
 
   render() {
-    const totalPrice = this.state.medications
-      .map(medication => medication.price)
-      .reduce((total, price) => (total += price), 0);
+    const totalPrice = this.state.cart
+      .map(cart => +cart.medication.price)
+      .reduce((total, price) => (total += price), 0)
+      .toFixed(2);
 
     return (
       <React.Fragment>
@@ -62,14 +54,14 @@ export default class ShoppingCart extends Component {
         </div>
         <div className="shoppingCartContainer">
           <div className="medicationsContainer medicationGrid">
-            {this.state.medications.map((medication, i) => (
+            {this.state.cart.map((cart, i) => (
               <Order
                 key={i}
-                name={medication.name}
-                price={medication.price}
-                pharmacy={medication.pharmacyName}
-                address={medication.pharmacyAddress}
-                remove={() => this.removeMedication(i, this.state.medications)}
+                name={cart.medication.name}
+                price={cart.medication.price}
+                pharmacy={cart.pharmacy.name}
+                address={cart.pharmacy.address}
+                remove={() => this.removeMedication(i, this.state.cart)}
               />
             ))}
           </div>
@@ -78,7 +70,7 @@ export default class ShoppingCart extends Component {
             <p>{totalPrice} L.E</p>
             <Button
               className="btn checkout-btn"
-              onClick={() => this.setState({ orderDetailsBox: true })}
+              onClick={this.openOrderDetailsBox}
             >
               Checkout
             </Button>
@@ -87,33 +79,24 @@ export default class ShoppingCart extends Component {
         {this.state.orderDetailsBox && (
           <OrderDetails
             closePopup={() => this.setState({ orderDetailsBox: false })}
-            orders={[
-              {
-                totalPrice,
-                medications: this.state.medications.map(
-                  medication => medication.name
-                ),
-                pharmacy: {
-                  name: "Roshdy pharmacies",
-                  logo: PharmacyIcon,
-                  address: "Mansoura, Gehan St"
-                }
-              },
-              {
-                totalPrice,
-                medications: this.state.medications.map(
-                  medication => medication.name
-                ),
-                pharmacy: {
-                  name: "Roshdy pharmacies",
-                  logo: PharmacyIcon,
-                  address: "Mansoura, Gehan St"
-                }
-              }
-            ]}
+            orders={this.state.orderDetails}
           />
         )}
       </React.Fragment>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  cart: state.user.cart
+});
+
+const mapDispatchToProps = dispatch => ({
+  removeFromCartStorage: cart =>
+    dispatch({
+      type: actions.REMOVE_FROM_CART,
+      cart
+    })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCart);

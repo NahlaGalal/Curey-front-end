@@ -9,7 +9,7 @@ import * as actions from "../actions/types";
 import ReactLoading from "react-loading";
 
 class MedicinePage extends Component {
-  state = { hovered: false, changeAddressBox: false, productID: 5 };
+  state = { hovered: false, changeAddressBox: false, productID: 82 };
 
   componentDidMount() {
     this.props.requestMedicineData(this.props.api_token, this.state.productID);
@@ -34,6 +34,13 @@ class MedicinePage extends Component {
       "MedicationPage"
     );
   };
+
+  addToCart = (pharmacy) => {
+    this.props.addToCartStorage({
+      medication: this.props.medicine,
+      pharmacy
+    })
+  }
 
   render() {
     return (
@@ -103,6 +110,16 @@ class MedicinePage extends Component {
                         name: this.props.medicine.name,
                         price: this.props.medicine.price
                       }}
+                      isCart={
+                        this.props.cart.find(
+                          item =>
+                            item.medication.name === this.props.medicine.name &&
+                            item.pharmacy.name === pharmacy.name
+                        )
+                          ? true
+                          : false
+                      }
+                      addToCart={() => this.addToCart(pharmacy)}
                     />
                   ))
                 ) : (
@@ -134,7 +151,8 @@ class MedicinePage extends Component {
 const mapStateToProps = state => ({
   api_token: state.user.api_token,
   medicine: state.medicationsData.medicationInfo.product,
-  pharmacies: state.medicationsData.medicationInfo.pharmacies
+  pharmacies: state.medicationsData.medicationInfo.pharmacies,
+  cart: state.user.cart
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -143,7 +161,8 @@ const mapDispatchToProps = dispatch => ({
   deleteFavouriteMedication: (data, source) =>
     dispatch({ type: actions.SAGA_DELETE_FAVOURITE, data, source }),
   addFavouriteMedication: (data, source) =>
-    dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source })
+    dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source }),
+  addToCartStorage: (data) => dispatch({ type: actions.ADD_TO_CART, data})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MedicinePage);

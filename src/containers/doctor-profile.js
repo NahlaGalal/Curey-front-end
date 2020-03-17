@@ -15,14 +15,16 @@ class DoctorProfile extends Component {
   boxRef = React.createRef();
 
   onScrollHandler = ({ currentTarget }) => {
-    const boxOffset = this.boxRef.current.offsetTop;
-    const scroll = currentTarget.pageYOffset;
-    const scrollBy = Math.abs(boxOffset - (scroll + 64));
-
-    if (boxOffset <= scroll + 64) {
-      this.boxRef.current.style.transform = `translateY(${scrollBy}px)`;
-    } else {
-      this.boxRef.current.style.transform = `translateY(0)`;
+    if(this.boxRef.current) {
+      const boxOffset = this.boxRef.current.offsetTop;
+      const scroll = currentTarget.pageYOffset;
+      const scrollBy = Math.abs(boxOffset - (scroll + 64));
+  
+      if (boxOffset <= scroll + 64) {
+        this.boxRef.current.style.transform = `translateY(${scrollBy}px)`;
+      } else {
+        this.boxRef.current.style.transform = `translateY(0)`;
+      }
     }
   };
 

@@ -12,7 +12,12 @@ class PharmacyItem extends Component {
     addedToCart: false
   };
 
-  addToCart = e => {
+  componentDidMount() {
+    if(this.props.isCart) this.setState({ addToCart: true });
+  }
+
+  addToCart = () => {
+    this.props.addToCart();
     this.setState({ addedToCart: !this.state.addedToCart });
   };
 
@@ -53,7 +58,6 @@ class PharmacyItem extends Component {
                 <Button
                   className={`btn btn-dark btn-xs btn-cart ${this.state.addedToCart &&
                     "visible"}`}
-                  onClick={this.addToCart}
                 >
                   Go to cart
                 </Button>

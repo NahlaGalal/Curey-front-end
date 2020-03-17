@@ -1,6 +1,7 @@
 import React from "react";
 import PopupFooter from "./PopupFooter";
 import LocationIcon from "../../assets/svg/location.svg";
+import PharmacyIcon from "../../assets/images/roshdy.png";
 
 const OrderDetails = props => {
   return (
@@ -8,12 +9,20 @@ const OrderDetails = props => {
       <div className="Popup__box">
         <h2 className="heading-2">Order invoice details</h2>
         {props.orders.map((order, i) => {
-          const { medications, pharmacy, totalPrice } = order;
+          const { medications, pharmacy } = order;
+          const totalPrice = medications
+            .map(medication => +medication.price)
+            .reduce((total, price) => (total += price), 0)
+            .toFixed(2);
+
           return (
             <React.Fragment key={i}>
               <div className="Popup__box__details">
                 <div className="Popup__box__details__header">
-                  <img src={pharmacy.logo} alt={`${pharmacy.name} logo`} />
+                  <img
+                    src={pharmacy.image || PharmacyIcon}
+                    alt={`${pharmacy.name} logo`}
+                  />
                   <div>
                     <p>{pharmacy.name}</p>
                     <p className="fades">

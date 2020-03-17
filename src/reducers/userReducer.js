@@ -5,7 +5,9 @@ import {
   LOGOUT_USER,
   GET_PRESCRIPTION,
   ADD_PRESCRIPTION,
-  DELETE_PRESCRIPTIONS
+  DELETE_PRESCRIPTIONS,
+  ADD_TO_CART,
+  REMOVE_FROM_CART
 } from "../actions/types";
 
 export function user(state = [], action) {
@@ -50,6 +52,16 @@ export function user(state = [], action) {
         ...state,
         errors: action.isFailed ? action.payload : []
       };
+    case ADD_TO_CART:
+      return {
+        ...state,
+        cart: [...state.cart, action.data]
+      }
+    case REMOVE_FROM_CART:
+      return {
+        ...state,
+        cart: state.cart
+      }
     default:
       return state;
   }

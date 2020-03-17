@@ -142,6 +142,9 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 2.6rem;
+    span:first-child {
+      width: 70%;
+    }
     @media screen and (max-width: 500px) {
       flex-direction: column;
       span:last-child {

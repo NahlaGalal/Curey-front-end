@@ -15,7 +15,8 @@ const defaultState = {
     full_name: "",
     image: null,
     email: "",
-    prescriptions: []
+    prescriptions: [],
+    cart: []
   },
   doctors: {
     doctorsData: [],
@@ -51,7 +52,8 @@ export const loadState = () =>
         api_token: "",
         full_name: "",
         image: null,
-        email: ""
+        email: "",
+        cart: []
       };
 
 export const saveState = state =>
@@ -61,7 +63,8 @@ export const saveState = state =>
       api_token: state.user.api_token,
       full_name: state.user.full_name,
       image: state.user.image,
-      email: state.user.email
+      email: state.user.email,
+      cart: state.user.cart
     })
   );
 
@@ -75,7 +78,8 @@ const initialState = () => {
       api_token: loadState().api_token,
       full_name: loadState().full_name,
       image: loadState().image,
-      email: loadState().email
+      email: loadState().email,
+      cart: loadState().cart
     }
   };
 };
