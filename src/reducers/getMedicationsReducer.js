@@ -50,8 +50,8 @@ export function medicationsData(state = {}, action) {
     case actions.RECIEVE_ORDERS:
       return {
         ...state,
-        orders: [...action.payload],
-        errors: action.isFailed ? action.payload : []
+        orders: !action.isFailed ? [...action.payload] : [],
+        errors: action.isFailed ? [action.payload] : []
       };
 
     default:

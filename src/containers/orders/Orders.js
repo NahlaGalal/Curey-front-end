@@ -6,133 +6,11 @@ import * as actions from "../../actions/types";
 import { connect } from "react-redux";
 import ReactLoading from "react-loading";
 
-const orders = [
-  {
-    logo: Pharmacy,
-    name: "Roshdy pharmacies",
-    address: "Mansoura City, Gehan St",
-    state: "Delivered",
-    total: 85,
-    orderList: [
-      "Antinal pills",
-      "Flumox syrup",
-      "Emetrex pills",
-      "Cefatax syrup"
-    ]
-  },
-  {
-    logo: Pharmacy,
-    name: "Roshdy pharmacies",
-    address: "Mansoura City, Gehan St",
-    state: "Failed",
-    total: 85,
-    orderList: [
-      "Antinal pills",
-      "Flumox syrup",
-      "Emetrex pills",
-      "Cefatax syrup",
-      "Cefatax syrup",
-      "Cefatax syrup"
-    ]
-  },
-  {
-    logo: Pharmacy,
-    name: "Roshdy pharmacies",
-    address: "Mansoura City, Gehan St",
-    state: "Pending",
-    total: 85,
-    orderList: [
-      "Antinal pills",
-      "Flumox syrup",
-      "Emetrex pills",
-      "Cefatax syrup"
-    ]
-  },
-  {
-    logo: Pharmacy,
-    name: "Roshdy pharmacies",
-    address: "Mansoura City, Gehan St",
-    state: "Delivered",
-    total: 85,
-    orderList: [
-      "Antinal pills",
-      "Flumox syrup",
-      "Emetrex pills",
-      "Cefatax syrup"
-    ]
-  },
-  {
-    logo: Pharmacy,
-    name: "Roshdy pharmacies",
-    address: "Mansoura City, Gehan St",
-    state: "Delivered",
-    total: 85,
-    orderList: [
-      "Antinal pills",
-      "Flumox syrup",
-      "Emetrex pills",
-      "Cefatax syrup"
-    ]
-  },
-  {
-    logo: Pharmacy,
-    name: "Roshdy pharmacies",
-    address: "Mansoura City, Gehan St",
-    state: "Delivered",
-    total: 85,
-    orderList: [
-      "Antinal pills",
-      "Flumox syrup",
-      "Emetrex pills",
-      "Cefatax syrup"
-    ]
-  },
-  {
-    logo: Pharmacy,
-    name: "Roshdy pharmacies",
-    address: "Mansoura City, Gehan St",
-    state: "Delivered",
-    total: 85,
-    orderList: [
-      "Antinal pills",
-      "Flumox syrup",
-      "Emetrex pills",
-      "Cefatax syrup"
-    ]
-  },
-  {
-    logo: Pharmacy,
-    name: "Roshdy pharmacies",
-    address: "Mansoura City, Gehan St",
-    state: "Delivered",
-    total: 85,
-    orderList: [
-      "Antinal pills",
-      "Flumox syrup",
-      "Emetrex pills",
-      "Cefatax syrup"
-    ]
-  },
-  {
-    logo: Pharmacy,
-    name: "Roshdy pharmacies",
-    address: "Mansoura City, Gehan St",
-    state: "Delivered",
-    total: 85,
-    orderList: [
-      "Antinal pills",
-      "Flumox syrup",
-      "Emetrex pills",
-      "Cefatax syrup"
-    ]
-  }
-];
-
 export class Orders extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      orders,
+      orders: [],
       filter: "All"
     };
   }
@@ -141,10 +19,16 @@ export class Orders extends Component {
     this.props.onRequestOrders(this.props.api_token);
   }
 
+  componentDidUpdate(prevProps) {
+    if(JSON.stringify(prevProps.orders) !== JSON.stringify(this.props.orders)) {
+      this.setState({ orders: this.props.orders });
+    }
+  }
+
   filterOrders = filter => {
-    if (filter === "All") return this.setState({ orders, filter });
+    if (filter === "All") return this.setState({ orders: this.props.orders, filter });
     return this.setState({
-      orders: orders.filter(order => order.state === filter),
+      orders: this.props.orders.filter(order => order.state === filter),
       filter
     });
   };
@@ -184,10 +68,10 @@ export class Orders extends Component {
         </div>
         <main className="Orders__container">
           {this.props.orders.length ? (
-            this.props.orders.map((order, i) => (
+            this.state.orders.map((order, i) => (
               <section className="Orders__container__box" key={i}>
                 <header className="Orders__container__box__header">
-                  <img src={Pharmacy} alt={`${order.name}`} />
+                  <img src={order.image || Pharmacy} alt={`${order.pharmacy} Logo`} />
                   <div>
                     <div className="Orders__container__box__header--heading">
                       <p>{order.pharmacy}</p>
@@ -196,7 +80,7 @@ export class Orders extends Component {
                           order.state !== "Failed" ? "state" : "state-failed"
                         }`}
                       >
-                        {"Delivered"}
+                        {order.state || "Delivered"}
                       </p>
                     </div>
                     <p className="Orders__container__box__header--address">
@@ -204,7 +88,7 @@ export class Orders extends Component {
                         src={Location}
                         alt={`location icon for ${order.pharmacy}`}
                       />
-                      <span>Mansoura City, Gehan St</span>
+                      <span>{order.address || "Mansoura City, Gehan St"}</span>
                     </p>
                   </div>
                 </header>
@@ -225,8 +109,8 @@ export class Orders extends Component {
                 </div>
               </section>
             ))
-          ) : this.props.medicationsDataError === "no orders yet" ? (
-            <p>NO ORDERS YET</p>
+          ) : this.props.medicationsDataError.length ? (
+            <p className="Orders__container__error">NO ORDERS YET</p>
           ) : (
             <ReactLoading
               type="spokes"

@@ -25,6 +25,7 @@ const OrderMedication = props => {
           </p>
         </div>
         <PopupFooter
+          submitOrder={props.submitOrder}
           closePopup={props.closePopup}
           applyText="Confirm"
         />

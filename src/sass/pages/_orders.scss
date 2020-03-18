@@ -89,5 +89,10 @@
         }
       }
     }
+    &__error {
+      color: $warning-color;
+      font-size: 1.6rem;
+      text-align: center;
+    }
   }
 }

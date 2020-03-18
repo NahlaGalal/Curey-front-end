@@ -41,7 +41,8 @@ const defaultState = {
       pharmacies: []
     },
     medicationsSaved: [],
-    orders: []
+    orders: [],
+    errors: []
   }
 };
 
