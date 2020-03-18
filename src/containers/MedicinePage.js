@@ -131,7 +131,7 @@ class MedicinePage extends Component {
                           : false
                       }
                       addToCart={() => this.addToCart(pharmacy)}
-                      onsubmit={this.submitOrder}
+                      onSubmit={this.submitOrder}
                     />
                   ))
                 ) : (
