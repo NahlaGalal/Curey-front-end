@@ -13,7 +13,6 @@ function* getAppointments({ api_token }) {
         payload: result.data.data,
         isFailed: false
       });
-      console.log(result.data.data);
     } else
       yield put({
         type: actions.RECIEVE_APPOINTMENTS,

@@ -31,7 +31,7 @@ const DoctorBookingCard = props => (
       </div>
       <p>
         <img src={ClockIcon} alt="Clock Icon" className="icon" />
-        {props.time}
+        {`${props.time} hours`}
       </p>
     </footer>
   </div>

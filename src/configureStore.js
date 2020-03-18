@@ -43,7 +43,10 @@ const defaultState = {
     },
     medicationsSaved: []
   },
-  appointments: []
+  appointments: {
+    appointments: [],
+    errors: []
+  }
 };
 
 export const loadState = () =>

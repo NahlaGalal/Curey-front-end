@@ -93,15 +93,20 @@ class Appointments extends Component {
     this.props.onRequestAppointments(this.props.api_token);
   }
 
+  arr = this.props.appointments.map((booking, i) => [...booking]);
+
   filterBookings = filter => {
     if (filter === "All") return this.setState({ filter, bookings });
     return this.setState({
       filter,
-      bookings: bookings.filter(booking => booking.status === filter)
+      bookings: this.props.appointments.filter(
+        booking => booking.status === filter
+      )
     });
   };
 
   render() {
+    console.log(this.arr);
     return (
       <div className="Appointments">
         <div className="toggler">
@@ -140,18 +145,32 @@ class Appointments extends Component {
         </div>
 
         <div className="Appointments__Grid">
-          {this.state.bookings.map((booking, i) => (
-            <DoctorBookingCard
-              key={i}
-              name={booking.doctorName}
-              price={booking.doctorPrice}
-              speciality={booking.speciality}
-              address={booking.address}
-              date={booking.date}
-              time={booking.time}
-              status={booking.status}
+          {this.props.appointments.length ? (
+            this.props.appointments.map((booking, i) => (
+              <DoctorBookingCard
+                key={i}
+                name={booking.full_name}
+                price={booking.fees}
+                speciality={booking.speciality}
+                address={booking.address}
+                date={booking.app_time}
+                time={booking.duration}
+                status={
+                  booking.is_callup
+                    ? "Home visit"
+                    : booking.re_exam
+                    ? "Re-examination"
+                    : "Booking"
+                }
+              />
+            ))
+          ) : !this.props.appointmentsError.length ? (
+            <ReactLoading
+              type="spokes"
+              color="#0066ff"
+              className="loading center mb-40"
             />
-          ))}
+          ) : null}
         </div>
       </div>
     );
@@ -160,7 +179,9 @@ class Appointments extends Component {
 
 const mapStateToProps = state => {
   return {
-    api_token: state.user.api_token
+    api_token: state.user.api_token,
+    appointments: state.appointments.appointments,
+    appointmentsError: state.appointments.errors
   };
 };
 
