@@ -40,8 +40,9 @@ const defaultState = {
       product: {},
       pharmacies: []
     },
-    medicationsSaved: []
-  },
+    medicationsSaved: [],
+    orders: []
+  }
 };
 
 export const loadState = () =>
