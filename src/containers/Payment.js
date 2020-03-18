@@ -4,7 +4,15 @@ import Payment from "payment";
 import Button from "../components/Button";
 import SelectBox from "../components/SelectBox";
 
-const cities = ["Cairo", "Mansoura", "Bilqas", "El-Mahallah"];
+const cities = [
+  {
+    name: "Cairo",
+    id: 1
+  },
+  { name: "Mansoura", id: 2 },
+  { name: "Bilqas", id: 3 },
+  { name: "El-Mahallah", id: 4 }
+];
 
 export class PaymentForm extends Component {
   constructor(props) {

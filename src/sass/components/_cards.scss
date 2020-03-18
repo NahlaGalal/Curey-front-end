@@ -137,7 +137,8 @@
   }
 
   &__info {
-    margin: 3.2rem 0;
+    // margin: 3.2rem 0;
+    margin: 1.6rem 0 0.8rem; // Shopping cart and saving page
     &--flex {
       @extend .doctorCard__info;
     }

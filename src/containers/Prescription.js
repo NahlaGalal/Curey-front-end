@@ -58,7 +58,7 @@ export class Prescription extends Component {
       end_date,
       frequency: data.frequency,
       days: data.days,
-      hours,
+      hours: hours.sort(),
       auto: 0
     });
   };

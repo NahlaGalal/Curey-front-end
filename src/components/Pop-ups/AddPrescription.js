@@ -28,8 +28,13 @@ const AddPrescription = props => {
   const toggleDay = (e, day) => {
     e.target.classList.toggle("active");
     const dayIndex = days.findIndex(day2 => day2 === day);
-    if (dayIndex === -1) setDays([...days, day]);
+    if (dayIndex === -1){
+      // if(days.length === 6) setPeriod("day");
+      // else setPeriod("week");
+      setDays([...days, day]);
+    }
     else {
+      // setPeriod("week")
       let splicedDays = [...days];
       splicedDays.splice(dayIndex, 1);
       setDays(splicedDays);
@@ -65,7 +70,7 @@ const AddPrescription = props => {
 
   const onSubmitHandler = data => {
     const {medication_name, frequency, period, days, ...rest} = data;
-    const daysArr = days.split(",");
+    const daysArr = days.split(",").sort();
     const dosing = Object.values(rest);
     props.addPrescription({
       medication_name,

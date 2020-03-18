@@ -48,6 +48,7 @@ export class SavePage extends Component {
               {this.state.medications.map((medication, i) => (
                 <MedicineCard
                   key={i}
+                  id={medication.id}
                   name={medication.name}
                   price={medication.price}
                   image={medication.image}
