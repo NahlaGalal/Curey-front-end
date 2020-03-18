@@ -20,7 +20,7 @@ export class Prescription extends Component {
   };
 
   componentDidMount() {
-    // this.props.getPrescriptions(this.props.api_token);
+    this.props.getPrescriptions(this.props.api_token);
   }
 
   toggleMenu = i => {
