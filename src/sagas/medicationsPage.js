@@ -61,7 +61,6 @@ function* getMedication({ api_token, id }) {
         payload: result.data.data,
         isFailed: false
       });
-      console.log(result.data.data);
     } else
       yield put({
         type: actions.RECIEVE_MEDICATION,
@@ -171,15 +170,15 @@ function* getFavourites({ api_token }) {
 
 function* submitOrder({ api_token, data }) {
   const obj = { api_token: api_token, products: data };
-  console.log(obj);
   try {
     let result = yield call(() => axios.post("/api/web/submit_order", obj));
-
-    console.log(result);
     if (!result.data.isFailed) {
-      console.log("yes");
+      alert(result.data.data.success);
     } else {
-      console.log("no");
+      put({
+        type: actions.SUBMIT_MEDICATION_ORDER_FAILED,
+        payload: result.data.errors
+      });
     }
   } catch (e) {
     console.log(e);
