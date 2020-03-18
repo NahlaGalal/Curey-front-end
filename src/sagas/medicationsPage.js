@@ -185,6 +185,29 @@ function* submitOrder({ api_token, data }) {
   }
 }
 
+function* getOrders({ api_token }) {
+  try {
+    let result = yield call(() =>
+      axios.get(`/api/web/orders?api_token=${api_token}`)
+    );
+    if (!result.data.isFailed) {
+      yield put({
+        type: actions.RECIEVE_ORDERS,
+        payload: result.data.data,
+        isFailed: false
+      });
+      console.log(result.data.data);
+    } else
+      yield put({
+        type: actions.RECIEVE_ORDERS,
+        payload: result.data.errors,
+        isFailed: true
+      });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export default function* watchMedications() {
   yield takeEvery(actions.REQUEST_MEDICATIONS, getMedications);
   yield takeEvery(actions.SEARCH_MEDICATIONS, getMedicationsSearch);
@@ -193,4 +216,5 @@ export default function* watchMedications() {
   yield takeEvery(actions.SAGA_DELETE_FAVOURITE, postDeleteFavourite);
   yield takeEvery(actions.SAGA_GET_FAVOURITES, getFavourites);
   yield takeEvery(actions.SUBMIT_MEDICATION_ORDER, submitOrder);
+  yield takeEvery(actions.REQUEST_ORDERS, getOrders);
 }

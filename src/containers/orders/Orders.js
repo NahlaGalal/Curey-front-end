@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Location from "../../assets/svg/location.svg";
 import Pharmacy from "../../assets/images/roshdy.png";
 import Button from "../../components/Button";
+import * as actions from "../../actions/types";
+import { connect } from "react-redux";
 
 const orders = [
   {
@@ -134,6 +136,10 @@ export class Orders extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.onRequestOrders(this.props.api_token);
+  }
+
   filterOrders = filter => {
     if (filter === "All") return this.setState({ orders, filter });
     return this.setState({
@@ -223,4 +229,17 @@ export class Orders extends Component {
   }
 }
 
-export default Orders;
+const mapStateToProps = state => {
+  return {
+    api_token: state.user.api_token
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onRequestOrders: api_token =>
+      dispatch({ type: actions.REQUEST_ORDERS, api_token })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Orders);
