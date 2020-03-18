@@ -10,7 +10,7 @@ import { withRouter } from "react-router-dom";
 
 class NavigationBar extends Component {
   componentDidUpdate(prevProps) {
-    if (prevProps.api_token !== this.props.api_token)
+    if (prevProps.api_token === "")
       this.props.history.push("/login");
   }
 

@@ -75,6 +75,7 @@ export class Home extends Component {
               this.props.topMedications.map((medication, i) => (
                 <MedicineCard
                   key={i}
+                  id={medication.id}
                   name={medication.name}
                   price={medication.price}
                   description={medication.description}

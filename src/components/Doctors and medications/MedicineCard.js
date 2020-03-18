@@ -42,7 +42,7 @@ const MedicineCard = props => (
       ) : null}
     </div>
     {props.link ? (
-      <Link to="/medicine/1">
+      <Link to={`/medicine/${props.id}`}>
         <Button className="btn btn-lg btn-green center">Shop now</Button>
       </Link>
     ) : null}

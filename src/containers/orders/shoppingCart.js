@@ -68,12 +68,15 @@ class ShoppingCart extends Component {
           <div className="totalPriceCard">
             <h3>Total price</h3>
             <p>{totalPrice} L.E</p>
-            <Button
-              className="btn checkout-btn"
-              onClick={this.openOrderDetailsBox}
-            >
-              Checkout
-            </Button>
+            {this.state.cart.length ? (
+              <Button
+                className="btn checkout-btn"
+                onClick={this.openOrderDetailsBox}
+                
+              >
+                Checkout
+              </Button>
+            ) : null}
           </div>
         </div>
         {this.state.orderDetailsBox && (

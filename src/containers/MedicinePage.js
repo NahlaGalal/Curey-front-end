@@ -9,10 +9,13 @@ import * as actions from "../actions/types";
 import ReactLoading from "react-loading";
 
 class MedicinePage extends Component {
-  state = { hovered: false, changeAddressBox: false, productID: 82 };
+  state = { hovered: false, changeAddressBox: false };
 
   componentDidMount() {
-    this.props.requestMedicineData(this.props.api_token, this.state.productID);
+    this.props.requestMedicineData(
+      this.props.api_token,
+      this.props.match.params.id
+    );
   }
 
   deleteFavouriteMedication = product_id => {
@@ -35,13 +38,13 @@ class MedicinePage extends Component {
     );
   };
 
-  addToCart = (pharmacy) => {
+  addToCart = pharmacy => {
     this.props.addToCartStorage({
       medication: this.props.medicine,
       pharmacy
-    })
-  }
-
+    });
+  };
+  
   render() {
     return (
       <React.Fragment>
@@ -50,6 +53,7 @@ class MedicinePage extends Component {
             <div className="medicine__container">
               {Object.keys(this.props.medicine).length ? (
                 <MedicineCard
+                  id={this.props.medicine.id}
                   name={this.props.medicine.name}
                   price={this.props.medicine.price}
                   image={this.props.medicine.image}
@@ -113,8 +117,8 @@ class MedicinePage extends Component {
                       isCart={
                         this.props.cart.find(
                           item =>
-                            item.medication.name === this.props.medicine.name &&
-                            item.pharmacy.name === pharmacy.name
+                            item.medication.id === this.props.medicine.id &&
+                            item.pharmacy.id === pharmacy.id
                         )
                           ? true
                           : false
@@ -152,7 +156,7 @@ const mapStateToProps = state => ({
   api_token: state.user.api_token,
   medicine: state.medicationsData.medicationInfo.product,
   pharmacies: state.medicationsData.medicationInfo.pharmacies,
-  cart: state.user.cart
+  cart: state.user.cart || []
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -162,7 +166,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: actions.SAGA_DELETE_FAVOURITE, data, source }),
   addFavouriteMedication: (data, source) =>
     dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source }),
-  addToCartStorage: (data) => dispatch({ type: actions.ADD_TO_CART, data})
+  addToCartStorage: data => dispatch({ type: actions.ADD_TO_CART, data })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MedicinePage);
