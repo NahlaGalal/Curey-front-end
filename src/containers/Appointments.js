@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import DoctorBookingCard from "../components/Doctors and medications/DoctorBookingCard";
 import Button from "../components/Button";
+import { connect } from "react-redux";
+import * as actions from "../actions/types";
+import ReactLoading from "react-loading";
 
 const bookings = [
   {
@@ -83,22 +86,57 @@ class Appointments extends Component {
     this.state = {
       filter: "All",
       bookings
-    }
+    };
   }
 
-  filterBookings = (filter) => {
-    if(filter === "All") return this.setState({filter, bookings});
-    return this.setState({filter, bookings: bookings.filter(booking => booking.status === filter)});
+  componentDidMount() {
+    this.props.onRequestAppointments(this.props.api_token);
   }
+
+  filterBookings = filter => {
+    if (filter === "All") return this.setState({ filter, bookings });
+    return this.setState({
+      filter,
+      bookings: bookings.filter(booking => booking.status === filter)
+    });
+  };
 
   render() {
     return (
       <div className="Appointments">
         <div className="toggler">
-          <Button className={`btn ${this.state.filter==="All" ? "active" : ""}`} onClick={() => this.filterBookings("All")}> All </Button>
-          <Button className={`btn ${this.state.filter==="Booking" ? "active" : ""}`} onClick={() => this.filterBookings("Booking")}> Bookings </Button>
-          <Button className={`btn ${this.state.filter==="Home visit" ? "active" : ""}`} onClick={() => this.filterBookings("Home visit")}> Home visits </Button>
-          <Button className={`btn ${this.state.filter==="Re-examination" ? "active" : ""}`} onClick={() => this.filterBookings("Re-examination")}> Re-examinations </Button>
+          <Button
+            className={`btn ${this.state.filter === "All" ? "active" : ""}`}
+            onClick={() => this.filterBookings("All")}
+          >
+            {" "}
+            All{" "}
+          </Button>
+          <Button
+            className={`btn ${this.state.filter === "Booking" ? "active" : ""}`}
+            onClick={() => this.filterBookings("Booking")}
+          >
+            {" "}
+            Bookings{" "}
+          </Button>
+          <Button
+            className={`btn ${
+              this.state.filter === "Home visit" ? "active" : ""
+            }`}
+            onClick={() => this.filterBookings("Home visit")}
+          >
+            {" "}
+            Home visits{" "}
+          </Button>
+          <Button
+            className={`btn ${
+              this.state.filter === "Re-examination" ? "active" : ""
+            }`}
+            onClick={() => this.filterBookings("Re-examination")}
+          >
+            {" "}
+            Re-examinations{" "}
+          </Button>
         </div>
 
         <div className="Appointments__Grid">
@@ -120,4 +158,17 @@ class Appointments extends Component {
   }
 }
 
-export default Appointments;
+const mapStateToProps = state => {
+  return {
+    api_token: state.user.api_token
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onRequestAppointments: api_token =>
+      dispatch({ type: actions.REQUEST_APPOINTMENTS, api_token })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Appointments);

@@ -4,6 +4,7 @@ import watchUser from "./userSaga";
 import watchDoctors from "./getDoctorsSaga";
 import watchHomeData from "./homeData";
 import watchMedications from "./medicationsPage";
+import watchAppointments from "./appointments";
 
 export default function* rootSaga() {
   yield all([
@@ -12,5 +13,6 @@ export default function* rootSaga() {
     watchDoctors(),
     watchHomeData(),
     watchMedications(),
+    watchAppointments()
   ]);
 }
