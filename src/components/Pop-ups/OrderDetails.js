@@ -41,7 +41,7 @@ const OrderDetails = props => {
                   <ul>
                     {medications.map((medication, i) => (
                       <li className="fades" key={i}>
-                        {medication}
+                        {medication.name}
                       </li>
                     ))}
                   </ul>

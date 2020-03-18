@@ -13,7 +13,7 @@ class PharmacyItem extends Component {
   };
 
   componentDidMount() {
-    if(this.props.isCart) this.setState({ addToCart: true });
+    if(this.props.isCart) this.setState({ addedToCart: true });
   }
 
   addToCart = () => {

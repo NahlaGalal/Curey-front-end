@@ -102,6 +102,7 @@ class Medications extends Component {
                 {this.state.medications.slice(0, 16).map((medication, i) => (
                   <MedicineCard
                     key={i}
+                    id={medication.id}
                     name={medication.name}
                     price={medication.price}
                     description={medication.description}

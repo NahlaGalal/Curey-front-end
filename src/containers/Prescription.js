@@ -20,7 +20,7 @@ export class Prescription extends Component {
   };
 
   componentDidMount() {
-    this.props.getPrescriptions(this.props.api_token);
+    // this.props.getPrescriptions(this.props.api_token);
   }
 
   toggleMenu = i => {
@@ -145,6 +145,7 @@ export class Prescription extends Component {
           <AddPrescription
             closePopup={() => this.setState({ addPrescriptionBox: false })}
             addPrescription={data => this.addPrescription(data)}
+            errors={this.props.error}
           />
         )}
       </main>
