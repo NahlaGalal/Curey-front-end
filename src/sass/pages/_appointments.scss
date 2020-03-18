@@ -8,6 +8,11 @@
     grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
     grid-gap: 4rem;
     margin-top: 4.9rem;
+    &__error {
+      color: $warning-color;
+      text-align: center;
+      font-size: 1.6rem;
+    }
   }
 }
 

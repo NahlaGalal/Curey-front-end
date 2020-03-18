@@ -5,87 +5,12 @@ import { connect } from "react-redux";
 import * as actions from "../actions/types";
 import ReactLoading from "react-loading";
 
-const bookings = [
-  {
-    doctorName: "Hassan Ali",
-    doctorPrice: 125,
-    speciality: "General Surgery",
-    address: "Mansoura City, Gehan St",
-    date: "JAN 32, 2020",
-    time: "4: 30 PM",
-    status: "Booking"
-  },
-  {
-    doctorName: "Hassan Ali",
-    doctorPrice: 125,
-    speciality: "General Surgery",
-    address: "Mansoura City, Gehan St",
-    date: "JAN 32, 2020",
-    time: "4: 30 PM",
-    status: "Re-examination"
-  },
-  {
-    doctorName: "Hassan Ali",
-    doctorPrice: 125,
-    speciality: "General Surgery",
-    address: "Mansoura City, Gehan St",
-    date: "JAN 32, 2020",
-    time: "4: 30 PM",
-    status: "Booking"
-  },
-  {
-    doctorName: "Hassan Ali",
-    doctorPrice: 125,
-    speciality: "General Surgery",
-    address: "Mansoura City, Gehan St",
-    date: "JAN 32, 2020",
-    time: "4: 30 PM",
-    status: "Booking"
-  },
-  {
-    doctorName: "Hassan Ali",
-    doctorPrice: 125,
-    speciality: "General Surgery",
-    address: "Mansoura City, Gehan St",
-    date: "JAN 32, 2020",
-    time: "4: 30 PM",
-    status: "Re-examination"
-  },
-  {
-    doctorName: "Hassan Ali",
-    doctorPrice: 125,
-    speciality: "General Surgery",
-    address: "Mansoura City, Gehan St",
-    date: "JAN 32, 2020",
-    time: "4: 30 PM",
-    status: "Booking"
-  },
-  {
-    doctorName: "Hassan Ali",
-    doctorPrice: 125,
-    speciality: "General Surgery",
-    address: "Mansoura City, Gehan St",
-    date: "JAN 32, 2020",
-    time: "4: 30 PM",
-    status: "Home visit"
-  },
-  {
-    doctorName: "Hassan Ali",
-    doctorPrice: 125,
-    speciality: "General Surgery",
-    address: "Mansoura City, Gehan St",
-    date: "JAN 32, 2020",
-    time: "4: 30 PM",
-    status: "Home visit"
-  }
-];
-
 class Appointments extends Component {
   constructor(props) {
     super(props);
     this.state = {
       filter: "All",
-      bookings
+      bookings: []
     };
   }
 
@@ -94,17 +19,28 @@ class Appointments extends Component {
   }
 
   filterBookings = filter => {
-    if (filter === "All") return this.setState({ filter, bookings });
-    return this.setState({
-      filter,
-      bookings: this.props.appointments.filter(
-        booking => booking.status === filter
-      )
-    });
+    if (filter === "All")
+      return this.setState({ filter, bookings: this.props.appointments });
+    else if (filter === "Home visit")
+      return this.setState({
+        filter,
+        bookings: this.props.appointments.filter(booking => booking.is_callup)
+      });
+    else if (filter === "Re-examination")
+      return this.setState({
+        filter,
+        bookings: this.props.appointments.filter(booking => booking.re_exam)
+      });
+    else
+      return this.setState({
+        filter,
+        bookings: this.props.appointments.filter(
+          booking => !booking.is_callup && !booking.re_exam
+        )
+      });
   };
 
   render() {
-    console.log(this.arr);
     return (
       <div className="Appointments">
         <div className="toggler">
@@ -168,7 +104,9 @@ class Appointments extends Component {
               color="#0066ff"
               className="loading center mb-40"
             />
-          ) : null}
+          ) : (
+            <p className="Appointments__Grid__error"> No appointments yet </p>
+          )}
         </div>
       </div>
     );
