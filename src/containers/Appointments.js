@@ -93,8 +93,6 @@ class Appointments extends Component {
     this.props.onRequestAppointments(this.props.api_token);
   }
 
-  arr = this.props.appointments.map((booking, i) => [...booking]);
-
   filterBookings = filter => {
     if (filter === "All") return this.setState({ filter, bookings });
     return this.setState({
