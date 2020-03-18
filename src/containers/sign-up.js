@@ -1,207 +1,174 @@
 //@ts-check
-import React, { Component } from "react";
+import React, { useEffect, Component, useState } from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { connect } from "react-redux";
+import validator from "validator";
 import SocialButtons from "../components/Social-buttons";
 import Dividor from "../components/Dividor";
-import FieldInput from "../components/FieldInput";
 import Button from "../components/Button";
 import SelectBox from "../components/SelectBox";
-import { connect } from "react-redux";
 import { getCities, postSignup } from "../actions/userAction";
-import validator from "validator";
+import Input from "../components/Input";
 
-class SignupUser extends Component {
-  state = {
-    cityBoxOpened: false,
-    full_name: "",
-    email: "",
-    password: "",
-    confirm_password: "",
-    city: "",
-    city_id: 0,
-    cityList: [],
-    errors: {
-      full_name: "",
-      email: "",
-      password: "",
-      confirm_password: "",
-      city: ""
-    }
-  };
+const SignupUser = props => {
+  const [city, setCity] = useState({ city_id: null, city: "" });
+  const [cityBoxOpened, setCityBoxOpened] = useState(false);
+  let { register, handleSubmit, errors, watch } = useForm();
+  let citiesContainerRef = React.createRef();
 
-  citiesContainerRef = React.createRef();
-
-  componentDidMount() {
-    this.props.getCities();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.cities.length !== this.props.cities.length) {
-      this.setState({ cityList: this.props.cities });
-    }
-    if (
-      prevProps.signupSuccess !== this.props.signupSuccess &&
-      this.props.signupSuccess
-    ) {
-      this.props.redirectToLogin();
-    }
-    if (
-      JSON.stringify(prevProps.signupErrors) !==
-      JSON.stringify(this.props.signupErrors)
-    ) {
-      const errors = { full_name: "", password: "", email: "", city: "" };
-      if (this.props.signupErrors.full_name)
-        errors.full_name = this.props.signupErrors.full_name;
-      if (this.props.signupErrors.password)
-        errors.password = this.props.signupErrors.password;
-      if (this.props.signupErrors.email)
-        errors.email = this.props.signupErrors.email;
-      if (this.props.signupErrors.city)
-        errors.city = this.props.signupErrors.city;
-      this.setState({errors})
-    }
-  }
-
-  onChangeHandler = ({ target: { value, name } }) => {
-    this.setState({
-      [name]: value
+  const onSubmitHandler = data => {
+    props.postSignup({
+      role_id: props.role_id,
+      full_name: data.full_name,
+      email: validator.normalizeEmail(data.email),
+      password: data.password,
+      city_id: +city.city_id
     });
   };
 
-  toggleCitySelectBox = () => {
-    const prev = this.state.cityBoxOpened;
+  useEffect(() => {
+    if (props.success) props.redirectToLogin();
+  }, [props.success]);
+
+  const toggleCitySelectBox = () => {
+    const prev = cityBoxOpened;
     let city = "",
       city_id = "";
     if (prev) {
       const inputChecked = Array.from(
-        this.citiesContainerRef.current.querySelectorAll("input[type=radio]")
+        citiesContainerRef.current.querySelectorAll("input[type=radio]")
       ).filter(input => input.checked)[0];
       city = inputChecked ? inputChecked.value : "";
       city_id = inputChecked ? inputChecked.id.split("_")[0] : "";
     }
-    this.setState({
-      cityBoxOpened: !prev,
-      city,
-      city_id
+    errors.city_id = undefined;
+    setCityBoxOpened(!prev);
+    setCity({
+      city_id,
+      city
     });
   };
 
-  onSubmitHandler = e => {
-    e.preventDefault();
-    const errors = {
-      full_name: "",
-      email: "",
-      password: "",
-      confirm_password: "",
-      city: ""
-    };
-    if (
-      !validator.isEmail(this.state.email) ||
-      !validator.isLength(this.state.email, {
-        max: 50
-      })
-    )
-      errors.email = "Your email must be a valid email";
-    if (
-      !validator.isLength(this.state.full_name, {
-        max: 50,
-        min: 6
-      })
-    )
-      errors.full_name = "Your name must be between 6 and 50 characters";
-    if (
-      !validator.isLength(this.state.password, {
-        max: 50,
-        min: 8
-      })
-    )
-      errors.password = "Your password must be between 8 and 50 characters";
-    if (this.state.password !== this.state.confirm_password)
-      errors.confirm_password = "Passwords must be identical";
-    if (!this.state.city) errors.city = "You must choose your city";
-    this.setState({ errors });
-    if (!Object.values(errors).filter(value => value !== "").length) {
-      this.props.postSignup({
-        role_id: this.props.role_id,
-        full_name: this.state.full_name,
-        email: this.state.email,
-        password: this.state.password,
-        city_id: +this.state.city_id
-      });
-    }
-    e.target.disabled = true;
-  };
-
-  render() {
-    return (
-      <section className="signup__container__forms__user">
-        <form noValidate>
-          <FieldInput
-            type="text"
-            name="full_name"
-            value={this.state.full_name}
-            onChange={this.onChangeHandler}
-            placeholder={
-              this.props.role_id === 2 ? "Pharmacy name" : "Full name"
-            }
-            error={this.state.errors.full_name}
-          />
-          <FieldInput
-            type="email"
-            name="email"
-            value={this.state.email}
-            onChange={this.onChangeHandler}
-            placeholder="Email address"
-            error={this.state.errors.email}
-          />
-          {this.props.role_id === 1 ? (
-            <div>
-              <SelectBox
-                name="city_id"
-                onClick={this.toggleCitySelectBox}
-                className={`${this.state.city ? "hasValue" : null}`}
-                listChecked={this.state.city ? [this.state.city] : []}
-                header="City"
-                boxOpened={this.state.cityBoxOpened}
-                list={this.state.cityList}
-                optionsContainerRef={this.citiesContainerRef}
-                multiSelect={false}
-                error={this.state.errors.city}
-              />
-            </div>
-          ) : null}
-          <FieldInput
-            type="password"
-            name="password"
-            value={this.state.password}
-            onChange={this.onChangeHandler}
-            placeholder="Password"
-            error={this.state.errors.password}
-          />
-          <FieldInput
-            type="password"
-            name="confirm_password"
-            value={this.state.confirm_password}
-            onChange={this.onChangeHandler}
-            placeholder="Repeat password"
-            error={this.state.errors.confirm_password}
-          />
-          <Button
-            className="btn btn-md btn-green"
-            onClick={this.onSubmitHandler}
-          >
-            Signup
-          </Button>
-        </form>
-      </section>
-    );
-  }
-}
+  return (
+    <section className="signup__container__forms__user">
+      <form
+        noValidate
+        onSubmit={handleSubmit(data => {
+          onSubmitHandler(data);
+        })}
+      >
+        <Input
+          type="text"
+          name="full_name"
+          value={watch("full_name")}
+          id="full_name"
+          placeholder={props.role_id === 2 ? "Pharmacy name" : "Full name"}
+          isError={errors.full_name || props.errors.full_name}
+          error={
+            errors.full_name
+              ? "Your name must be between 6 and 50 characters"
+              : props.errors.full_name
+          }
+          refe={register({
+            required: true,
+            minLength: 6,
+            maxLength: 50
+          })}
+        />
+        <Input
+          type="email"
+          name="email"
+          value={watch("email")}
+          id="email"
+          placeholder="Email address"
+          isError={errors.email || props.errors.email}
+          error={
+            errors.email
+              ? "Your email must be a valid email"
+              : props.errors.email
+          }
+          refe={register({
+            required: true,
+            maxLength: 50,
+            validate: value => validator.isEmail(value)
+          })}
+        />
+        {props.role_id === 1 ? (
+          <div>
+            <SelectBox
+              name="city_id"
+              onClick={toggleCitySelectBox}
+              className={`${city.city ? "hasValue" : null}`}
+              listChecked={city.city_id ? [city.city] : []}
+              header="City"
+              boxOpened={cityBoxOpened}
+              list={props.cities}
+              optionsContainerRef={citiesContainerRef}
+              multiSelect={false}
+              isError={errors.City || props.errors.city_id}
+              error={
+                errors.City
+                  ? "You must choose your city"
+                  : props.errors.city_id
+              }
+              refe={register({
+                validate: () => city.city_id !== null
+              })}
+            />
+          </div>
+        ) : null}
+        <Input
+          type="password"
+          name="password"
+          value={watch("password")}
+          id="password"
+          placeholder="Password"
+          isError={errors.password || props.errors.password}
+          error={
+            errors.password
+              ? "Your password must be between 8 and 50 characters"
+              : props.errors.password
+          }
+          refe={register({
+            required: true,
+            minLength: 8,
+            maxLength: 50
+          })}
+        />
+        <Input
+          type="password"
+          name="confirm_password"
+          value={watch("confirm_password")}
+          id="confirm_password"
+          placeholder="Repeat password"
+          isError={errors.confirm_password || props.errors.confirm_password}
+          error={
+            errors.confirm_password
+              ? "Passwords must be identical"
+              : props.errors.confirm_password
+          }
+          refe={register({
+            required: true,
+            validate: value => value === watch("password")
+          })}
+        />
+        <Button className="btn btn-md btn-green" type="submit">
+          Signup
+        </Button>
+      </form>
+    </section>
+  );
+};
 
 class Signup extends Component {
   state = {
     role_id: 1
   };
+
+  componentDidMount() {
+    this.props.getCities();
+  }
 
   toggleUserForm = role_id => {
     if (this.state.role_id !== role_id) {
@@ -252,11 +219,10 @@ class Signup extends Component {
             <div className={"signup__container__forms__slider"}>
               <SignupUser
                 role_id={this.state.role_id}
-                getCities={this.props.getCities}
                 cities={this.props.user.cities}
                 postSignup={this.props.postSignup}
-                signupSuccess={this.props.user.success}
-                signupErrors={this.props.user.errors}
+                success={this.props.user.success}
+                errors={this.props.user.errors}
                 redirectToLogin={() => this.props.history.push("/login")}
               />
             </div>

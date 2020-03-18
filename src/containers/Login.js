@@ -1,158 +1,99 @@
 // @ts-check
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import validator from "validator";
 import SocialButtons from "../components/Social-buttons";
 import Dividor from "../components/Dividor";
-import FieldInput from "../components/FieldInput";
 import Button from "../components/Button";
 import { connect } from "react-redux";
-import validator from "validator";
 import { postLogin } from "../actions/userAction";
+import Input from "../components/Input";
 
-class Login extends Component {
-  state = {
-    user: "",
-    password: "",
-    errorsClient: {
-      user: "",
-      password: ""
-    },
-    errorsServer: {
-      user: "",
-      password: ""
-    }
-  };
+const Login = props => {
+  let { register, handleSubmit, errors, watch } = useForm();
 
-  componentDidUpdate(prevProps) {
-    if (
-      JSON.stringify(prevProps.user.errors) !==
-      JSON.stringify(this.props.user.errors)
-    ) {
-      const errorsServer = this.state.errorsServer;
-      this.props.user.errors.user
-        ? (errorsServer.user = this.props.user.errors.user)
-        : (errorsServer.user = "");
-      this.props.user.errors.password && !this.props.user.errors.user
-        ? (errorsServer.password = this.props.user.errors.password)
-        : (errorsServer.password = "");
-      this.setState({ errorsServer });
-    }
-    if (
-      prevProps.user.api_token !== this.props.user.api_token &&
-      this.props.user.api_token
-    )
-      this.props.history.push("/home");
-  }
-
-  onChangeHandler = ({ target: { name, value } }) => {
-    this.setState({
-      [name]: value
+  const onSubmitHandler = data => {
+    props.postLogin({
+      user: data.user,
+      password: data.password
     });
   };
 
-  checkInput = name => {
-    const { errorsClient } = this.state;
-    if (name === "user") {
-      if (
-        !validator.isEmail(this.state.user) &&
-        !validator.isMobilePhone(this.state.user)
-      )
-        errorsClient.user = "You must type your email or your phone correctly";
-      else errorsClient.user = "";
-    } else {
-      if (
-        !validator.isLength(this.state.password, {
-          max: 50,
-          min: 8
-        })
-      )
-        errorsClient.password =
-          "Your password must be between 8 and 50 characters";
-      else errorsClient.password = "";
-    }
-    this.setState({ errorsClient });
-  };
+  useEffect(() => {
+    if (props.user.api_token) props.history.push("/home");
+  }, [props.user]);
 
-  onSubmitHandler = e => {
-    e.preventDefault();
-    this.checkInput("user");
-    this.checkInput("password");
-    if (
-      !Object.values(this.state.errorsClient).filter(value => value !== "")
-        .length
-    ) {
-      this.props.postLogin({
-        user: this.state.user,
-        password: this.state.password
-      });
-    }
-  };
-
-  render() {
-    return (
-      <section className="login">
-        <section className="login__container">
-          <header className="login__container__header">
-            <p>Don't have an account?</p>
-            <Link to="/signup">
-              <button>sign up</button>
-            </Link>
-          </header>
-          <div className="login__container__form">
-            <h1>
-              Hi,
-              <span>Welcome back!</span>
-            </h1>
-            <div className="login__container__form__social">
-              <SocialButtons />
-            </div>
-            <Dividor />
-            <form>
-              <FieldInput
-                type="text"
-                name="user"
-                value={this.state.user}
-                onChange={this.onChangeHandler.bind(this)}
-                placeholder="Email address - Phone number"
-                error={
-                  this.state.errorsClient.user || this.state.errorsServer.user
-                }
-                onBlur={() => this.checkInput("user")}
-              />
-              <FieldInput
-                type="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.onChangeHandler.bind(this)}
-                placeholder="Password"
-                error={
-                  this.state.errorsClient.password ||
-                  this.state.errorsServer.password
-                }
-                onBlur={() => this.checkInput("password")}
-              />
-              <div className="forgot-password">
-                <Link to="/forgot-password">
-                  <p>Forget your password?</p>
-                </Link>
-              </div>
-              <Button
-                className="btn btn-md btn-green"
-                // type="submit"
-                onClick={this.onSubmitHandler}
-              >
-                Login
-              </Button>
-            </form>
+  return (
+    <section className="login">
+      <section className="login__container">
+        <header className="login__container__header">
+          <p>Don't have an account?</p>
+          <Link to="/signup">
+            <button>sign up</button>
+          </Link>
+        </header>
+        <div className="login__container__form">
+          <h1>
+            Hi,
+            <span>Welcome back!</span>
+          </h1>
+          <div className="login__container__form__social">
+            <SocialButtons />
           </div>
-          <footer className="login__container__footer">
-            <p>All Rights Reserved © Curey</p>
-          </footer>
-        </section>
+          <Dividor />
+          <form onSubmit={handleSubmit(data => onSubmitHandler(data))}>
+            <Input
+              className="fieldinput__input"
+              type="text"
+              name="user"
+              id="user"
+              value={watch("user")}
+              placeholder="Email address - Phone number"
+              isError={errors.user || props.user.errors.user}
+              error={
+                errors.user
+                  ? "You must type your email or your phone correctly"
+                  : props.user.errors.user
+              }
+              refe={register({
+                required: true,
+                minLength: 5,
+                validate: value =>
+                  validator.isEmail(value) || validator.isMobilePhone(value, "ar-EG")
+              })}
+            />
+            <Input
+              type="password"
+              name="password"
+              placeholder="Password"
+              id="password"
+              value={watch("password")}
+              isError={errors.password || props.user.errors.password}
+              error={
+                errors.password
+                  ? "Your password must be between 8 and 50 characters"
+                  : props.user.errors.password
+              }
+              refe={register({ required: true, minLength: 8, maxLength: 50 })}
+            />
+            <div className="forgot-password">
+              <Link to="/forgot-password">
+                <p>Forget your password?</p>
+              </Link>
+            </div>
+            <Button className="btn btn-md btn-green" type="submit">
+              Login
+            </Button>
+          </form>
+        </div>
+        <footer className="login__container__footer">
+          <p>All Rights Reserved © Curey</p>
+        </footer>
       </section>
-    );
-  }
-}
+    </section>
+  );
+};
 
 const mapStateToProps = state => ({
   user: state.user

@@ -1,4 +1,5 @@
 import React from "react";
+import ReactLoading from "react-loading";
 
 const SelectBox = props => {
   return (
@@ -21,20 +22,29 @@ const SelectBox = props => {
         ref={props.optionsContainerRef}
       >
         <h3>{props.header}</h3>
-        {props.list.map(type => (
-          <div key={type.id} className="option">
-            <input
-              type={`${props.multiple ? "checkbox" : "radio"}`}
-              id={`${type.id}_${type.name}`}
-              hidden
-              value={type.name}
-              name={props.header}
-            />
-            <label htmlFor={`${type.id}_${type.name}`}>{type.name}</label>
-          </div>
-        ))}
+        {props.list.length ? (
+          props.list.map(type => (
+            <div key={type.id} className="option">
+              <input
+                ref={props.refe}
+                type={`${props.multiple ? "checkbox" : "radio"}`}
+                id={`${type.id}_${type.name}`}
+                hidden
+                value={type.name}
+                name={props.header}
+              />
+              <label htmlFor={`${type.id}_${type.name}`}>{type.name}</label>
+            </div>
+          ))
+        ) : (
+          <ReactLoading
+            type="spokes"
+            color="#0066ff"
+            className="loading center mb-40"
+          />
+        )}
       </div>
-      {props.error && <p className="fieldinput__error">{props.error}</p>}
+      {props.isError && <p className="fieldinput__error">{props.error}</p>}
     </div>
   );
 };
