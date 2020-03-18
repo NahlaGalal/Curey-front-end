@@ -196,7 +196,7 @@ function* getOrders({ api_token }) {
         payload: result.data.data.orders,
         isFailed: false
       });
-      console.log(result.data.data.orders);
+      console.log(result.data);
     } else
       yield put({
         type: actions.RECIEVE_ORDERS,

@@ -4,6 +4,7 @@ import Pharmacy from "../../assets/images/roshdy.png";
 import Button from "../../components/Button";
 import * as actions from "../../actions/types";
 import { connect } from "react-redux";
+import ReactLoading from "react-loading";
 
 const orders = [
   {
@@ -182,47 +183,57 @@ export class Orders extends Component {
           </Button>
         </div>
         <main className="Orders__container">
-          {this.state.orders.map((order, i) => (
-            <section className="Orders__container__box" key={i}>
-              <header className="Orders__container__box__header">
-                <img src={order.logo} alt={`${order.name}`} />
-                <div>
-                  <div className="Orders__container__box__header--heading">
-                    <p>{order.name}</p>
-                    <p
-                      className={`${
-                        order.state !== "Failed" ? "state" : "state-failed"
-                      }`}
-                    >
-                      {order.state}
+          {this.props.orders.length ? (
+            this.props.orders.map((order, i) => (
+              <section className="Orders__container__box" key={i}>
+                <header className="Orders__container__box__header">
+                  <img src={Pharmacy} alt={`${order.name}`} />
+                  <div>
+                    <div className="Orders__container__box__header--heading">
+                      <p>{order.pharmacy}</p>
+                      <p
+                        className={`${
+                          order.state !== "Failed" ? "state" : "state-failed"
+                        }`}
+                      >
+                        {"Delivered"}
+                      </p>
+                    </div>
+                    <p className="Orders__container__box__header--address">
+                      <img
+                        src={Location}
+                        alt={`location icon for ${order.pharmacy}`}
+                      />
+                      <span>Mansoura City, Gehan St</span>
                     </p>
                   </div>
-                  <p className="Orders__container__box__header--address">
-                    <img
-                      src={Location}
-                      alt={`location icon for ${order.name}`}
-                    />
-                    <span> {order.address} </span>
-                  </p>
+                </header>
+                <div className="Orders__container__box__order">
+                  <div className="Orders__container__box__order--heading">
+                    <h3> Order list </h3>
+                    <p> {order.total_price} L.E </p>
+                  </div>
+                  <ul>
+                    {order.products.map((medication, i) => (
+                      <li key={i}> {medication.name} </li>
+                    ))}
+                  </ul>
+                  <Button className="btn btn-xxs btn-green-dark">
+                    {" "}
+                    {order.state !== "Failed" ? "Trace Order" : "Reorder"}{" "}
+                  </Button>
                 </div>
-              </header>
-              <div className="Orders__container__box__order">
-                <div className="Orders__container__box__order--heading">
-                  <h3> Order list </h3>
-                  <p> {order.total} L.E </p>
-                </div>
-                <ul>
-                  {order.orderList.map((medication, i) => (
-                    <li key={i}> {medication} </li>
-                  ))}
-                </ul>
-                <Button className="btn btn-xxs btn-green-dark">
-                  {" "}
-                  {order.state !== "Failed" ? "Trace Order" : "Reorder"}{" "}
-                </Button>
-              </div>
-            </section>
-          ))}
+              </section>
+            ))
+          ) : this.props.medicationsDataError === "no orders yet" ? (
+            <p>NO ORDERS YET</p>
+          ) : (
+            <ReactLoading
+              type="spokes"
+              color="#0066ff"
+              className="loading center mb-40"
+            />
+          )}
         </main>
       </div>
     );
@@ -231,7 +242,9 @@ export class Orders extends Component {
 
 const mapStateToProps = state => {
   return {
-    api_token: state.user.api_token
+    api_token: state.user.api_token,
+    orders: state.medicationsData.orders,
+    medicationsDataError: state.medicationsData.errors
   };
 };
 

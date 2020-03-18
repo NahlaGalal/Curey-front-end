@@ -45,12 +45,13 @@ export function medicationsData(state = {}, action) {
     case actions.SUBMIT_MEDICATION_ORDER_FAILED:
       return {
         ...state,
-        errors: action.isFailed ? action.payload : []
+        errors: action.payload
       };
     case actions.RECIEVE_ORDERS:
       return {
         ...state,
-        orders: [...action.payload]
+        orders: [...action.payload],
+        errors: action.isFailed ? action.payload : []
       };
 
     default:
