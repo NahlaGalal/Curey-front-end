@@ -25,7 +25,9 @@ const defaultState = {
     doctorsSearch: [],
     doctorData: {
       degrees: [],
-      reviews: []
+      reviews: [],
+      id: 0,
+      is_callup: 0
     }
   },
   homeData: {

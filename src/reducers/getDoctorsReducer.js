@@ -1,7 +1,12 @@
-import {GET_DOCTORS, SEARCH_DOCTORS, GET_DOCTOR} from "../actions/types";
+import {
+  GET_DOCTORS,
+  SEARCH_DOCTORS,
+  GET_DOCTOR,
+  CALL_UP_DOCTOR
+} from "../actions/types";
 
-export const doctors = (state={}, action) => {
-  switch(action.type) {
+export const doctors = (state = {}, action) => {
+  switch (action.type) {
     case GET_DOCTORS:
       return {
         ...state,
@@ -19,13 +24,24 @@ export const doctors = (state={}, action) => {
     case GET_DOCTOR:
       return {
         ...state,
-        doctorData: !action.isFailed ? {
-          ...action.payload.doctor,
-          reviews: action.payload.reviews
-        } : {},
+        doctorData: !action.isFailed
+          ? {
+              ...state.doctorData,
+              ...action.payload.doctor,
+              reviews: action.payload.reviews
+            }
+          : {},
         errors: action.isFailed ? action.payload : []
-      }
+      };
+    case CALL_UP_DOCTOR:
+      return {
+        ...state,
+        doctorData: {
+          ...state.doctorData,
+          is_callup: 1
+        }
+      };
     default:
       return state;
   }
-}
+};

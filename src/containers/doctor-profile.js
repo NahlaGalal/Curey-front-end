@@ -10,16 +10,17 @@ import { connect } from "react-redux";
 import { getDoctorData } from "../actions/getDoctorsAction";
 import ReactLoading from "react-loading";
 import UserImg from "../assets/svg/user.svg";
+import * as actions from "../actions/types";
 
 class DoctorProfile extends Component {
   boxRef = React.createRef();
 
   onScrollHandler = ({ currentTarget }) => {
-    if(this.boxRef.current) {
+    if (this.boxRef.current) {
       const boxOffset = this.boxRef.current.offsetTop;
       const scroll = currentTarget.pageYOffset;
       const scrollBy = Math.abs(boxOffset - (scroll + 64));
-  
+
       if (boxOffset <= scroll + 64) {
         this.boxRef.current.style.transform = `translateY(${scrollBy}px)`;
       } else {
@@ -109,13 +110,15 @@ class DoctorProfile extends Component {
                   Book now {doctor.fees} L.E
                 </Button>
               </Link>
-              {doctor.offers_callup && (
-                <Link to="/homeVisitDoctor/1">
-                  <Button className="btn btn-lg btn-green" type="button">
-                    Home visit {doctor.callup_fees} L.E
-                  </Button>
-                </Link>
-              )}
+              <div onClick={this.props.callUpDoctor}>
+                {doctor.offers_callup && (
+                  <Link to="/homeVisitDoctor/1">
+                    <Button className="btn btn-lg btn-green" type="button">
+                      Home visit {doctor.callup_fees} L.E
+                    </Button>
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
         </section>
@@ -143,7 +146,11 @@ class DoctorProfile extends Component {
         </section>
       </section>
     ) : (
-      <ReactLoading type="spokes" color="#0066ff" className="loading loading-doctor-profile" />
+      <ReactLoading
+        type="spokes"
+        color="#0066ff"
+        className="loading loading-doctor-profile"
+      />
     );
   }
 }
@@ -154,7 +161,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getDoctorData: (id, api_token) => dispatch(getDoctorData({ id, api_token }))
+  getDoctorData: (id, api_token) => dispatch(getDoctorData({ id, api_token })),
+  callUpDoctor: () => dispatch({ type: actions.CALL_UP_DOCTOR })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DoctorProfile);

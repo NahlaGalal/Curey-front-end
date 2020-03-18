@@ -24,6 +24,20 @@ function* getAppointments({ api_token }) {
   }
 }
 
+function* bookAppointment({ data }) {
+  try {
+    let res = yield call(() => axios.post("/api/web/book_appointment", data));
+    if (!res.data.isFailed) {
+      console.log(res);
+    } else {
+      console.log("erroe");
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export default function* watchAppointments() {
   yield takeEvery(actions.REQUEST_APPOINTMENTS, getAppointments);
+  yield takeEvery(actions.BOOK_APPOINTMENT, bookAppointment);
 }
