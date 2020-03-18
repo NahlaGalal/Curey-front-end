@@ -21,6 +21,11 @@ class PharmacyItem extends Component {
     this.setState({ addedToCart: !this.state.addedToCart });
   };
 
+  submitOrder = () => {
+    this.props.onSubmit();
+    this.setState({ orderMedicationBox: false });
+  };
+
   render() {
     return (
       <Fragment>
@@ -67,7 +72,10 @@ class PharmacyItem extends Component {
         </div>
         {this.state.orderMedicationBox && (
           <OrderMedication
-            closePopup={() => this.setState({ orderMedicationBox: false })}
+            closePopup={() => {
+              this.setState({ orderMedicationBox: false });
+            }}
+            submitOrder={this.submitOrder}
             medication={this.props.medication}
             pharmacy={{ name: this.props.name, address: this.props.address }}
           />
@@ -78,5 +86,3 @@ class PharmacyItem extends Component {
 }
 
 export default PharmacyItem;
-
-// TODO: Add to cart ==> Send to shopping cart ==> and show box for confirmation

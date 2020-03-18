@@ -2,142 +2,33 @@ import React, { Component } from "react";
 import Location from "../../assets/svg/location.svg";
 import Pharmacy from "../../assets/images/roshdy.png";
 import Button from "../../components/Button";
-
-const orders = [
-  {
-    logo: Pharmacy,
-    name: "Roshdy pharmacies",
-    address: "Mansoura City, Gehan St",
-    state: "Delivered",
-    total: 85,
-    orderList: [
-      "Antinal pills",
-      "Flumox syrup",
-      "Emetrex pills",
-      "Cefatax syrup"
-    ]
-  },
-  {
-    logo: Pharmacy,
-    name: "Roshdy pharmacies",
-    address: "Mansoura City, Gehan St",
-    state: "Failed",
-    total: 85,
-    orderList: [
-      "Antinal pills",
-      "Flumox syrup",
-      "Emetrex pills",
-      "Cefatax syrup",
-      "Cefatax syrup",
-      "Cefatax syrup"
-    ]
-  },
-  {
-    logo: Pharmacy,
-    name: "Roshdy pharmacies",
-    address: "Mansoura City, Gehan St",
-    state: "Pending",
-    total: 85,
-    orderList: [
-      "Antinal pills",
-      "Flumox syrup",
-      "Emetrex pills",
-      "Cefatax syrup"
-    ]
-  },
-  {
-    logo: Pharmacy,
-    name: "Roshdy pharmacies",
-    address: "Mansoura City, Gehan St",
-    state: "Delivered",
-    total: 85,
-    orderList: [
-      "Antinal pills",
-      "Flumox syrup",
-      "Emetrex pills",
-      "Cefatax syrup"
-    ]
-  },
-  {
-    logo: Pharmacy,
-    name: "Roshdy pharmacies",
-    address: "Mansoura City, Gehan St",
-    state: "Delivered",
-    total: 85,
-    orderList: [
-      "Antinal pills",
-      "Flumox syrup",
-      "Emetrex pills",
-      "Cefatax syrup"
-    ]
-  },
-  {
-    logo: Pharmacy,
-    name: "Roshdy pharmacies",
-    address: "Mansoura City, Gehan St",
-    state: "Delivered",
-    total: 85,
-    orderList: [
-      "Antinal pills",
-      "Flumox syrup",
-      "Emetrex pills",
-      "Cefatax syrup"
-    ]
-  },
-  {
-    logo: Pharmacy,
-    name: "Roshdy pharmacies",
-    address: "Mansoura City, Gehan St",
-    state: "Delivered",
-    total: 85,
-    orderList: [
-      "Antinal pills",
-      "Flumox syrup",
-      "Emetrex pills",
-      "Cefatax syrup"
-    ]
-  },
-  {
-    logo: Pharmacy,
-    name: "Roshdy pharmacies",
-    address: "Mansoura City, Gehan St",
-    state: "Delivered",
-    total: 85,
-    orderList: [
-      "Antinal pills",
-      "Flumox syrup",
-      "Emetrex pills",
-      "Cefatax syrup"
-    ]
-  },
-  {
-    logo: Pharmacy,
-    name: "Roshdy pharmacies",
-    address: "Mansoura City, Gehan St",
-    state: "Delivered",
-    total: 85,
-    orderList: [
-      "Antinal pills",
-      "Flumox syrup",
-      "Emetrex pills",
-      "Cefatax syrup"
-    ]
-  }
-];
+import * as actions from "../../actions/types";
+import { connect } from "react-redux";
+import ReactLoading from "react-loading";
 
 export class Orders extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      orders,
+      orders: [],
       filter: "All"
     };
   }
 
+  componentDidMount() {
+    this.props.onRequestOrders(this.props.api_token);
+  }
+
+  componentDidUpdate(prevProps) {
+    if(JSON.stringify(prevProps.orders) !== JSON.stringify(this.props.orders)) {
+      this.setState({ orders: this.props.orders });
+    }
+  }
+
   filterOrders = filter => {
-    if (filter === "All") return this.setState({ orders, filter });
+    if (filter === "All") return this.setState({ orders: this.props.orders, filter });
     return this.setState({
-      orders: orders.filter(order => order.state === filter),
+      orders: this.props.orders.filter(order => order.state === filter),
       filter
     });
   };
@@ -176,51 +67,76 @@ export class Orders extends Component {
           </Button>
         </div>
         <main className="Orders__container">
-          {this.state.orders.map((order, i) => (
-            <section className="Orders__container__box" key={i}>
-              <header className="Orders__container__box__header">
-                <img src={order.logo} alt={`${order.name}`} />
-                <div>
-                  <div className="Orders__container__box__header--heading">
-                    <p>{order.name}</p>
-                    <p
-                      className={`${
-                        order.state !== "Failed" ? "state" : "state-failed"
-                      }`}
-                    >
-                      {order.state}
+          {this.props.orders.length ? (
+            this.state.orders.map((order, i) => (
+              <section className="Orders__container__box" key={i}>
+                <header className="Orders__container__box__header">
+                  <img src={order.image || Pharmacy} alt={`${order.pharmacy} Logo`} />
+                  <div>
+                    <div className="Orders__container__box__header--heading">
+                      <p>{order.pharmacy}</p>
+                      <p
+                        className={`${
+                          order.state !== "Failed" ? "state" : "state-failed"
+                        }`}
+                      >
+                        {order.state || "Delivered"}
+                      </p>
+                    </div>
+                    <p className="Orders__container__box__header--address">
+                      <img
+                        src={Location}
+                        alt={`location icon for ${order.pharmacy}`}
+                      />
+                      <span>{order.address || "Mansoura City, Gehan St"}</span>
                     </p>
                   </div>
-                  <p className="Orders__container__box__header--address">
-                    <img
-                      src={Location}
-                      alt={`location icon for ${order.name}`}
-                    />
-                    <span> {order.address} </span>
-                  </p>
+                </header>
+                <div className="Orders__container__box__order">
+                  <div className="Orders__container__box__order--heading">
+                    <h3> Order list </h3>
+                    <p> {order.total_price} L.E </p>
+                  </div>
+                  <ul>
+                    {order.products.map((medication, i) => (
+                      <li key={i}> {medication.name} </li>
+                    ))}
+                  </ul>
+                  <Button className="btn btn-xxs btn-green-dark">
+                    {" "}
+                    {order.state !== "Failed" ? "Trace Order" : "Reorder"}{" "}
+                  </Button>
                 </div>
-              </header>
-              <div className="Orders__container__box__order">
-                <div className="Orders__container__box__order--heading">
-                  <h3> Order list </h3>
-                  <p> {order.total} L.E </p>
-                </div>
-                <ul>
-                  {order.orderList.map((medication, i) => (
-                    <li key={i}> {medication} </li>
-                  ))}
-                </ul>
-                <Button className="btn btn-xxs btn-green-dark">
-                  {" "}
-                  {order.state !== "Failed" ? "Trace Order" : "Reorder"}{" "}
-                </Button>
-              </div>
-            </section>
-          ))}
+              </section>
+            ))
+          ) : this.props.medicationsDataError.length ? (
+            <p className="Orders__container__error">NO ORDERS YET</p>
+          ) : (
+            <ReactLoading
+              type="spokes"
+              color="#0066ff"
+              className="loading center mb-40"
+            />
+          )}
         </main>
       </div>
     );
   }
 }
 
-export default Orders;
+const mapStateToProps = state => {
+  return {
+    api_token: state.user.api_token,
+    orders: state.medicationsData.orders,
+    medicationsDataError: state.medicationsData.errors
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onRequestOrders: api_token =>
+      dispatch({ type: actions.REQUEST_ORDERS, api_token })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Orders);

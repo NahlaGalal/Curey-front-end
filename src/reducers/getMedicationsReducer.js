@@ -29,18 +29,31 @@ export function medicationsData(state = {}, action) {
       return {
         ...state,
         errors: action.isFailed ? action.payload : []
-      }
+      };
     case actions.DELETE_FAVOURITE:
       return {
         ...state,
         errors: action.isFailed ? action.payload : []
-      }
+      };
     case actions.GET_FAVOURITES:
       return {
         ...state,
         medicationsSaved: !action.isFailed ? action.payload[0] : [],
         errors: action.isFailed ? action.payload : []
       };
+
+    case actions.SUBMIT_MEDICATION_ORDER_FAILED:
+      return {
+        ...state,
+        errors: action.payload
+      };
+    case actions.RECIEVE_ORDERS:
+      return {
+        ...state,
+        orders: !action.isFailed ? [...action.payload] : [],
+        errors: action.isFailed ? [action.payload] : []
+      };
+
     default:
       return state;
   }

@@ -45,6 +45,13 @@ class MedicinePage extends Component {
     });
   };
   
+  submitOrder = () => {
+    this.props.submitMedicineOrder(this.props.api_token, [
+      { id: this.props.pharmacies[0].product_pharmacy_id, amount: 1 }
+    ]);
+  };
+  // product_pharmacy_id
+
   render() {
     return (
       <React.Fragment>
@@ -124,6 +131,7 @@ class MedicinePage extends Component {
                           : false
                       }
                       addToCart={() => this.addToCart(pharmacy)}
+                      onsubmit={this.submitOrder}
                     />
                   ))
                 ) : (
@@ -156,7 +164,8 @@ const mapStateToProps = state => ({
   api_token: state.user.api_token,
   medicine: state.medicationsData.medicationInfo.product,
   pharmacies: state.medicationsData.medicationInfo.pharmacies,
-  cart: state.user.cart || []
+  cart: state.user.cart || [],
+  productId: state.medicationsData.medicationInfo.pharmacies.product_pharmacy_id
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -166,7 +175,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: actions.SAGA_DELETE_FAVOURITE, data, source }),
   addFavouriteMedication: (data, source) =>
     dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source }),
-  addToCartStorage: data => dispatch({ type: actions.ADD_TO_CART, data })
+  addToCartStorage: data => dispatch({ type: actions.ADD_TO_CART, data }),
+  submitMedicineOrder: (api_token, data) =>
+    dispatch({ type: actions.SUBMIT_MEDICATION_ORDER, api_token, data })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MedicinePage);

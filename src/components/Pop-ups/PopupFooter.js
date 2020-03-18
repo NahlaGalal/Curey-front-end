@@ -31,7 +31,7 @@ const PopupFooter = props => {
         )}
         <Button
           className="btn btn-xxs btn-cancel btn-transparent"
-          onClick={props.closePopup}
+          onClick={props.submitOrder}
         >
           Cancel
         </Button>
