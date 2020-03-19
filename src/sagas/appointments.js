@@ -27,10 +27,10 @@ function* getAppointments({ api_token }) {
 function* bookAppointment({ data }) {
   try {
     let res = yield call(() => axios.post("/api/web/book_appointment", data));
-    if (!res.data.isFailed) {
-      console.log(res);
-    } else {
-      console.log("erroe");
+    if (!res.data.isFailed && res.data.errors.error) {
+      alert(res.data.errors.error);
+    } else if (!res.data.isFailed && !res.data.errors.error) {
+      alert(res.data.data.message);
     }
   } catch (e) {
     console.log(e);

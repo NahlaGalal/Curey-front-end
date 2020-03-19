@@ -2,7 +2,8 @@ import {
   GET_DOCTORS,
   SEARCH_DOCTORS,
   GET_DOCTOR,
-  CALL_UP_DOCTOR
+  CALL_UP_DOCTOR,
+  BOOK_WITHOUT_CALL_UP
 } from "../actions/types";
 
 export const doctors = (state = {}, action) => {
@@ -39,6 +40,14 @@ export const doctors = (state = {}, action) => {
         doctorData: {
           ...state.doctorData,
           is_callup: 1
+        }
+      };
+    case BOOK_WITHOUT_CALL_UP:
+      return {
+        ...state,
+        doctorData: {
+          ...state.doctorData,
+          is_callup: 0
         }
       };
     default:
