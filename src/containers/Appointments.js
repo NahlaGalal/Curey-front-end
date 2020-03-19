@@ -15,7 +15,14 @@ class Appointments extends Component {
   }
 
   componentDidMount() {
+    this.setState({ bookings: this.props.appointments });
     this.props.onRequestAppointments(this.props.api_token);
+  }
+
+  componentDidUpdate(prevProps) {
+    if(JSON.stringify(prevProps.appointments) !== JSON.stringify(this.props.appointments)) {
+      this.setState({ bookings: this.props.appointments})
+    }
   }
 
   filterBookings = filter => {
@@ -29,7 +36,7 @@ class Appointments extends Component {
     else if (filter === "Re-examination")
       return this.setState({
         filter,
-        bookings: this.props.appointments.filter(booking => booking.re_exam)
+        bookings: this.props.appointments.filter(booking => booking.re_exam && !booking.is_callup)
       });
     else
       return this.setState({
@@ -80,9 +87,10 @@ class Appointments extends Component {
 
         <div className="Appointments__Grid">
           {this.props.appointments.length ? (
-            this.props.appointments.map((booking, i) => (
+            this.state.bookings.map((booking, i) => (
               <DoctorBookingCard
                 key={i}
+                image={booking.image}
                 name={booking.full_name}
                 price={booking.fees}
                 speciality={booking.speciality}

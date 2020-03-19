@@ -18,6 +18,8 @@
 
 .DoctorBookingCard {
   box-shadow: $shadow;
+  display: flex;
+  flex-direction: column;
 
   &__img {
     box-shadow: 0 0 0 2.68px #07a3a4, 0 0 0 5.63px rgba(7, 163, 164, 0.4),
@@ -36,6 +38,10 @@
 
     &__text {
       flex-grow: 1;
+      .doctorCard__price {
+        text-align: right;
+        flex-basis: 23%;
+      }
     }
   }
 
@@ -48,13 +54,16 @@
   p {
     color: rgba($color: $color-dark, $alpha: $very-high-opacity);
     margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    img {
+      margin-right: 0.4rem;
+    }
   }
   hr {
     background-color: $color-dark;
     border-bottom: 0;
-  }
-  .icon {
-    margin-right: 0.4rem;
+    margin-top: auto;
   }
   span {
     font-family: $semi-bold-font;

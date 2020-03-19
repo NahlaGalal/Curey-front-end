@@ -1,18 +1,12 @@
 import React, { Component } from "react";
 import EditIcon from "../../assets/svg/Union-3.svg";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import * as actions from "../../actions/types";
+import Button from "../Button";
 
 class AvailableAppointments extends Component {
   doctorBookingHandler = () => {
     let appointment_time = "2020-03-18 12:10:00";
-    this.props.onBookAppointment(
-      this.props.api_token,
-      this.props.doctor_id,
-      this.props.is_callup,
-      appointment_time
-    );
+    this.props.onBookAppointment(appointment_time);
   };
 
   render() {
@@ -30,82 +24,82 @@ class AvailableAppointments extends Component {
 
             <div className="appointment">
               <span>1:00 PM to 1:15 PM</span>
-              <button
+              <Button
                 className="btn btn-blue"
                 onClick={this.doctorBookingHandler}
               >
                 Book
-              </button>
+              </Button>
             </div>
 
             <div className="appointment">
               <span>1:15 PM to 1:30 PM</span>
-              <button
+              <Button
                 className="btn btn-blue"
                 onClick={this.doctorBookingHandler}
               >
                 Book
-              </button>
+              </Button>
             </div>
 
             <div className="appointment">
               <span>1:30 PM to 1:45 PM</span>
-              <button
+              <Button
                 className="btn btn-blue"
                 onClick={this.doctorBookingHandler}
               >
                 Book
-              </button>
+              </Button>
             </div>
 
             <div className="appointment">
               <span>1:00 PM to 1:15 PM</span>
-              <button
+              <Button
                 className="btn btn-blue"
                 onClick={this.doctorBookingHandler}
               >
                 Book
-              </button>
+              </Button>
             </div>
 
             <div className="appointment">
               <span>2:00 PM to 2:15 PM</span>
-              <button
+              <Button
                 className="btn btn-blue"
                 onClick={this.doctorBookingHandler}
               >
                 Book
-              </button>
+              </Button>
             </div>
 
             <div className="appointment">
               <span>2:15 PM to 2:30 PM</span>
-              <button
+              <Button
                 className="btn btn-blue"
                 onClick={this.doctorBookingHandler}
               >
                 Book
-              </button>
+              </Button>
             </div>
 
             <div className="appointment">
               <span>2:45 PM to 3:00 PM</span>
-              <button
+              <Button
                 className="btn btn-blue"
                 onClick={this.doctorBookingHandler}
               >
                 Book
-              </button>
+              </Button>
             </div>
 
             <div className="appointment">
               <span>3:00 PM to 3:15 PM</span>
-              <button
+              <Button
                 className="btn btn-blue"
                 onClick={this.doctorBookingHandler}
               >
                 Book
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -113,82 +107,82 @@ class AvailableAppointments extends Component {
             <h3 className="heading-3">Tomorrow's appointments </h3>
             <div className="appointment">
               <span>1:00 PM to 1:15 PM</span>
-              <button
+              <Button
                 className="btn btn-blue"
                 onClick={this.doctorBookingHandler}
               >
                 Book
-              </button>
+              </Button>
             </div>
 
             <div className="appointment">
               <span>1:15 PM to 1:30 PM</span>
-              <button
+              <Button
                 className="btn btn-blue"
                 onClick={this.doctorBookingHandler}
               >
                 Book
-              </button>
+              </Button>
             </div>
 
             <div className="appointment">
               <span>1:30 PM to 1:45 PM</span>
-              <button
+              <Button
                 className="btn btn-blue"
                 onClick={this.doctorBookingHandler}
               >
                 Book
-              </button>
+              </Button>
             </div>
 
             <div className="appointment">
               <span>1:00 PM to 1:15 PM</span>
-              <button
+              <Button
                 className="btn btn-blue"
                 onClick={this.doctorBookingHandler}
               >
                 Book
-              </button>
+              </Button>
             </div>
 
             <div className="appointment">
               <span>2:00 PM to 2:15 PM</span>
-              <button
+              <Button
                 className="btn btn-blue"
                 onClick={this.doctorBookingHandler}
               >
                 Book
-              </button>
+              </Button>
             </div>
 
             <div className="appointment">
               <span>2:15 PM to 2:30 PM</span>
-              <button
+              <Button
                 className="btn btn-blue"
                 onClick={this.doctorBookingHandler}
               >
                 Book
-              </button>
+              </Button>
             </div>
 
             <div className="appointment">
               <span>2:45 PM to 3:00 PM</span>
-              <button
+              <Button
                 className="btn btn-blue"
                 onClick={this.doctorBookingHandler}
               >
                 Book
-              </button>
+              </Button>
             </div>
 
             <div className="appointment">
               <span>3:00 PM to 3:15 PM</span>
-              <button
+              <Button
                 className="btn btn-blue"
                 onClick={this.doctorBookingHandler}
               >
                 Book
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -197,25 +191,4 @@ class AvailableAppointments extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    api_token: state.user.api_token,
-    doctor_id: state.doctors.doctorData.id,
-    is_callup: state.doctors.doctorData.is_callup
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onBookAppointment: (api_token, doctor_id, is_callup, appointment_time) =>
-      dispatch({
-        type: actions.BOOK_APPOINTMENT,
-        data: { api_token, doctor_id, is_callup, appointment_time }
-      })
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AvailableAppointments);
+export default AvailableAppointments;

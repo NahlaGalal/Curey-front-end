@@ -227,7 +227,7 @@ $border: #07a3a4;
 				width: 100%;
 				}
 
-                &:first-of-type {
+                &:not(:last-of-type) {
                     margin-bottom: 1.6rem;
                 }
             }

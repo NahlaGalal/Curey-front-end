@@ -1,13 +1,18 @@
 import React from "react";
-import DoctorImg from "../../assets/images/doctor1.png";
+import UserImg from "../../assets/svg/user.svg";
 import LocationIcon from "../../assets/svg/location.svg";
 import CalendarIcon from "../../assets/svg/calendar.svg";
 import ClockIcon from "../../assets/svg/clock.svg";
 
-const DoctorBookingCard = props => (
+const DoctorBookingCard = props => {
+  const dateTime = new Date(props.date);
+  const date = `${dateTime.toString().split(" ")[1]} ${dateTime.getDate()}, ${dateTime.getFullYear()}`;
+  const time = new Date(dateTime).toLocaleTimeString();
+
+  return(
   <div className="DoctorBookingCard">
     <div className="DoctorBookingCard__info">
-      <img alt="doctor" src={DoctorImg} className="DoctorBookingCard__img" />
+      <img alt="doctor" src={props.image || UserImg} className="DoctorBookingCard__img" />
       <div className="DoctorBookingCard__info__text">
         <div className="flex">
           <h3 className="heading-3">{props.name}</h3>
@@ -25,16 +30,16 @@ const DoctorBookingCard = props => (
       <div className="flex">
         <p>
           <img src={CalendarIcon} alt="Calendar Icon" className="icon" />
-          {props.date}
+          {date}
         </p>
         <span>{props.status}</span>
       </div>
       <p>
         <img src={ClockIcon} alt="Clock Icon" className="icon" />
-        {`${props.time} hours`}
+        {time}
       </p>
     </footer>
   </div>
-);
+)};
 
 export default DoctorBookingCard;

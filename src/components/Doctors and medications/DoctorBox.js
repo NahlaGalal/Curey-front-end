@@ -1,11 +1,11 @@
 import React from "react";
-import DoctorImg from "../../assets/images/doctor1.png";
 import LocationIcon from "../../assets/svg/location.svg";
+import UserImg from "../../assets/svg/user.svg";
 
 const DoctorBox = props => (
   <div className="doctorBox">
     <div>
-      <img src={DoctorImg} alt="doctor" className="doctorBox__img" />
+      <img src={props.image || UserImg} alt="doctor" className="doctorBox__img" />
     </div>
     <div>
       <h3 className="doctorCard__name">{props.name}</h3>

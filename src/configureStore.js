@@ -43,12 +43,12 @@ const defaultState = {
       product: {},
       pharmacies: []
     },
-    medicationsSaved: []
+    medicationsSaved: [],
+    orders: [],
+    errors: []
   },
   appointments: {
     appointments: [],
-    medicationsSaved: [],
-    orders: [],
     errors: []
   }
 };

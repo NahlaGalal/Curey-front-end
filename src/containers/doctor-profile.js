@@ -63,7 +63,7 @@ class DoctorProfile extends Component {
                     <p>{doctor.address}</p>
                   </div>
                   <p>
-                    <span>{doctor.appointments_count}</span> Bookings,
+                    <span>{doctor.appointments_count}</span> Bookings,{" "}
                     <span>{doctor.callup_count}</span> Home visits
                   </p>
                 </div>
@@ -105,22 +105,18 @@ class DoctorProfile extends Component {
               </div>
             </div>
             <div className="profile__header__box" ref={this.boxRef}>
-              <div onClick={this.props.bookDoctor} className="mb-20">
-                <Link to="/bookingDoctor/1">
+              <Link to={`/bookingDoctor/${doctor.id}`}>
+                <Button className="btn btn-lg btn-green" type="button">
+                  Book now {doctor.fees} L.E
+                </Button>
+              </Link>
+              {doctor.offers_callup && (
+                <Link to={`/homeVisitDoctor/${doctor.id}`}>
                   <Button className="btn btn-lg btn-green" type="button">
-                    Book now {doctor.fees} L.E
+                    Home visit {doctor.callup_fees} L.E
                   </Button>
                 </Link>
-              </div>
-              <div onClick={this.props.callUpDoctor}>
-                {doctor.offers_callup && (
-                  <Link to="/homeVisitDoctor/1">
-                    <Button className="btn btn-lg btn-green" type="button">
-                      Home visit {doctor.callup_fees} L.E
-                    </Button>
-                  </Link>
-                )}
-              </div>
+              )}
             </div>
           </div>
         </section>
@@ -163,9 +159,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getDoctorData: (id, api_token) => dispatch(getDoctorData({ id, api_token })),
-  callUpDoctor: () => dispatch({ type: actions.CALL_UP_DOCTOR }),
-  bookDoctor: () => dispatch({ type: actions.BOOK_WITHOUT_CALL_UP })
+  getDoctorData: (id, api_token) => dispatch(getDoctorData({ id, api_token }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DoctorProfile);
