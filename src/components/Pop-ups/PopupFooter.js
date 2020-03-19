@@ -24,7 +24,7 @@ const PopupFooter = props => {
         ) : (
           <Button
             className="btn btn-xxs btn-green-dark btn-apply"
-            onClick={props.closePopup}
+            onClick={props.submitOrder}
           >
             {props.applyText}
           </Button>

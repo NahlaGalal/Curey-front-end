@@ -108,12 +108,13 @@
                 margin-top: 1.6rem;
               }
               &__hours {
+                z-index: 10;
                 position: absolute;
                 width: 9.6rem;
                 height: 4.8rem;
                 top: 0;
                 right: 0;
-                border-left: 1px solid $color-dark;
+                border-left: 1px solid rgba($color: $color-dark, $alpha: $medium-opacity);
                 padding: 1.4rem 2.2rem;
                 color: $color-dark;
                 font-size: 1.6rem;

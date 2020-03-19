@@ -18,6 +18,18 @@
     top: -8px;
     right: 18px;
   }
+  @media screen and (max-width: 1210px) {
+    left: 18rem;
+    right: unset;
+    &:before {
+      border-left: unset;
+      border-bottom-color: transparent;
+      border-top: 8px solid transparent;
+      border-right-color: $color-white;
+      left: -8px;
+      top: 25px;
+    }
+  }
   &__notification {
     background-color: transparent;
     box-shadow: none;
@@ -60,6 +72,18 @@
   @extend .Notifications;
   right: 2.4rem;
   padding: 2.4rem;
+  @media screen and (max-width: 1210px) {
+    left: 24rem;
+    right: unset;
+    &:before {
+      border-left: unset;
+      border-bottom-color: transparent;
+      border-top: 8px solid transparent;
+      border-right-color: $color-white;
+      left: -8px;
+      top: 25px;
+    }
+  }
   header {
     display: flex;
     align-items: center;

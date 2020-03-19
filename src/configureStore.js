@@ -47,6 +47,8 @@ const defaultState = {
   },
   appointments: {
     appointments: [],
+    medicationsSaved: [],
+    orders: [],
     errors: []
   }
 };

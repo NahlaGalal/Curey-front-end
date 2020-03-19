@@ -29,7 +29,7 @@ const SignupUser = props => {
 
   useEffect(() => {
     if (props.success) props.redirectToLogin();
-  }, [props.success]);
+  });
 
   const toggleCitySelectBox = () => {
     const prev = cityBoxOpened;

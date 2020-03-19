@@ -22,7 +22,7 @@ const Login = props => {
 
   useEffect(() => {
     if (props.user.api_token) props.history.push("/home");
-  }, [props.user]);
+  });
 
   return (
     <section className="login">

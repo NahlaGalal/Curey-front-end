@@ -190,7 +190,7 @@
 
     @media (max-width: 1210px) {
       margin-bottom: 1.5rem;
-      order: 1;
+      order: 2;
     }
 
     &--unique {
@@ -200,6 +200,7 @@
       @media (max-width: 1210px) {
         border-left: none;
         padding-left: 0;
+        order: 1;
       }
     }
 

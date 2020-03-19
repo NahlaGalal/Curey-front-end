@@ -9,7 +9,11 @@ import ReactLoading from "react-loading";
 class Doctors extends Component {
   state = {
     filterShown: "hidden",
-    doctors: []
+    doctors: [],
+    filters: {
+      cities: [],
+      specialities: []
+    }
   };
 
   componentDidMount() {
@@ -27,7 +31,9 @@ class Doctors extends Component {
       JSON.stringify(prevProps.doctorsSearch) !==
       JSON.stringify(this.props.doctorsSearch)
     ) {
-      this.setState({ doctors: this.props.doctorsSearch });
+      this.setState({ doctors: this.props.doctorsSearch }, () =>
+        this.applyFilters(this.state.filters)
+      );
     }
   }
 
@@ -40,10 +46,18 @@ class Doctors extends Component {
       cities = this.props.cities.map(city => city.id.toString());
     if (!filters.specialities.length)
       specialities = this.props.specialities.map(speciality => speciality.name);
-    const doctors = this.props.doctors
+    const doctorsFilter =
+      this.state.doctors.length === this.props.doctors.length
+        ? this.props.doctors
+        : this.props.doctorsSearch;
+    const doctors = doctorsFilter
       .filter(doctor => cities.includes(doctor.city_id.toString()))
       .filter(doctor => specialities.includes(doctor.speciality));
-    this.setState({ filterShown: "hidden", doctors });
+    this.setState({
+      filterShown: "hidden",
+      doctors,
+      filters: { cities: filters.cities, specialities: filters.specialities }
+    });
   };
 
   searchDoctor = search => {

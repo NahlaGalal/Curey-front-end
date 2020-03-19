@@ -48,7 +48,6 @@
 
     @media (max-width: 880px) {
       order: 1;
-      text-align: center;
       flex-basis: 100%;
       margin: 0;
 
@@ -73,6 +72,7 @@
       width: 30rem;
       margin-bottom: 4rem;
       top: 0;
+      position: initial;
     }
 
     h3 {
