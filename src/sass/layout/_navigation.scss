@@ -234,6 +234,26 @@
       width: 2.4rem;
       height: 2.4rem;
     }
+    &__save {
+      @include image("../../assets/svg/heart.svg");
+      &.active {
+        @include image("../../assets/svg/heart-green.svg");
+      }
+    }
+    &__cart {
+      @include image("../../assets/svg/shopping-cart.svg");
+      &.active {
+        @include image("../../assets/svg/shopping-cart-green.svg");
+      }
+    }
+    &__notifications {
+      width: 2.4rem;
+      height: 2.4rem;
+      @include image("../../assets/svg/notifications-button.svg");
+      &.active {
+        @include image("../../assets/svg/notifications-button-green.svg");
+      }
+    }
     @media (max-width: 1210px) {
       order: 0;
       margin-bottom: 2rem;

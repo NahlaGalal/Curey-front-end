@@ -119,6 +119,7 @@
       background-size: 2.4rem 2.079rem;
       background-repeat: no-repeat;
       background-position: right 0.8rem top 0.8rem;
+      cursor: pointer;
       &.fav {
         background-image: url("../../assets/svg/favourite.svg");
       }
@@ -173,6 +174,7 @@
     opacity: 0;
     transition: all 0.4s;
     box-shadow: inherit;
+    background-color: $color-white;
 
     &:hover {
       cursor: pointer;

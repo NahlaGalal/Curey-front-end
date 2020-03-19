@@ -28,6 +28,9 @@
           border: none;
           background-color: transparent;
           outline: none;
+          width: 3.2rem;
+          height: 3.2rem;
+          cursor: pointer;
         }
       }
       h3 {
@@ -71,7 +74,7 @@
       &__menu {
         position: absolute;
         top: 3.2rem;
-        right: 3.2rem;
+        right: 3.7rem;
         padding: 1.6rem;
         display: flex;
         flex-direction: column;

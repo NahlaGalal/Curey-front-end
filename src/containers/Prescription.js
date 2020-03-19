@@ -73,9 +73,9 @@ export class Prescription extends Component {
           {" "}
           Add Prescription{" "}
         </Button>
-        <div className="Prescription__container">
-          {this.props.prescriptions.length ? (
-            this.props.prescriptions.map((prescription, i) => (
+        {this.props.prescriptions.length ? (
+          <div className="Prescription__container">
+            {this.props.prescriptions.map((prescription, i) => (
               <section
                 className="Prescription__container__card"
                 key={prescription.id}
@@ -132,15 +132,13 @@ export class Prescription extends Component {
                   </Button>
                 </div>
               </section>
-            ))
-          ) : !this.props.error.length && (
-            <ReactLoading
-              type="spokes"
-              color="#0066ff"
-              className="loading"
-            />
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          !this.props.error.length && (
+            <ReactLoading type="spokes" color="#0066ff" className="loading" />
+          )
+        )}
         {this.state.addPrescriptionBox && (
           <AddPrescription
             closePopup={() => this.setState({ addPrescriptionBox: false })}
