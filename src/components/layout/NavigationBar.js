@@ -69,31 +69,18 @@ class NavigationBar extends Component {
             </li>
 
             <div className="NavigationBar__icons">
-              <NavLink to="/savepage">
-                <img
-                  className="NavigationBar__icon"
-                  src={require("../../assets/svg/heart.svg")}
-                  alt="logo"
-                />
-              </NavLink>
-              <NavLink to="/shoppingcart">
-                <img
-                  className="NavigationBar__icon"
-                  src={require("../../assets/svg/shopping-cart.svg")}
-                  alt="logo"
-                />
-              </NavLink>
+              <NavLink
+                to="/savepage"
+                className="NavigationBar__icons__save"
+              ></NavLink>
+              <NavLink
+                to="/shoppingcart"
+                className="NavigationBar__icons__cart"
+              ></NavLink>
               <Button
-                className="btn"
+                className={`btn NavigationBar__icons__notifications${this.props.notificationList ? " active" : ""}`}
                 onClick={this.props.toggleNotifocationsList}
-              >
-                <img
-                  className="NavigationBar__icon"
-                  src={require("../../assets/svg/notifications-button.svg")}
-                  alt="logo"
-                />
-              </Button>
-              {/* {!this.props.api_token ? <Link to="/login" />} */}
+              ></Button>
               <Button
                 className="btn NavigationBar__profile-btn"
                 onClick={this.props.toggleUserThumbnailList}

@@ -20,21 +20,16 @@ const AddPrescription = props => {
     if (frequency >= 1) setFrequency(+frequency - 1 || 1);
   };
 
-  const togglePeriod = () => {
-    if (period === "day") setPeriod("week");
-    else setPeriod("day");
-  };
-
   const toggleDay = (e, day) => {
     e.target.classList.toggle("active");
     const dayIndex = days.findIndex(day2 => day2 === day);
-    if (dayIndex === -1){
-      // if(days.length === 6) setPeriod("day");
-      // else setPeriod("week");
+    if (dayIndex === -1) {
+      if (days.length === 6) setPeriod("day");
+      else setPeriod("week");
       setDays([...days, day]);
-    }
-    else {
-      // setPeriod("week")
+    } else {
+      if(days.length === 1) setPeriod("");
+      else setPeriod("week");
       let splicedDays = [...days];
       splicedDays.splice(dayIndex, 1);
       setDays(splicedDays);
@@ -69,7 +64,7 @@ const AddPrescription = props => {
   };
 
   const onSubmitHandler = data => {
-    const {medication_name, frequency, period, days, ...rest} = data;
+    const { medication_name, frequency, period, days, ...rest } = data;
     const daysArr = days.split(",").sort();
     const dosing = Object.values(rest);
     props.addPrescription({
@@ -79,7 +74,7 @@ const AddPrescription = props => {
       days: daysArr,
       hours,
       dosing
-    })
+    });
     props.closePopup();
   };
 
@@ -158,22 +153,9 @@ const AddPrescription = props => {
                   Per{" "}
                 </label>
                 <label htmlFor="period" style={{ position: "initial" }}>
-                  <span
-                    className="arrow arrow-up"
-                    onClick={togglePeriod}
-                  ></span>
-                  <span
-                    className="arrow arrow-down"
-                    onClick={togglePeriod}
-                  ></span>
+                  <span className="arrow arrow-up"></span>
+                  <span className="arrow arrow-down"></span>
                 </label>
-                {(errors.period || props.errors.period) && (
-                  <p className="fieldinput__error">
-                    {errors.period
-                      ? "You must choose period"
-                      : props.errors.period}
-                  </p>
-                )}
               </div>
             </div>
             <h4 className="heading-4">Days in week</h4>
@@ -182,7 +164,7 @@ const AddPrescription = props => {
                 hidden
                 name="days"
                 value={days}
-                ref={register({ validate: value => value.length > 0})}
+                ref={register({ validate: value => value.length > 0 })}
                 readOnly
               />
               {daysInWeek.map((day, i) => (
