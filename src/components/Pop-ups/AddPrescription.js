@@ -8,7 +8,7 @@ const daysInWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
 
 const AddPrescription = props => {
   let { register, handleSubmit, errors, watch } = useForm();
-  let [period, setPeriod] = useState("");
+  let [period, setPeriod] = useState("day");
   let [days, setDays] = useState([]);
   let [frequency, setFrequency] = useState(0);
   let [dosing, setDosing] = useState([""]);
@@ -18,6 +18,11 @@ const AddPrescription = props => {
 
   const decreaseFrequency = () => {
     if (frequency >= 1) setFrequency(+frequency - 1 || 1);
+  };
+
+  const togglePeriod = () => {
+    if (period === "day") setPeriod("week");
+    else setPeriod("day");
   };
 
   const toggleDay = (e, day) => {
@@ -153,8 +158,14 @@ const AddPrescription = props => {
                   Per{" "}
                 </label>
                 <label htmlFor="period" style={{ position: "initial" }}>
-                  <span className="arrow arrow-up"></span>
-                  <span className="arrow arrow-down"></span>
+                  <span
+                    className="arrow arrow-up"
+                    onClick={togglePeriod}
+                  ></span>
+                  <span
+                    className="arrow arrow-down"
+                    onClick={togglePeriod}
+                  ></span>
                 </label>
               </div>
             </div>

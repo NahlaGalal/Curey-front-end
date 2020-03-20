@@ -249,9 +249,25 @@
     &__notifications {
       width: 2.4rem;
       height: 2.4rem;
+      position: relative;
       @include image("../../assets/svg/notifications-button.svg");
       &.active {
         @include image("../../assets/svg/notifications-button-green.svg");
+      }
+      span {
+        position: absolute;
+        background-color: $warning-color;
+        width: 1.6rem;
+        height: 1.6rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        color: $color-white;
+        top: -4px;
+        left: -4px;
+        font-size: 1.2rem;
+        font-family: $regular-font;
       }
     }
     @media (max-width: 1210px) {

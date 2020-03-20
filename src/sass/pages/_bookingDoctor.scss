@@ -18,7 +18,7 @@
 .doctorBox {
   margin-right: 4rem;
   display: flex;
-
+  flex-basis: 35.2rem;
   position: sticky;
   left: 3rem;
   top: 6.4rem;
@@ -26,6 +26,7 @@
   @media (max-width: 1000px) {
     position: static;
     margin-bottom: 4rem;
+    flex-basis: auto;
   }
   &__img {
     width: 6.7rem;

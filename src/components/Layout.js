@@ -7,7 +7,7 @@ import { loadState } from "../configureStore";
 class Layout extends Component {
   state = {
     notificationList: false,
-    userThumbnailList: false
+    userThumbnailList: false,
   };
 
   hideLists = () =>

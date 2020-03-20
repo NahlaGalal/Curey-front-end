@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import DoctorGrid from "../components/Doctors and medications/DoctorsGrid";
 import Search from "../components/Doctors and medications/Search";
 import Filter from "../components/Doctors and medications/Filter";
-import { getAllDoctors, getDoctorsSearch } from "../actions/getDoctorsAction";
+import * as actions from "../actions/types";
 import ReactLoading from "react-loading";
 
 class Doctors extends Component {
@@ -106,9 +106,17 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getAllDoctors: api_token => dispatch(getAllDoctors(api_token)),
+  getAllDoctors: api_token =>
+    dispatch({
+      type: actions.SAGA_GET_DOCTORS,
+      api_token
+    }),
   getDoctorsSearch: (api_token, search) =>
-    dispatch(getDoctorsSearch({ search, api_token }))
+    dispatch({
+      type: actions.SAGA_SEARCH_DOCTORS,
+      search,
+      api_token
+    })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Doctors);

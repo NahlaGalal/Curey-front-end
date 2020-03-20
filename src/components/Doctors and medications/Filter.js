@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { scanPrescription } from "../../actions/prescriptionAction";
 import Button from "../Button";
 import SelectBox from "../SelectBox";
 import FilterScanning from "../Pop-ups/FilterScanning";
@@ -33,12 +31,12 @@ class Filter extends Component {
     let { filtersChecked, filtersOptionsClass } = this.state;
     const filter = e.target.textContent;
     const isChecked = filtersChecked.findIndex(
-      filterChecked => filter.trim() === filterChecked
+      filterChecked => filter.trim() === filterChecked.name
     );
     // Uncheck filter
     if (i === -1) {
       // If filter from common search
-      i = this.props.filters.findIndex(filterOption => filter === filterOption);
+      i = this.props.filters.findIndex(filterOption => filter === filterOption.name);
       if (i === -1) {
         // If filter from cities
         let cityIndex = this.state.citiesChecked.findIndex(
@@ -91,7 +89,7 @@ class Filter extends Component {
     }
     filtersOptionsClass[i] = !filtersOptionsClass[i];
     if (isChecked === -1) {
-      filtersChecked.push(filter);
+      filtersChecked.push(this.props.filters[i]);
     } else {
       filtersChecked = filtersChecked
         .slice(0, isChecked)
@@ -157,7 +155,9 @@ class Filter extends Component {
   applyScanning = () => {
     const medications = Array.from(
       this.prescriptionScanned.current.children
-    ).map(element => element.textContent);
+    ).map(element => ({
+      name: element.textContent
+    }));
     this.setState({
       filtersChecked: [...this.state.filtersChecked, ...medications],
       scanningOutcomeOpened: false
@@ -178,7 +178,7 @@ class Filter extends Component {
 
   render() {
     const keywords = [
-      ...this.state.filtersChecked,
+      ...this.state.filtersChecked.map(keyword => keyword.name),
       ...this.state.citiesChecked,
       ...this.state.specialitiesChecked
     ];
@@ -228,7 +228,7 @@ class Filter extends Component {
                 key={i}
                 onClick={e => this.checkFilter(e, i)}
               >
-                {filter}
+                {filter.name}
               </Button>
             ))}
           </div>
@@ -271,7 +271,8 @@ class Filter extends Component {
               onClick={() =>
                 this.props.applyFilters({
                   cities: [...this.state.citiesChecked_id] || [],
-                  specialities: [...this.state.specialitiesChecked] || []
+                  specialities: [...this.state.specialitiesChecked] || [],
+                  keywords: [...this.state.filtersChecked] || []
                 })
               }
             >
@@ -302,12 +303,4 @@ class Filter extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  prescription: state.prescription.medications || []
-});
-
-const mapDispatchToProps = dispatch => ({
-  scanPrescription: file => dispatch(scanPrescription(file))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
+export default Filter;

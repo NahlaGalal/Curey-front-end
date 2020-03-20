@@ -173,9 +173,16 @@ function* submitOrder({ api_token, data }) {
   try {
     let result = yield call(() => axios.post("/api/web/submit_order", obj));
     if (!result.data.isFailed) {
-      alert(result.data.data.success);
+      yield put({
+        type: actions.ADD_NOTIFICATION,
+        notification: {
+          text: "Your order is sent to pharmacy and wait for its response",
+          read: false,
+          time: Date.now()
+        }
+      })
     } else {
-      put({
+      yield put({
         type: actions.SUBMIT_MEDICATION_ORDER_FAILED,
         payload: result.data.errors
       });

@@ -28,6 +28,11 @@ class Search extends Component {
             placeholder={this.props.placeholder}
             onChange={this.onChangeHandler}
             value={this.state.search}
+            onKeyPress={e =>
+              e.key === "Enter"
+                ? this.props.searchfunction(this.state.search)
+                : null
+            }
           />
           {this.props.withFilter ? (
             <img

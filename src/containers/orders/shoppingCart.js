@@ -41,6 +41,16 @@ class ShoppingCart extends Component {
     this.setState({ orderDetailsBox: true, orderDetails });
   };
 
+  applyOrder = () => {
+    const products = this.state.cart.map(cart => ({
+      id: cart.pharmacy.product_pharmacy_id,
+      amount: 1
+    }));
+    this.props.submitOrder(this.props.api_token, products);
+    this.props.removeFromCartStorage([]);
+    this.setState({ orderDetailsBox: false, cart: [] });
+  }
+
   render() {
     const totalPrice = this.state.cart
       .map(cart => +cart.medication.price)
@@ -72,7 +82,6 @@ class ShoppingCart extends Component {
               <Button
                 className="btn checkout-btn"
                 onClick={this.openOrderDetailsBox}
-                
               >
                 Checkout
               </Button>
@@ -83,6 +92,7 @@ class ShoppingCart extends Component {
           <OrderDetails
             closePopup={() => this.setState({ orderDetailsBox: false })}
             orders={this.state.orderDetails}
+            applyOrder={this.applyOrder}
           />
         )}
       </React.Fragment>
@@ -91,7 +101,8 @@ class ShoppingCart extends Component {
 }
 
 const mapStateToProps = state => ({
-  cart: state.user.cart
+  cart: state.user.cart,
+  api_token: state.user.api_token
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -99,7 +110,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: actions.REMOVE_FROM_CART,
       cart
-    })
+    }),
+  submitOrder: (api_token, data) =>
+    dispatch({ type: actions.SUBMIT_MEDICATION_ORDER, api_token, data })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCart);

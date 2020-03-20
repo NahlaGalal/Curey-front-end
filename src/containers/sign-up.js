@@ -8,7 +8,7 @@ import SocialButtons from "../components/Social-buttons";
 import Dividor from "../components/Dividor";
 import Button from "../components/Button";
 import SelectBox from "../components/SelectBox";
-import { getCities, postSignup } from "../actions/userAction";
+import * as actions from "../actions/types";
 import Input from "../components/Input";
 
 const SignupUser = props => {
@@ -241,8 +241,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  postSignup: data => dispatch(postSignup(data)),
-  getCities: () => dispatch(getCities())
+  postSignup: data => dispatch({ type: actions.SAGA_SIGNUP_USER, data }),
+  getCities: () => dispatch({ type: actions.SAGA_GET_CITIES })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup);

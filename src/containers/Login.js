@@ -7,7 +7,7 @@ import SocialButtons from "../components/Social-buttons";
 import Dividor from "../components/Dividor";
 import Button from "../components/Button";
 import { connect } from "react-redux";
-import { postLogin } from "../actions/userAction";
+import * as actions from "../actions/types";
 import Input from "../components/Input";
 
 const Login = props => {
@@ -60,7 +60,8 @@ const Login = props => {
                 required: true,
                 minLength: 5,
                 validate: value =>
-                  validator.isEmail(value) || validator.isMobilePhone(value, "ar-EG")
+                  validator.isEmail(value) ||
+                  validator.isMobilePhone(value, "ar-EG")
               })}
             />
             <Input
@@ -100,7 +101,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  postLogin: data => dispatch(postLogin(data))
+  postLogin: data => dispatch({ type: actions.SAGA_LOGIN_USER, data })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

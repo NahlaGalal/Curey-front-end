@@ -6,7 +6,9 @@ import reducers from "./reducers";
 import rootSaga from "./sagas";
 
 const defaultState = {
-  prescription: [],
+  prescription: {
+    medications: []
+  },
   user: {
     cities: [],
     success: "",
@@ -16,7 +18,8 @@ const defaultState = {
     image: null,
     email: "",
     prescriptions: [],
-    cart: []
+    cart: [],
+    notifications: []
   },
   doctors: {
     doctorsData: [],

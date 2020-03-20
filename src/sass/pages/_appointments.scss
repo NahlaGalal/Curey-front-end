@@ -5,7 +5,7 @@
 
   &__Grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 0.33fr));
     grid-gap: 4rem;
     margin-top: 4.9rem;
     &__error {

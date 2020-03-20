@@ -45,12 +45,11 @@ class MedicinePage extends Component {
     });
   };
   
-  submitOrder = () => {
+  submitOrder = (pharmacy) => {
     this.props.submitMedicineOrder(this.props.api_token, [
-      { id: this.props.pharmacies[0].product_pharmacy_id, amount: 1 }
+      { id: pharmacy.product_pharmacy_id, amount: 1 }
     ]);
   };
-  // product_pharmacy_id
 
   render() {
     return (
@@ -131,7 +130,7 @@ class MedicinePage extends Component {
                           : false
                       }
                       addToCart={() => this.addToCart(pharmacy)}
-                      onSubmit={this.submitOrder}
+                      onSubmit={() => this.submitOrder(pharmacy)}
                     />
                   ))
                 ) : (

@@ -7,7 +7,6 @@ import Phone from "../assets/svg/phone.svg";
 import At from "../assets/svg/at.svg";
 import Button from "../components/Button";
 import { connect } from "react-redux";
-import { getDoctorData } from "../actions/getDoctorsAction";
 import ReactLoading from "react-loading";
 import UserImg from "../assets/svg/user.svg";
 import * as actions from "../actions/types";
@@ -159,7 +158,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getDoctorData: (id, api_token) => dispatch(getDoctorData({ id, api_token }))
+  getDoctorData: (id, api_token) =>
+    dispatch({
+      type: actions.SAGA_GET_DOCTOR,
+      id,
+      api_token
+    })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DoctorProfile);

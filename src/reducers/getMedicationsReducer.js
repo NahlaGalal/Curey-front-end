@@ -12,7 +12,7 @@ export function medicationsData(state = {}, action) {
     case actions.RECIEVE_SEARCH_MEDICATIONS:
       return {
         ...state,
-        medicationsSearch: !action.isFailed ? [...action.payload] : [],
+        medicationsSearch: !action.isFailed ? action.payload.products : [],
         errors: action.isFailed ? action.payload : []
       };
     case actions.RECIEVE_MEDICATION:

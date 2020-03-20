@@ -14,7 +14,10 @@ class Medications extends Component {
     hovered: [],
     requestMedicationBox: false,
     medications: [],
-    searchResults: false
+    error: false,
+    filters: {
+      keywords: []
+    }
   };
 
   componentDidMount() {
@@ -39,18 +42,41 @@ class Medications extends Component {
       JSON.stringify(prevProps.medicationsSearch) !==
       JSON.stringify(this.props.medicationsSearch)
     ) {
-      this.setState({
-        medications: this.props.medicationsSearch,
-        hovered: new Array(this.props.medicationsSearch.length).fill(false),
-        searchResults: true
-      });
+      this.setState(
+        {
+          medications: this.props.medicationsSearch,
+          hovered: new Array(this.props.medicationsSearch.length).fill(false),
+        },
+        () => this.applyFilters(this.state.filters)
+      );
+    }
+    if (prevProps.error.length !== this.props.error.length) {
+      if (this.props.error.length && this.props.error[0].error === "no results")
+        this.setState({ medications: [] });
     }
   }
 
   openFilterBox = () => this.setState({ filterShown: "visible" });
   cancelFilters = () => this.setState({ filterShown: "hidden" });
   applyFilters = filters => {
-    this.setState({ filterShown: "hidden" });
+    let keywords;
+    if (filters.keywords && !filters.keywords.length)
+      keywords = this.props.keywords.map(keyword => keyword.id);
+    else keywords = filters.keywords.map(keyword => keyword.id);
+    const medicationsFilter =
+      this.state.medications.length === this.props.medications.length
+        ? this.props.medications
+        : this.props.medicationsSearch;
+    const medications = medicationsFilter.filter(medication =>
+      medication.keywords.some(key => keywords.includes(key))
+    );
+    console.log(medications, keywords);
+    this.setState({
+      filterShown: "hidden",
+      medications,
+      filters,
+      error: medications.length ? false : true
+    });
   };
 
   searchMedications = search => {
@@ -82,11 +108,13 @@ class Medications extends Component {
     return (
       <div>
         <Filter
-          filters={this.props.keywords.map(key => key.name)}
+          filters={this.props.keywords}
           display={this.state.filterShown}
           cancelFilters={this.cancelFilters}
           applyFilters={this.applyFilters}
           type="medications"
+          scanPrescription={formData => this.props.scanPrescription(formData)}
+          prescription={this.props.prescription}
         />
         <Search
           placeholder="Search Medication, desease...etc"
@@ -128,7 +156,7 @@ class Medications extends Component {
                   />
                 ))}
               </div>
-            ) : this.state.searchResults ? (
+            ) : this.props.error.length || this.state.error ? (
               <div className="topMedications__container--no-medication">
                 <p>
                   OPPS, This medication isn't found at any any pharmacy in your
@@ -165,7 +193,9 @@ const mapStateToProps = state => {
     api_token: state.user.api_token,
     medications: state.medicationsData.products,
     keywords: state.medicationsData.keywords,
-    medicationsSearch: state.medicationsData.medicationsSearch
+    medicationsSearch: state.medicationsData.medicationsSearch,
+    prescription: state.prescription.medications,
+    error: state.medicationsData.errors
   };
 };
 
@@ -178,7 +208,9 @@ const mapDispatchToProps = dispatch => {
     deleteFavouriteMedication: (data, source) =>
       dispatch({ type: actions.SAGA_DELETE_FAVOURITE, data, source }),
     addFavouriteMedication: (data, source) =>
-      dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source })
+      dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source }),
+    scanPrescription: file =>
+      dispatch({ type: actions.SCAN_PRESCRIPTION, file })
   };
 };
 

@@ -2,11 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import ReactLoading from "react-loading";
 import Button from "../components/Button";
-import {
-  getPrescriptions,
-  postDeletePrescriptions,
-  postAddPrescription
-} from "../actions/userAction";
+import * as actions from "../actions/types";
 import AddPrescription from "../components/Pop-ups/AddPrescription";
 // Icons
 import menuIcon from "../assets/svg/menu.svg";
@@ -158,9 +154,21 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getPrescriptions: api_token => dispatch(getPrescriptions(api_token)),
-  postDeletePrescriptions: data => dispatch(postDeletePrescriptions(data)),
-  postAddPrescription: data => dispatch(postAddPrescription(data))
+  getPrescriptions: api_token =>
+    dispatch({
+      type: actions.SAGA_GET_PRESCRIPTION,
+      api_token
+    }),
+  postDeletePrescriptions: data =>
+    dispatch({
+      type: actions.SAGA_ADD_PRESCRIPTION,
+      data
+    }),
+  postAddPrescription: data =>
+    dispatch({
+      type: actions.SAGA_DELETE_PRESCRIPTIONS,
+      data
+    })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Prescription);

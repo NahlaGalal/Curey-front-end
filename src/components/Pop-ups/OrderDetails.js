@@ -51,7 +51,11 @@ const OrderDetails = props => {
             </React.Fragment>
           );
         })}
-        <PopupFooter closePopup={props.closePopup} applyText="Confirm" />
+        <PopupFooter
+          closePopup={props.closePopup}
+          applyText="Confirm"
+          submitOrder={props.applyOrder}
+        />
       </div>
     </section>
   );

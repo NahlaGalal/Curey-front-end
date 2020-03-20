@@ -7,7 +7,9 @@ import {
   ADD_PRESCRIPTION,
   DELETE_PRESCRIPTIONS,
   ADD_TO_CART,
-  REMOVE_FROM_CART
+  REMOVE_FROM_CART,
+  ADD_NOTIFICATION,
+  READ_NOTIFICATION
 } from "../actions/types";
 
 export function user(state = [], action) {
@@ -57,12 +59,22 @@ export function user(state = [], action) {
       return {
         ...state,
         cart: [...state.cart, action.data]
-      }
+      };
     case REMOVE_FROM_CART:
       return {
         ...state,
-        cart: state.cart
-      }
+        cart: action.cart
+      };
+    case ADD_NOTIFICATION:
+      return {
+        ...state,
+        notifications: [...state.notifications, action.notification]
+      };
+    case READ_NOTIFICATION:
+      return {
+        ...state,
+        notifications: action.notifications
+      };
     default:
       return state;
   }
