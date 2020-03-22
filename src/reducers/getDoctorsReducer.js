@@ -1,7 +1,8 @@
 import {
   GET_DOCTORS,
   SEARCH_DOCTORS,
-  GET_DOCTOR
+  GET_DOCTOR,
+  GET_DOCTOR_APPOINTMENTS
 } from "../actions/types";
 
 export const doctors = (state = {}, action) => {
@@ -28,6 +29,20 @@ export const doctors = (state = {}, action) => {
               ...state.doctorData,
               ...action.payload.doctor,
               reviews: action.payload.reviews
+            }
+          : {},
+        errors: action.isFailed ? action.payload : []
+      };
+    case GET_DOCTOR_APPOINTMENTS:
+      return {
+        ...state,
+        doctorData: !action.isFailed
+          ? {
+              ...state.doctorData,
+              appointments: {
+                first_day: action.payload.first_day,
+                second_day: action.payload.second_day
+              }
             }
           : {},
         errors: action.isFailed ? action.payload : []

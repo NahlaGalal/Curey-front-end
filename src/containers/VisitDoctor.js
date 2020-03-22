@@ -8,7 +8,9 @@ import ReactLoading from "react-loading";
 class VisitDoctor extends Component {
   state = {
     doctor: {},
-    error: ""
+    error: "",
+    bookedOrder: [],
+    bookId: null
   };
 
   componentDidMount() {
@@ -19,23 +21,59 @@ class VisitDoctor extends Component {
       );
       this.setState({ doctor: {} });
     } else this.setState({ doctor: this.props.doctor });
+
+    this.props.getAvailableAppointments(
+      this.props.api_token,
+      this.props.match.params.id
+    );
   }
 
   componentDidUpdate(prevProps) {
     if (
       JSON.stringify(prevProps.doctor) !== JSON.stringify(this.props.doctor)
     ) {
-      if (this.props.doctor.callup_fees)
-        this.setState({ doctor: this.props.doctor });
-      else
+      if (this.props.doctor.callup_fees) {
+        if (
+          this.props.doctor.appointments &&
+          this.props.doctor.appointments.first_day.available
+        ) {
+          const arr = new Array(
+            this.props.doctor.appointments.first_day.available.length +
+              this.props.doctor.appointments.second_day.available.length
+          ).fill(0);
+          this.setState({
+            bookedOrder: arr,
+            doctor: this.props.doctor
+          });
+        } else this.setState({ doctor: this.props.doctor });
+      } else
         this.setState({
-          docctor: {},
+          doctor: {},
           error: "This doctor isn't available for home visit services"
         });
     }
+    if (
+      JSON.stringify(prevProps.success) !==
+        JSON.stringify(this.props.success) &&
+      this.props.success
+    ) {
+      this.setState({
+        bookedOrder: this.state.bookedOrder.fill(
+          1,
+          +this.state.bookId,
+          +this.state.bookId + 1
+        )
+      });
+    }
   }
 
-  onBookAppointment = appointment_time => {
+  onBookAppointment = (appointment_time, i, day) => {
+    this.setState({
+      bookId:
+        day === 1
+          ? +i
+          : +i + +this.props.doctor.appointments.first_day.available.length
+    });
     const is_callup =
       this.props.match.url.split("/")[1] === "bookingDoctor" ? 0 : 1;
     this.props.onBookAppointment(
@@ -64,10 +102,20 @@ class VisitDoctor extends Component {
               />
 
               <AvailableAppointments
-                getAvailableAppointments={this.availableAppontments}
-                onBookAppointment={appointment_time =>
-                  this.onBookAppointment(appointment_time)
+                onBookAppointment={(appointment_time, i, day) =>
+                  this.onBookAppointment(appointment_time, i, day)
                 }
+                firstDay={
+                  this.props.doctor.appointments
+                    ? this.props.doctor.appointments.first_day
+                    : {}
+                }
+                secondDay={
+                  this.props.doctor.appointments
+                    ? this.props.doctor.appointments.second_day
+                    : {}
+                }
+                bookedOrder={this.state.bookedOrder}
               />
             </React.Fragment>
           ) : this.state.error ? (
@@ -84,7 +132,9 @@ class VisitDoctor extends Component {
 const mapStateToProps = state => {
   return {
     api_token: state.user.api_token,
-    doctor: state.doctors.doctorData
+    doctor: state.doctors.doctorData,
+    success: state.appointments.success,
+    error: state.appointments.errors
   };
 };
 
@@ -96,7 +146,13 @@ const mapDispatchToProps = dispatch => {
         data: { api_token, doctor_id, is_callup, appointment_time }
       }),
     getDoctorData: (id, api_token) =>
-      dispatch({ type: actions.SAGA_GET_DOCTOR, id, api_token })
+      dispatch({ type: actions.SAGA_GET_DOCTOR, id, api_token }),
+    getAvailableAppointments: (api_token, doctor_id) =>
+      dispatch({
+        type: actions.SAGA_GET_DOCTOR_APPOINTMENTS,
+        api_token,
+        doctor_id
+      })
   };
 };
 

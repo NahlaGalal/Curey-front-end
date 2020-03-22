@@ -8,6 +8,18 @@ export function appointments(state = {}, action) {
         appointments: !action.isFailed ? action.payload : [],
         errors: action.isFailed ? action.payload : []
       };
+    case actions.BOOK_APPOINTMENT_RES:
+      return {
+        ...state,
+        success: !action.isFailed ? action.payload.message : "",
+        errors: action.isFailed ? action.payload : []
+      }
+    case actions.BOOK_APPOINTMENT:
+      return {
+        ...state,
+        success: "",
+        errors: ""
+      }
     default:
       return state;
   }

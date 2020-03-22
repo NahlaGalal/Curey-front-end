@@ -30,7 +30,11 @@ const defaultState = {
       degrees: [],
       reviews: [],
       id: 0,
-      is_callup: 0
+      is_callup: 0,
+      appointments: {
+        first_day: {},
+        second_day: {}
+      }
     }
   },
   homeData: {
@@ -52,7 +56,8 @@ const defaultState = {
   },
   appointments: {
     appointments: [],
-    errors: []
+    errors: [],
+    success: ""
   }
 };
 
