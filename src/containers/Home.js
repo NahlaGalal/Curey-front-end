@@ -70,9 +70,9 @@ export class Home extends Component {
         </div>
         <div className="topMedications__container">
           <h2 className="heading-2 mb-52">Top medications</h2>
-          <div className="medicationGrid mb-40">
-            {this.props.topMedications.length ? (
-              this.props.topMedications.map((medication, i) => (
+          {this.props.topMedications.length ? (
+            <div className="medicationGrid mb-40">
+              {this.props.topMedications.map((medication, i) => (
                 <MedicineCard
                   key={i}
                   id={medication.id}
@@ -99,15 +99,15 @@ export class Home extends Component {
                     this.addFavouriteMedication(medication.id)
                   }
                 />
-              ))
-            ) : (
-              <ReactLoading
-                type="spokes"
-                color="#0066ff"
-                className="loading center mb-40"
-              />
-            )}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <ReactLoading
+              type="spokes"
+              color="#0066ff"
+              className="loading center mb-40"
+            />
+          )}
           <Link to="/medications">
             <Button className="btn btn-lg btn-green center">See more</Button>
           </Link>

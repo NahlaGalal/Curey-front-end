@@ -35,5 +35,3 @@ const OrderMedication = props => {
 };
 
 export default OrderMedication;
-
-//TODO: Confirm ==> Send to pending orders ==> and show box for confirmation

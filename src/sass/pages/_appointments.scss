@@ -29,33 +29,28 @@
     margin-right: 2.4rem;
     width: 6rem;
     height: 6rem;
-    align-self: center;
   }
 
   &__info {
     display: flex;
     margin: 2rem;
-
-    &__text {
-      flex-grow: 1;
-      .doctorCard__price {
-        text-align: right;
-        flex-basis: 23%;
-      }
+    &__address {
+      @include controlLines(1);
     }
   }
 
   .flex {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 0.4rem;
+    line-height: 3rem;
+    span {
+      white-space: nowrap;
+    }
   }
   p {
     color: rgba($color: $color-dark, $alpha: $very-high-opacity);
     margin-bottom: 0.4rem;
-    display: flex;
-    align-items: center;
     img {
       margin-right: 0.4rem;
     }

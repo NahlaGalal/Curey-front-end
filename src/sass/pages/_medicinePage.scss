@@ -129,6 +129,12 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 0.8rem;
+    .heading-4 {
+      margin-right: 0.8rem;
+    }
+    .rate {
+      white-space: nowrap;
+    }
     @media screen and (max-width: 500px) {
       flex-direction: column;
       .rate {
@@ -143,7 +149,11 @@
     justify-content: space-between;
     margin-bottom: 2.6rem;
     span:first-child {
-      width: 70%;
+      @include controlLines(1);
+      margin-right: 0.8rem;
+    }
+    span:last-child {
+      white-space: nowrap;
     }
     @media screen and (max-width: 500px) {
       flex-direction: column;

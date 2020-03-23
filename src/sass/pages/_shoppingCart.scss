@@ -90,10 +90,10 @@
   }
   .medicationCard__pharmacy {
     display: flex;
-    align-items: center;
-
     &__logo {
-      width: 42px;
+      width: 4.2rem;
+      height: 4.2rem;
+      object-fit: cover;
       border-radius: 50%;
     }
 
@@ -103,6 +103,9 @@
       color: rgba($color: $color-dark, $alpha: $very-high-opacity);
       p {
         margin-bottom: 0.4rem;
+      }
+      span {
+        @include controlLines(1);
       }
       img {
         margin-right: 0.4rem;

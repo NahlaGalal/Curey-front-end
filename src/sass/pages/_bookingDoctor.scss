@@ -47,6 +47,10 @@
     }
   }
 
+  &__address {
+    @include controlLines(1);
+  }
+
   &__price {
     font-size: 3.2rem;
     font-family: $bold-font;

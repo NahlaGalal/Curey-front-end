@@ -28,24 +28,25 @@
   &__info {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 0.8rem;
-    flex-wrap: wrap;
+    line-height: 2.5rem;
   }
   &__name {
     font-size: 2.4rem;
     color: $color-dark;
     font-family: $bold-font;
-    flex-basis: 70%;
+    word-break: break-word;
   }
   &__price {
     margin-left: auto;
     font-size: 1.6rem;
     font-family: $semi-bold-font;
+    white-space: nowrap;
   }
   &__speciality {
     color: rgba($color-dark, $very-high-opacity);
     margin-bottom: 0.9rem;
+    @include controlLines(1);
   }
   &__rate {
     display: flex;
@@ -147,6 +148,9 @@
 
   &__description {
     color: rgba($color-dark, $very-high-opacity);
+    p {
+      @include controlLines(3);
+    }
   }
 
   &__name {

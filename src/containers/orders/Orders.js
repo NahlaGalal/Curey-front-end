@@ -20,13 +20,16 @@ export class Orders extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if(JSON.stringify(prevProps.orders) !== JSON.stringify(this.props.orders)) {
+    if (
+      JSON.stringify(prevProps.orders) !== JSON.stringify(this.props.orders)
+    ) {
       this.setState({ orders: this.props.orders });
     }
   }
 
   filterOrders = filter => {
-    if (filter === "All") return this.setState({ orders: this.props.orders, filter });
+    if (filter === "All")
+      return this.setState({ orders: this.props.orders, filter });
     return this.setState({
       orders: this.props.orders.filter(order => order.state === filter),
       filter
@@ -66,12 +69,15 @@ export class Orders extends Component {
             Failed
           </Button>
         </div>
-        <main className="Orders__container">
-          {this.props.orders.length ? (
-            this.state.orders.map((order, i) => (
+        {this.props.orders.length ? (
+          <main className="Orders__container">
+            {this.state.orders.map((order, i) => (
               <section className="Orders__container__box" key={i}>
                 <header className="Orders__container__box__header">
-                  <img src={order.image || Pharmacy} alt={`${order.pharmacy} Logo`} />
+                  <img
+                    src={order.image || Pharmacy}
+                    alt={`${order.pharmacy} Logo`}
+                  />
                   <div>
                     <div className="Orders__container__box__header--heading">
                       <p>{order.pharmacy}</p>
@@ -108,17 +114,17 @@ export class Orders extends Component {
                   </Button>
                 </div>
               </section>
-            ))
-          ) : this.props.medicationsDataError.length ? (
-            <p className="Orders__container__error">No orders yet</p>
-          ) : (
-            <ReactLoading
-              type="spokes"
-              color="#0066ff"
-              className="loading center mb-40"
-            />
-          )}
-        </main>
+            ))}
+          </main>
+        ) : this.props.medicationsDataError.length ? (
+          <p className="Orders__container__error">No orders yet</p>
+        ) : (
+          <ReactLoading
+            type="spokes"
+            color="#0066ff"
+            className="loading center mb-40"
+          />
+        )}
       </div>
     );
   }

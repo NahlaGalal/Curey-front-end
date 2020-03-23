@@ -20,8 +20,11 @@ class Appointments extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if(JSON.stringify(prevProps.appointments) !== JSON.stringify(this.props.appointments)) {
-      this.setState({ bookings: this.props.appointments})
+    if (
+      JSON.stringify(prevProps.appointments) !==
+      JSON.stringify(this.props.appointments)
+    ) {
+      this.setState({ bookings: this.props.appointments });
     }
   }
 
@@ -36,7 +39,9 @@ class Appointments extends Component {
     else if (filter === "Re-examination")
       return this.setState({
         filter,
-        bookings: this.props.appointments.filter(booking => booking.re_exam && !booking.is_callup)
+        bookings: this.props.appointments.filter(
+          booking => booking.re_exam && !booking.is_callup
+        )
       });
     else
       return this.setState({
@@ -85,9 +90,9 @@ class Appointments extends Component {
           </Button>
         </div>
 
-        <div className="Appointments__Grid">
-          {this.props.appointments.length ? (
-            this.state.bookings.map((booking, i) => (
+        {this.props.appointments.length ? (
+          <div className="Appointments__Grid">
+            {this.state.bookings.map((booking, i) => (
               <DoctorBookingCard
                 key={i}
                 image={booking.image}
@@ -105,17 +110,17 @@ class Appointments extends Component {
                     : "Booking"
                 }
               />
-            ))
-          ) : !this.props.appointmentsError.length ? (
-            <ReactLoading
-              type="spokes"
-              color="#0066ff"
-              className="loading center mb-40"
-            />
-          ) : (
-            <p className="Appointments__Grid__error"> No appointments yet </p>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : !this.props.appointmentsError.length ? (
+          <ReactLoading
+            type="spokes"
+            color="#0066ff"
+            className="loading center mb-40"
+          />
+        ) : (
+          <p className="Appointments__Grid__error"> No appointments yet </p>
+        )}
       </div>
     );
   }

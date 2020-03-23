@@ -10,7 +10,7 @@ const DoctorBox = props => (
     <div>
       <h3 className="doctorCard__name">{props.name}</h3>
       <p>{props.speciality}</p>
-      <p>
+      <p className="doctorBox__address">
         <img alt="location icon" src={LocationIcon} />
         {props.address}
       </p>
