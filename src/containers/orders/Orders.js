@@ -5,13 +5,15 @@ import Button from "../../components/Button";
 import * as actions from "../../actions/types";
 import { connect } from "react-redux";
 import ReactLoading from "react-loading";
+import OrderTracing from "../../components/Pop-ups/OrderTracing";
 
 export class Orders extends Component {
   constructor(props) {
     super(props);
     this.state = {
       orders: [],
-      filter: "All"
+      filter: "All",
+      orderTracingBox: false
     };
   }
 
@@ -108,10 +110,18 @@ export class Orders extends Component {
                       <li key={i}> {medication.name} </li>
                     ))}
                   </ul>
-                  <Button className="btn btn-xxs btn-green-dark">
-                    {" "}
-                    {order.state !== "Failed" ? "Trace Order" : "Reorder"}{" "}
-                  </Button>
+                  {this.state !== "Failed" ? (
+                    <Button
+                      className="btn btn-xxs btn-green-dark"
+                      onClick={() => this.setState({ orderTracingBox: true })}
+                    >
+                      Trace Order
+                    </Button>
+                  ) : (
+                    <Button className="btn btn-xxs btn-green-dark">
+                      Reorder
+                    </Button>
+                  )}
                 </div>
               </section>
             ))}
@@ -123,6 +133,11 @@ export class Orders extends Component {
             type="spokes"
             color="#0066ff"
             className="loading center mb-40"
+          />
+        )}
+        {this.state.orderTracingBox && (
+          <OrderTracing
+            closePopup={() => this.setState({ orderTracingBox: false })}
           />
         )}
       </div>
