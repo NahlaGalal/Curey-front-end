@@ -1,5 +1,5 @@
 .Notifications {
-  width: max-content;
+  width: 34.8rem;
   position: absolute;
   right: 8.2rem;
   top: 6.8rem;
@@ -8,7 +8,7 @@
   padding: 1.6rem;
   filter: drop-shadow(0px 3px 6px $color-light-3);
   max-height: 25.4rem;
-  overflow: auto;
+  box-sizing: content-box;
   &:before {
     content: "";
     position: absolute;
@@ -32,11 +32,14 @@
       top: 25px;
     }
   }
+  >div {
+    overflow: auto;
+    max-height: 25.4rem;
+  }
   &__notification {
     background-color: transparent;
     box-shadow: none;
     display: flex;
-    align-items: center;
     margin: 0.8rem 0;
     text-align: left;
     &:last-of-type {
@@ -48,20 +51,39 @@
     &:hover {
       box-shadow: none;
     }
-    img {
-      width: 4rem;
+    &__img {
+      min-width: 4rem;
       height: 4rem;
-      object-fit: cover;
       margin-right: 0.8rem;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &.cart {
+        background-color: $color-green;
+      }
+      img {
+        width: 2.4rem;
+        height: 2.4rem;
+      }
+    }
+    img {
+      object-fit: cover;
     }
     span {
       font-family: $regular-font;
       color: rgba($color: $color-dark, $alpha: $very-high-opacity);
     }
+    &__pharmacy {
+      color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+      font-family: $semi-bold-font;
+      display: inline;
+    }
     &__time {
       font-family: $regular-font;
       color: rgba($color: $color-dark, $alpha: $very-high-opacity);
       font-size: 1.2rem;
+      margin-top: 0.4rem;
     }
   }
   hr {
@@ -79,6 +101,8 @@
   @extend .Notifications;
   right: 2.4rem;
   padding: 2.4rem;
+  max-height: 28.8rem;
+  width: 35.3rem;
   @media screen and (max-width: 1210px) {
     left: 24rem;
     right: unset;

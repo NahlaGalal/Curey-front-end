@@ -31,11 +31,11 @@ class ShoppingCart extends Component {
       );
       if (orderIndex === -1) {
         orderDetails.push({
-          pharmacy: {...item.pharmacy},
-          medications: [{...item.medication}]
-        })
-      }else {
-        orderDetails[orderIndex].medications.push({...item.medication});
+          pharmacy: { ...item.pharmacy },
+          medications: [{ ...item.medication }]
+        });
+      } else {
+        orderDetails[orderIndex].medications.push({ ...item.medication });
       }
     });
     this.setState({ orderDetailsBox: true, orderDetails });
@@ -46,10 +46,10 @@ class ShoppingCart extends Component {
       id: cart.pharmacy.product_pharmacy_id,
       amount: 1
     }));
-    this.props.submitOrder(this.props.api_token, products);
+    this.props.submitOrder(this.props.api_token, products, { order: 0 });
     this.props.removeFromCartStorage([]);
     this.setState({ orderDetailsBox: false, cart: [] });
-  }
+  };
 
   render() {
     const totalPrice = this.state.cart
@@ -111,8 +111,8 @@ const mapDispatchToProps = dispatch => ({
       type: actions.REMOVE_FROM_CART,
       cart
     }),
-  submitOrder: (api_token, data) =>
-    dispatch({ type: actions.SUBMIT_MEDICATION_ORDER, api_token, data })
+  submitOrder: (api_token, data, notificationData) =>
+    dispatch({ type: actions.SUBMIT_MEDICATION_ORDER, api_token, data, notificationData })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCart);

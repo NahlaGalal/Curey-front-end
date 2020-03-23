@@ -44,11 +44,19 @@ class MedicinePage extends Component {
       pharmacy
     });
   };
-  
-  submitOrder = (pharmacy) => {
-    this.props.submitMedicineOrder(this.props.api_token, [
-      { id: pharmacy.product_pharmacy_id, amount: 1 }
-    ]);
+
+  submitOrder = pharmacy => {
+    this.props.submitMedicineOrder(
+      this.props.api_token,
+      [{ id: pharmacy.product_pharmacy_id, amount: 1 }],
+      {
+        order: 1,
+        medicationName: this.props.medicine.name,
+        pharmacy: pharmacy.name,
+        medicationImage:
+          this.props.medicine.image || require("../assets/images/med1.png")
+      }
+    );
   };
 
   render() {
@@ -175,8 +183,13 @@ const mapDispatchToProps = dispatch => ({
   addFavouriteMedication: (data, source) =>
     dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source }),
   addToCartStorage: data => dispatch({ type: actions.ADD_TO_CART, data }),
-  submitMedicineOrder: (api_token, data) =>
-    dispatch({ type: actions.SUBMIT_MEDICATION_ORDER, api_token, data })
+  submitMedicineOrder: (api_token, data, notificationData) =>
+    dispatch({
+      type: actions.SUBMIT_MEDICATION_ORDER,
+      api_token,
+      data,
+      notificationData
+    })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MedicinePage);

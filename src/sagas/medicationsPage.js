@@ -168,19 +168,31 @@ function* getFavourites({ api_token }) {
   }
 }
 
-function* submitOrder({ api_token, data }) {
+function* submitOrder({ api_token, data, notificationData }) {
   const obj = { api_token: api_token, products: data };
+  let notification = {};
+  if (notificationData.order)
+    notification = {
+      read: false,
+      time: Date.now(),
+      order: 1,
+      medicationName: notificationData.medicationName,
+      medicationImage: notificationData.medicationImage,
+      pharmacy: notificationData.pharmacy
+    };
+  else
+    notification = {
+      read: false,
+      time: Date.now(),
+      order: 0
+    };
   try {
     let result = yield call(() => axios.post("/api/web/submit_order", obj));
     if (!result.data.isFailed) {
       yield put({
         type: actions.ADD_NOTIFICATION,
-        notification: {
-          text: "Your order is sent to pharmacy and wait for its response",
-          read: false,
-          time: Date.now()
-        }
-      })
+        notification
+      });
     } else {
       yield put({
         type: actions.SUBMIT_MEDICATION_ORDER_FAILED,
