@@ -27,7 +27,7 @@
 
 .medicine__container {
   .medicationCard {
-    padding: 3.2rem 3.2rem 1.6rem;
+    padding: 3.2rem;
     &__main {
       &__medicationImg {
         box-shadow: 0 0 0 13.5px $color-green,
@@ -40,6 +40,9 @@
         background-position: right 1.6rem top 1.6rem;
         background-size: 3.2rem 2.72rem;
       }
+    }
+    &__info {
+      margin: 2.8rem 0 0 0;
     }
     &__price {
       font-family: $semi-bold-font;

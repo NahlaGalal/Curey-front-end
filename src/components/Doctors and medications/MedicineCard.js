@@ -36,7 +36,7 @@ const MedicineCard = props => (
         <span className="medicationCard__price">{props.price} L.E.</span>
       </div>
       {props.description ? (
-        <div className="medicationCard__description">
+        <div className="medicationCard__description" title={props.description}>
           <p>{props.description}</p>
         </div>
       ) : null}

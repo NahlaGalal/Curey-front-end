@@ -20,7 +20,7 @@ const DoctorBookingCard = props => {
         </div>
 
         <p>{props.speciality}</p>
-        <p className="DoctorBookingCard__info__address">
+        <p className="DoctorBookingCard__info__address" title={props.address}>
           <img alt="location icon" src={LocationIcon} /> {props.address}
         </p>
       </div>

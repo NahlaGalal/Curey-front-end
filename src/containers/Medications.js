@@ -163,7 +163,7 @@ class Medications extends Component {
                   district
                 </p>
                 <Button
-                  className="btn btn-green btn-lg"
+                  className="btn btn-green-dark btn-lg"
                   onClick={() => this.setState({ requestMedicationBox: true })}
                 >
                   Request the medication
