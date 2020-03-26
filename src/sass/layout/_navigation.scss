@@ -6,6 +6,7 @@
   justify-content: space-between;
   font-size: 1.6rem;
   flex-wrap: wrap;
+  box-shadow: 0px 3px 6px $color-light-3;
 
   @media (max-width: 1335px) {
     padding: 1rem 0;
@@ -204,6 +205,11 @@
       }
     }
 
+    &--last {
+      border-right: 1px solid rgba(#242a37, 0.4);
+      padding-right: 2.4rem;
+    }
+
     .active {
       color: $color-green;
       font-family: $semi-bold-font;
@@ -273,6 +279,25 @@
     @media (max-width: 1210px) {
       order: 0;
       margin-bottom: 2rem;
+    }
+    &--pharmacy {
+      margin-right: 2.4rem;
+    }
+  }
+
+  &__icon {
+    margin-right: 0.8rem;
+  }
+  span {
+    color: rgba($color-dark, 0.7);
+    display: block;
+    float: right;
+  }
+  &__phrmacyData {
+    display: flex;
+    align-items: center;
+    &--logo {
+      margin-left: 0.4rem;
     }
   }
 }
