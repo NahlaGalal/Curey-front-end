@@ -13,7 +13,8 @@ class Doctors extends Component {
     doctors: [],
     filters: {
       cities: [],
-      specialities: []
+      specialities: [],
+      specialities_id: []
     }
   };
 
@@ -32,9 +33,7 @@ class Doctors extends Component {
       JSON.stringify(prevProps.doctorsSearch) !==
       JSON.stringify(this.props.doctorsSearch)
     ) {
-      this.setState({ doctors: this.props.doctorsSearch }, () =>
-        this.applyFilters(this.state.filters)
-      );
+      this.setState({ doctors: this.props.doctorsSearch });
     }
   }
 
@@ -42,7 +41,8 @@ class Doctors extends Component {
   cancelFilters = () => this.setState({ filterShown: "hidden" });
   applyFilters = filters => {
     let cities = filters.cities,
-      specialities = filters.specialities;
+      specialities = filters.specialities,
+      specialities_id = filters.specialities_id;
     if (!filters.cities.length)
       cities = this.props.cities.map(city => city.id.toString());
     if (!filters.specialities.length)
@@ -53,12 +53,23 @@ class Doctors extends Component {
     this.setState({
       filterShown: "hidden",
       doctors,
-      filters: { cities: filters.cities, specialities: filters.specialities }
+      filters: {
+        cities: filters.cities,
+        specialities: filters.specialities,
+        specialities_id
+      }
     });
   };
 
   searchDoctor = search => {
-    this.props.getDoctorsSearch(this.props.api_token, search);
+    this.props.getDoctorsSearch(
+      this.props.api_token,
+      search,
+      0,
+      16,
+      this.state.filters.cities[0] || "",
+      this.state.filters.specialities_id[0] || ""
+    );
   };
 
   render() {
@@ -85,19 +96,21 @@ class Doctors extends Component {
             {this.state.doctors.length ? (
               <React.Fragment>
                 <DoctorGrid doctors={this.state.doctors} />
-                <Button
-                  className="btn btn-blue btn-lg"
-                  onClick={() =>
-                    this.props.getAllDoctors(
-                      this.props.api_token,
-                      this.props.doctors.length,
-                      8
-                    )
-                  }
-                >
-                  {" "}
-                  See more
-                </Button>
+                {!this.props.doctorsDone && (
+                  <Button
+                    className="btn btn-blue btn-lg"
+                    onClick={() =>
+                      this.props.getAllDoctors(
+                        this.props.api_token,
+                        this.state.doctors.length,
+                        8
+                      )
+                    }
+                  >
+                    {" "}
+                    See more
+                  </Button>
+                )}
               </React.Fragment>
             ) : (
               <ReactLoading type="spokes" color="#0066ff" className="loading" />
@@ -114,7 +127,8 @@ const mapStateToProps = state => ({
   doctors: state.doctors.doctorsData,
   specialities: state.doctors.specialities,
   cities: state.doctors.cities,
-  doctorsSearch: state.doctors.doctorsSearch
+  doctorsSearch: state.doctors.doctorsSearch,
+  doctorsDone: state.doctors.doctorsDone
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -125,11 +139,15 @@ const mapDispatchToProps = dispatch => ({
       skip,
       limit
     }),
-  getDoctorsSearch: (api_token, search) =>
+  getDoctorsSearch: (api_token, search, skip, limit, city_id, speciality_id) =>
     dispatch({
       type: actions.SAGA_SEARCH_DOCTORS,
       search,
-      api_token
+      api_token,
+      skip,
+      limit,
+      city_id,
+      speciality_id
     })
 });
 

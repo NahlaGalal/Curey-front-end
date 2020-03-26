@@ -42,13 +42,10 @@ class Medications extends Component {
       JSON.stringify(prevProps.medicationsSearch) !==
       JSON.stringify(this.props.medicationsSearch)
     ) {
-      this.setState(
-        {
-          medications: this.props.medicationsSearch,
-          hovered: new Array(this.props.medicationsSearch.length).fill(false)
-        },
-        () => this.applyFilters(this.state.filters)
-      );
+      this.setState({
+        medications: this.props.medicationsSearch,
+        hovered: new Array(this.props.medicationsSearch.length).fill(false)
+      });
     }
     if (prevProps.error.length !== this.props.error.length) {
       if (this.props.error.length && this.props.error[0].error === "no results")
@@ -70,7 +67,6 @@ class Medications extends Component {
     const medications = medicationsFilter.filter(medication =>
       medication.keywords.some(key => keywords.includes(key))
     );
-    console.log(medications, keywords);
     this.setState({
       filterShown: "hidden",
       medications,
@@ -81,7 +77,13 @@ class Medications extends Component {
 
   searchMedications = search => {
     this.setState({ searchResults: false });
-    this.props.getMedicationsSearch(this.props.api_token, search);
+    this.props.getMedicationsSearch(
+      this.props.api_token,
+      search,
+      0,
+      16,
+      this.state.filters.keywords
+    );
   };
 
   deleteFavouriteMedication = product_id => {
@@ -157,19 +159,21 @@ class Medications extends Component {
                     />
                   ))}
                 </div>
-                <Button
-                  className="btn btn-blue btn-lg"
-                  onClick={() =>
-                    this.props.onRequestData(
-                      this.props.api_token,
-                      this.props.medications.length,
-                      8
-                    )
-                  }
-                >
-                  {" "}
-                  See more
-                </Button>
+                {!this.props.medicationsDone && (
+                  <Button
+                    className="btn btn-blue btn-lg"
+                    onClick={() =>
+                      this.props.onRequestData(
+                        this.props.api_token,
+                        this.state.medications.length,
+                        8
+                      )
+                    }
+                  >
+                    {" "}
+                    See more
+                  </Button>
+                )}
               </React.Fragment>
             ) : this.props.error.length || this.state.error ? (
               <div className="topMedications__container--no-medication">
@@ -210,7 +214,8 @@ const mapStateToProps = state => {
     keywords: state.medicationsData.keywords,
     medicationsSearch: state.medicationsData.medicationsSearch,
     prescription: state.prescription.medications,
-    error: state.medicationsData.errors
+    error: state.medicationsData.errors,
+    medicationsDone: state.medicationsData.medicationsDone
   };
 };
 
