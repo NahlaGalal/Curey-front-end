@@ -70,6 +70,14 @@ export class Orders extends Component {
           >
             Failed
           </Button>
+          <Button
+            className={`btn btn-filter ${
+              this.state.filter === "Waiting" ? "active" : ""
+            }`}
+            onClick={() => this.filterOrders("Waiting")}
+          >
+            Waiting
+          </Button>
         </div>
         {this.props.orders.length ? (
           <main className="Orders__container">
@@ -110,16 +118,22 @@ export class Orders extends Component {
                       <li key={i}> {medication.name} </li>
                     ))}
                   </ul>
-                  {this.state !== "Failed" ? (
+                  {this.state.filter === "Waiting" ? (
                     <Button
                       className="btn btn-xxs btn-green-dark"
-                      onClick={() => this.setState({ orderTracingBox: true })}
+                      onClick={() =>
+                        this.props.onCancelOrder(this.props.api_token, order.id)
+                      }
                     >
-                      Trace Order
+                      Cancel Order
+                    </Button>
+                  ) : this.state.filter === "Failed" ? (
+                    <Button className="btn btn-xxs btn-green-dark">
+                      Reorder
                     </Button>
                   ) : (
                     <Button className="btn btn-xxs btn-green-dark">
-                      Reorder
+                      Trace Order
                     </Button>
                   )}
                 </div>
@@ -156,7 +170,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onRequestOrders: api_token =>
-      dispatch({ type: actions.REQUEST_ORDERS, api_token })
+      dispatch({ type: actions.REQUEST_ORDERS, api_token }),
+    onCancelOrder: (api_token, order_id) =>
+      dispatch({ type: actions.CANCEL_ORDER, api_token, order_id })
   };
 };
 

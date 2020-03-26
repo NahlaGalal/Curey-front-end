@@ -227,6 +227,25 @@ function* getOrders({ api_token }) {
   }
 }
 
+function* cancelOrder({ api_token, order_id }) {
+  const data = { api_token, order_id };
+  try {
+    let result = yield call(() => axios.post(`/api/web/cancel_order`, data));
+
+    if (!result.data.isFailed) {
+      alert(result.data.data.success);
+      yield put({
+        type: actions.REQUEST_ORDERS,
+        api_token
+      });
+    } else {
+      console.log(result.data.errors);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export default function* watchMedications() {
   yield takeEvery(actions.REQUEST_MEDICATIONS, getMedications);
   yield takeEvery(actions.SEARCH_MEDICATIONS, getMedicationsSearch);
@@ -236,4 +255,5 @@ export default function* watchMedications() {
   yield takeEvery(actions.SAGA_GET_FAVOURITES, getFavourites);
   yield takeEvery(actions.SUBMIT_MEDICATION_ORDER, submitOrder);
   yield takeEvery(actions.REQUEST_ORDERS, getOrders);
+  yield takeEvery(actions.CANCEL_ORDER, cancelOrder);
 }
