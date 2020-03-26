@@ -16,6 +16,7 @@ class MedicinePage extends Component {
       this.props.api_token,
       this.props.match.params.id
     );
+    this.props.showCart(this.props.api_token);
   }
 
   deleteFavouriteMedication = product_id => {
@@ -124,8 +125,7 @@ class MedicinePage extends Component {
                         isCart={
                           this.props.cart.find(
                             item =>
-                              item.medication.id === this.props.medicine.id &&
-                              item.pharmacy.id === pharmacy.id
+                              item.pharmacy.product_pharmacy_id === pharmacy.product_pharmacy_id
                           )
                             ? true
                             : false
@@ -183,7 +183,8 @@ const mapDispatchToProps = dispatch => ({
       api_token,
       data,
       notificationData
-    })
+    }),
+  showCart: api_token => dispatch({ type: actions.SAGA_SHOW_CART, api_token })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MedicinePage);

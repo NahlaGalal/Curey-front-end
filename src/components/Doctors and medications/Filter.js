@@ -11,6 +11,7 @@ class Filter extends Component {
       citiesChecked: [],
       citiesChecked_id: [],
       specialitiesChecked: [],
+      specialitiesChecked_id: [],
       filtersOptionsClass: [],
       cityBoxOpened: false,
       specialityBoxOpened: false,
@@ -283,7 +284,8 @@ class Filter extends Component {
                 this.props.applyFilters({
                   cities: [...this.state.citiesChecked_id] || [],
                   specialities: [...this.state.specialitiesChecked] || [],
-                  keywords: [...this.state.filtersChecked] || []
+                  keywords: [...this.state.filtersChecked] || [],
+                  specialities_id: [...this.state.specialitiesChecked_id] || []
                 })
               }
             >

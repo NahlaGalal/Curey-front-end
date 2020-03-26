@@ -13,6 +13,7 @@ export const doctors = (state = {}, action) => {
         doctorsData: !action.isFailed ? [...state.doctorsData, ...action.payload.doctors] : [],
         specialities: !action.isFailed ? action.payload.specialities : [],
         cities: !action.isFailed ? action.payload.cities : [],
+        doctorsDone: !action.isFailed && !action.payload.doctors.length ? true : false,
         errors: action.isFailed ? action.payload : []
       };
     case SEARCH_DOCTORS:

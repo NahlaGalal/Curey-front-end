@@ -4,6 +4,7 @@ import Order from "../../components/order";
 import Button from "../../components/Button";
 import OrderDetails from "../../components/Pop-ups/OrderDetails";
 import * as actions from "../../actions/types";
+import ReactLoading from "react-loading";
 
 class ShoppingCart extends Component {
   state = {
@@ -62,32 +63,41 @@ class ShoppingCart extends Component {
           <h2 className="heading-2">Shopping cart</h2>
         </div>
         <div className="shoppingCartContainer">
-          <div className="medicationsContainer medicationGrid">
-            {this.state.cart.map((cart, i) => (
-              <Order
-                key={i}
-                name={cart.name}
-                price={cart.price}
-                pharmacy={cart.pharmacy.name}
-                address={cart.pharmacy.address}
-                remove={() =>
-                  this.props.removeFromCart(this.props.api_token, cart.pharmacy.product_pharmacy_id)
-                }
-              />
-            ))}
-          </div>
-          <div className="totalPriceCard">
-            <h3>Total price</h3>
-            <p>{totalPrice} L.E</p>
-            {this.state.cart.length ? (
-              <Button
-                className="btn checkout-btn"
-                onClick={this.openOrderDetailsBox}
-              >
-                Checkout
-              </Button>
-            ) : null}
-          </div>
+          {this.state.cart.length ? (
+            <React.Fragment>
+              <div className="medicationsContainer medicationGrid">
+                {this.state.cart.map((cart, i) => (
+                  <Order
+                    key={i}
+                    name={cart.name}
+                    price={cart.price}
+                    pharmacy={cart.pharmacy.name}
+                    address={cart.pharmacy.address}
+                    remove={() =>
+                      this.props.removeFromCart(
+                        this.props.api_token,
+                        cart.pharmacy.product_pharmacy_id
+                      )
+                    }
+                  />
+                ))}
+              </div>
+              <div className="totalPriceCard">
+                <h3>Total price</h3>
+                <p>{totalPrice} L.E</p>
+                {this.state.cart.length ? (
+                  <Button
+                    className="btn checkout-btn"
+                    onClick={this.openOrderDetailsBox}
+                  >
+                    Checkout
+                  </Button>
+                ) : null}
+              </div>
+            </React.Fragment>
+          ) : !this.props.error ? (
+            <ReactLoading type="spokes" color="#0066ff" className="loading" />
+          ) : <p className="shoppingCartContainer__error"> No items in shopping cart </p>}
         </div>
         {this.state.orderDetailsBox && (
           <OrderDetails
@@ -103,7 +113,8 @@ class ShoppingCart extends Component {
 
 const mapStateToProps = state => ({
   cart: state.user.cart,
-  api_token: state.user.api_token
+  api_token: state.user.api_token,
+  error: state.user.errors.error
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -120,7 +131,7 @@ const mapDispatchToProps = dispatch => ({
       data,
       notificationData
     }),
-  showCart: api_token => dispatch({ type: actions.SAGA_SHOW_CART, api_token }),
+  showCart: api_token => dispatch({ type: actions.SAGA_SHOW_CART, api_token })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCart);

@@ -35,10 +35,19 @@ function* getAllDoctors({ api_token, skip, limit }) {
   }
 }
 
-function* getDoctorsSearch({ search, api_token }) {
+function* getDoctorsSearch({
+  search,
+  api_token,
+  skip,
+  limit,
+  city_id,
+  speciality_id
+}) {
   try {
     const res = yield call(() =>
-      axios.get(`/api/web/doctors/search?name=${search}&api_token=${api_token}`)
+      axios.get(
+        `/api/web/doctors/search?name=${search}&api_token=${api_token}&skip=${skip}&limit=${limit}&city_id=${city_id}&speciality_id=${speciality_id}`
+      )
     );
     if (!res.data.isFailed)
       yield put({

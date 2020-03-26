@@ -157,19 +157,21 @@ class Medications extends Component {
                     />
                   ))}
                 </div>
-                <Button
-                  className="btn btn-blue btn-lg"
-                  onClick={() =>
-                    this.props.onRequestData(
-                      this.props.api_token,
-                      this.props.medications.length,
-                      8
-                    )
-                  }
-                >
-                  {" "}
-                  See more
-                </Button>
+                {!this.props.medicationsDone && (
+                  <Button
+                    className="btn btn-blue btn-lg"
+                    onClick={() =>
+                      this.props.onRequestData(
+                        this.props.api_token,
+                        this.props.medications.length,
+                        8
+                      )
+                    }
+                  >
+                    {" "}
+                    See more
+                  </Button>
+                )}
               </React.Fragment>
             ) : this.props.error.length || this.state.error ? (
               <div className="topMedications__container--no-medication">
@@ -210,7 +212,8 @@ const mapStateToProps = state => {
     keywords: state.medicationsData.keywords,
     medicationsSearch: state.medicationsData.medicationsSearch,
     prescription: state.prescription.medications,
-    error: state.medicationsData.errors
+    error: state.medicationsData.errors,
+    medicationsDone: state.medicationsData.medicationsDone
   };
 };
 

@@ -60,7 +60,11 @@
 .availableAppointments {
   background-color: $color-light-1;
   padding: 3.2rem;
-  flex-basis: 747px;
+  width: 747px;
+
+  @media screen and (max-width: 747px) {
+    width: 90%;
+  }
 
   &__header {
     display: flex;
@@ -90,7 +94,7 @@
     grid-template-columns: 32.5rem 32.5rem;
     grid-gap: 3.2rem;
 
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 747px) {
       grid-template-columns: 1fr;
     }
 
