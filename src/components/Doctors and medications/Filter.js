@@ -36,7 +36,9 @@ class Filter extends Component {
     // Uncheck filter
     if (i === -1) {
       // If filter from common search
-      i = this.props.filters.findIndex(filterOption => filter === filterOption.name);
+      i = this.props.filters.findIndex(
+        filterOption => filter === filterOption.name
+      );
       if (i === -1) {
         // If filter from cities
         let cityIndex = this.state.citiesChecked.findIndex(
@@ -64,7 +66,7 @@ class Filter extends Component {
           // Uncheck selected filter (speciality)
           Array.from(
             this.specialitiesContainerRef.current.querySelectorAll(
-              "input[type=checkbox]"
+              "input[type=radio]"
             )
           ).filter(input => input.value === filter)[0].checked = false;
           return;
@@ -81,7 +83,7 @@ class Filter extends Component {
         // Uncheck selected filter (city)
         Array.from(
           this.citiesContainerRef.current.querySelectorAll(
-            "input[type=checkbox]"
+            "input[type=radio]"
           )
         ).filter(input => input.value === filter)[0].checked = false;
         return;
@@ -104,12 +106,12 @@ class Filter extends Component {
       citiesChecked_id = [];
     if (cityBoxOpened) {
       citiesChecked = Array.from(
-        this.citiesContainerRef.current.querySelectorAll("input[type=checkbox]")
+        this.citiesContainerRef.current.querySelectorAll("input[type=radio]")
       )
         .filter(input => input.checked)
         .map(el => el.value);
       citiesChecked_id = Array.from(
-        this.citiesContainerRef.current.querySelectorAll("input[type=checkbox]")
+        this.citiesContainerRef.current.querySelectorAll("input[type=radio]")
       )
         .filter(input => input.checked)
         .map(el => el.id.split("_")[0]);
@@ -123,19 +125,28 @@ class Filter extends Component {
 
   toggleSpecialitySelectBox = () => {
     const { specialityBoxOpened } = this.state;
-    let specialitiesChecked = [];
+    let specialitiesChecked = [],
+      specialitiesChecked_id = [];
     if (specialityBoxOpened) {
       specialitiesChecked = Array.from(
         this.specialitiesContainerRef.current.querySelectorAll(
-          "input[type=checkbox]"
+          "input[type=radio]"
         )
       )
         .filter(input => input.checked)
         .map(el => el.value);
+      specialitiesChecked_id = Array.from(
+        this.specialitiesContainerRef.current.querySelectorAll(
+          "input[type=radio]"
+        )
+      )
+        .filter(input => input.checked)
+        .map(el => el.id.split("_")[0]);
     }
     this.setState({
       specialityBoxOpened: !specialityBoxOpened,
-      specialitiesChecked
+      specialitiesChecked,
+      specialitiesChecked_id
     });
   };
 
@@ -246,7 +257,7 @@ class Filter extends Component {
                   boxOpened={this.state.cityBoxOpened}
                   list={this.props.cities}
                   optionsContainerRef={this.citiesContainerRef}
-                  multiple={true}
+                  multiple={false}
                 />
               </div>
               <div>
@@ -260,7 +271,7 @@ class Filter extends Component {
                   boxOpened={this.state.specialityBoxOpened}
                   list={this.props.specialities}
                   optionsContainerRef={this.specialitiesContainerRef}
-                  multiple={true}
+                  multiple={false}
                 />
               </div>
             </div>

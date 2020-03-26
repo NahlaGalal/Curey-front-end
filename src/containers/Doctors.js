@@ -23,7 +23,6 @@ class Doctors extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    // console.log(this.props.doctors)
     if (
       JSON.stringify(prevProps.doctors) !== JSON.stringify(this.props.doctors)
     ) {
@@ -48,11 +47,7 @@ class Doctors extends Component {
       cities = this.props.cities.map(city => city.id.toString());
     if (!filters.specialities.length)
       specialities = this.props.specialities.map(speciality => speciality.name);
-    const doctorsFilter =
-      this.state.doctors.length === this.props.doctors.length
-        ? this.props.doctors
-        : this.props.doctorsSearch;
-    const doctors = doctorsFilter
+    const doctors = this.props.doctors
       .filter(doctor => cities.includes(doctor.city_id.toString()))
       .filter(doctor => specialities.includes(doctor.speciality));
     this.setState({
