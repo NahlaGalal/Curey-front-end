@@ -81,64 +81,75 @@ export class Orders extends Component {
         </div>
         {this.props.orders.length ? (
           <main className="Orders__container">
-            {this.state.orders.map((order, i) => (
-              <section className="Orders__container__box" key={i}>
-                <header className="Orders__container__box__header">
-                  <img
-                    src={order.image || Pharmacy}
-                    alt={`${order.pharmacy} Logo`}
-                  />
-                  <div>
-                    <div className="Orders__container__box__header--heading">
-                      <p>{order.pharmacy}</p>
-                      <p
-                        className={`${
-                          order.state !== "Failed" ? "state" : "state-failed"
-                        }`}
-                      >
-                        {order.state || "Delivered"}
+            {this.state.orders.map((order, i) => {
+              order.state = order.state || "Waiting";
+              return (
+                <section className="Orders__container__box" key={i}>
+                  <header className="Orders__container__box__header">
+                    <img
+                      src={order.image || Pharmacy}
+                      alt={`${order.pharmacy} Logo`}
+                    />
+                    <div>
+                      <div className="Orders__container__box__header--heading">
+                        <p>{order.pharmacy}</p>
+                        <p
+                          className={`${
+                            order.state !== "Failed" ? "state" : "state-failed"
+                          }`}
+                        >
+                          {order.state}
+                        </p>
+                      </div>
+                      <p className="Orders__container__box__header--address">
+                        <img
+                          src={Location}
+                          alt={`location icon for ${order.pharmacy}`}
+                        />
+                        <span>
+                          {order.address || "Mansoura City, Gehan St"}
+                        </span>
                       </p>
                     </div>
-                    <p className="Orders__container__box__header--address">
-                      <img
-                        src={Location}
-                        alt={`location icon for ${order.pharmacy}`}
-                      />
-                      <span>{order.address || "Mansoura City, Gehan St"}</span>
-                    </p>
+                  </header>
+                  <div className="Orders__container__box__order">
+                    <div className="Orders__container__box__order--heading">
+                      <h3> Order list </h3>
+                      <p> {order.total_price} L.E </p>
+                    </div>
+                    <ul>
+                      {order.products.map((medication, i) => (
+                        <li key={i}> {medication.name} </li>
+                      ))}
+                    </ul>
+                    {order.state === "Waiting" ? (
+                      <Button
+                        className="btn btn-xxs btn-green-dark"
+                        onClick={() =>
+                          this.props.onCancelOrder(
+                            this.props.api_token,
+                            order.id
+                          )
+                        }
+                      >
+                        Cancel Order
+                      </Button>
+                    ) : order.state === "Failed" ? (
+                      <Button className="btn btn-xxs btn-green-dark">
+                        Reorder
+                      </Button>
+                    ) : (
+                      <Button
+                        className="btn btn-xxs btn-green-dark"
+                        onClick={() => this.setState({ orderTracingBox: true })}
+                      >
+                        Trace Order
+                      </Button>
+                    )}
                   </div>
-                </header>
-                <div className="Orders__container__box__order">
-                  <div className="Orders__container__box__order--heading">
-                    <h3> Order list </h3>
-                    <p> {order.total_price} L.E </p>
-                  </div>
-                  <ul>
-                    {order.products.map((medication, i) => (
-                      <li key={i}> {medication.name} </li>
-                    ))}
-                  </ul>
-                  {this.state.filter === "Waiting" ? (
-                    <Button
-                      className="btn btn-xxs btn-green-dark"
-                      onClick={() =>
-                        this.props.onCancelOrder(this.props.api_token, order.id)
-                      }
-                    >
-                      Cancel Order
-                    </Button>
-                  ) : this.state.filter === "Failed" ? (
-                    <Button className="btn btn-xxs btn-green-dark">
-                      Reorder
-                    </Button>
-                  ) : (
-                    <Button className="btn btn-xxs btn-green-dark">
-                      Trace Order
-                    </Button>
-                  )}
-                </div>
-              </section>
-            ))}
+                </section>
+              );
+            })}
           </main>
         ) : this.props.medicationsDataError.length ? (
           <p className="Orders__container__error">No orders yet</p>
