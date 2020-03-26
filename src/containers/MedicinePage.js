@@ -38,10 +38,10 @@ class MedicinePage extends Component {
     );
   };
 
-  addToCart = pharmacy => {
-    this.props.addToCartStorage({
-      medication: this.props.medicine,
-      pharmacy
+  addToCart = product_pharmacy_id => {
+    this.props.addToCart(this.props.api_token, {
+      id: product_pharmacy_id,
+      amount: 1
     });
   };
 
@@ -130,7 +130,7 @@ class MedicinePage extends Component {
                             ? true
                             : false
                         }
-                        addToCart={() => this.addToCart(pharmacy)}
+                        addToCart={() => this.addToCart(pharmacy.product_pharmacy_id)}
                         onSubmit={() => this.submitOrder(pharmacy)}
                       />
                     ))
@@ -176,7 +176,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: actions.SAGA_DELETE_FAVOURITE, data, source }),
   addFavouriteMedication: (data, source) =>
     dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source }),
-  addToCartStorage: data => dispatch({ type: actions.ADD_TO_CART, data }),
+  addToCart: (api_token, product) => dispatch({ type: actions.SAGA_ADD_TO_CART, api_token, product }),
   submitMedicineOrder: (api_token, data, notificationData) =>
     dispatch({
       type: actions.SUBMIT_MEDICATION_ORDER,

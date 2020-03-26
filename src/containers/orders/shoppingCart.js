@@ -14,14 +14,14 @@ class ShoppingCart extends Component {
 
   componentDidMount() {
     this.setState({ cart: this.props.cart });
+    this.props.showCart(this.props.api_token);
   }
 
-  removeMedication = index => {
-    const cart = this.state.cart;
-    cart.splice(index, 1);
-    this.setState({ cart });
-    this.props.removeFromCartStorage(this.state.cart);
-  };
+  componentDidUpdate(prevProps) {
+    if (JSON.stringify(prevProps.cart) !== JSON.stringify(this.props.cart)) {
+      this.setState({ cart: this.props.cart });
+    }
+  }
 
   openOrderDetailsBox = () => {
     const orderDetails = [];
@@ -32,10 +32,10 @@ class ShoppingCart extends Component {
       if (orderIndex === -1) {
         orderDetails.push({
           pharmacy: { ...item.pharmacy },
-          medications: [{ ...item.medication }]
+          medications: [{ ...item }]
         });
       } else {
-        orderDetails[orderIndex].medications.push({ ...item.medication });
+        orderDetails[orderIndex].medications.push({ ...item });
       }
     });
     this.setState({ orderDetailsBox: true, orderDetails });
@@ -47,13 +47,12 @@ class ShoppingCart extends Component {
       amount: 1
     }));
     this.props.submitOrder(this.props.api_token, products, { order: 0 });
-    this.props.removeFromCartStorage([]);
     this.setState({ orderDetailsBox: false, cart: [] });
   };
 
   render() {
     const totalPrice = this.state.cart
-      .map(cart => +cart.medication.price)
+      .map(cart => +cart.price)
       .reduce((total, price) => (total += price), 0)
       .toFixed(2);
 
@@ -67,11 +66,13 @@ class ShoppingCart extends Component {
             {this.state.cart.map((cart, i) => (
               <Order
                 key={i}
-                name={cart.medication.name}
-                price={cart.medication.price}
+                name={cart.name}
+                price={cart.price}
                 pharmacy={cart.pharmacy.name}
                 address={cart.pharmacy.address}
-                remove={() => this.removeMedication(i, this.state.cart)}
+                remove={() =>
+                  this.props.removeFromCart(this.props.api_token, cart.id)
+                }
               />
             ))}
           </div>
@@ -106,13 +107,20 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  removeFromCartStorage: cart =>
+  removeFromCart: (api_token, product_id) =>
     dispatch({
-      type: actions.REMOVE_FROM_CART,
-      cart
+      type: actions.SAGA_REMOVE_FROM_CART,
+      api_token,
+      product_id
     }),
   submitOrder: (api_token, data, notificationData) =>
-    dispatch({ type: actions.SUBMIT_MEDICATION_ORDER, api_token, data, notificationData })
+    dispatch({
+      type: actions.SUBMIT_MEDICATION_ORDER,
+      api_token,
+      data,
+      notificationData
+    }),
+  showCart: api_token => dispatch({ type: actions.SAGA_SHOW_CART, api_token }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCart);

@@ -181,6 +181,9 @@
         .icon {
           margin-right: 4px;
         }
+        .one-line {
+          @include controlLines(1);
+        }
       }
       &__note {
         font-size: 1.6rem;

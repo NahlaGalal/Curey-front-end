@@ -69,7 +69,7 @@ export const loadState = () =>
         full_name: "",
         image: null,
         email: "",
-        cart: []
+        // cart: []
       };
 
 export const saveState = state =>
@@ -80,7 +80,7 @@ export const saveState = state =>
       full_name: state.user.full_name,
       image: state.user.image,
       email: state.user.email,
-      cart: state.user.cart
+      // cart: state.user.cart
     })
   );
 
@@ -95,7 +95,7 @@ const initialState = () => {
       full_name: loadState().full_name,
       image: loadState().image,
       email: loadState().email,
-      cart: loadState().cart
+      // cart: loadState().cart
     }
   };
 };

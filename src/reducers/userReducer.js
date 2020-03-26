@@ -9,7 +9,8 @@ import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
   ADD_NOTIFICATION,
-  READ_NOTIFICATION
+  READ_NOTIFICATION,
+  SHOW_CART
 } from "../actions/types";
 
 export function user(state = [], action) {
@@ -58,12 +59,19 @@ export function user(state = [], action) {
     case ADD_TO_CART:
       return {
         ...state,
-        cart: [...state.cart, action.data]
+        success: !action.isFailed ? action.payload.success : "",
+        errors: action.isFailed ? action.payload : []
       };
+    case SHOW_CART:
+      return {
+        ...state,
+        cart: !action.isFailed ? action.payload : [],
+        errors: action.isFailed ? action.payload : []
+      }
     case REMOVE_FROM_CART:
       return {
         ...state,
-        cart: action.cart
+        errors: action.isFailed ? action.payload : []
       };
     case ADD_NOTIFICATION:
       return {

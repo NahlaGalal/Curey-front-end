@@ -14,7 +14,13 @@ import {
   SAGA_ADD_PRESCRIPTION,
   ADD_PRESCRIPTION,
   SAGA_DELETE_PRESCRIPTIONS,
-  DELETE_PRESCRIPTIONS
+  DELETE_PRESCRIPTIONS,
+  SAGA_ADD_TO_CART,
+  ADD_TO_CART,
+  SHOW_CART,
+  SAGA_SHOW_CART,
+  SAGA_REMOVE_FROM_CART,
+  REMOVE_FROM_CART
 } from "../actions/types";
 
 function* signupUser({ data }) {
@@ -124,7 +130,9 @@ function* postAddPrescription({ data }) {
 
 function* postDeletePrescriptions({ data }) {
   try {
-    const res = yield call(() => axios.post("/api/web/delete_prescription", data));
+    const res = yield call(() =>
+      axios.post("/api/web/delete_prescription", data)
+    );
     console.log(res);
     if (!res.data.isFailed)
       yield put({
@@ -137,9 +145,59 @@ function* postDeletePrescriptions({ data }) {
         payload: res.data.errors,
         isFailed: true
       });
-  }catch (err) {
+  } catch (err) {
     console.log(err);
   }
+}
+
+function* postAddToCart({ api_token, product }) {
+  const res = yield call(() =>
+    axios.post("/api/web/add_item", { api_token, product })
+  );
+  if (!res.data.isFailed)
+    yield put({
+      type: ADD_TO_CART,
+      payload: res.data.data,
+      isFailed: false
+    });
+  else
+    yield put({
+      type: ADD_TO_CART,
+      payload: res.data.errors,
+      isFailed: true
+    });
+}
+
+function* getCart({ api_token }) {
+  const res = yield call(() => axios.get(`/api/web/cart?api_token=${api_token}`));
+  if(!res.data.isFailed) 
+    yield put({
+      type: SHOW_CART,
+      payload: res.data.data,
+      isFailed: false
+    })
+  else
+    yield put({
+      type: SHOW_CART,
+      payload: res.data.errors,
+      isFailed: true
+    })
+}
+
+function* postRemoveCartItem({ api_token, product_id }) {
+  const res = yield call(() => axios.post("/api/web/delete_item", {api_token, product_id}));
+  console.log(res)
+  if(!res.data.isFailed)
+    yield put({
+      type: SAGA_SHOW_CART,
+      api_token
+    })
+  else
+    yield put({
+      type: REMOVE_FROM_CART,
+      payload: res.data.errors,
+      isFailed: true
+    })
 }
 
 export default function* watchUser() {
@@ -150,4 +208,7 @@ export default function* watchUser() {
   yield takeEvery(SAGA_GET_PRESCRIPTION, getPrescriptions);
   yield takeEvery(SAGA_ADD_PRESCRIPTION, postAddPrescription);
   yield takeEvery(SAGA_DELETE_PRESCRIPTIONS, postDeletePrescriptions);
+  yield takeEvery(SAGA_ADD_TO_CART, postAddToCart);
+  yield takeEvery(SAGA_SHOW_CART, getCart);
+  yield takeEvery(SAGA_REMOVE_FROM_CART, postRemoveCartItem)
 }

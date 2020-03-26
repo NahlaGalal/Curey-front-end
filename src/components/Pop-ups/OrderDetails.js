@@ -25,7 +25,7 @@ const OrderDetails = props => {
                   />
                   <div>
                     <p>{pharmacy.name}</p>
-                    <p className="fades">
+                    <p className="fades one-line">
                       <img
                         src={LocationIcon}
                         alt="location icon"
