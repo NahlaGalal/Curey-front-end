@@ -2,10 +2,10 @@ import axios from "axios";
 import { put, takeEvery, call } from "redux-saga/effects";
 import * as actions from "../actions/types";
 
-function* getMedications({ api_token }) {
+function* getMedications({ api_token, skip, limit }) {
   try {
     let result = yield call(() =>
-      axios.get(`/api/web/medications?api_token=${api_token}`)
+      axios.get(`/api/web/medications?api_token=${api_token}&skip=${skip}&limit=${limit}`)
     );
     if (!result.data.isFailed) {
       yield put({

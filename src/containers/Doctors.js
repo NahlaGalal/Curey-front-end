@@ -5,6 +5,7 @@ import Search from "../components/Doctors and medications/Search";
 import Filter from "../components/Doctors and medications/Filter";
 import * as actions from "../actions/types";
 import ReactLoading from "react-loading";
+import Button from "../components/Button";
 
 class Doctors extends Component {
   state = {
@@ -18,10 +19,11 @@ class Doctors extends Component {
 
   componentDidMount() {
     this.setState({ doctors: this.props.doctors });
-    this.props.getAllDoctors(this.props.api_token);
+    this.props.getAllDoctors(this.props.api_token, 0, 16);
   }
 
   componentDidUpdate(prevProps) {
+    // console.log(this.props.doctors)
     if (
       JSON.stringify(prevProps.doctors) !== JSON.stringify(this.props.doctors)
     ) {
@@ -86,7 +88,22 @@ class Doctors extends Component {
         <section className="topDoctors">
           <div className="topDoctors__container">
             {this.state.doctors.length ? (
-              <DoctorGrid doctors={this.state.doctors.slice(0, 16)} />
+              <React.Fragment>
+                <DoctorGrid doctors={this.state.doctors} />
+                <Button
+                  className="btn btn-blue btn-lg"
+                  onClick={() =>
+                    this.props.getAllDoctors(
+                      this.props.api_token,
+                      this.props.doctors.length,
+                      8
+                    )
+                  }
+                >
+                  {" "}
+                  See more
+                </Button>
+              </React.Fragment>
             ) : (
               <ReactLoading type="spokes" color="#0066ff" className="loading" />
             )}
@@ -106,10 +123,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getAllDoctors: api_token =>
+  getAllDoctors: (api_token, skip, limit) =>
     dispatch({
       type: actions.SAGA_GET_DOCTORS,
-      api_token
+      api_token,
+      skip,
+      limit
     }),
   getDoctorsSearch: (api_token, search) =>
     dispatch({

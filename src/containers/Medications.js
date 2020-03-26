@@ -21,7 +21,7 @@ class Medications extends Component {
   };
 
   componentDidMount() {
-    this.props.onRequestData(this.props.api_token);
+    this.props.onRequestData(this.props.api_token, 0, 16);
     this.setState({
       medications: this.props.medications,
       hovered: new Array(this.props.medications.length).fill(false)
@@ -45,7 +45,7 @@ class Medications extends Component {
       this.setState(
         {
           medications: this.props.medicationsSearch,
-          hovered: new Array(this.props.medicationsSearch.length).fill(false),
+          hovered: new Array(this.props.medicationsSearch.length).fill(false)
         },
         () => this.applyFilters(this.state.filters)
       );
@@ -126,36 +126,51 @@ class Medications extends Component {
         <section className="topMedications">
           <div className="topMedications__container">
             {this.state.medications.length ? (
-              <div className="medicationGrid">
-                {this.state.medications.slice(0, 16).map((medication, i) => (
-                  <MedicineCard
-                    key={i}
-                    id={medication.id}
-                    name={medication.name}
-                    price={medication.price}
-                    description={medication.description}
-                    isFavourite={medication.is_favourite}
-                    onMouseMove={() =>
-                      this.setState({
-                        hovered: this.state.hovered.fill(true, i, i + 1)
-                      })
-                    }
-                    onMouseLeave={() =>
-                      this.setState({
-                        hovered: this.state.hovered.fill(false, i, i + 1)
-                      })
-                    }
-                    hovered={this.state.hovered[i]}
-                    link
-                    deleteFavouriteMedication={() =>
-                      this.deleteFavouriteMedication(medication.id)
-                    }
-                    addFavouriteMedication={() =>
-                      this.addFavouriteMedication(medication.id)
-                    }
-                  />
-                ))}
-              </div>
+              <React.Fragment>
+                <div className="medicationGrid mb-40">
+                  {this.state.medications.slice(0, 16).map((medication, i) => (
+                    <MedicineCard
+                      key={i}
+                      id={medication.id}
+                      name={medication.name}
+                      price={medication.price}
+                      description={medication.description}
+                      isFavourite={medication.is_favourite}
+                      onMouseMove={() =>
+                        this.setState({
+                          hovered: this.state.hovered.fill(true, i, i + 1)
+                        })
+                      }
+                      onMouseLeave={() =>
+                        this.setState({
+                          hovered: this.state.hovered.fill(false, i, i + 1)
+                        })
+                      }
+                      hovered={this.state.hovered[i]}
+                      link
+                      deleteFavouriteMedication={() =>
+                        this.deleteFavouriteMedication(medication.id)
+                      }
+                      addFavouriteMedication={() =>
+                        this.addFavouriteMedication(medication.id)
+                      }
+                    />
+                  ))}
+                </div>
+                <Button
+                  className="btn btn-blue btn-lg"
+                  onClick={() =>
+                    this.props.onRequestData(
+                      this.props.api_token,
+                      this.props.medications.length,
+                      8
+                    )
+                  }
+                >
+                  {" "}
+                  See more
+                </Button>
+              </React.Fragment>
             ) : this.props.error.length || this.state.error ? (
               <div className="topMedications__container--no-medication">
                 <p>
@@ -201,8 +216,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onRequestData: api_token =>
-      dispatch({ type: actions.REQUEST_MEDICATIONS, api_token }),
+    onRequestData: (api_token, skip, limit) =>
+      dispatch({ type: actions.REQUEST_MEDICATIONS, api_token, skip, limit }),
     getMedicationsSearch: (api_token, search) =>
       dispatch({ type: actions.SEARCH_MEDICATIONS, api_token, search }),
     deleteFavouriteMedication: (data, source) =>

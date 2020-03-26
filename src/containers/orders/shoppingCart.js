@@ -71,7 +71,7 @@ class ShoppingCart extends Component {
                 pharmacy={cart.pharmacy.name}
                 address={cart.pharmacy.address}
                 remove={() =>
-                  this.props.removeFromCart(this.props.api_token, cart.id)
+                  this.props.removeFromCart(this.props.api_token, cart.pharmacy.product_pharmacy_id)
                 }
               />
             ))}

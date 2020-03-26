@@ -11,10 +11,12 @@ import {
   GET_DOCTOR_APPOINTMENTS
 } from "../actions/types";
 
-function* getAllDoctors({ api_token }) {
+function* getAllDoctors({ api_token, skip, limit }) {
   try {
     const res = yield call(() =>
-      axios.get(`/api/web/doctors?api_token=${api_token}`)
+      axios.get(
+        `/api/web/doctors?api_token=${api_token}&skip=${skip}&limit=${limit}`
+      )
     );
     if (!res.data.isFailed)
       yield put({
