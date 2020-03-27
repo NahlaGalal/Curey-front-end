@@ -208,6 +208,11 @@
     &--last {
       border-right: 1px solid rgba(#242a37, 0.4);
       padding-right: 2.4rem;
+
+      @media (max-width: 1210px) {
+        border-right: none;
+        padding-right: 0;
+      }
     }
 
     .active {
@@ -296,9 +301,26 @@
   &__phrmacyData {
     display: flex;
     align-items: center;
+    transition: transform 0.2s ease-in-out;
+    z-index: 200;
+    background-color: transparent;
     &--logo {
       margin-left: 0.4rem;
     }
+    @media (max-width: 1210px) {
+      padding: 2rem;
+      margin-left: 0;
+      background-color: $color-white;
+      flex-direction: column;
+      transform: translateY(-1000px);
+      position: fixed;
+      left: 2rem;
+      top: 21rem;
+    }
+  }
+
+  &__checkbox:checked ~ &__phrmacyData {
+    transform: translateY(0);
   }
 }
 

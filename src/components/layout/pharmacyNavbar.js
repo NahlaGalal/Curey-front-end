@@ -5,6 +5,15 @@ import pharmacyImg from "../../assets/images/pharmacy.png";
 
 const PharmacyNavbar = () => (
   <nav className="NavigationBar">
+    <input
+      type="checkbox"
+      className="NavigationBar__checkbox"
+      id="nav-toggle"
+    />
+    <label htmlFor="nav-toggle" className="NavigationBar__button">
+      <span className="NavigationBar__hamburger"> </span>
+    </label>
+
     <div className="NavigationBar__logo">
       <img src={require("../../assets/svg/Logo-SVG.svg")} alt="logo" />
     </div>
