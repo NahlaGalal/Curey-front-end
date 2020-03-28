@@ -22,11 +22,13 @@ import Orders from "./orders/Orders";
 import Payment from "./Payment";
 import MedicalWallet from "./MedicalWallet";
 import { loadState } from "../configureStore";
+import Dashboard from "./pharmacy/dashboard";
 
 const Router = () => (
   <BrowserRouter>
     <Switch>
       <Switch>
+        <Route exact path="/Dashboard" component={Dashboard} />
         {!loadState().api_token && (
           <Route exact path="/" component={Landing_page} />
         )}

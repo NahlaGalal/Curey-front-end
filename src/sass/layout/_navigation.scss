@@ -6,6 +6,7 @@
   justify-content: space-between;
   font-size: 1.6rem;
   flex-wrap: wrap;
+  box-shadow: 0px 3px 6px $color-light-3;
 
   @media (max-width: 1335px) {
     padding: 1rem 0;
@@ -204,6 +205,16 @@
       }
     }
 
+    &--last {
+      border-right: 1px solid rgba(#242a37, 0.4);
+      padding-right: 2.4rem;
+
+      @media (max-width: 1210px) {
+        border-right: none;
+        padding-right: 0;
+      }
+    }
+
     .active {
       color: $color-green;
       font-family: $semi-bold-font;
@@ -274,6 +285,42 @@
       order: 0;
       margin-bottom: 2rem;
     }
+    &--pharmacy {
+      margin-right: 2.4rem;
+    }
+  }
+
+  &__icon {
+    margin-right: 0.8rem;
+  }
+  span {
+    color: rgba($color-dark, 0.7);
+    display: block;
+    float: right;
+  }
+  &__phrmacyData {
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease-in-out;
+    z-index: 200;
+    background-color: transparent;
+    &--logo {
+      margin-left: 0.4rem;
+    }
+    @media (max-width: 1210px) {
+      padding: 2rem;
+      margin-left: 0;
+      background-color: $color-white;
+      flex-direction: column;
+      transform: translateY(-1000px);
+      position: fixed;
+      left: 2rem;
+      top: 21rem;
+    }
+  }
+
+  &__checkbox:checked ~ &__phrmacyData {
+    transform: translateY(0);
   }
 }
 
