@@ -11,6 +11,7 @@ class Doctors extends Component {
   state = {
     filterShown: "hidden",
     doctors: [],
+    search: "",
     filters: {
       cities: [],
       specialities: [],
@@ -40,37 +41,71 @@ class Doctors extends Component {
   openFilterBox = () => this.setState({ filterShown: "visible" });
   cancelFilters = () => this.setState({ filterShown: "hidden" });
   applyFilters = filters => {
-    let cities = filters.cities,
-      specialities = filters.specialities,
-      specialities_id = filters.specialities_id;
-    if (!filters.cities.length)
-      cities = this.props.cities.map(city => city.id.toString());
-    if (!filters.specialities.length)
-      specialities = this.props.specialities.map(speciality => speciality.name);
-    const doctors = this.props.doctors
-      .filter(doctor => cities.includes(doctor.city_id.toString()))
-      .filter(doctor => specialities.includes(doctor.speciality));
-    this.setState({
-      filterShown: "hidden",
-      doctors,
-      filters: {
-        cities: filters.cities,
-        specialities: filters.specialities,
-        specialities_id
-      }
-    });
+    if(!this.state.search) {
+      let cities = filters.cities,
+        specialities = filters.specialities;
+      if (!filters.cities.length)
+        cities = this.props.cities.map(city => city.id.toString());
+      if (!filters.specialities.length)
+        specialities = this.props.specialities.map(speciality => speciality.name);
+      const doctors = this.props.doctors
+        .filter(doctor => cities.includes(doctor.city_id.toString()))
+        .filter(doctor => specialities.includes(doctor.speciality));
+      this.setState({
+        filterShown: "hidden",
+        doctors,
+        filters
+      });
+    }else {
+      this.props.getDoctorsSearch(
+        this.props.api_token,
+        this.state.search,
+        0,
+        16,
+        filters.cities[0] || "",
+        filters.specialities_id[0] || ""
+      );
+      this.setState({
+        filterShown: "hidden",
+        filters
+      });
+    }
   };
 
   searchDoctor = search => {
-    this.props.getDoctorsSearch(
-      this.props.api_token,
-      search,
-      0,
-      16,
-      this.state.filters.cities[0] || "",
-      this.state.filters.specialities_id[0] || ""
-    );
+    if(search) {
+      this.props.getDoctorsSearch(
+        this.props.api_token,
+        search,
+        0,
+        16,
+        this.state.filters.cities[0] || "",
+        this.state.filters.specialities_id[0] || ""
+      );
+    }else {
+      this.setState({ doctors: this.props.doctors });
+    }
+    this.setState({ search })
   };
+
+  seeMoreDoctors = () => {
+    if(this.state.search) {
+      this.props.getDoctorsSearch(
+        this.props.api_token,
+        this.state.search,
+        this.state.doctors.length,
+        16,
+        this.state.filters.cities[0] || "",
+        this.state.filters.specialities_id[0] || ""
+      );
+    }else {
+      this.props.getAllDoctors(
+        this.props.api_token,
+        this.state.doctors.length,
+        8
+      );
+    }
+  }
 
   render() {
     return (
@@ -99,13 +134,7 @@ class Doctors extends Component {
                 {!this.props.doctorsDone && (
                   <Button
                     className="btn btn-blue btn-lg"
-                    onClick={() =>
-                      this.props.getAllDoctors(
-                        this.props.api_token,
-                        this.state.doctors.length,
-                        8
-                      )
-                    }
+                    onClick={this.seeMoreDoctors}
                   >
                     {" "}
                     See more

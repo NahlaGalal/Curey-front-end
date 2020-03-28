@@ -25,13 +25,37 @@ function* getMedications({ api_token, skip, limit }) {
   }
 }
 
-function* getMedicationsSearch({ search, api_token }) {
+function* getMedicationsSearch({ search, api_token, skip, limit, keywords }) {
   try {
-    const res = yield call(() =>
-      axios.get(
-        `/api/web/medications/search?name=${search}&api_token=${api_token}`
-      )
-    );
+    let res;
+    if(keywords.length) {
+      res = yield call(() =>
+        axios.get(
+          `/api/web/medications/search`, {
+            params: {
+              name: search,
+              api_token,
+              skip,
+              limit,
+              keywords
+            }
+          }
+        )
+      );
+    }else {
+      res = yield call(() =>
+        axios.get(
+          `/api/web/medications/search`, {
+            params: {
+              name: search,
+              api_token,
+              skip,
+              limit
+            }
+          }
+        )
+      );
+    }
     if (!res.data.isFailed) {
       yield put({
         type: actions.RECIEVE_SEARCH_MEDICATIONS,

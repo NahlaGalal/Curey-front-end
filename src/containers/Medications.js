@@ -15,6 +15,7 @@ class Medications extends Component {
     requestMedicationBox: false,
     medications: [],
     error: false,
+    search: "",
     filters: {
       keywords: []
     }
@@ -56,34 +57,51 @@ class Medications extends Component {
   openFilterBox = () => this.setState({ filterShown: "visible" });
   cancelFilters = () => this.setState({ filterShown: "hidden" });
   applyFilters = filters => {
-    let keywords;
-    if (filters.keywords && !filters.keywords.length)
-      keywords = this.props.keywords.map(keyword => keyword.id);
-    else keywords = filters.keywords.map(keyword => keyword.id);
-    const medicationsFilter =
-      this.state.medications.length === this.props.medications.length
-        ? this.props.medications
-        : this.props.medicationsSearch;
-    const medications = medicationsFilter.filter(medication =>
-      medication.keywords.some(key => keywords.includes(key))
-    );
-    this.setState({
-      filterShown: "hidden",
-      medications,
-      filters,
-      error: medications.length ? false : true
-    });
+    if (!this.state.search) {
+      let keywords;
+      if (filters.keywords && !filters.keywords.length)
+        keywords = this.props.keywords.map(keyword => keyword.id);
+      else keywords = filters.keywords.map(keyword => keyword.id);
+      const medications = this.props.medications.filter(medication =>
+        medication.keywords.some(key => keywords.includes(key))
+      );
+      this.setState({
+        filterShown: "hidden",
+        medications,
+        filters,
+        error: medications.length ? false : true
+      });
+    } else {
+      this.props.getMedicationsSearch(
+        this.props.api_token,
+        this.state.search,
+        0,
+        16,
+        filters.keywords.map(key => key.id)
+      );
+      this.setState({
+        filterShown: "hidden",
+        filters
+      });
+    }
   };
 
   searchMedications = search => {
-    this.setState({ searchResults: false });
-    this.props.getMedicationsSearch(
-      this.props.api_token,
-      search,
-      0,
-      16,
-      this.state.filters.keywords
-    );
+    if (search) {
+      this.props.getMedicationsSearch(
+        this.props.api_token,
+        search,
+        0,
+        16,
+        this.state.filters.keywords.map(key => key.id)
+      );
+    } else {
+      this.setState({
+        medications: this.props.medications,
+        hovered: new Array(this.props.medications.length).fill(false)
+      });
+    }
+    this.setState({ search });
   };
 
   deleteFavouriteMedication = product_id => {
@@ -105,6 +123,24 @@ class Medications extends Component {
       "MedicationsPage"
     );
   };
+
+  seeMoreMedications = () => {
+    if(this.state.search) {
+      this.props.getMedicationsSearch(
+        this.props.api_token,
+        this.state.search,
+        this.state.medications.length,
+        8,
+        this.state.filters.keywords.map(key => key.id)
+      );
+    }else {
+      this.props.onRequestData(
+        this.props.api_token,
+        this.state.medications.length,
+        8
+      );
+    }
+  }
 
   render() {
     return (
@@ -130,7 +166,7 @@ class Medications extends Component {
             {this.state.medications.length ? (
               <React.Fragment>
                 <div className="medicationGrid mb-40">
-                  {this.state.medications.slice(0, 16).map((medication, i) => (
+                  {this.state.medications.map((medication, i) => (
                     <MedicineCard
                       key={i}
                       id={medication.id}
@@ -162,13 +198,7 @@ class Medications extends Component {
                 {!this.props.medicationsDone && (
                   <Button
                     className="btn btn-blue btn-lg"
-                    onClick={() =>
-                      this.props.onRequestData(
-                        this.props.api_token,
-                        this.state.medications.length,
-                        8
-                      )
-                    }
+                    onClick={this.seeMoreMedications}
                   >
                     {" "}
                     See more
@@ -223,8 +253,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onRequestData: (api_token, skip, limit) =>
       dispatch({ type: actions.REQUEST_MEDICATIONS, api_token, skip, limit }),
-    getMedicationsSearch: (api_token, search) =>
-      dispatch({ type: actions.SEARCH_MEDICATIONS, api_token, search }),
+    getMedicationsSearch: (api_token, search, skip, limit, keywords) =>
+      dispatch({ type: actions.SEARCH_MEDICATIONS, api_token, search, skip, limit, keywords }),
     deleteFavouriteMedication: (data, source) =>
       dispatch({ type: actions.SAGA_DELETE_FAVOURITE, data, source }),
     addFavouriteMedication: (data, source) =>
