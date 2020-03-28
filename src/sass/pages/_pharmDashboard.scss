@@ -1,11 +1,18 @@
 .pharamcyDashboardContainer {
   @extend .medicalWallet;
+  > .btn {
+    display: block;
+    margin: 0 auto;
+  }
 }
 
 .dashboardGrid {
   @extend .DoctorsPrescriptions;
+  margin-bottom: 4rem;
 }
 .orderCard__btn {
   display: block;
-  margin: 2.56rem 2rem 0 auto;
+  margin: 2rem 2rem 0 auto;
+  width: 16.8rem;
+  height: 3.2rem;
 }

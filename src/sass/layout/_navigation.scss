@@ -1,6 +1,6 @@
 .NavigationBar {
   background-color: $color-white;
-  padding: 1rem 2.4rem;
+  padding: 0.8rem 2.4rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -207,7 +207,8 @@
 
     &--last {
       border-right: 1px solid rgba(#242a37, 0.4);
-      padding-right: 2.4rem;
+      padding-right: 3.2rem;
+      margin-right: 3.2rem;
 
       @media (max-width: 1210px) {
         border-right: none;
@@ -223,6 +224,34 @@
   &__link {
     text-decoration: none;
     color: rgba($color-dark, 0.6);
+    &--statement {
+      padding-left: 2.4rem;
+      @include image("../../assets/svg/statement.svg");
+      &.active {
+        @include image("../../assets/svg/statement-green.svg");
+      }
+    }
+    &--list {
+      padding-left: 2.4rem;
+      @include image("../../assets/svg/dots.svg");
+      &.active {
+        @include image("../../assets/svg/dots-green.svg");
+      }
+    }
+    &--profit {
+      padding-left: 2.4rem;
+      @include image("../../assets/svg/profit.svg");
+      &.active {
+        @include image("../../assets/svg/profit-green.svg");
+      }
+    }
+    &--packing {
+      padding-left: 2.4rem;
+      @include image("../../assets/svg/gbag.svg");
+      &.active {
+        @include image("../../assets/svg/gbag-green.svg");
+      }
+    }
   }
 
   &__icons {
@@ -301,7 +330,7 @@
   &__phrmacyData {
     display: flex;
     align-items: center;
-    transition: transform 0.2s ease-in-out;
+    transition: $transition;
     z-index: 200;
     background-color: transparent;
     &--logo {

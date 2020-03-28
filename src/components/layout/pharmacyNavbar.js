@@ -20,45 +20,37 @@ const PharmacyNavbar = () => (
 
     <ul className="NavigationBar__links">
       <li className="NavigationBar__item">
-        <NavLink to="/Statement" className="NavigationBar__link">
-          <img
-            className="NavigationBar__icon"
-            src={require("../../assets/svg/statement.svg")}
-            alt="icon"
-          />
+        <NavLink
+          to="/pharmacy/Statement"
+          className="NavigationBar__link NavigationBar__link--statement"
+        >
           Statement
         </NavLink>
       </li>
 
       <li className="NavigationBar__item">
-        <NavLink to="/Medications list" className="NavigationBar__link">
-          <img
-            className="NavigationBar__icon"
-            src={require("../../assets/svg/dots.svg")}
-            alt="icon"
-          />
+        <NavLink
+          to="/pharmacy/Medications list"
+          className="NavigationBar__link NavigationBar__link--list"
+        >
           Medications list
         </NavLink>
       </li>
 
       <li className="NavigationBar__item">
-        <NavLink to="/Requests" className="NavigationBar__link">
-          <img
-            className="NavigationBar__icon"
-            src={require("../../assets/svg/profit.svg")}
-            alt="icon"
-          />
+        <NavLink
+          to="/pharmacy/Requests"
+          className="NavigationBar__link NavigationBar__link--profit"
+        >
           Requests
         </NavLink>
       </li>
 
       <li className="NavigationBar__item NavigationBar__item--last">
-        <NavLink to="/Packing list" className="NavigationBar__link">
-          <img
-            className="NavigationBar__icon "
-            src={require("../../assets/svg/gbag.svg")}
-            alt="icon"
-          />
+        <NavLink
+          to="/pharmacy/Packing-list"
+          className="NavigationBar__link NavigationBar__link--packing"
+        >
           Packing list
         </NavLink>
       </li>

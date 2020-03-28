@@ -1,5 +1,5 @@
 import React from "react";
-import personImg from "../../assets/images/Hassan.png";
+import personImg from "../../assets/svg/user.svg";
 import Medicine from "../../assets/images/med2.png";
 import Button from "../Button";
 
@@ -42,9 +42,15 @@ const OrderCard = props => (
       <MedicineItem key={index} medicineName={el.name} quantity={el.quantity} />
     ))}
 
-    <Button className="btn btn-blue btn-md orderCard__btn">
-      Move to packing list
-    </Button>
+    {props.request ? (
+      <Button className="btn btn-blue orderCard__btn">
+        Move to packing list
+      </Button>
+    ) : (
+      <Button className="btn btn-blue orderCard__btn">
+        Recieved by courier
+      </Button>
+    )}
   </div>
 );
 

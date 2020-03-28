@@ -212,22 +212,27 @@
         margin: 0.4rem 0;
       }
       p {
+        display: flex;
         color: rgba($color-dark, $very-high-opacity);
         .icon {
           margin-right: 0.4rem;
+        }
+        span:first-of-type {
+          margin-right: 0.8rem;
         }
       }
     }
   }
 
   h4 {
+    font-family: $semi-bold-font;
     margin: 2rem 2rem 1.6rem;
     color: $color-dark;
   }
 
   hr {
     border-bottom: 0;
-    color: rgba($color-green, $medium-opacity);
+    border-color: rgba($color-green, $medium-opacity);
   }
 
   .PrescriptionItem {
@@ -247,9 +252,6 @@
       color: rgba($color-dark, $very-high-opacity);
       > img {
         margin-right: 0.4rem;
-      }
-      span {
-        font-family: $semi-bold-font;
       }
       &:first-of-type {
         margin-bottom: 4px;
