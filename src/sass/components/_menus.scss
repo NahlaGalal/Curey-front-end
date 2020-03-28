@@ -103,6 +103,7 @@
   padding: 2.4rem;
   max-height: 28.8rem;
   width: 35.3rem;
+  box-sizing: border-box;
   @media screen and (max-width: 1210px) {
     left: 24rem;
     right: unset;
@@ -155,13 +156,20 @@
     h4 {
       margin-bottom: 0.8rem;
     }
-    a {
+    button {
       color: rgba($color: $color-dark, $alpha: $very-high-opacity);
       font-size: 1.6rem;
       margin-bottom: 0.4rem;
       display: block;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      outline: none;
       &:last-of-type {
         margin-bottom: 0;
+      }
+      a {
+        color: rgba($color: $color-dark, $alpha: $very-high-opacity);
       }
     }
   }

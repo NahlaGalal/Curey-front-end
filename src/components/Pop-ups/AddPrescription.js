@@ -254,12 +254,12 @@ const AddPrescription = props => {
             </div>
           </section>
           <div className="Popup__box__footer buttons">
-            <Button
+            <button
               className="btn btn-xxs btn-green-dark btn-apply"
               type="submit"
             >
               Confirm
-            </Button>
+            </button>
             <Button
               type="button"
               className="btn btn-xxs btn-cancel btn-transparent"

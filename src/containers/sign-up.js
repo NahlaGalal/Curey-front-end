@@ -153,9 +153,9 @@ const SignupUser = props => {
             validate: value => value === watch("password")
           })}
         />
-        <Button className="btn btn-md btn-green" type="submit">
+        <button className="btn btn-md btn-green" type="submit">
           Signup
-        </Button>
+        </button>
       </form>
     </section>
   );

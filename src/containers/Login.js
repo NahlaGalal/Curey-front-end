@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import validator from "validator";
 import SocialButtons from "../components/Social-buttons";
 import Dividor from "../components/Dividor";
-import Button from "../components/Button";
 import { connect } from "react-redux";
 import * as actions from "../actions/types";
 import Input from "../components/Input";
@@ -83,9 +82,9 @@ const Login = props => {
                 <p>Forget your password?</p>
               </Link>
             </div>
-            <Button className="btn btn-md btn-green" type="submit">
+            <button className="btn btn-md btn-green" type="submit">
               Login
-            </Button>
+            </button>
           </form>
         </div>
         <footer className="login__container__footer">

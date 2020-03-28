@@ -32,6 +32,12 @@ const SelectBox = props => {
                 hidden
                 value={type.name}
                 name={props.header}
+                defaultChecked={
+                  props.listChecked.length === 1 &&
+                  props.listChecked[0] === type.name
+                    ? true
+                    : false
+                }
               />
               <label htmlFor={`${type.id}_${type.name}`}>{type.name}</label>
             </div>
