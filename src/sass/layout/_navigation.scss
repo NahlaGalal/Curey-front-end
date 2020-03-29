@@ -227,29 +227,37 @@
     &--statement {
       padding-left: 2.4rem;
       @include image("../../assets/svg/statement.svg");
+      background-size: 1.6rem;
       &.active {
         @include image("../../assets/svg/statement-green.svg");
+        background-size: 1.6rem;
       }
     }
     &--list {
       padding-left: 2.4rem;
       @include image("../../assets/svg/dots.svg");
+      background-size: 1.6rem;
       &.active {
         @include image("../../assets/svg/dots-green.svg");
+        background-size: 1.6rem;
       }
     }
     &--profit {
       padding-left: 2.4rem;
       @include image("../../assets/svg/profit.svg");
+      background-size: 1.6rem;
       &.active {
         @include image("../../assets/svg/profit-green.svg");
+        background-size: 1.6rem;
       }
     }
     &--packing {
       padding-left: 2.4rem;
       @include image("../../assets/svg/gbag.svg");
+      background-size: 1.6rem;
       &.active {
         @include image("../../assets/svg/gbag-green.svg");
+        background-size: 1.6rem;
       }
     }
   }

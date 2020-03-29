@@ -49,12 +49,12 @@ export class Orders extends Component {
             All
           </Button>
           <Button
-            className={`btn ${
-              this.state.filter === "Delivered" ? "active" : ""
+            className={`btn btn-filter ${
+              this.state.filter === "Waiting" ? "active" : ""
             }`}
-            onClick={() => this.filterOrders("Delivered")}
+            onClick={() => this.filterOrders("Waiting")}
           >
-            Delivered
+            Waiting
           </Button>
           <Button
             className={`btn ${this.state.filter === "Pending" ? "active" : ""}`}
@@ -63,20 +63,20 @@ export class Orders extends Component {
             Pending
           </Button>
           <Button
+            className={`btn ${
+              this.state.filter === "Delivered" ? "active" : ""
+            }`}
+            onClick={() => this.filterOrders("Delivered")}
+          >
+            Delivered
+          </Button>
+          <Button
             className={`btn btn-filter ${
               this.state.filter === "Failed" ? "active" : ""
             }`}
             onClick={() => this.filterOrders("Failed")}
           >
             Failed
-          </Button>
-          <Button
-            className={`btn btn-filter ${
-              this.state.filter === "Waiting" ? "active" : ""
-            }`}
-            onClick={() => this.filterOrders("Waiting")}
-          >
-            Waiting
           </Button>
         </div>
         {this.props.orders.length ? (
@@ -124,7 +124,7 @@ export class Orders extends Component {
                     </ul>
                     {order.state === "Waiting" ? (
                       <Button
-                        className="btn btn-xxs btn-green-dark"
+                        className="btn btn-xxs btn-warning"
                         onClick={() =>
                           this.props.onCancelOrder(
                             this.props.api_token,

@@ -78,3 +78,9 @@
   color: $color-dark;
   border: 2px solid $color-dark;
 }
+
+.btn-warning {
+  color: $warning-color;
+  background-color: transparent;
+  border: 2px solid $warning-color;
+}

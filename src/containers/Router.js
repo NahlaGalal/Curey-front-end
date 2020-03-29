@@ -77,6 +77,8 @@ const Router = () => (
               path="/pharmacy/statement"
               component={PharmacyStatement}
             />
+            <Redirect exact from="/" to="/home" />
+            <Redirect exact from="/pharmacy/" to="/pharmacy/statement" />
           </Switch>
         </Layout>
       </Switch>

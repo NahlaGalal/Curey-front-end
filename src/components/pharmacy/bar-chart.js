@@ -54,7 +54,7 @@ const BarChart = ({
 
   return (
     <section className="chart">
-      <h3 className="chart__title">{title}</h3>
+      <h4 className="heading-4">{title}</h4>
       <div className="chart__container">
         <div>
           <svg className="chartBox" viewBox={viewBox.join(" ")}>

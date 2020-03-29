@@ -25,7 +25,6 @@ class PharmacyStatement extends Component {
   };
   render() {
     return (
-      <div>
         <div className="pharmacyStatment">
           <div className="pharmacyStatment__statisticis mb-56">
             <h2 className="heading-2 mb-32">Statistics</h2>
@@ -97,7 +96,6 @@ class PharmacyStatement extends Component {
           </div>
           <Button className="btn btn-blue btn-lg center">See more</Button>
         </div>
-      </div>
     );
   }
 }
