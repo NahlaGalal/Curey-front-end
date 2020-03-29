@@ -1,0 +1,81 @@
+.rect {
+  fill: #242a37;
+  opacity: 0.2;
+  transition: fill 0.1s linear, opacity 0.1s linear, height 0.2s linear;
+}
+
+.rect-active,
+.rect:hover {
+  opacity: 1;
+  fill: #07a3a4;
+}
+
+.chart {
+  padding: 15px;
+  box-shadow: 0px 3px 6px $color-light-3;
+  font-size: 1.6rem;
+}
+
+.chart__container > div:not(.indicators) {
+  padding: 15px 25px;
+  padding-bottom: 0;
+  border-bottom: 1px solid rgba(36, 42, 55, 0.4);
+}
+
+.chart__container > div > svg {
+  transform: translateY(5px);
+}
+
+.indicators {
+  padding: 0 25px;
+  position: relative;
+}
+
+.indicators .indicators__right,
+.indicators .indicators__left {
+  position: absolute;
+  width: 25px;
+  top: 50%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.indicators .indicators__right {
+  left: auto;
+  right: 0;
+  transform: translateY(-50%) rotateY(180deg);
+}
+
+.indicators > div {
+  overflow: hidden;
+}
+
+.indicators > div > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 25px;
+}
+
+.indicators > div > div > p {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  width: calc(100% / 5);
+  color: #242a37;
+  opacity: 0.7;
+}
+
+.indicator-active > svg > g {
+  fill: #656973 !important;
+}
+
+.chart__title {
+  font-family: $bold-font;
+}

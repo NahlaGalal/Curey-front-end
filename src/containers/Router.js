@@ -24,6 +24,7 @@ import MedicalWallet from "./MedicalWallet";
 import { loadState } from "../configureStore";
 import Requests from "./pharmacy/Requests";
 import Packing from "./pharmacy/Packing";
+import PharmacyStatement from "./pharmacy/Statement";
 
 const Router = () => (
   <BrowserRouter>
@@ -34,14 +35,14 @@ const Router = () => (
         )}
         {!loadState().api_token && (
           <Route exact path="/login" component={Login} />
-          )}
+        )}
         {!loadState().api_token && (
           <Route
             exact
             path={["/forgot-password", "/verification", "/reset-password"]}
             component={Forgot}
           />
-          )}
+        )}
         {!loadState().api_token && (
           <Route exact path="/signup" component={Signup} />
         )}
@@ -71,6 +72,11 @@ const Router = () => (
             <Route exact path="/medicalwallet" component={MedicalWallet} />
             <Route exact path="/pharmacy/Requests" component={Requests} />
             <Route exact path="/pharmacy/Packing-list" component={Packing} />
+            <Route
+              exact
+              path="/pharmacy/statement"
+              component={PharmacyStatement}
+            />
           </Switch>
         </Layout>
       </Switch>
