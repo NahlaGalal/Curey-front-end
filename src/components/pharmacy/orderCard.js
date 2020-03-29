@@ -2,6 +2,7 @@ import React from "react";
 import personImg from "../../assets/svg/user.svg";
 import Medicine from "../../assets/images/med2.png";
 import Button from "../Button";
+import { Rate } from "../../util/rate";
 
 const OrderCard = props => (
   <div className="PrescriptionCard">
@@ -17,20 +18,23 @@ const OrderCard = props => (
           />
           {props.address}
         </p>
-        <p>
-          <img
-            src={require("../../assets/svg/calendar.svg")}
-            alt="logo"
-            className="icon"
-          />
-          <span className="mr-16"> {props.day} </span>
-          <img
-            src={require("../../assets/svg/clock.svg")}
-            alt="logo"
-            className="icon"
-          />
-          <span> {props.hour}</span>
-        </p>
+        <Rate rate={5} />
+        {props.date ? (
+          <p>
+            <img
+              src={require("../../assets/svg/calendar.svg")}
+              alt="logo"
+              className="icon"
+            />
+            <span className="mr-16"> {props.day} </span>
+            <img
+              src={require("../../assets/svg/clock.svg")}
+              alt="logo"
+              className="icon"
+            />
+            <span> {props.hour}</span>
+          </p>
+        ) : null}
       </div>
     </div>
 
@@ -42,15 +46,15 @@ const OrderCard = props => (
       <MedicineItem key={index} medicineName={el.name} quantity={el.quantity} />
     ))}
 
-    {props.request ? (
+    {props.request === "request" ? (
       <Button className="btn btn-blue orderCard__btn">
         Move to packing list
       </Button>
-    ) : (
+    ) : props.request === "packing" ? (
       <Button className="btn btn-blue orderCard__btn">
         Recieved by courier
       </Button>
-    )}
+    ) : null}
   </div>
 );
 

@@ -29,3 +29,7 @@
     }
   }
 }
+
+.performedRequests__grid {
+  @extend .pharmacyStatment__statisticis--grid;
+}

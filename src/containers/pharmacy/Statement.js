@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import BarChart from "../../components/pharmacy/bar-chart";
+import OrderCard from "../../components/pharmacy/orderCard";
+import Button from "../../components/Button";
 
 class PharmacyStatement extends Component {
   state = {
@@ -14,6 +16,11 @@ class PharmacyStatement extends Component {
       { value: 350, month: "Oct" },
       { value: 600, month: "Nov" },
       { value: 325, month: "Dec" }
+    ],
+    medications: [
+      { name: "Flumox syrup", quantity: 3 },
+      { name: "Antinal pills", quantity: 2 },
+      { name: "Panadol extra pills", quantity: 1 }
     ]
   };
   render() {
@@ -37,6 +44,58 @@ class PharmacyStatement extends Component {
               />
             </div>
           </div>
+
+          <div className="performedRequests mb-40">
+            <h2 className="heading-2 mb-32">Performed requests</h2>
+            <div className="performedRequests__grid">
+              <OrderCard
+                name="MO Zayan"
+                address="Mansoura City, Gehan St"
+                medications={this.state.medications}
+              />
+              <OrderCard
+                name="MO Zayan"
+                address="Mansoura City, Gehan St"
+                medications={this.state.medications}
+              />
+              <OrderCard
+                name="MO Zayan"
+                address="Mansoura City, Gehan St"
+                medications={this.state.medications}
+              />
+              <OrderCard
+                name="MO Zayan"
+                address="Mansoura City, Gehan St"
+                medications={this.state.medications}
+              />
+              <OrderCard
+                name="MO Zayan"
+                address="Mansoura City, Gehan St"
+                medications={this.state.medications}
+              />
+              <OrderCard
+                name="MO Zayan"
+                address="Mansoura City, Gehan St"
+                medications={this.state.medications}
+              />
+              <OrderCard
+                name="MO Zayan"
+                address="Mansoura City, Gehan St"
+                medications={this.state.medications}
+              />
+              <OrderCard
+                name="MO Zayan"
+                address="Mansoura City, Gehan St"
+                medications={this.state.medications}
+              />
+              <OrderCard
+                name="MO Zayan"
+                address="Mansoura City, Gehan St"
+                medications={this.state.medications}
+              />
+            </div>
+          </div>
+          <Button className="btn btn-blue btn-lg center">See more</Button>
         </div>
       </div>
     );

@@ -20,7 +20,7 @@ class Requests extends Component {
             day="JAN 23, 2020"
             hour="4:30 PM"
             medications={this.state.medications}
-            request={true}
+            request="request"
           />
           <OrderCard
             name="MO Zayan"
@@ -28,7 +28,7 @@ class Requests extends Component {
             day="JAN 23, 2020"
             hour="4:30 PM"
             medications={this.state.medications}
-            request={true}
+            request="request"
           />
           <OrderCard
             name="MO Zayan"
@@ -36,7 +36,7 @@ class Requests extends Component {
             day="JAN 23, 2020"
             hour="4:30 PM"
             medications={this.state.medications}
-            request={true}
+            request="request"
           />
           <OrderCard
             name="MO Zayan"
@@ -44,7 +44,7 @@ class Requests extends Component {
             day="JAN 23, 2020"
             hour="4:30 PM"
             medications={this.state.medications}
-            request={true}
+            request="request"
           />
           <OrderCard
             name="MO Zayan"
@@ -52,7 +52,7 @@ class Requests extends Component {
             day="JAN 23, 2020"
             hour="4:30 PM"
             medications={this.state.medications}
-            request={true}
+            request="request"
           />
           <OrderCard
             name="MO Zayan"
@@ -60,7 +60,7 @@ class Requests extends Component {
             day="JAN 23, 2020"
             hour="4:30 PM"
             medications={this.state.medications}
-            request={true}
+            request="request"
           />
         </div>
         <Button className="btn btn-blue btn-lg">See more</Button>
