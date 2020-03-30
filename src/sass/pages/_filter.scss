@@ -10,6 +10,7 @@
   color: $color-dark;
   right: -10000px;
   transition: $transition;
+  z-index: 1000;
   &.visible {
     right: 0;
   }

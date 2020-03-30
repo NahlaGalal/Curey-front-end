@@ -25,6 +25,7 @@ import { loadState } from "../configureStore";
 import Requests from "./pharmacy/Requests";
 import Packing from "./pharmacy/Packing";
 import PharmacyStatement from "./pharmacy/Statement";
+import MedicationsList from "./pharmacy/MedicationsList";
 
 const Router = () => (
   <BrowserRouter>
@@ -77,6 +78,7 @@ const Router = () => (
               path="/pharmacy/statement"
               component={PharmacyStatement}
             />
+            <Route exact path="/pharmacy/medications-list" component={MedicationsList} />
             <Redirect exact from="/" to="/home" />
             <Redirect exact from="/pharmacy/" to="/pharmacy/statement" />
           </Switch>

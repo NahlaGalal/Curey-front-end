@@ -33,3 +33,50 @@
 .performedRequests__grid {
   @extend .pharmacyStatment__statisticis--grid;
 }
+
+// Medications list page
+.pharamcyDashboardContainer {
+  .btn-connect {
+    width: 22.4rem;
+    height: 4.8rem;
+    margin: 0 0 0 auto;
+  }
+  .Searchbar {
+    width: 100%;
+    margin: 4rem 0 3.2rem;
+  }
+  .PharmacyMedCard {
+    box-shadow: $shadow;
+    padding: 2rem;
+    header {
+      margin-bottom: 2.4rem;
+      display: flex;
+      justify-content: space-between;
+      color: $color-dark;
+      .menu-btn {
+        border: none;
+        background-color: transparent;
+        outline: none;
+        width: 3.2rem;
+        height: 3.2rem;
+        cursor: pointer;
+        text-align: right;
+      }
+    }
+    &__details {
+      p {
+        margin-bottom: 0.8rem;
+        color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+        font-size: 1.6rem;
+        span {
+          color: $color-dark;
+          font-family: $semi-bold-font;
+          margin-right: 0.4rem;
+        }
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+}
+}

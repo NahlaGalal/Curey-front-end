@@ -30,7 +30,7 @@ const PharmacyNavbar = () => (
 
       <li className="NavigationBar__item">
         <NavLink
-          to="/pharmacy/Medications list"
+          to="/pharmacy/Medications-list"
           className="NavigationBar__link NavigationBar__link--list"
         >
           Medications list
