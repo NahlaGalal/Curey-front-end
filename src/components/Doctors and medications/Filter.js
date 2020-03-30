@@ -83,9 +83,7 @@ class Filter extends Component {
         this.setState({ citiesChecked, citiesChecked_id });
         // Uncheck selected filter (city)
         Array.from(
-          this.citiesContainerRef.current.querySelectorAll(
-            "input[type=radio]"
-          )
+          this.citiesContainerRef.current.querySelectorAll("input[type=radio]")
         ).filter(input => input.value === filter)[0].checked = false;
         return;
       }
@@ -247,34 +245,30 @@ class Filter extends Component {
           {this.props.type === "doctors" ? (
             <div className="Filter__checkbox">
               <h3> City & Speciality </h3>
-              <div>
-                <SelectBox
-                  onClick={this.toggleCitySelectBox}
-                  className={`${
-                    this.state.citiesChecked.length ? "hasValue" : null
-                  }`}
-                  listChecked={this.state.citiesChecked}
-                  header="Cities"
-                  boxOpened={this.state.cityBoxOpened}
-                  list={this.props.cities}
-                  optionsContainerRef={this.citiesContainerRef}
-                  multiple={false}
-                />
-              </div>
-              <div>
-                <SelectBox
-                  onClick={this.toggleSpecialitySelectBox}
-                  className={`${
-                    this.state.specialitiesChecked.length ? "hasValue" : null
-                  }`}
-                  listChecked={this.state.specialitiesChecked}
-                  header="Specialities"
-                  boxOpened={this.state.specialityBoxOpened}
-                  list={this.props.specialities}
-                  optionsContainerRef={this.specialitiesContainerRef}
-                  multiple={false}
-                />
-              </div>
+              <SelectBox
+                onClick={this.toggleCitySelectBox}
+                className={`${
+                  this.state.citiesChecked.length ? "hasValue" : null
+                }`}
+                listChecked={this.state.citiesChecked}
+                header="Cities"
+                boxOpened={this.state.cityBoxOpened}
+                list={this.props.cities}
+                optionsContainerRef={this.citiesContainerRef}
+                multiple={false}
+              />
+              <SelectBox
+                onClick={this.toggleSpecialitySelectBox}
+                className={`${
+                  this.state.specialitiesChecked.length ? "hasValue" : null
+                }`}
+                listChecked={this.state.specialitiesChecked}
+                header="Specialities"
+                boxOpened={this.state.specialityBoxOpened}
+                list={this.props.specialities}
+                optionsContainerRef={this.specialitiesContainerRef}
+                multiple={false}
+              />
             </div>
           ) : null}
           <div className="Filter__buttons">

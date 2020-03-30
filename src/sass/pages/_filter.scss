@@ -45,12 +45,13 @@
 
   &__checked {
     @extend .Filter__prescription;
+    padding-top: 2rem;
     &:empty {
       padding: 0;
     }
     .btn-filter {
       padding: 0.65rem 0.8rem;
-      margin: 0.8rem 0.8rem 0 0;
+      margin: 0.4rem 0.8rem 0 0;
       font-family: $regular-font;
       &:hover,
       &.active {
@@ -67,10 +68,16 @@
       font-family: $bold-font;
       margin-bottom: 1.6rem;
     }
+    .btn-filter {
+      margin-top: 0.8rem;
+    }
   }
 
   &__checkbox {
     @extend .Filter__options;
+    .select-component:last-child {
+      margin-bottom: 0;
+    }
   }
 
   &__buttons {

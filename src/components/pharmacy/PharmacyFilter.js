@@ -105,64 +105,55 @@ class PharmacyFilter extends Component {
             ))}
           </div>
           <div className="Filter__checkbox">
-            <div>
-              <SelectBox
-                onClick={() => this.toggleBoxSelectBox("company")}
-                className={`${
-                  this.state.companyChecked.length ? "hasValue" : null
-                }`}
-                listChecked={this.state.companyChecked.map(item => item.name)}
-                header="Company"
-                boxOpened={this.state.companyBoxOpened}
-                list={this.props.companies}
-                optionsContainerRef={this.companyContainerRef}
-                multiple={false}
-              />
-            </div>
-            <div>
-              <SelectBox
-                onClick={() => this.toggleBoxSelectBox("generic")}
-                className={`${
-                  this.state.genericChecked.length ? "hasValue" : null
-                }`}
-                listChecked={this.state.genericChecked.map(item => item.name)}
-                header="Generic name"
-                boxOpened={this.state.genericBoxOpened}
-                list={this.props.generics}
-                optionsContainerRef={this.genericContainerRef}
-                multiple={false}
-              />
-            </div>
-            <div>
-              <SelectBox
-                onClick={() => this.toggleBoxSelectBox("pharmacology")}
-                className={`${
-                  this.state.pharmacologyChecked.length ? "hasValue" : null
-                }`}
-                listChecked={this.state.pharmacologyChecked.map(
-                  item => item.name
-                )}
-                header="Pharmacology"
-                boxOpened={this.state.pharmacologyBoxOpened}
-                list={this.props.pharmacologies}
-                optionsContainerRef={this.pharmacologyContainerRef}
-                multiple={false}
-              />
-            </div>
-            <div>
-              <SelectBox
-                onClick={() => this.toggleBoxSelectBox("type")}
-                className={`${
-                  this.state.typeChecked.length ? "hasValue" : null
-                }`}
-                listChecked={this.state.typeChecked.map(item => item.name)}
-                header="Type"
-                boxOpened={this.state.typeBoxOpened}
-                list={this.props.types}
-                optionsContainerRef={this.typeContainerRef}
-                multiple={false}
-              />
-            </div>
+            <SelectBox
+              onClick={() => this.toggleBoxSelectBox("company")}
+              className={`${
+                this.state.companyChecked.length ? "hasValue" : null
+              }`}
+              listChecked={this.state.companyChecked.map(item => item.name)}
+              header="Company"
+              boxOpened={this.state.companyBoxOpened}
+              list={this.props.companies}
+              optionsContainerRef={this.companyContainerRef}
+              multiple={false}
+            />
+            <SelectBox
+              onClick={() => this.toggleBoxSelectBox("generic")}
+              className={`${
+                this.state.genericChecked.length ? "hasValue" : null
+              }`}
+              listChecked={this.state.genericChecked.map(item => item.name)}
+              header="Generic name"
+              boxOpened={this.state.genericBoxOpened}
+              list={this.props.generics}
+              optionsContainerRef={this.genericContainerRef}
+              multiple={false}
+            />
+
+            <SelectBox
+              onClick={() => this.toggleBoxSelectBox("pharmacology")}
+              className={`${
+                this.state.pharmacologyChecked.length ? "hasValue" : null
+              }`}
+              listChecked={this.state.pharmacologyChecked.map(
+                item => item.name
+              )}
+              header="Pharmacology"
+              boxOpened={this.state.pharmacologyBoxOpened}
+              list={this.props.pharmacologies}
+              optionsContainerRef={this.pharmacologyContainerRef}
+              multiple={false}
+            />
+            <SelectBox
+              onClick={() => this.toggleBoxSelectBox("type")}
+              className={`${this.state.typeChecked.length ? "hasValue" : null}`}
+              listChecked={this.state.typeChecked.map(item => item.name)}
+              header="Type"
+              boxOpened={this.state.typeBoxOpened}
+              list={this.props.types}
+              optionsContainerRef={this.typeContainerRef}
+              multiple={false}
+            />
           </div>
           <div className="Filter__buttons">
             <Button
