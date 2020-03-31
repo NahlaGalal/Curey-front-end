@@ -72,7 +72,7 @@ class ReExamination extends Component {
                 rate={5}
                 date="JAN 23, 2020"
                 time="4:30 PM"
-                state="Booking"
+                state="Home visit"
               />
               <PatientCard
                 name="Margot Maggio"
@@ -117,17 +117,17 @@ class ReExamination extends Component {
                 time="4:30 PM"
                 state="Booking"
               />
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
               <PatientCard
                 name="Margot Maggio"
                 address="570 Doyle Avenue West Kalebbury"
                 rate={5}
                 date="JAN 23, 2020"
                 time="4:30 PM"
-                state="Booking"
+                state="Home visit"
               />
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
               <PatientCard
                 name="Margot Maggio"
                 address="570 Doyle Avenue West Kalebbury"
