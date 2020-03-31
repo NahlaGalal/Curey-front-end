@@ -281,3 +281,50 @@
     margin-right: 0.4rem;
   }
 }
+
+///////////////////////////
+.PatientCard {
+  @extend .DoctorBookingCard;
+  position: relative;
+  max-width: 55rem;
+  color: rgba($color-dark, $very-high-opacity);
+  font-size: 1.6rem;
+
+  &__info {
+    @extend .DoctorBookingCard__info;
+
+    span {
+      font-family: $regular-font !important;
+    }
+
+    .rate {
+      margin-top: 0.4rem;
+    }
+  }
+
+  &__menu {
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+  }
+  footer {
+    span {
+      font-family: $regular-font !important;
+    }
+    p {
+      font-family: $semi-bold-font !important;
+      color: $color-dark !important;
+    }
+  }
+
+  .btn {
+    padding: 1rem !important;
+    border-radius: 1rem;
+    display: block;
+    margin: 2rem 0 0 auto;
+  }
+}
+
+.icon {
+  margin-right: 0.4rem;
+}

@@ -1,0 +1,21 @@
+.re-examination {
+  width: 85%;
+  margin: 0 auto;
+  padding: 6.4rem 0;
+
+  .signup__container__forms__toggler.active-0 {
+    > span {
+      left: -1px;
+    }
+
+    > button:nth-of-type(1) {
+      color: $color-white;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    grid-gap: 4rem;
+  }
+}

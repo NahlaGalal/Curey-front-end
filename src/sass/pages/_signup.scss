@@ -82,6 +82,15 @@
           background-color: $color-blue;
           transition: $transition;
         }
+        &.active-1 {
+          > button:nth-of-type(2) {
+            color: $color-white;
+          }
+
+          > span {
+            left: calc(100% / 3);
+          }
+        }
 
         &.active-3 {
           > button:first-of-type {
@@ -90,16 +99,6 @@
 
           > span {
             left: -1px;
-          }
-        }
-
-        &.active-1 {
-          > button:nth-of-type(2) {
-            color: $color-white;
-          }
-
-          > span {
-            left: calc(100% / 3);
           }
         }
 
