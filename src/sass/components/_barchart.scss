@@ -4,8 +4,7 @@
   transition: fill 0.1s linear, opacity 0.1s linear, height 0.2s linear;
 }
 
-.rect-active,
-.rect:hover {
+.rect-active{
   opacity: 1;
   fill: $color-green;
 }

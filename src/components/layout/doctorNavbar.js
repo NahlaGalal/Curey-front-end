@@ -1,14 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Rate } from "../../util/rate";
-import pharmacyImg from "../../assets/images/pharmacy.png";
-import PharmacyThumbnail from "../Pop-ups/PharmacyThumbnail";
+import userImg from "../../assets/svg/user.svg";
+import DoctorThumbnail from "../Pop-ups/DoctorThumbnail";
 import { connect } from "react-redux";
 import * as actions from "../../actions/types";
 import { withRouter } from "react-router-dom";
 import Button from "../Button";
 
-const PharmacyNavbar = (props) => (
+const DoctorNavbar = props => (
   <React.Fragment>
     <nav className="NavigationBar">
       <input
@@ -27,7 +27,7 @@ const PharmacyNavbar = (props) => (
       <ul className="NavigationBar__links">
         <li className="NavigationBar__item">
           <NavLink
-            to="/pharmacy/Statement"
+            to="/doctor/Statement"
             className="NavigationBar__link NavigationBar__link--statement"
           >
             Statement
@@ -36,28 +36,37 @@ const PharmacyNavbar = (props) => (
 
         <li className="NavigationBar__item">
           <NavLink
-            to="/pharmacy/Medications-list"
-            className="NavigationBar__link NavigationBar__link--list"
+            to="/doctor/schedule"
+            className="NavigationBar__link NavigationBar__link--schedule"
           >
-            Medications list
+            Working schedule
           </NavLink>
         </li>
 
         <li className="NavigationBar__item">
           <NavLink
-            to="/pharmacy/Requests"
+            to="/doctor/Requests"
             className="NavigationBar__link NavigationBar__link--profit"
           >
             Requests
           </NavLink>
         </li>
 
+        <li className="NavigationBar__item NavigationBar__item">
+          <NavLink
+            to="/doctor/re-examination"
+            className="NavigationBar__link NavigationBar__link--re-examination"
+          >
+            Re-examinations list
+          </NavLink>
+        </li>
+
         <li className="NavigationBar__item NavigationBar__item--last">
           <NavLink
-            to="/pharmacy/Packing-list"
-            className="NavigationBar__link NavigationBar__link--packing"
+            to="/doctor/prescriptions"
+            className="NavigationBar__link NavigationBar__link--prescription"
           >
-            Packing list
+            Prescription list
           </NavLink>
         </li>
       </ul>
@@ -66,25 +75,24 @@ const PharmacyNavbar = (props) => (
 
       <Button
         className="NavigationBar__phrmacyData btn"
-        onClick={props.togglePharmacyThumbnailList}
+        onClick={props.toggleDoctorThumbnailList}
       >
         <div>
-          <Rate rate={1} />
+          <Rate rate={2.23} />
           <span>1220 reviews</span>
         </div>
-        <img
-          src={pharmacyImg}
-          alt="pharmacy logo"
-          className="NavigationBar__phrmacyData--logo"
-        />
+        <div className="NavigationBar__phrmacyData--logo NavigationBar__phrmacyData--logo-doctor">
+          <img src={userImg} alt="doctor logo" />
+        </div>
       </Button>
     </nav>
-    {props.pharmacyThumbnailList && (
-      <PharmacyThumbnail
+    {props.doctorThumbnailList && (
+      <DoctorThumbnail
         hideLists={props.hideLists}
-        pharmacyLogo={props.image || pharmacyImg}
-        pharmacyName={props.pharmacy_name}
-        pharmacyAddress={props.address || ""}
+        doctorImage={props.image || userImg}
+        doctorName={props.doctor_name}
+        doctorSpeciality={props.doctor_speciality}
+        doctorAddress={props.address || ""}
         logout={() => props.postLogout(this.props.api_token)}
       />
     )}
@@ -93,9 +101,10 @@ const PharmacyNavbar = (props) => (
 
 const mapStateToProps = state => ({
   api_token: state.user.api_token,
-  pharmacy_name: state.user.full_name,
+  doctor_name: state.user.full_name,
   image: state.user.image,
-  address: state.user.address
+  address: state.user.address || "Mansoura",
+  doctor_speciality: state.user.speciality || "Surgery"
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -104,5 +113,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(PharmacyNavbar)
+  connect(mapStateToProps, mapDispatchToProps)(DoctorNavbar)
 );
