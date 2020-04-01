@@ -128,3 +128,14 @@
     grid-gap: 4rem;
   }
 }
+
+///////////////////////////////////
+// Doctor statement
+
+.doctorStatement {
+  @extend .pharmacyStatment;
+
+  .PatientCard__info__text {
+    width: 100%;
+  }
+}

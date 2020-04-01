@@ -53,11 +53,18 @@ class PatientCard extends Component {
             <img className="icon" src={Clock} alt="clock icon" />
             {this.props.time}
           </span>
-          {this.props.reExamination ? (
-            <Button className="btn btn-blue">Finish re-examination</Button>
-          ) : (
-            <Button className="btn btn-blue">Finish examination</Button>
-          )}
+          {/* {
+            (this.props.type = "re-examination" ? (
+              <Button className="btn btn-blue">Finish re-examination</Button>
+            ) : (
+              (this.props.type = "examination" ? (
+                <Button className="btn btn-blue">Finish examination</Button>
+              ) : null)
+            ))
+          } */}
+          {this.props.type ? (
+            <Button className="btn btn-blue">Finish {this.props.type}</Button>
+          ) : null}
         </footer>
         <div
           className={`PatientCard__menu ${

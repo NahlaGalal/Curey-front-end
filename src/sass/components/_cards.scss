@@ -394,3 +394,9 @@
     }
   }
 }
+
+//////////////////////////////
+// Appointment card
+.AppointmentCard {
+  @extend .PrescriptionCard;
+}

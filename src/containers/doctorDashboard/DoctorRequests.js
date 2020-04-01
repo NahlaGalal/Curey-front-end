@@ -113,7 +113,7 @@ class DoctorRequests extends Component {
                   date={card.date}
                   time={card.time}
                   state={card.state}
-                  reExamination={false}
+                  type="examination"
                   toggleMenuBox={e => this.toggleMenuBox(e, i)}
                   menuVisibility={this.state.menuVisiblity}
                   stopPropagation={e => e.stopPropagation()}
@@ -132,7 +132,7 @@ class DoctorRequests extends Component {
                     date={card.date}
                     time={card.time}
                     state={card.state}
-                    reExamination={false}
+                    type="examination"
                     toggleMenuBox={e => this.toggleMenuBox(e, i)}
                     menuVisibility={this.state.menuVisiblity}
                     stopPropagation={e => e.stopPropagation()}
@@ -150,7 +150,7 @@ class DoctorRequests extends Component {
                     date={card.date}
                     time={card.time}
                     state={card.state}
-                    reExamination={false}
+                    type="examination"
                     toggleMenuBox={e => this.toggleMenuBox(e, i)}
                     menuVisibility={this.state.menuVisiblity}
                     stopPropagation={e => e.stopPropagation()}
