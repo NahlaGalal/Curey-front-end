@@ -38,7 +38,7 @@ class Layout extends Component {
                   });
                 }}
               />
-            ) : this.props.location.pathname.startsWith("/doctor") ? (
+            ) : this.props.location.pathname.startsWith("/doctor/") ? (
               <DoctorNavbar
                 hideLists={this.hideLists}
                 doctorThumbnailList={this.state.doctorThumbnailList}

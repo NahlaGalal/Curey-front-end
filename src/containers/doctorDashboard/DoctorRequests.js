@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Button from "../../components/Button";
 import PatientCard from "../../components/doctorDashboard/patientCard";
 
-class ReExamination extends Component {
+class DoctorRequests extends Component {
   state = {
     pageNum: 0
   };
@@ -49,7 +49,7 @@ class ReExamination extends Component {
                 date="JAN 23, 2020"
                 time="4:30 PM"
                 state="Booking"
-                reExamination={true}
+                reExamination={false}
               />
               <PatientCard
                 name="Margot Maggio"
@@ -58,7 +58,7 @@ class ReExamination extends Component {
                 date="JAN 23, 2020"
                 time="4:30 PM"
                 state="Booking"
-                reExamination={true}
+                reExamination={false}
               />
               <PatientCard
                 name="Margot Maggio"
@@ -67,7 +67,7 @@ class ReExamination extends Component {
                 date="JAN 23, 2020"
                 time="4:30 PM"
                 state="Booking"
-                reExamination={true}
+                reExamination={false}
               />
               <PatientCard
                 name="Margot Maggio"
@@ -76,7 +76,7 @@ class ReExamination extends Component {
                 date="JAN 23, 2020"
                 time="4:30 PM"
                 state="Home visit"
-                reExamination={true}
+                reExamination={false}
               />
               <PatientCard
                 name="Margot Maggio"
@@ -85,7 +85,7 @@ class ReExamination extends Component {
                 date="JAN 23, 2020"
                 time="4:30 PM"
                 state="Home visit"
-                reExamination={true}
+                reExamination={false}
               />
               <PatientCard
                 name="Margot Maggio"
@@ -94,7 +94,7 @@ class ReExamination extends Component {
                 date="JAN 23, 2020"
                 time="4:30 PM"
                 state="Home visit"
-                reExamination={true}
+                reExamination={false}
               />
             </React.Fragment>
           ) : this.state.pageNum === 1 ? (
@@ -106,7 +106,7 @@ class ReExamination extends Component {
                 date="JAN 23, 2020"
                 time="4:30 PM"
                 state="Booking"
-                reExamination={true}
+                reExamination={false}
               />
               <PatientCard
                 name="Margot Maggio"
@@ -115,7 +115,7 @@ class ReExamination extends Component {
                 date="JAN 23, 2020"
                 time="4:30 PM"
                 state="Booking"
-                reExamination={true}
+                reExamination={false}
               />
               <PatientCard
                 name="Margot Maggio"
@@ -124,7 +124,7 @@ class ReExamination extends Component {
                 date="JAN 23, 2020"
                 time="4:30 PM"
                 state="Booking"
-                reExamination={true}
+                reExamination={false}
               />
             </React.Fragment>
           ) : (
@@ -136,7 +136,7 @@ class ReExamination extends Component {
                 date="JAN 23, 2020"
                 time="4:30 PM"
                 state="Home visit"
-                reExamination={true}
+                reExamination={false}
               />
               <PatientCard
                 name="Margot Maggio"
@@ -145,7 +145,7 @@ class ReExamination extends Component {
                 date="JAN 23, 2020"
                 time="4:30 PM"
                 state="Home visit"
-                reExamination={true}
+                reExamination={false}
               />
               <PatientCard
                 name="Margot Maggio"
@@ -154,7 +154,7 @@ class ReExamination extends Component {
                 date="JAN 23, 2020"
                 time="4:30 PM"
                 state="Home visit"
-                reExamination={true}
+                reExamination={false}
               />
             </React.Fragment>
           )}
@@ -165,4 +165,4 @@ class ReExamination extends Component {
   }
 }
 
-export default ReExamination;
+export default DoctorRequests;

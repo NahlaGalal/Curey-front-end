@@ -28,6 +28,7 @@ import PharmacyStatement from "./pharmacy/Statement";
 import MedicationsList from "./pharmacy/MedicationsList";
 import ReExamination from "../containers/doctorDashboard/reexamination";
 import WorkingSchedule from "../containers/doctorDashboard/workingSchedule";
+import DoctorRequests from "./doctorDashboard/DoctorRequests";
 
 const Router = () => (
   <BrowserRouter>
@@ -92,6 +93,7 @@ const Router = () => (
             />
 
             <Route exact path="/doctor/schedule" component={WorkingSchedule} />
+            <Route exact path="/doctor/requests" component={DoctorRequests} />
             <Redirect exact from="/" to="/home" />
             <Redirect exact from="/pharmacy/" to="/pharmacy/statement" />
           </Switch>

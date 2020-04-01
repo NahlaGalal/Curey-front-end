@@ -1,21 +1,31 @@
 import React from "react";
-import Patient from "../../assets/images/Hassan.png";
 import Menu from "../../assets/svg/menu1.svg";
 import Location from "../../assets/svg/location.svg";
 import { Rate } from "../../util/rate";
 import Calendar from "../../assets/svg/calendar.svg";
 import Clock from "../../assets/svg/clock.svg";
 import Button from "../Button";
+import UserImg from "../../assets/svg/user.svg";
 
 const PatientCard = props => (
   <div className="PatientCard">
     <div className="PatientCard__info">
-      <img src={Patient} alt="patient" className="DoctorBookingCard__img" />
+      <img
+        src={props.image || UserImg}
+        alt="patient"
+        className="DoctorBookingCard__img"
+      />
       <div className="PatientCard__info__text">
-        <h3 class="heading-3">{props.name}</h3>
-        <img src={Menu} alt="menu" className="PatientCard__menu" />
-        <img src={Location} className="icon" alt="loactionIcon" />
-        <span>{props.address}</span>
+        <div className="flex">
+          <h3 className="heading-3">{props.name}</h3>
+          <Button className="menu-btn">
+            <img src={Menu} alt="menu" />
+          </Button>
+        </div>
+        <span className="PatientCard__info__address">
+          <img src={Location} className="icon" alt="loactionIcon" />
+          {props.address}
+        </span>
         <Rate rate={props.rate} />
       </div>
     </div>
@@ -32,7 +42,11 @@ const PatientCard = props => (
         <img className="icon" src={Clock} alt="clock icon" />
         {props.time}
       </span>
-      <Button className="btn btn-blue">Finish re-examination</Button>
+      {props.reExamination ? (
+        <Button className="btn btn-blue">Finish re-examination</Button>
+      ) : (
+        <Button className="btn btn-blue">Finish examination</Button>
+      )}
     </footer>
   </div>
 );

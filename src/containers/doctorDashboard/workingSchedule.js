@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Button from "../../components/Button";
-import Next from "../../assets/svg/next (1) (1).svg";
-import Prev from "../../assets/svg/next (1).svg";
+import Next from "../../assets/svg/next.svg";
+import Prev from "../../assets/svg/prev.svg";
 import AppointmentSchedule from "../../components/doctorDashboard/appointmentsSchedule";
 
 class WorkingSchedule extends Component {
@@ -14,14 +14,18 @@ class WorkingSchedule extends Component {
             <h3 className="heading-3">
               Your working schdule for bookings service
             </h3>
-            <Button className=" btn btn-green scheduleBox__btn">
+            <Button className="btn btn-green-dark scheduleBox__btn">
               Add schedule
             </Button>
           </div>
-          <span className="scheduleBox__indicators">
-            <img className="icon" src={Prev} alt="icon" />1 2 3 4 5{" "}
+          <p className="scheduleBox__indicators">
+            <img className="icon" src={Prev} alt="icon" />
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
             <img alt="icon" src={Next} />
-          </span>
+          </p>
           <div className="scheduleBox__grid">
             <AppointmentSchedule title="Today's appointments" />
             <AppointmentSchedule title="Mar, 21 appointments" />

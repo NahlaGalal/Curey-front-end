@@ -293,21 +293,33 @@
   &__info {
     @extend .DoctorBookingCard__info;
 
-    span {
+    &__address {
+      @extend .DoctorBookingCard__info__address;
       font-family: $regular-font !important;
     }
 
     .rate {
       margin-top: 0.4rem;
+      &__number {
+        margin-bottom: 0;
+      }
+    }
+
+    .menu-btn {
+      border: none;
+      background-color: transparent;
+      outline: none;
+      width: 3.2rem;
+      height: 3.2rem;
+      cursor: pointer;
+      text-align: right;
     }
   }
 
-  &__menu {
-    position: absolute;
-    right: 2rem;
-    top: 2rem;
-  }
   footer {
+    .flex {
+      line-height: unset;
+    }
     span {
       font-family: $regular-font !important;
     }
@@ -318,10 +330,11 @@
   }
 
   .btn {
-    padding: 1rem !important;
     border-radius: 1rem;
     display: block;
     margin: 2rem 0 0 auto;
+    width: 20rem;
+    height: 3.2rem;
   }
 }
 
@@ -335,17 +348,18 @@
   background-color: $color-white;
   position: relative;
   max-width: 55rem;
-  h4 {
-    font-family: $semi-bold-font;
-    font-size: 1.4rem;
+  .flex {
     margin-bottom: 1.6rem;
+    h4 {
+      font-family: $semi-bold-font;
+      font-size: 1.4rem;
+    }
+    .btn {
+      background-color: transparent;
+      box-shadow: none;
+    }
   }
 
-  &__icon {
-    position: absolute;
-    top: 2rem;
-    right: 1.9rem;
-  }
   p {
     font-size: 1.6rem;
     color: rgba($color-dark, $very-high-opacity);

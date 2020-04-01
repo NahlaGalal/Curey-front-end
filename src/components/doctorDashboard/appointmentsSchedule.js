@@ -1,10 +1,15 @@
 import React from "react";
 import EditIcon from "../../assets/svg/edit.svg";
+import Button from "../Button";
 
 const AppointmentSchedule = props => (
   <div className="AppointmentSchedule">
-    <h4>{props.title}</h4>
-    <img src={EditIcon} alt="edit" className="AppointmentSchedule__icon" />
+    <div className="flex">
+      <h4>{props.title}</h4>
+      <Button className="btn">
+        <img src={EditIcon} alt="edit"/>
+      </Button>
+    </div>
 
     <p>1:00 PM to 1:15 PM</p>
     <p>1:00 PM to 1:15 PM</p>
