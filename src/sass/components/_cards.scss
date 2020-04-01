@@ -336,6 +336,32 @@
     width: 20rem;
     height: 3.2rem;
   }
+
+  .btn-apply,
+  .btn-cancel {
+    margin: 0;
+    width: 11.2rem;
+  }
+
+  .btn-add-medication {
+    height: 3.2rem;
+    width: 20rem;
+    font-family: $semi-bold-font;
+    border-radius: 1rem;
+    box-shadow: $shadow;
+    cursor: pointer;
+    border: none;
+    display: block;
+    margin-left: auto;
+    font-size: 1.6rem;
+    &:hover {
+      box-shadow: $shadow-hover;
+    }
+  }
+
+  &__menu {
+    @extend .Prescription__container__card__menu;
+  }
 }
 
 .icon {

@@ -19,7 +19,8 @@ export class Prescription extends Component {
     this.props.getPrescriptions(this.props.api_token);
   }
 
-  toggleMenu = i => {
+  toggleMenu = (e, i) => {  
+    e.stopPropagation();
     let menuVisiblity = i;
     if (this.state.menuVisiblity === i) menuVisiblity = -1;
     this.setState({ menuVisiblity });
@@ -61,7 +62,7 @@ export class Prescription extends Component {
 
   render() {
     return (
-      <main className="Prescription">
+      <main className="Prescription" onClick={() => this.setState({menuVisiblity: -1})}>
         <Button
           className="btn btn-lg btn-green-dark"
           onClick={() => this.setState({ addPrescriptionBox: true })}
@@ -79,7 +80,7 @@ export class Prescription extends Component {
                 <header>
                   <h2>{prescription.medicine}</h2>
                   <Button
-                    onClick={() => this.toggleMenu(i)}
+                    onClick={(e) => this.toggleMenu(e, i)}
                     className="menu-btn"
                   >
                     <img
@@ -109,6 +110,7 @@ export class Prescription extends Component {
                   className={`Prescription__container__card__menu ${
                     this.state.menuVisiblity === i ? "visible" : ""
                   }`}
+                  onClick={e => e.stopPropagation()}
                 >
                   <Button>
                     <img
@@ -161,12 +163,12 @@ const mapDispatchToProps = dispatch => ({
     }),
   postDeletePrescriptions: data =>
     dispatch({
-      type: actions.SAGA_ADD_PRESCRIPTION,
+      type: actions.SAGA_DELETE_PRESCRIPTIONS,
       data
     }),
   postAddPrescription: data =>
     dispatch({
-      type: actions.SAGA_DELETE_PRESCRIPTIONS,
+      type: actions.SAGA_ADD_PRESCRIPTION,
       data
     })
 });
