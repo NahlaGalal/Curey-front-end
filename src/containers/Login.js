@@ -20,7 +20,11 @@ const Login = props => {
   };
 
   useEffect(() => {
-    if (props.user.api_token) props.history.push("/home");
+    if (props.user.api_token) {
+      if (props.user.role === 2) props.history.push("/pharmacy/statement");
+      else if (props.user.role === 3) props.history.push("/doctor/statement");
+      else props.history.push("/home");
+    }
   });
 
   return (

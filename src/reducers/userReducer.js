@@ -33,6 +33,7 @@ export function user(state = [], action) {
         full_name: !action.isFailed ? action.payload.full_name : "",
         image: !action.isFailed ? action.payload.image : null,
         email: !action.isFailed ? action.payload.email : "",
+        role: !action.isFailed ? action.payload.role : null,
         cart: [],
         errors: action.isFailed ? action.payload : {}
       };

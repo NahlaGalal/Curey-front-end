@@ -23,7 +23,7 @@ const SignupUser = props => {
       full_name: data.full_name,
       email: validator.normalizeEmail(data.email),
       password: data.password,
-      city_id: +city.city_id
+      city_id: +city.city_id || 1
     });
   };
 

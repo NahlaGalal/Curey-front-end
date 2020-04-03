@@ -19,7 +19,8 @@ const defaultState = {
     email: "",
     prescriptions: [],
     cart: [],
-    notifications: []
+    notifications: [],
+    role: null
   },
   doctors: {
     doctorsData: [],
