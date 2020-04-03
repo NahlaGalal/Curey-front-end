@@ -7,7 +7,7 @@ import { Rate } from "../../util/rate";
 const OrderCard = props => (
   <div className="PrescriptionCard">
     <div className="PrescriptionCard__head">
-      <img src={personImg} alt="doctor" className="doctorBox__img" />
+      <img src={props.image || personImg} alt="doctor" className="doctorBox__img" />
       <div className="doctorInfo">
         <h3 className="doctorCard__name">{props.name}</h3>
         <p>
@@ -43,7 +43,7 @@ const OrderCard = props => (
     <h4>Order details</h4>
 
     {props.medications.map((el, index) => (
-      <MedicineItem key={index} medicineName={el.name} quantity={el.quantity} />
+      <MedicineItem key={index} medicineName={el.product} quantity={el.amunt} image={el.image} />
     ))}
 
     {props.request === "request" ? (
@@ -51,7 +51,7 @@ const OrderCard = props => (
         Move to packing list
       </Button>
     ) : props.request === "packing" ? (
-      <Button className="btn btn-blue orderCard__btn">
+      <Button className="btn btn-blue orderCard__btn" onClick={props.moveToDelivery}>
         Recieved by courier
       </Button>
     ) : null}
@@ -64,10 +64,10 @@ export default OrderCard;
 
 const MedicineItem = props => (
   <div className="PrescriptionItem">
-    <img src={Medicine} alt="Medicine" />
+    <img src={props.image || Medicine} alt="Medicine" />
     <div className="PrescriptionItem__info">
       <p>{props.medicineName}</p>
-      <p>
+      <p className="PrescriptionItem__info__quantity">
         <span>Quantity : </span>
         <span>{props.quantity}</span>
       </p>

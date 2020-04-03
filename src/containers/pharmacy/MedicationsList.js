@@ -3,105 +3,9 @@ import Button from "../../components/Button";
 import Search from "../../components/Doctors and medications/Search";
 import PharmacyCard from "../../components/pharmacy/PharmacyCard";
 import PharmacyFilter from "../../components/pharmacy/PharmacyFilter";
-
-const medications = [
-  {
-    name: "Cataflam pills",
-    price: 12.5,
-    company: "farako",
-    generic: "Diclofenac",
-    pharmacology: "Diclofenac",
-    quantity: 124
-  },
-  {
-    name: "Cataflam pills",
-    price: 12.5,
-    company: "farako",
-    generic: "Diclofenac",
-    pharmacology: "Diclofenac",
-    quantity: 124
-  },
-  {
-    name: "Cataflam pills",
-    price: 12.5,
-    company: "farako",
-    generic: "Diclofenac",
-    pharmacology: "Diclofenac",
-    quantity: 124
-  },
-  {
-    name: "Cataflam pills",
-    price: 12.5,
-    company: "farako",
-    generic: "Diclofenac",
-    pharmacology: "Diclofenac",
-    quantity: 124
-  },
-  {
-    name: "Cataflam pills",
-    price: 12.5,
-    company: "farako",
-    generic: "Diclofenac",
-    pharmacology: "Diclofenac",
-    quantity: 124
-  },
-  {
-    name: "Cataflam pills",
-    price: 12.5,
-    company: "farako",
-    generic: "Diclofenac",
-    pharmacology: "Diclofenac",
-    quantity: 124
-  },
-  {
-    name: "Cataflam pills",
-    price: 12.5,
-    company: "farako",
-    generic: "Diclofenac",
-    pharmacology: "Diclofenac",
-    quantity: 124
-  },
-  {
-    name: "Cataflam pills",
-    price: 12.5,
-    company: "farako",
-    generic: "Diclofenac",
-    pharmacology: "Diclofenac",
-    quantity: 124
-  },
-  {
-    name: "Cataflam pills",
-    price: 12.5,
-    company: "farako",
-    generic: "Diclofenac",
-    pharmacology: "Diclofenac",
-    quantity: 124
-  },
-  {
-    name: "Cataflam pills",
-    price: 12.5,
-    company: "farako",
-    generic: "Diclofenac",
-    pharmacology: "Diclofenac",
-    quantity: 124
-  },
-  {
-    name: "Cataflam pills",
-    price: 12.5,
-    company: "farako",
-    generic: "Diclofenac",
-    pharmacology: "Diclofenac",
-    quantity: 124
-  },
-  {
-    name: "Cataflam pills",
-    price: 12.5,
-    company: "farako",
-    generic: "Diclofenac",
-    pharmacology: "Diclofenac",
-    quantity: 124
-  }
-];
+import { connect } from "react-redux";
+import { SAGA_GET_MEDICATIONS } from "../../actions/types";
+import ReactLoading from "react-loading";
 
 export class MedicationsList extends Component {
   state = {
@@ -111,12 +15,14 @@ export class MedicationsList extends Component {
       keywords: []
     }
   };
-  
+
+  componentDidMount() {
+    this.props.getMedicationsList(this.props.api_token);
+  }
+
   openFilterBox = () => this.setState({ filterShown: "visible" });
   cancelFilters = () => this.setState({ filterShown: "hidden" });
-  applyFilters = () => {
-
-  }
+  applyFilters = () => {};
 
   render() {
     const companies = [
@@ -164,14 +70,37 @@ export class MedicationsList extends Component {
           // searchfunction={this.searchDoctor}
         />
         <div className="dashboardGrid">
-          {medications.map((medication, i) => (
-            <PharmacyCard medication={medication} key={i} />
-          ))}
+          {this.props.medications.length ? (
+            this.props.medications.map((medication, i) => (
+              <PharmacyCard medication={medication} key={i} />
+            ))
+          ) : this.props.errors.error ? (
+            <p className="dashboardGrid__error"> No medications yet </p>
+          ) : (
+            <ReactLoading
+              type="spokes"
+              color="#0066ff"
+              className="loading center mb-40"
+            />
+          )}
         </div>
-        <Button className="btn btn-blue btn-lg">See more</Button>
+        {this.props.medications.length ? (
+          <Button className="btn btn-blue btn-lg">See more</Button>
+        ) : null}
       </div>
     );
   }
 }
 
-export default MedicationsList;
+const mapStateToProps = state => ({
+  api_token: state.user.api_token,
+  medications: state.pharmacyData.medications,
+  errors: state.pharmacyData.errors
+});
+
+const mapDispatchToProps = dispatch => ({
+  getMedicationsList: api_token =>
+    dispatch({ type: SAGA_GET_MEDICATIONS, api_token })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MedicationsList);

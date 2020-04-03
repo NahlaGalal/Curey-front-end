@@ -33,7 +33,7 @@ const PharmacyCard = props => {
         </p>
         <p>
           <span>Quantity:</span>
-          {props.medication.quantity}
+          {props.medication.amount}
         </p>
       </div>
     </div>

@@ -61,6 +61,11 @@ const defaultState = {
     appointments: [],
     errors: [],
     success: ""
+  },
+  pharmacyData: {
+    medications: [],
+    packing: [],
+    errors: []
   }
 };
 

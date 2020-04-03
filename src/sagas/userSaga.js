@@ -57,7 +57,7 @@ function* getCities() {
 
 function* loginUser({ data }) {
   try {
-    const res = yield call(() => axios.post("/api/web/userLogin", data));
+    const res = yield call(() => axios.post("/api/web/login", data));
     if (!res.data.isFailed)
       yield put({
         type: LOGIN_USER,

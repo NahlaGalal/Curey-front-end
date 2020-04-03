@@ -243,6 +243,9 @@
       span {
         font-family: $semi-bold-font;
       }
+      &__quantity span {
+        font-family: $regular-font;
+      }
     }
     > img {
       margin-right: 0.8rem;
