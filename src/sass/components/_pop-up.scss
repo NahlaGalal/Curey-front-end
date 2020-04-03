@@ -99,7 +99,8 @@
         text-align: left;
         padding-left: 1.6rem;
         margin-bottom: 1.6rem;
-        &:hover, &.active {
+        &:hover,
+        &.active {
           background-color: $color-blue;
           color: $color-white;
           box-shadow: $shadow;
@@ -109,7 +110,8 @@
           color: $warning-color;
           margin: 0;
           border: 0;
-          &:hover, &:active {
+          &:hover,
+          &:active {
             background-color: transparent;
             color: $warning-color;
             box-shadow: none;
@@ -156,7 +158,8 @@
             left: unset;
             z-index: 10;
             padding: 1.6rem;
-            border-left: 1px solid rgba($color: $color-dark, $alpha: $medium-opacity);
+            border-left: 1px solid
+              rgba($color: $color-dark, $alpha: $medium-opacity);
             cursor: pointer;
           }
         }
@@ -169,11 +172,22 @@
     &__details {
       margin: 2.4rem;
       .select--options {
-        top: 0;
+        top: -100px;
+      }
+      & .prescription__doctor:not(:first-of-type) {
+        padding-top: 2rem;
+        border-top: 1px solid rgba($color: $color-dark, $alpha: $medium-opacity);
       }
       &.prescription {
         .row {
           display: flex;
+          &.schedule {
+            .select-component {
+              &:first-of-type{
+                margin-right: 2rem;
+              }
+            }
+          }
           .fieldinput {
             .arrow {
               position: absolute;
@@ -199,7 +213,9 @@
           }
           .dosing-inputs {
             width: 100%;
-            margin-right: 2rem;
+            &:first-of-type {
+              margin-right: 2rem;
+            }
             .fieldinput {
               margin-bottom: 0;
               &:not(:first-of-type) {

@@ -5,17 +5,41 @@ import Input from "../Input";
 
 const DoctorPrescription = props => {
   let { register, handleSubmit, errors, watch } = useForm();
-  let [period, setPeriod] = useState("");
-  let [frequency, setFrequency] = useState(0);
+  let [medication, setMedication] = useState([
+    {
+      name: "",
+      frequency: 0,
+      period: ""
+    }
+  ]);
 
-  const IncreaseFrequency = () => setFrequency(+frequency + 1);
-  const decreaseFrequency = () => {
-    if (frequency >= 1) setFrequency(+frequency - 1 || 1);
+  const IncreaseFrequency = i => {
+    let state = [...medication];
+    state[i].frequency = +state[i].frequency + 1;
+    setMedication(state);
+  };
+  const decreaseFrequency = i => {
+    if (medication[i].frequency >= 1) {
+      let state = [...medication];
+      state[i].frequency = +state[i].frequency - 1 || 1;
+      setMedication(state);
+    }
   };
 
-  const togglePeriod = () => {
-    if (period === "day") setPeriod("week");
-    else setPeriod("day");
+  const togglePeriod = i => {
+    let state = [...medication];
+    state[i].period = state[i].period === "week" ? "day" : "week";
+    setMedication(state);
+  };
+
+  const addAnotherMedication = () => {
+    let state = [...medication];
+    state.push({
+      name: "",
+      frequency: 0,
+      period: ""
+    });
+    setMedication(state);
   };
 
   const onSubmitHandler = data => {
@@ -29,87 +53,123 @@ const DoctorPrescription = props => {
         <form onSubmit={handleSubmit(data => onSubmitHandler(data))}>
           <h2 className="heading-2">Prescription details</h2>
           <section className="Popup__box__details prescription">
-            <Input
-              type="text"
-              name="medication_name"
-              value={watch("medication_name")}
-              id="medication_name"
-              placeholder="Medication name"
-              isError={errors.medication_name || props.errors.medication_name}
-              error={
-                errors.medication_name
-                  ? "You must type medication name"
-                  : props.errors.medication_name
-              }
-              refe={register({ required: true })}
-            />
-            <div className="row">
-              <div className="fieldinput">
-                <input
-                  className="fieldinput__input"
+            {medication.map((med, i) => (
+              <div className="prescription__doctor" key={i}>
+                <Input
                   type="text"
-                  name="frequency"
-                  id="frequency"
-                  onKeyPress={e =>
-                    !e.key.toString().match(/[0-9]/) ? e.preventDefault() : null
+                  name={`medication_name-${i}`}
+                  value={watch(`medication_name-${i}`)}
+                  id={`medication_name-${i}`}
+                  placeholder="Medication name"
+                  isError={
+                    errors[`medication_name-${i}`] ||
+                    props.errors.medication_name
                   }
-                  ref={register({ required: true })}
-                  value={frequency || ""}
-                  onChange={e => setFrequency(+e.target.value)}
+                  error={
+                    errors[`medication_name-${i}`]
+                      ? "You must type medication name"
+                      : props.errors.medication_name
+                  }
+                  refe={register({ required: true })}
                 />
-                <label
-                  className={frequency ? "active" : null}
-                  htmlFor="frequency"
-                >
-                  Frequency
-                </label>
-                <label htmlFor="frequency" style={{ position: "initial" }}>
-                  <button
-                    type="button"
-                    className="arrow arrow-up"
-                    onClick={IncreaseFrequency}
-                  ></button>
-                  <button
-                    type="button"
-                    className="arrow arrow-down"
-                    onClick={decreaseFrequency}
-                  ></button>
-                </label>
-                {(errors.frequency || props.errors.frequency) && (
-                  <p className="fieldinput__error">
-                    {errors.frequency
-                      ? "You must choose frequency"
-                      : props.errors.frequency}
-                  </p>
-                )}
+                <div className="row">
+                  <div className="fieldinput">
+                    <input
+                      className="fieldinput__input"
+                      type="text"
+                      name={`frequency-${i}`}
+                      id={`frequency-${i}`}
+                      onKeyPress={e =>
+                        !e.key.toString().match(/[0-9]/)
+                          ? e.preventDefault()
+                          : null
+                      }
+                      ref={register({ required: true })}
+                      value={med.frequency || ""}
+                      onChange={e => {
+                        let state = [...medication];
+                        state[i].frequency = +e.target.value;
+                        setMedication(state);
+                      }}
+                    />
+                    <label
+                      className={med.frequency ? "active" : null}
+                      htmlFor={`frequency-${i}`}
+                    >
+                      Frequency
+                    </label>
+                    <label
+                      htmlFor={`frequency-${i}`}
+                      style={{ position: "initial" }}
+                    >
+                      <button
+                        type="button"
+                        className="arrow arrow-up"
+                        onClick={() => IncreaseFrequency(i)}
+                      ></button>
+                      <button
+                        type="button"
+                        className="arrow arrow-down"
+                        onClick={() => decreaseFrequency(i)}
+                      ></button>
+                    </label>
+                    {((errors[`frequency-${i}`] && !med.frequency) ||
+                      props.errors.frequency) && (
+                      <p className="fieldinput__error">
+                        {errors[`frequency-${i}`]
+                          ? "You must choose frequency"
+                          : props.errors.frequency}
+                      </p>
+                    )}
+                  </div>
+                  <div className="fieldinput">
+                    <input
+                      className="fieldinput__input"
+                      type="text"
+                      name={`period-${i}`}
+                      readOnly
+                      id={`period-${i}`}
+                      value={med.period}
+                      ref={register({ required: true })}
+                    />
+                    <label
+                      className={med.period ? "active" : null}
+                      htmlFor={`period-${i}`}
+                    >
+                      {" "}
+                      Per{" "}
+                    </label>
+                    <label
+                      htmlFor={`period-${i}`}
+                      style={{ position: "initial" }}
+                    >
+                      <span
+                        className="arrow arrow-up"
+                        onClick={() => togglePeriod(i)}
+                      ></span>
+                      <span
+                        className="arrow arrow-down"
+                        onClick={() => togglePeriod(i)}
+                      ></span>
+                    </label>
+                    {((errors[`period-${i}`] && !med.period) ||
+                      props.errors.period) && (
+                      <p className="fieldinput__error">
+                        {errors[`period-${i}`]
+                          ? "You must choose period"
+                          : props.errors.period}
+                      </p>
+                    )}
+                  </div>
+                </div>
               </div>
-              <div className="fieldinput">
-                <input
-                  className="fieldinput__input"
-                  type="text"
-                  name="period"
-                  readOnly
-                  id="period"
-                  value={period}
-                  ref={register({ required: true })}
-                />
-                <label className={period ? "active" : null} htmlFor="period">
-                  {" "}
-                  Per{" "}
-                </label>
-                <label htmlFor="period" style={{ position: "initial" }}>
-                  <span
-                    className="arrow arrow-up"
-                    onClick={togglePeriod}
-                  ></span>
-                  <span
-                    className="arrow arrow-down"
-                    onClick={togglePeriod}
-                  ></span>
-                </label>
-              </div>
-            </div>
-            <Button className="btn-blue btn-add-medication">Add another medication</Button>
+            ))}
+            <Button
+              className="btn-blue btn-add-medication"
+              onClick={addAnotherMedication}
+            >
+              Add another medication
+            </Button>
           </section>
           <div className="Popup__box__footer buttons">
             <button

@@ -45,7 +45,7 @@
     }
 
     &__error {
-        color: $warning-color;
+        color: $warning-color !important;
         font-size: 1.2rem;
         margin-top: 0.8rem;
     }

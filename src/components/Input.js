@@ -12,6 +12,7 @@ const Input = props => {
         name={name}
         ref={refe}
         id={id}
+        onKeyPress={props.onKeyPress ? props.onKeyPress : null}
       />
       <label htmlFor={id} className={value ? "active" : null}>
         {placeholder}

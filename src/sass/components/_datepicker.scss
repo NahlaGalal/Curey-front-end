@@ -79,6 +79,7 @@ $color-dark-low-opacity: rgba($color-dark, 0.1);
           height: 48px;
           border-radius: 10px;
           padding-left: 16px;
+          font-size: 1.6rem;
         }
         span {
           z-index: 10;
@@ -90,6 +91,8 @@ $color-dark-low-opacity: rgba($color-dark, 0.1);
           border-left: 1px solid $color-dark-medium-opacity;
           padding: 14px 22px;
           text-align: left;
+          color: $color-dark;
+          font-family: $regular-font;
         }
         .arrow-up,
         .arrow-down {

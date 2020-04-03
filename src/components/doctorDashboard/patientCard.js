@@ -53,15 +53,6 @@ class PatientCard extends Component {
             <img className="icon" src={Clock} alt="clock icon" />
             {this.props.time}
           </span>
-          {/* {
-            (this.props.type = "re-examination" ? (
-              <Button className="btn btn-blue">Finish re-examination</Button>
-            ) : (
-              (this.props.type = "examination" ? (
-                <Button className="btn btn-blue">Finish examination</Button>
-              ) : null)
-            ))
-          } */}
           {this.props.type ? (
             <Button className="btn btn-blue">Finish {this.props.type}</Button>
           ) : null}
@@ -72,12 +63,10 @@ class PatientCard extends Component {
           }`}
           onClick={this.props.stopPropagation}
         >
-          {!this.props.reExamination && (
-            <Button onClick={() => this.setState({ dateTimePickerBox: true })}>
-              <img src={transform} alt="Set re-examination date" />
-              Set re-examination date
-            </Button>
-          )}
+          <Button onClick={() => this.setState({ dateTimePickerBox: true })}>
+            <img src={transform} alt="Set re-examination date" />
+            Set re-examination date
+          </Button>
           <Button onClick={() => this.setState({ prescriptionBox: true })}>
             <img src={list} alt="Write a prescription" />
             Write a prescription

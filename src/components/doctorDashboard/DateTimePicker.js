@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import nextIcon from "../../assets/svg/next.svg";
 import prevIcon from "../../assets/svg/prev.svg";
 
-const DateTimePicker = (props) => {
+const DateTimePicker = props => {
   const monthsStr = [
     "January",
     "February",
@@ -80,6 +80,7 @@ const DateTimePicker = (props) => {
   };
 
   const validateTime = () => {
+    if (time.length < 5) return setError(true);
     let hour = +time.slice(0, 2);
     if (timeFormat === "PM") hour += 12;
     const min = +time.slice(3);
@@ -195,10 +196,15 @@ const DateTimePicker = (props) => {
           <p className="error"> You must write the time correct </p>
         ) : null}
         <div className="buttons">
-          <button className="confirm btn btn-xxs btn-green-dark" onClick={validateTime}>
+          <button
+            className="confirm btn btn-xxs btn-green-dark"
+            onClick={validateTime}
+          >
             Confirm{" "}
           </button>
-          <button className="cancel btn btn-xxs" onClick={props.closePopup}>Cancel </button>
+          <button className="cancel btn btn-xxs" onClick={props.closePopup}>
+            Cancel{" "}
+          </button>
         </div>
       </div>
     </div>

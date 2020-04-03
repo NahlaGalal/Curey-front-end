@@ -111,9 +111,6 @@
 
   /// Search bar
 
-  .Searchbar__input--no-filter::after {
-    display: none;
-  }
   .Searchbar {
     width: 100%;
     margin: 0;
@@ -124,7 +121,7 @@
   &__grid {
     margin: 4rem 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 0.33fr));
     grid-gap: 4rem;
   }
 }

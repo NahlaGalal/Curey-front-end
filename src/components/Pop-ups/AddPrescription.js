@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import Button from "../Button";
 import plusIcon from "../../assets/svg/plus.svg";
 import Input from "../Input";
+import TimeInput from "../TimeInput";
 
 const daysInWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
 
@@ -46,15 +47,6 @@ const AddPrescription = props => {
     if (hoursState[i] === "AM") hoursState[i] = "PM";
     else hoursState[i] = "AM";
     setHours(hoursState);
-  };
-
-  const controlDosing = (e, i) => {
-    if (
-      !e.key.toString().match(/[0-9]/) ||
-      e.target.value.toString().length === 5
-    )
-      e.preventDefault();
-    else if (e.target.value.toString().length === 2) e.target.value += ":";
   };
 
   const changeDose = (e, i) => {
@@ -199,49 +191,24 @@ const AddPrescription = props => {
             <div className="row">
               <div className="dosing-inputs">
                 {dosing.map((dose, i) => (
-                  <div className="fieldinput" key={i}>
-                    <input
-                      className="fieldinput__input"
-                      type="text"
-                      name={`dosing-${i}`}
-                      id={`dosing-${i}`}
-                      ref={register({
-                        required: true,
-                        validate: value =>
-                          value.toString().slice(0, 2) <= 12 &&
-                          value.toString().slice(0, 2) > 0 &&
-                          value.toString().slice(3) <= 59 &&
-                          value.toString().slice(3) >= 0
-                      })}
-                      onKeyPress={e => controlDosing(e)}
-                      value={dose}
-                      onChange={e => changeDose(e, i)}
-                    />
-                    <label
-                      className={dose ? "active" : null}
-                      htmlFor={`dosing-${i}`}
-                    >
-                      Dosing time
-                    </label>
-                    <span className="fieldinput__hours">{hours[i]}</span>
-                    <button
-                      className="arrow arrow-up"
-                      type="button"
-                      onClick={() => toggleHour(i)}
-                    ></button>
-                    <button
-                      className="arrow arrow-down"
-                      type="button"
-                      onClick={() => toggleHour(i)}
-                    ></button>
-                    {(errors[`dosing-${i}`] || props.errors.dosing) && (
-                      <p className="fieldinput__error">
-                        {errors[`dosing-${i}`]
-                          ? "You must write your dosing times correctly"
-                          : props.errors.dosing}
-                      </p>
-                    )}
-                  </div>
+                  <TimeInput
+                    key={i}
+                    refe={register({
+                      required: true,
+                      validate: value =>
+                        value.toString().slice(0, 2) <= 12 &&
+                        value.toString().slice(0, 2) > 0 &&
+                        value.toString().slice(3) <= 59 &&
+                        value.toString().slice(3) >= 0
+                    })}
+                    index={i}
+                    changeDose={(e) => changeDose(e, i)}
+                    toggleHour={() => toggleHour(i)}
+                    time={dose}
+                    hourFormat={hours[i]}
+                    errors={errors}
+                    placeholder="Dosing time"
+                  />
                 ))}
               </div>
               <button

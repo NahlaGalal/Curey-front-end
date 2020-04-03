@@ -3,10 +3,61 @@ import BarChart from "../../components/pharmacy/bar-chart";
 import Button from "../../components/Button";
 import PatientCard from "../../components/doctorDashboard/patientCard";
 
+const patientCard = [
+  {
+    name: "Margot Maggio",
+    address: "570 Doyle Avenue West Kalebbury",
+    rate: 5,
+    date: "JAN 23, 2020",
+    time: "4:30 PM",
+    state: "Home visit"
+  },
+  {
+    name: "Margot Maggio",
+    address: "570 Doyle Avenue West Kalebbury",
+    rate: 5,
+    date: "JAN 23, 2020",
+    time: "4:30 PM",
+    state: "Booking"
+  },
+  {
+    name: "Margot Maggio",
+    address: "570 Doyle Avenue West Kalebbury",
+    rate: 5,
+    date: "JAN 23, 2020",
+    time: "4:30 PM",
+    state: "Booking"
+  },
+  {
+    name: "Margot Maggio",
+    address: "570 Doyle Avenue West Kalebbury",
+    rate: 5,
+    date: "JAN 23, 2020",
+    time: "4:30 PM",
+    state: "Booking"
+  },
+  {
+    name: "Margot Maggio",
+    address: "570 Doyle Avenue West Kalebbury",
+    rate: 5,
+    date: "JAN 23, 2020",
+    time: "4:30 PM",
+    state: "Home visit"
+  },
+  {
+    name: "Margot Maggio",
+    address: "570 Doyle Avenue West Kalebbury",
+    rate: 5,
+    date: "JAN 23, 2020",
+    time: "4:30 PM",
+    state: "Home visit"
+  }
+];
+
 class DoctorStatement extends Component {
   state = {
     filter: "All",
-    menuVisiblity: false,
+    menuVisiblity: -1,
     data: [
       { value: 370, month: "Jan" },
       { value: 70, month: "Feb" },
@@ -30,7 +81,10 @@ class DoctorStatement extends Component {
 
   render() {
     return (
-      <div className="doctorStatement">
+      <div
+        className="doctorStatement"
+        onClick={() => this.setState({ menuVisiblity: -1 })}
+      >
         <div className="pharmacyStatment__statisticis mb-56">
           <h2 className="heading-2 mb-32">Statistics</h2>
           <div className="pharmacyStatment__statisticis--grid">
@@ -88,72 +142,21 @@ class DoctorStatement extends Component {
             </Button>
           </div>
           <div className="performedRequests__grid mt-41 mb-40">
-            <PatientCard
-              name="John Doe"
-              address="Mansura City , Gehan ST"
-              rate={5}
-              date="JAN 23, 2020"
-              time="4:30 PM"
-              state="Booking"
-              toggleMenuBox={e => this.toggleMenuBox(e)}
-              menuVisibility={this.state.menuVisiblity}
-              stopPropagation={e => e.stopPropagation()}
-            />
-            <PatientCard
-              name="John Doe"
-              address="Mansura City , Gehan ST"
-              rate={5}
-              date="JAN 23, 2020"
-              time="4:30 PM"
-              state="Booking"
-              toggleMenuBox={e => this.toggleMenuBox(e)}
-              menuVisibility={this.state.menuVisiblity}
-              stopPropagation={e => e.stopPropagation()}
-            />
-            <PatientCard
-              name="John Doe"
-              address="Mansura City , Gehan ST"
-              rate={5}
-              date="JAN 23, 2020"
-              time="4:30 PM"
-              state="Booking"
-              toggleMenuBox={e => this.toggleMenuBox(e)}
-              menuVisibility={this.state.menuVisiblity}
-              stopPropagation={e => e.stopPropagation()}
-            />
-            <PatientCard
-              name="John Doe"
-              address="Mansura City , Gehan ST"
-              rate={5}
-              date="JAN 23, 2020"
-              time="4:30 PM"
-              state="Booking"
-              toggleMenuBox={e => this.toggleMenuBox(e)}
-              menuVisibility={this.state.menuVisiblity}
-              stopPropagation={e => e.stopPropagation()}
-            />
-            <PatientCard
-              name="John Doe"
-              address="Mansura City , Gehan ST"
-              rate={5}
-              date="JAN 23, 2020"
-              time="4:30 PM"
-              state="Booking"
-              toggleMenuBox={e => this.toggleMenuBox(e)}
-              menuVisibility={this.state.menuVisiblity}
-              stopPropagation={e => e.stopPropagation()}
-            />
-            <PatientCard
-              name="John Doe"
-              address="Mansura City , Gehan ST"
-              rate={5}
-              date="JAN 23, 2020"
-              time="4:30 PM"
-              state="Booking"
-              toggleMenuBox={e => this.toggleMenuBox(e)}
-              menuVisibility={this.state.menuVisiblity}
-              stopPropagation={e => e.stopPropagation()}
-            />
+            {patientCard.map((card, i) => (
+              <PatientCard
+                key={i}
+                index={i}
+                name={card.name}
+                address={card.address}
+                rate={card.rate}
+                date={card.date}
+                time={card.time}
+                state={card.state}
+                toggleMenuBox={e => this.toggleMenuBox(e, i)}
+                menuVisibility={this.state.menuVisiblity}
+                stopPropagation={e => e.stopPropagation()}
+              />
+            ))}
           </div>
           <Button className="btn btn-lg btn-blue center">See more</Button>
         </div>
