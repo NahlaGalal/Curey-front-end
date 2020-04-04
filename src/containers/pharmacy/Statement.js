@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import BarChart from "../../components/pharmacy/bar-chart";
 import OrderCard from "../../components/pharmacy/orderCard";
 import Button from "../../components/Button";
+import * as actions from "../../actions/types";
+import { connect } from "react-redux";
+import ReactLoading from "react-loading";
 
 class PharmacyStatement extends Component {
   state = {
@@ -23,11 +26,17 @@ class PharmacyStatement extends Component {
       { name: "Panadol extra pills", quantity: 1 }
     ]
   };
+
+  componentDidMount() {
+    this.props.getDashbaord(this.props.api_token);
+  }
+
   render() {
     return (
-        <div className="pharmacyStatment">
-          <div className="pharmacyStatment__statisticis mb-56">
-            <h2 className="heading-2 mb-32">Statistics</h2>
+      <div className="pharmacyStatment">
+        <div className="pharmacyStatment__statisticis mb-56">
+          <h2 className="heading-2 mb-32">Statistics</h2>
+          {this.props.dashboard.length ? (
             <div className="pharmacyStatment__statisticis--grid">
               <BarChart
                 data={this.state.data}
@@ -42,62 +51,56 @@ class PharmacyStatement extends Component {
                 title="Total earning per month by L.E"
               />
             </div>
-          </div>
-
-          <div className="performedRequests mb-40">
-            <h2 className="heading-2 mb-32">Performed requests</h2>
-            <div className="performedRequests__grid">
-              <OrderCard
-                name="MO Zayan"
-                address="Mansoura City, Gehan St"
-                medications={this.state.medications}
-              />
-              <OrderCard
-                name="MO Zayan"
-                address="Mansoura City, Gehan St"
-                medications={this.state.medications}
-              />
-              <OrderCard
-                name="MO Zayan"
-                address="Mansoura City, Gehan St"
-                medications={this.state.medications}
-              />
-              <OrderCard
-                name="MO Zayan"
-                address="Mansoura City, Gehan St"
-                medications={this.state.medications}
-              />
-              <OrderCard
-                name="MO Zayan"
-                address="Mansoura City, Gehan St"
-                medications={this.state.medications}
-              />
-              <OrderCard
-                name="MO Zayan"
-                address="Mansoura City, Gehan St"
-                medications={this.state.medications}
-              />
-              <OrderCard
-                name="MO Zayan"
-                address="Mansoura City, Gehan St"
-                medications={this.state.medications}
-              />
-              <OrderCard
-                name="MO Zayan"
-                address="Mansoura City, Gehan St"
-                medications={this.state.medications}
-              />
-              <OrderCard
-                name="MO Zayan"
-                address="Mansoura City, Gehan St"
-                medications={this.state.medications}
-              />
-            </div>
-          </div>
-          <Button className="btn btn-blue btn-lg center">See more</Button>
+          ) : this.props.errors.error ? (
+            <p className="dashboardGrid__error"> No Statistics yet </p>
+          ) : (
+            <ReactLoading
+              type="spokes"
+              color="#0066ff"
+              className="loading center mb-40"
+            />
+          )}
         </div>
+
+        <div className="performedRequests mb-40">
+          <h2 className="heading-2 mb-32">Performed requests</h2>
+          <div className="performedRequests__grid">
+            {this.props.dashboard.length ? (
+              <OrderCard
+                name="MO Zayan"
+                address="Mansoura City, Gehan St"
+                medications={this.state.medications}
+              />
+            ) : this.props.errors.error ? (
+              <p className="dashboardGrid__error">
+                {" "}
+                No performed Requests yet{" "}
+              </p>
+            ) : (
+              <ReactLoading
+                type="spokes"
+                color="#0066ff"
+                className="loading center mb-40"
+              />
+            )}
+          </div>
+        </div>
+        {this.props.dashboard.length ? (
+          <Button className="btn btn-blue btn-lg center">See more</Button>
+        ) : null}
+      </div>
     );
   }
 }
 
-export default PharmacyStatement;
+const mapStateToProps = state => ({
+  api_token: state.user.api_token,
+  errors: state.pharmacyData.errors,
+  dashboard: state.pharmacyData.dashboard
+});
+
+const mapDispatchToProps = dispatch => ({
+  getDashbaord: api_token =>
+    dispatch({ type: actions.SAGA_GET_DASHBOARD, api_token })
+});
+export default connect(mapStateToProps, mapDispatchToProps)(PharmacyStatement);

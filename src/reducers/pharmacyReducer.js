@@ -1,4 +1,9 @@
-import { GET_MEDICATIONS, GET_PACKING, MOVE_TO_DELIVERY } from "../actions/types";
+import {
+  GET_MEDICATIONS,
+  GET_PACKING,
+  MOVE_TO_DELIVERY,
+  GET_DASHBOARD
+} from "../actions/types";
 
 export function pharmacyData(state = {}, action) {
   switch (action.type) {
@@ -13,12 +18,18 @@ export function pharmacyData(state = {}, action) {
         ...state,
         packing: !action.isFailed ? action.payload : [],
         errors: action.isFailed ? action.payload : []
-      }
+      };
     case MOVE_TO_DELIVERY:
       return {
         ...state,
         errors: action.isFailed ? action.payload : []
-      }
+      };
+    case GET_DASHBOARD:
+      return {
+        ...state,
+        dashboard: !action.isFailed ? action.payload : [],
+        errors: action.isFailed ? action.payload : []
+      };
     default:
       return state;
   }
