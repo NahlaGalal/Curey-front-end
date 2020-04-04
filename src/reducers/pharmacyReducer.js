@@ -2,7 +2,8 @@ import {
   GET_MEDICATIONS,
   GET_PACKING,
   MOVE_TO_DELIVERY,
-  GET_DASHBOARD
+  GET_DASHBOARD,
+  GET_REQUESTS
 } from "../actions/types";
 
 export function pharmacyData(state = {}, action) {
@@ -28,6 +29,12 @@ export function pharmacyData(state = {}, action) {
       return {
         ...state,
         dashboard: !action.isFailed ? action.payload : [],
+        errors: action.isFailed ? action.payload : []
+      };
+    case GET_REQUESTS:
+      return {
+        ...state,
+        requests: !action.isFailed ? action.payload : [],
         errors: action.isFailed ? action.payload : []
       };
     default:

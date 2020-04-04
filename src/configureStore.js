@@ -66,7 +66,8 @@ const defaultState = {
     medications: [],
     packing: [],
     errors: [],
-    dashboard: []
+    dashboard: [],
+    requests: []
   }
 };
 

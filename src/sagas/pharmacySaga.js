@@ -6,7 +6,9 @@ import {
   MOVE_TO_DELIVERY,
   SAGA_MOVE_TO_DELIVERY,
   SAGA_GET_DASHBOARD,
-  GET_DASHBOARD
+  GET_DASHBOARD,
+  SAGA_GET_REQUESTS,
+  GET_REQUESTS
 } from "../actions/types";
 import { takeEvery, put, call } from "redux-saga/effects";
 import axios from "axios";
@@ -97,9 +99,32 @@ function* getDashboard({ api_token }) {
   }
 }
 
+function* getRequests({ api_token }) {
+  try {
+    const res = yield call(() =>
+      axios.get(`/api/web/requests?api_token=${api_token}`)
+    );
+    if (!res.data.isFailed)
+      yield put({
+        type: GET_REQUESTS,
+        payload: res.data.data,
+        isFailed: false
+      });
+    else
+      yield put({
+        type: GET_REQUESTS,
+        payload: res.data.errors,
+        isFailed: true
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export default function* watchPharmacyDashboard() {
   yield takeEvery(SAGA_GET_MEDICATIONS, getMedicationsList);
   yield takeEvery(SAGA_GET_PACKING, getPackingList);
   yield takeEvery(SAGA_MOVE_TO_DELIVERY, postDeliveryOrder);
   yield takeEvery(SAGA_GET_DASHBOARD, getDashboard);
+  yield takeEvery(SAGA_GET_REQUESTS, getRequests);
 }
