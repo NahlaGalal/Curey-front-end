@@ -22,17 +22,21 @@ class Requests extends Component {
       <div className="pharamcyDashboardContainer">
         <div className="dashboardGrid">
           {this.props.requests.length ? (
-            <OrderCard
-              name="MO Zayan"
-              address="Mansoura City, Gehan St"
-              day="JAN 23, 2020"
-              hour="4:30 PM"
-              medications={this.state.medications}
-              request="request"
-              requestAccepted={() =>
-                this.props.acceptRequest(this.props.api_token, 5)
-              }
-            />
+            this.props.requests.map((request) => (
+              <OrderCard
+                key={request.id}
+                name={request.buyer}
+                address={request.address}
+                image={request.image}
+                day="JAN 23, 2020"
+                hour="4:30 PM"
+                medications={this.state.medications}
+                request="request"
+                requestAccepted={() =>
+                  this.props.acceptRequest(this.props.api_token, request.id)
+                }
+              />
+            ))
           ) : this.props.errors.error ? (
             <p className="dashboardGrid__error"> No requests yet </p>
           ) : (
