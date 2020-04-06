@@ -7,7 +7,7 @@ import rootSaga from "./sagas";
 
 const defaultState = {
   prescription: {
-    medications: []
+    medications: [],
   },
   user: {
     cities: [],
@@ -20,7 +20,7 @@ const defaultState = {
     prescriptions: [],
     cart: [],
     notifications: [],
-    role: null
+    role: null,
   },
   doctors: {
     doctorsData: [],
@@ -34,15 +34,15 @@ const defaultState = {
       is_callup: 0,
       appointments: {
         first_day: {},
-        second_day: {}
-      }
+        second_day: {},
+      },
     },
-    doctorsDone: false
+    doctorsDone: false,
   },
   homeData: {
     top_doctors: [],
     top_products: [],
-    errors: []
+    errors: [],
   },
   medicationsData: {
     products: [],
@@ -50,23 +50,27 @@ const defaultState = {
     medicationsSearch: [],
     medicationInfo: {
       product: {},
-      pharmacies: []
+      pharmacies: [],
     },
     medicationsSaved: [],
     orders: [],
     errors: [],
-    medicationsDone: false
+    medicationsDone: false,
   },
   appointments: {
     appointments: [],
     errors: [],
-    success: ""
+    success: "",
   },
   pharmacyData: {
     medications: [],
     packing: [],
-    errors: []
-  }
+    errors: [],
+  },
+  doctorDashboard: {
+    statement: [],
+    errors: [],
+  },
 };
 
 export const loadState = () =>
@@ -79,7 +83,7 @@ export const loadState = () =>
         email: "",
       };
 
-export const saveState = state =>
+export const saveState = (state) =>
   localStorage.setItem(
     "curey-state",
     JSON.stringify({
@@ -101,7 +105,7 @@ const initialState = () => {
       full_name: loadState().full_name,
       image: loadState().image,
       email: loadState().email,
-    }
+    },
   };
 };
 
