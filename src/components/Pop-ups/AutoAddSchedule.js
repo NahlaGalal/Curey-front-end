@@ -93,60 +93,68 @@ const AutoAddSchedule = props => {
   return (
     <form
       className="Popup__box__details prescription"
-      onSubmit={handleSubmit(data => console.log(data))}
+      onSubmit={handleSubmit((data) =>
+        props.addSchedule({
+          ...data,
+          sTimeFormat: startTime.format,
+          eTimeFormat: endTime.format
+        })
+      )}
     >
-      <div className="row schedule">
-        <SelectBox
-          onClick={toggleStartDaySelectBox}
-          className={`${startDay ? "hasValue" : null}`}
-          listChecked={startDay ? [startDay.name] : []}
-          header="Starting day"
-          boxOpened={startDayBox}
-          list={startDays}
-          optionsContainerRef={startDayContainerRef}
-          multiSelect={false}
-          isError={errors["Starting day"]}
-          error={
-            errors["Starting day"] ? "You must choose your starting day" : null
-          }
-          refe={register({ required: true })}
-        />
-        <SelectBox
-          onClick={toggleEndDaySelectBox}
-          className={`${endDay ? "hasValue" : null}`}
-          listChecked={endDay ? [endDay.name] : []}
-          header="Ending day"
-          boxOpened={endDayBox}
-          list={endDays}
-          optionsContainerRef={endDayContainerRef}
-          multiSelect={false}
-          isError={errors["Ending day"]}
-          error={
-            errors["Ending day"] ? "You must choose your ending day" : null
-          }
-          refe={register({ required: true })}
-        />
-      </div>
+      {props.add ? (
+        <div className="row schedule">
+          <SelectBox
+            onClick={toggleStartDaySelectBox}
+            className={`${startDay ? "hasValue" : null}`}
+            listChecked={startDay ? [startDay.name] : []}
+            header="Starting day"
+            boxOpened={startDayBox}
+            list={startDays}
+            optionsContainerRef={startDayContainerRef}
+            multiSelect={false}
+            isError={errors["Starting day"]}
+            error={
+              errors["Starting day"] ? "You must choose your starting day" : null
+            }
+            refe={register({ required: true })}
+          />
+          <SelectBox
+            onClick={toggleEndDaySelectBox}
+            className={`${endDay ? "hasValue" : null}`}
+            listChecked={endDay ? [endDay.name] : []}
+            header="Ending day"
+            boxOpened={endDayBox}
+            list={endDays}
+            optionsContainerRef={endDayContainerRef}
+            multiSelect={false}
+            isError={errors["Ending day"]}
+            error={
+              errors["Ending day"] ? "You must choose your ending day" : null
+            }
+            refe={register({ required: true })}
+          />
+        </div>
+      ) : null}
       <div className="row mb-20">
         <div className="dosing-inputs">
           <TimeInput
             refe={register({
               required: true,
-              validate: value =>
+              validate: (value) =>
                 value.toString().length === 5 &&
                 value.toString().slice(0, 2) <= 12 &&
                 value.toString().slice(0, 2) > 0 &&
                 value.toString().slice(3) <= 59 &&
-                value.toString().slice(3) >= 0
+                value.toString().slice(3) >= 0,
             })}
             index={0}
-            changeDose={e =>
+            changeDose={(e) =>
               setStartTime({ ...startTime, time: e.target.value })
             }
             toggleHour={() =>
               setStartTime({
                 ...startTime,
-                format: startTime.format === "AM" ? "PM" : "AM"
+                format: startTime.format === "AM" ? "PM" : "AM",
               })
             }
             time={startTime.time}
@@ -159,19 +167,19 @@ const AutoAddSchedule = props => {
           <TimeInput
             refe={register({
               required: true,
-              validate: value =>
+              validate: (value) =>
                 value.toString().length === 5 &&
                 value.toString().slice(0, 2) <= 12 &&
                 value.toString().slice(0, 2) > 0 &&
                 value.toString().slice(3) <= 59 &&
-                value.toString().slice(3) >= 0
+                value.toString().slice(3) >= 0,
             })}
             index={1}
-            changeDose={e => setEndTime({ ...endTime, time: e.target.value })}
+            changeDose={(e) => setEndTime({ ...endTime, time: e.target.value })}
             toggleHour={() =>
               setEndTime({
                 ...endTime,
-                format: endTime.format === "AM" ? "PM" : "AM"
+                format: endTime.format === "AM" ? "PM" : "AM",
               })
             }
             time={endTime.time}
@@ -189,8 +197,10 @@ const AutoAddSchedule = props => {
         placeholder="Session duration in minutes"
         isError={errors.duration}
         error={errors.duration ? "You must type session duration" : null}
-        refe={register({ required: true, validate: value => +value !== 0 })}
-        onKeyPress={e => !e.key.toString().match(/[0-9]/) ? e.preventDefault() : null}
+        refe={register({ required: true, validate: (value) => +value !== 0 })}
+        onKeyPress={(e) =>
+          !e.key.toString().match(/[0-9]/) ? e.preventDefault() : null
+        }
       />
       <input type="submit" hidden ref={submitRef} />
     </form>

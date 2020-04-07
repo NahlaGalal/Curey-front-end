@@ -68,6 +68,10 @@ const defaultState = {
     errors: [],
     dashboard: [],
     requests: []
+  },
+  doctorData: {
+    schedule: [],
+    errors: []
   }
 };
 

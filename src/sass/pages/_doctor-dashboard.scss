@@ -58,12 +58,25 @@
       :last-child {
         margin-right: 0;
       }
+      button {
+        background-color: transparent;
+        border: 0;
+        color: rgba($color-dark, $very-high-opacity);
+        cursor: pointer;
+        outline-color: transparent;
+      }
     }
 
     &__grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(23rem, 0.25fr));
       grid-gap: 3.2rem;
+    }
+
+    &__error {
+      text-align: center;
+      font-size: 1.6rem;
+      color: $warning-color;
     }
   }
   .homeVisit {

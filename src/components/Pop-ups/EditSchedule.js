@@ -3,14 +3,14 @@ import Button from "../Button";
 import ManualAddSchedule from "./ManualAddSchedule";
 import AutoAddSchedule from "./AutoAddSchedule";
 
-const AddSchedule = props => {
+const EditSchedule = (props) => {
   const [activeToggler, setActiveToggler] = useState(false);
   const [formSubmit, setFormSubmit] = useState(1);
 
   return (
     <section className="Popup">
       <div className="Popup__box">
-        <h2 className="heading-2"> Add schedule </h2>
+        <h2 className="heading-2"> Edit schedule for {props.day.name} </h2>
         <div className="Popup__box__toggler toggler address-toggler">
           <Button
             className={activeToggler ? "btn" : "btn active"}
@@ -26,9 +26,13 @@ const AddSchedule = props => {
           </Button>
         </div>
         {activeToggler ? (
-          <AutoAddSchedule formSubmit={formSubmit} addSchedule={data => props.addSchedule(data)} add={true}/>
+          <AutoAddSchedule
+            formSubmit={formSubmit}
+            addSchedule={(data) => props.updateDay(data)}
+            add={false}
+          />
         ) : (
-          <ManualAddSchedule formSubmit={formSubmit} add={true}/>
+          <ManualAddSchedule formSubmit={formSubmit} add={false} day={props.day.name} />
         )}
         <div className="Popup__box__footer buttons">
           <button
@@ -49,4 +53,4 @@ const AddSchedule = props => {
   );
 };
 
-export default AddSchedule;
+export default EditSchedule;

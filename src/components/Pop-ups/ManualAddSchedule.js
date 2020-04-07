@@ -11,7 +11,7 @@ const days = [
   { name: "Tuesday", id: 4 },
   { name: "Wednesday", id: 5 },
   { name: "Thursday", id: 6 },
-  { name: "Friday", id: 7 }
+  { name: "Friday", id: 7 },
 ];
 
 function usePrevious(value) {
@@ -22,15 +22,15 @@ function usePrevious(value) {
   return ref.current;
 }
 
-const ManulaAddSchedule = props => {
+const ManualAddSchedule = (props) => {
   const { register, errors, handleSubmit } = useForm();
   const [dayBox, setDayBox] = useState(false);
   const [day, setDay] = useState("");
   const [appointments, setAppointments] = useState([
     {
       time: "",
-      format: "AM"
-    }
+      format: "AM",
+    },
   ]);
   const submittedCnt = usePrevious(props.formSubmit);
 
@@ -49,10 +49,10 @@ const ManulaAddSchedule = props => {
       itemChecked = Array.from(
         dayContainerRef.current.querySelectorAll("input[type=radio]")
       )
-        .filter(input => input.checked)
-        .map(el => ({
+        .filter((input) => input.checked)
+        .map((el) => ({
           name: el.value,
-          id: el.id.split("_")[0]
+          id: el.id.split("_")[0],
         }));
     }
     setDayBox(!boxOpened);
@@ -63,7 +63,7 @@ const ManulaAddSchedule = props => {
     let state = [...appointments];
     state.push({
       time: "",
-      format: "AM"
+      format: "AM",
     });
     setAppointments(state);
   };
@@ -71,23 +71,34 @@ const ManulaAddSchedule = props => {
   return (
     <form
       className="Popup__box__details prescription"
-      onSubmit={handleSubmit(data => console.log(data))}
+      onSubmit={handleSubmit((data) => console.log(data))}
     >
-      <SelectBox
-        onClick={toggleDaySelectBox}
-        className={`${day ? "hasValue" : null}`}
-        listChecked={day ? [day.name] : []}
-        header="Set the day"
-        boxOpened={dayBox}
-        list={days}
-        optionsContainerRef={dayContainerRef}
-        multiSelect={false}
-        isError={errors["Set the day"]}
-        error={
-          errors["Set the day"] ? "You must choose your starting day" : null
-        }
-        refe={register({ required: true })}
-      />
+      {props.add ? (
+        <SelectBox
+          onClick={toggleDaySelectBox}
+          className={`${day ? "hasValue" : null}`}
+          listChecked={day ? [day.name] : []}
+          header="Set the day"
+          boxOpened={dayBox}
+          list={days}
+          optionsContainerRef={dayContainerRef}
+          multiSelect={false}
+          isError={errors["Set the day"]}
+          error={
+            errors["Set the day"] ? "You must choose your starting day" : null
+          }
+          refe={register({ required: true })}
+        />
+      ) : (
+        <div className="fieldinput">
+          <input
+            type="text"
+            className="fieldinput__input"
+            readOnly
+            value={props.day}
+          />
+        </div>
+      )}
       <div className="row">
         <div className="dosing-inputs">
           {appointments.map((appointment, i) => (
@@ -95,15 +106,15 @@ const ManulaAddSchedule = props => {
               key={i}
               refe={register({
                 required: true,
-                validate: value =>
+                validate: (value) =>
                   value.toString().length === 5 &&
                   value.toString().slice(0, 2) <= 12 &&
                   value.toString().slice(0, 2) > 0 &&
                   value.toString().slice(3) <= 59 &&
-                  value.toString().slice(3) >= 0
+                  value.toString().slice(3) >= 0,
               })}
               index={i}
-              changeDose={e => {
+              changeDose={(e) => {
                 let state = [...appointments];
                 state[i].time = e.target.value;
                 setAppointments(state);
@@ -129,4 +140,4 @@ const ManulaAddSchedule = props => {
   );
 };
 
-export default ManulaAddSchedule;
+export default ManualAddSchedule;
