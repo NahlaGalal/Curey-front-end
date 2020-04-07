@@ -4,7 +4,7 @@ import Medicine from "../../assets/images/med2.png";
 import Button from "../Button";
 import { Rate } from "../../util/rate";
 
-const OrderCard = props => (
+const OrderCard = (props) => (
   <div className="PrescriptionCard">
     <div className="PrescriptionCard__head">
       <img
@@ -56,7 +56,10 @@ const OrderCard = props => (
     ))}
 
     {props.request === "request" ? (
-      <Button className="btn btn-blue orderCard__btn">
+      <Button
+        className="btn btn-blue orderCard__btn"
+        onClick={props.requestAccepted}
+      >
         Move to packing list
       </Button>
     ) : props.request === "packing" ? (
@@ -74,7 +77,7 @@ export default OrderCard;
 
 /*************************  */
 
-const MedicineItem = props => (
+const MedicineItem = (props) => (
   <div className="PrescriptionItem">
     <img src={props.image || Medicine} alt="Medicine" />
     <div className="PrescriptionItem__info">
