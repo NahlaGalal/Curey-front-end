@@ -69,6 +69,7 @@ const defaultState = {
   },
   doctorDashboard: {
     statement: [],
+    requests: [],
     errors: [],
   },
 };

@@ -8,6 +8,12 @@ export function doctorDashboard(state = {}, action) {
         statement: !action.isFailed ? action.payload : [],
         errors: action.isFailed ? action.payload : [],
       };
+    case actions.GET_DOCTOR_REQUESTS:
+      return {
+        ...state,
+        requests: !action.isFailed ? action.payload : [],
+        errors: action.isFailed ? action.payload : [],
+      };
     default:
       return {
         ...state,

@@ -14,7 +14,7 @@ import DoctorPrescription from "../Pop-ups/DoctorPrescription";
 class PatientCard extends Component {
   state = {
     dateTimePickerBox: false,
-    prescriptionBox: false
+    prescriptionBox: false,
   };
 
   render() {
@@ -47,7 +47,7 @@ class PatientCard extends Component {
               <img className="icon" src={Calendar} alt="calendar icon" />
               {this.props.date}
             </span>
-            <p>{this.props.state}</p>
+            <p>{this.props.home_visit === 0 ? "Booking" : "Home visit"}</p>
           </div>
           <span>
             <img className="icon" src={Clock} alt="clock icon" />

@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import Button from "../../components/Button";
 import PatientCard from "../../components/doctorDashboard/patientCard";
+import { connect } from "react-redux";
+import * as actions from "../../actions/types";
+import ReactLoading from "react-loading";
 
 const patientCard = [
   {
@@ -9,7 +12,7 @@ const patientCard = [
     rate: 5,
     date: "JAN 23, 2020",
     time: "4:30 PM",
-    state: "Home visit"
+    state: "Home visit",
   },
   {
     name: "Margot Maggio",
@@ -17,7 +20,7 @@ const patientCard = [
     rate: 5,
     date: "JAN 23, 2020",
     time: "4:30 PM",
-    state: "Booking"
+    state: "Booking",
   },
   {
     name: "Margot Maggio",
@@ -25,7 +28,7 @@ const patientCard = [
     rate: 5,
     date: "JAN 23, 2020",
     time: "4:30 PM",
-    state: "Booking"
+    state: "Booking",
   },
   {
     name: "Margot Maggio",
@@ -33,7 +36,7 @@ const patientCard = [
     rate: 5,
     date: "JAN 23, 2020",
     time: "4:30 PM",
-    state: "Booking"
+    state: "Booking",
   },
   {
     name: "Margot Maggio",
@@ -41,7 +44,7 @@ const patientCard = [
     rate: 5,
     date: "JAN 23, 2020",
     time: "4:30 PM",
-    state: "Home visit"
+    state: "Home visit",
   },
   {
     name: "Margot Maggio",
@@ -49,20 +52,24 @@ const patientCard = [
     rate: 5,
     date: "JAN 23, 2020",
     time: "4:30 PM",
-    state: "Home visit"
-  }
+    state: "Home visit",
+  },
 ];
 
 class ReExamination extends Component {
   state = {
     pageNum: 0,
-    menuVisiblity: -1
+    menuVisiblity: -1,
   };
 
-  togglePageNumber = pageNo => {
+  componentDidMount() {
+    this.props.getReExaminations(this.props.api_token);
+  }
+
+  togglePageNumber = (pageNo) => {
     if (this.state.pageNum !== pageNo) {
       this.setState({
-        pageNum: pageNo
+        pageNum: pageNo,
       });
     }
   };
@@ -114,14 +121,14 @@ class ReExamination extends Component {
                   time={card.time}
                   state={card.state}
                   type="re-examination"
-                  toggleMenuBox={e => this.toggleMenuBox(e, i)}
+                  toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
                   menuVisibility={this.state.menuVisiblity}
-                  stopPropagation={e => e.stopPropagation()}
+                  stopPropagation={(e) => e.stopPropagation()}
                 />
               ))
             : this.state.pageNum === 1
             ? patientCard
-                .filter(card => card.state === "Booking")
+                .filter((card) => card.state === "Booking")
                 .map((card, i) => (
                   <PatientCard
                     key={i}
@@ -133,13 +140,13 @@ class ReExamination extends Component {
                     time={card.time}
                     state={card.state}
                     type="re-examination"
-                    toggleMenuBox={e => this.toggleMenuBox(e, i)}
+                    toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
                     menuVisibility={this.state.menuVisiblity}
-                    stopPropagation={e => e.stopPropagation()}
+                    stopPropagation={(e) => e.stopPropagation()}
                   />
                 ))
             : patientCard
-                .filter(card => card.state === "Home visit")
+                .filter((card) => card.state === "Home visit")
                 .map((card, i) => (
                   <PatientCard
                     key={i}
@@ -150,10 +157,10 @@ class ReExamination extends Component {
                     date={card.date}
                     time={card.time}
                     state={card.state}
-                    type="re-examination"
-                    toggleMenuBox={e => this.toggleMenuBox(e, i)}
+                    home_visit={card.home_visit}
+                    toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
                     menuVisibility={this.state.menuVisiblity}
-                    stopPropagation={e => e.stopPropagation()}
+                    stopPropagation={(e) => e.stopPropagation()}
                   />
                 ))}
         </div>
@@ -163,4 +170,13 @@ class ReExamination extends Component {
   }
 }
 
-export default ReExamination;
+const mapStateToProps = (state) => ({
+  api_token: state.user.api_token,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getReExaminations: (api_token) =>
+    dispatch({ type: actions.SAGA_GET_DOCTOR_REEXAMINATION, api_token }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReExamination);
