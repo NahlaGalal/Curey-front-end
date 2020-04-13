@@ -1,5 +1,4 @@
 import React from "react";
-import UserImg from "../../assets/svg/user.svg";
 import LocationIcon from "../../assets/svg/location.svg";
 import CalendarIcon from "../../assets/svg/calendar.svg";
 import ClockIcon from "../../assets/svg/clock.svg";
@@ -12,7 +11,7 @@ const DoctorBookingCard = props => {
   return(
   <div className="DoctorBookingCard">
     <div className="DoctorBookingCard__info">
-      <img alt="doctor" src={props.image || UserImg} className="DoctorBookingCard__img" />
+      <img alt="doctor" src={props.image} className="DoctorBookingCard__img" />
       <div className="DoctorBookingCard__info__text">
         <div className="flex">
           <h3 className="heading-3">{props.name}</h3>

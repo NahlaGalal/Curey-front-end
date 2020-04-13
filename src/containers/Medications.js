@@ -172,6 +172,7 @@ class Medications extends Component {
                       id={medication.id}
                       name={medication.name}
                       price={medication.price}
+                      image={medication.image}
                       description={medication.description}
                       isFavourite={medication.is_favourite}
                       onMouseMove={() =>

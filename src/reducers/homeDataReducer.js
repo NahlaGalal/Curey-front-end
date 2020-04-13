@@ -5,9 +5,19 @@ export function homeData(state = {}, action) {
     case actions.RECIEVE_HOME_DATA:
       return {
         ...state,
-        top_doctors: !action.isFailed ? action.payload.top_doctors : [],
-        top_products: !action.isFailed ? action.payload.top_products : [],
-        errors: action.isFailed ? action.payload : []
+        top_doctors: !action.isFailed
+          ? action.payload.top_doctors.map((doctor) => ({
+              ...doctor,
+              image: `https://curey-backend.herokuapp.com/${doctor.image}`,
+            }))
+          : [],
+        top_products: !action.isFailed
+          ? action.payload.top_products.map((product) => ({
+              ...product,
+              image: `https://curey-backend.herokuapp.com/${product.image}`,
+            }))
+          : [],
+        errors: action.isFailed ? action.payload : [],
       };
     default:
       return state;

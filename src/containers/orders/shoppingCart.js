@@ -71,8 +71,10 @@ class ShoppingCart extends Component {
                     key={i}
                     name={cart.name}
                     price={cart.price}
+                    image={cart.image}
                     pharmacy={cart.pharmacy.name}
                     address={cart.pharmacy.address}
+                    phImage={cart.pharmacy.image}
                     remove={() =>
                       this.props.removeFromCart(
                         this.props.api_token,

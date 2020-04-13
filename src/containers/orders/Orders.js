@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Location from "../../assets/svg/location.svg";
-import Pharmacy from "../../assets/images/roshdy.png";
 import Button from "../../components/Button";
 import * as actions from "../../actions/types";
 import { connect } from "react-redux";
@@ -87,8 +86,9 @@ export class Orders extends Component {
                 <section className="Orders__container__box" key={i}>
                   <header className="Orders__container__box__header">
                     <img
-                      src={order.image || Pharmacy}
+                      src={order.image}
                       alt={`${order.pharmacy} Logo`}
+                      className="Orders__container__box__header__logo"
                     />
                     <div>
                       <div className="Orders__container__box__header--heading">

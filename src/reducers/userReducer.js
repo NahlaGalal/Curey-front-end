@@ -31,11 +31,13 @@ export function user(state = [], action) {
         ...state,
         api_token: !action.isFailed ? action.payload.api_token : "",
         full_name: !action.isFailed ? action.payload.full_name : "",
-        image: !action.isFailed ? action.payload.image : null,
+        image: !action.isFailed
+          ? `https://curey-backend.herokuapp.com/${action.payload.image}`
+          : null,
         email: !action.isFailed ? action.payload.email : "",
         role: !action.isFailed ? action.payload.role : null,
         cart: [],
-        errors: action.isFailed ? action.payload : {}
+        errors: action.isFailed ? action.payload : {},
       };
     case LOGOUT_USER:
       return {
@@ -66,9 +68,20 @@ export function user(state = [], action) {
     case SHOW_CART:
       return {
         ...state,
-        cart: !action.isFailed ? action.payload : [],
-        errors: action.isFailed ? action.payload : []
-      }
+        cart: !action.isFailed
+          ? [
+              ...action.payload.map((medication) => ({
+                ...medication,
+                image: `https://curey-backend.herokuapp.com/${medication.image}`,
+                pharmacy: {
+                  ...medication.pharmacy,
+                  image: `https://curey-backend.herokuapp.com/${medication.pharmacy.image}`,
+                },
+              })),
+            ]
+          : [],
+        errors: action.isFailed ? action.payload : [],
+      };
     case REMOVE_FROM_CART:
       return {
         ...state,

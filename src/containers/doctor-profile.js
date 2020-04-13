@@ -8,7 +8,6 @@ import At from "../assets/svg/at.svg";
 import Button from "../components/Button";
 import { connect } from "react-redux";
 import ReactLoading from "react-loading";
-import UserImg from "../assets/svg/user.svg";
 import * as actions from "../actions/types";
 
 class DoctorProfile extends Component {
@@ -50,7 +49,7 @@ class DoctorProfile extends Component {
               <header className="profile__header__content__main__header">
                 <div className="profile__header__content__main__header__image">
                   <img
-                    src={doctor.image || UserImg}
+                    src={doctor.image}
                     alt={`doctor ${doctor.name} profile`}
                   />
                 </div>
@@ -126,7 +125,7 @@ class DoctorProfile extends Component {
               return (
                 <div className="review" key={i}>
                   <div className="review__image">
-                    <img src={review.image || UserImg} alt="user-profile" />
+                    <img src={review.image} alt="user-profile" />
                     <div>
                       <p>{review.full_name}</p>
                       <span>{review.time}</span>

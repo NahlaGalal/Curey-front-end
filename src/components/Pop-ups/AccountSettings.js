@@ -1,20 +1,13 @@
 import React, { Component, useState } from "react";
 import { useForm } from "react-hook-form";
 import validator from "validator";
-import UserImg from "../../assets/svg/user.svg";
 import Button from "../Button";
 
-const user = {
-  image: null,
-  name: "Nahla Galal",
-  email: "nahlaglal@yahoo.com"
-};
-
-const ChangePhoto = () => {
+const ChangePhoto = (props) => {
   const [imageUrl, setImageUrl] = useState("");
   const [imageName, setImageName] = useState("");
 
-  const uploadImage = e => {
+  const uploadImage = (e) => {
     let reader = new FileReader();
     let file = e.target.files[0];
     setImageName(file.name);
@@ -31,8 +24,8 @@ const ChangePhoto = () => {
         Add a nice photo to your profile
       </p>
       <h4 className="heading-4">Image preview</h4>
-      <img src={imageUrl || UserImg} alt={`${user.name} profile-pic`} />
-      <form onSubmit={e => e.preventDefault()}>
+      <img src={imageUrl || props.image} alt={`${props.name} profile-pic`} />
+      <form onSubmit={(e) => e.preventDefault()}>
         <div className="fieldinput fieldinput-image">
           <span
             className={`fieldinput__input fieldinput-image__input${
@@ -66,19 +59,19 @@ const ChangePhone = () => {
     <React.Fragment>
       <h2 className="heading-2">Phone number</h2>
       <p className="Popup__box__settings__description">Add your phone number</p>
-      <form onSubmit={handleSubmit(data => console.log(data))}>
+      <form onSubmit={handleSubmit((data) => console.log(data))}>
         <div className="fieldinput">
           <input
             name="phone"
             type="text"
             id="phone"
             className="fieldinput__input"
-            onKeyPress={e =>
+            onKeyPress={(e) =>
               !e.key.toString().match(/[0-9]/) ? e.preventDefault() : null
             }
             ref={register({
               required: true,
-              validate: value => validator.isMobilePhone(value)
+              validate: (value) => validator.isMobilePhone(value),
             })}
           />
           <label htmlFor="phone" className={watch("phone") ? "active" : null}>
@@ -107,7 +100,7 @@ const ChangePassword = () => {
       <p className="Popup__box__settings__description">
         Edit your password here
       </p>
-      <form onSubmit={handleSubmit(data => console.log(data))}>
+      <form onSubmit={handleSubmit((data) => console.log(data))}>
         <div className="fieldinput">
           <input
             name="current_password"
@@ -160,7 +153,7 @@ const ChangePassword = () => {
             className="fieldinput__input"
             ref={register({
               required: true,
-              validate: value => value === watch("new_password")
+              validate: (value) => value === watch("new_password"),
             })}
           />
           <label
@@ -183,11 +176,11 @@ const ChangePassword = () => {
   );
 };
 
-const ChangeEmail = () => {
+const ChangeEmail = (props) => {
   let { register, handleSubmit, errors, watch } = useForm({
     defaultValues: {
-      email: user.email
-    }
+      email: props.email,
+    },
   });
 
   return (
@@ -196,7 +189,7 @@ const ChangeEmail = () => {
       <p className="Popup__box__settings__description">
         Edit you email address here
       </p>
-      <form onSubmit={handleSubmit(data => console.log(data))}>
+      <form onSubmit={handleSubmit((data) => console.log(data))}>
         <div className="fieldinput">
           <input
             className="fieldinput__input"
@@ -206,7 +199,7 @@ const ChangeEmail = () => {
             ref={register({
               required: true,
               maxLength: 50,
-              validate: value => validator.isEmail(value)
+              validate: (value) => validator.isEmail(value),
             })}
           />
           <label htmlFor="email" className={watch("email") ? "active" : ""}>
@@ -228,10 +221,10 @@ const ChangeEmail = () => {
 
 class AccountSettings extends Component {
   state = {
-    boxShown: "Photo"
+    boxShown: "Photo",
   };
 
-  toggleBoxShown = e =>
+  toggleBoxShown = (e) =>
     this.setState({ boxShown: e.target.textContent.trim() });
 
   render() {
@@ -239,11 +232,14 @@ class AccountSettings extends Component {
       <section className="Popup">
         <div
           className="Popup__box-grid Popup__box"
-          onClick={e => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
         >
           <aside className="Popup__box__aside">
             <div className="Popup__box__aside__image">
-              <img src={user.img || UserImg} alt={`${user.name} profile-pic`} />
+              <img
+                src={this.props.user.image}
+                alt={`${this.props.user.name} profile-pic`}
+              />
             </div>
             <Button
               className={`btn btn-transparent${
@@ -288,13 +284,16 @@ class AccountSettings extends Component {
           </aside>
           <div className="Popup__box__settings">
             {this.state.boxShown === "Photo" ? (
-              <ChangePhoto />
+              <ChangePhoto
+                image={this.props.user.image}
+                name={this.props.user.name}
+              />
             ) : this.state.boxShown === "Phone number" ? (
               <ChangePhone />
             ) : this.state.boxShown === "Change password" ? (
               <ChangePassword />
             ) : (
-              <ChangeEmail />
+              <ChangeEmail email={this.props.user.email} />
             )}
           </div>
         </div>

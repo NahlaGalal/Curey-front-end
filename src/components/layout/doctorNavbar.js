@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Rate } from "../../util/rate";
-import userImg from "../../assets/svg/user.svg";
 import DoctorThumbnail from "../Pop-ups/DoctorThumbnail";
 import { connect } from "react-redux";
 import * as actions from "../../actions/types";
@@ -86,15 +85,15 @@ const DoctorNavbar = props => {
             <Rate rate={2.23} />
             <span>1220 reviews</span>
           </div>
-          <div className="NavigationBar__phrmacyData--logo NavigationBar__phrmacyData--logo-doctor">
-            <img src={userImg} alt="doctor logo" />
+          <div className="NavigationBar__phrmacyData--logo">
+            <img src={props.image} alt="doctor logo" />
           </div>
         </Button>
       </nav>
       {props.doctorThumbnailList && (
         <DoctorThumbnail
           hideLists={props.hideLists}
-          doctorImage={props.image || userImg}
+          doctorImage={props.image}
           doctorName={props.doctor_name}
           doctorSpeciality={props.doctor_speciality}
           doctorAddress={props.address || ""}

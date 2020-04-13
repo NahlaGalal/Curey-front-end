@@ -1,12 +1,14 @@
 import React from "react";
-import doctorImage from "../../assets/images/man-wearing-a-beanie.png";
-import medicationImg from "../../assets/images/med2.png";
+// import doctorImage from "../../assets/images/man-wearing-a-beanie.png";
+// import medicationImg from "../../assets/images/med2.png";
 import clockIcon from "../../assets/svg/clock.svg";
 import PopupFooter from "./PopupFooter";
 
+const medicationImg = null;
+
 const prescription = {
   doctorName: "Dr Hassan Ali",
-  doctorImage,
+  doctorImage: null,
   time: "20 minutes ago",
   price: 156,
   medications: [
@@ -14,31 +16,31 @@ const prescription = {
       medicationImg,
       medicationName: "Flumox syrup",
       numOfTimes: 3,
-      periods: "day"
+      periods: "day",
     },
     {
       medicationImg,
       medicationName: "Flumox syrup",
       numOfTimes: 3,
-      periods: "day"
+      periods: "day",
     },
     {
       medicationImg,
       medicationName: "Flumox syrup",
       numOfTimes: 3,
-      periods: "day"
+      periods: "day",
     },
     {
       medicationImg,
       medicationName: "Flumox syrup",
       numOfTimes: 3,
-      periods: "day"
-    }
-  ]
+      periods: "day",
+    },
+  ],
 };
 
-const ConfirmPrescription = props => (
-  <section className="Popup" onClick={e => e.stopPropagation()}>
+const ConfirmPrescription = (props) => (
+  <section className="Popup" onClick={(e) => e.stopPropagation()}>
     <div className="Popup__box">
       <header className="Popup__box__header">
         <img

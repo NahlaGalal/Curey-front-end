@@ -1,7 +1,6 @@
 import React from "react";
 import PopupFooter from "./PopupFooter";
 import LocationIcon from "../../assets/svg/location.svg";
-import PharmacyIcon from "../../assets/images/roshdy.png";
 
 const OrderDetails = props => {
   return (
@@ -20,7 +19,7 @@ const OrderDetails = props => {
               <div className="Popup__box__details">
                 <div className="Popup__box__details__header">
                   <img
-                    src={pharmacy.image || PharmacyIcon}
+                    src={pharmacy.image}
                     alt={`${pharmacy.name} logo`}
                   />
                   <div>

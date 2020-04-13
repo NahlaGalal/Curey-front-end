@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Rate } from "../util/rate";
-import Logo from "../assets/images/roshdy.png";
 import LocationIcon from "../assets/svg/location.svg";
 import Button from "../components/Button";
 import OrderMedication from "./Pop-ups/OrderMedication";
@@ -31,7 +30,7 @@ class PharmacyItem extends Component {
       <Fragment>
         <div className="pharmacy">
           <div className="pharmacy__logo">
-            <img src={Logo} alt={this.props.name} />
+            <img src={this.props.image} alt={this.props.name} />
           </div>
           <div className="pharmacy__info">
             <div className="pharmacy__name">

@@ -1,6 +1,4 @@
 import React from "react";
-import personImg from "../../assets/svg/user.svg";
-import Medicine from "../../assets/images/med2.png";
 import Button from "../Button";
 import { Rate } from "../../util/rate";
 
@@ -8,7 +6,7 @@ const OrderCard = (props) => (
   <div className="PrescriptionCard">
     <div className="PrescriptionCard__head">
       <img
-        src={props.image || personImg}
+        src={props.image}
         alt="doctor"
         className="doctorBox__img"
       />
@@ -79,7 +77,7 @@ export default OrderCard;
 
 const MedicineItem = (props) => (
   <div className="PrescriptionItem">
-    <img src={props.image || Medicine} alt="Medicine" />
+    <img src={props.image} alt="Medicine" />
     <div className="PrescriptionItem__info">
       <p>{props.medicineName}</p>
       <p className="PrescriptionItem__info__quantity">

@@ -15,11 +15,15 @@
         border-bottom: 1px solid $color-dark;
         padding: 2rem;
         display: flex;
+        &__logo {
+          box-shadow: $shadow;
+        }
         img {
           width: 4.2rem;
           height: 4.2rem;
           object-fit: cover;
           margin-right: 1.6rem;
+          border-radius: 50%;
         }
         > div {
           width: 100%;

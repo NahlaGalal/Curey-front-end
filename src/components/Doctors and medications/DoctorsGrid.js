@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Home_icon from "../../assets/svg/home.svg";
 import Button from "../Button";
 import { Rate } from "../../util/rate";
-import UserImg from "../../assets/svg/user.svg";
 
 class DoctorsGrid extends React.Component {
   state = { isCallupInfo: [] };
@@ -37,7 +36,7 @@ class DoctorsGrid extends React.Component {
             <div className="doctorCard__main">
               <img
                 alt={doctor.full_name}
-                src={doctor.image || UserImg}
+                src={doctor.image}
                 className="center doctorCard__main__doctorImg"
               />
               {doctor.offers_callup ? (

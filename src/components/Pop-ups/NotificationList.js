@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import doctorImg from "../../assets/images/Hassan.png";
 import Button from "../Button";
 import ConfirmPrescription from "./ConfirmPrescription";
 import TimeAgo from "javascript-time-ago";

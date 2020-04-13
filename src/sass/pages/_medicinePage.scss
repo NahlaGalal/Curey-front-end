@@ -119,6 +119,17 @@
     align-items: center;
   }
 
+  &__logo {
+    height: 11.2rem;
+    border-radius: 50%;
+    box-shadow: $shadow;
+    img {
+      width: 11.2rem;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+
   &__info {
     margin-left: 1.6rem;
     width: 100%;

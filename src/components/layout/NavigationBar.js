@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import Button from "../Button";
 import NotificationList from "../Pop-ups/NotificationList";
 import UserThumbnail from "../Pop-ups/UserThumbnail";
-import UserImg from "../../assets/svg/user.svg";
 import { connect } from "react-redux";
 import * as actions from "../../actions/types";
 import { withRouter } from "react-router-dom";
@@ -105,7 +104,7 @@ class NavigationBar extends Component {
                 onClick={this.props.toggleUserThumbnailList}
               >
                 <img
-                  src={this.props.image || UserImg}
+                  src={this.props.image}
                   alt="profile"
                   className="NavigationBar__img"
                 />
@@ -122,7 +121,7 @@ class NavigationBar extends Component {
         {this.props.userThumbnailList && (
           <UserThumbnail
             hideLists={this.props.hideLists}
-            userImg={this.props.image || UserImg}
+            userImg={this.props.image}
             userName={this.props.full_name}
             userEmail={this.props.email || ""}
             logout={() => this.props.postLogout(this.props.api_token)}

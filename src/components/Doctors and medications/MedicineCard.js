@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Button from "../Button";
-import Med from "../../assets/images/med1.png";
 
 const MedicineCard = props => (
   <div
@@ -25,7 +24,7 @@ const MedicineCard = props => (
       ) : null}
       <img
         alt={props.name}
-        src={props.image || Med}
+        src={props.image}
         className="center medicationCard__main__medicationImg"
       />
     </div>

@@ -5,8 +5,15 @@ export function appointments(state = {}, action) {
     case actions.RECIEVE_APPOINTMENTS:
       return {
         ...state,
-        appointments: !action.isFailed ? action.payload : [],
-        errors: action.isFailed ? action.payload : []
+        appointments: !action.isFailed
+          ? [
+              ...action.payload.map((appointment) => ({
+                ...appointment,
+                image: `https://curey-backend.herokuapp.com/${appointment.image}`,
+              })),
+            ]
+          : [],
+        errors: action.isFailed ? action.payload : [],
       };
     case actions.BOOK_APPOINTMENT_RES:
       return {

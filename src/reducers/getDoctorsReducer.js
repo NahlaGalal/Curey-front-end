@@ -2,7 +2,7 @@ import {
   GET_DOCTORS,
   SEARCH_DOCTORS,
   GET_DOCTOR,
-  GET_DOCTOR_APPOINTMENTS
+  GET_DOCTOR_APPOINTMENTS,
 } from "../actions/types";
 
 export const doctors = (state = {}, action) => {
@@ -10,21 +10,36 @@ export const doctors = (state = {}, action) => {
     case GET_DOCTORS:
       return {
         ...state,
-        doctorsData: !action.isFailed ? [...state.doctorsData, ...action.payload.doctors] : [],
+        doctorsData: !action.isFailed
+          ? [
+              ...state.doctorsData,
+              ...action.payload.doctors.map((doctor) => ({
+                ...doctor,
+                image: `https://curey-backend.herokuapp.com/${doctor.image}`,
+              })),
+            ]
+          : [],
         specialities: !action.isFailed ? action.payload.specialities : [],
         cities: !action.isFailed ? action.payload.cities : [],
-        doctorsDone: !action.isFailed && !action.payload.doctors.length ? true : false,
-        errors: action.isFailed ? action.payload : []
+        doctorsDone:
+          !action.isFailed && !action.payload.doctors.length < 8 ? true : false,
+        errors: action.isFailed ? action.payload : [],
       };
     case SEARCH_DOCTORS:
       return {
         ...state,
         doctorsSearch: !action.isFailed
-          ? [...action.payload.doctors, ...state.doctorsSearch]
+          ? [
+              ...state.doctorsSearch,
+              ...action.payload.doctors.map((doctor) => ({
+                ...doctor,
+                image: `https://curey-backend.herokuapp.com/${doctor.image}`,
+              })),
+            ]
           : [],
         doctorsDone:
-          !action.isFailed && !action.payload.doctors.length ? true : false,
-        errors: action.isFailed ? action.payload : []
+          !action.isFailed && action.payload.doctors.length < 8 ? true : false,
+        errors: action.isFailed ? action.payload : [],
       };
     case GET_DOCTOR:
       return {
@@ -33,10 +48,11 @@ export const doctors = (state = {}, action) => {
           ? {
               ...state.doctorData,
               ...action.payload.doctor,
-              reviews: action.payload.reviews
+              image: `https://curey-backend.herokuapp.com/${action.payload.doctor.image}`,
+              reviews: action.payload.reviews,
             }
           : {},
-        errors: action.isFailed ? action.payload : []
+        errors: action.isFailed ? action.payload : [],
       };
     case GET_DOCTOR_APPOINTMENTS:
       return {
@@ -46,11 +62,11 @@ export const doctors = (state = {}, action) => {
               ...state.doctorData,
               appointments: {
                 first_day: action.payload.first_day,
-                second_day: action.payload.second_day
-              }
+                second_day: action.payload.second_day,
+              },
             }
           : {},
-        errors: action.isFailed ? action.payload : []
+        errors: action.isFailed ? action.payload : [],
       };
     default:
       return state;

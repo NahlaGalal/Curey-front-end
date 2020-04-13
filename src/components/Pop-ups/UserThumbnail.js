@@ -16,7 +16,7 @@ class UserThumbnail extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="Thumbnail" onClick={e => e.stopPropagation()}>
+        <div className="Thumbnail" onClick={(e) => e.stopPropagation()}>
           <header>
             <div className="Thumbnail__profile-img">
               <img src={this.props.userImg} alt={this.props.userName} />
@@ -32,7 +32,10 @@ class UserThumbnail extends Component {
             <Button onClick={() => this.setState({ accountSettingsBox: true })}>
               Account
             </Button>
-            <Button to="/" onClick={() => this.setState({ personalSettingsBox: true })}>
+            <Button
+              to="/"
+              onClick={() => this.setState({ personalSettingsBox: true })}
+            >
               Personal
             </Button>
             <Button>
@@ -50,10 +53,20 @@ class UserThumbnail extends Component {
           </footer>
         </div>
         {this.state.accountSettingsBox && (
-          <AccountSettings closePopup={() => this.setState({ accountSettingsBox: false })} />
+          <AccountSettings
+            closePopup={() => this.setState({ accountSettingsBox: false })}
+            user={{
+              name: this.props.userName,
+              email: this.props.userEmail,
+              image: this.props.userImg,
+            }}
+          />
         )}
         {this.state.personalSettingsBox && (
-          <PersonalSettings closePopup={() => this.setState({ personalSettingsBox: false })} />
+          <PersonalSettings
+            closePopup={() => this.setState({ personalSettingsBox: false })}
+            name={this.props.userName}
+          />
         )}
       </React.Fragment>
     );

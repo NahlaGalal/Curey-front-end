@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Rate } from "../../util/rate";
-import pharmacyImg from "../../assets/images/pharmacy.png";
 import PharmacyThumbnail from "../Pop-ups/PharmacyThumbnail";
 import { connect } from "react-redux";
 import * as actions from "../../actions/types";
@@ -13,7 +12,7 @@ const PharmacyNavbar = props => {
     if (props.api_token === "") props.history.push("/login");
   });
 
-  return(
+  return (
     <React.Fragment>
       <nav className="NavigationBar">
         <input
@@ -77,17 +76,15 @@ const PharmacyNavbar = props => {
             <Rate rate={1} />
             <span>1220 reviews</span>
           </div>
-          <img
-            src={pharmacyImg}
-            alt="pharmacy logo"
-            className="NavigationBar__phrmacyData--logo"
-          />
+          <div className="NavigationBar__phrmacyData--logo">
+            <img src={props.image} alt="doctor logo" />
+          </div>
         </Button>
       </nav>
       {props.pharmacyThumbnailList && (
         <PharmacyThumbnail
           hideLists={props.hideLists}
-          pharmacyLogo={props.image || pharmacyImg}
+          pharmacyLogo={props.image}
           pharmacyName={props.pharmacy_name}
           pharmacyAddress={props.address || ""}
           logout={() => props.postLogout(props.api_token)}

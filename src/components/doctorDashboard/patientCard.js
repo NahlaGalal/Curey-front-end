@@ -5,7 +5,6 @@ import { Rate } from "../../util/rate";
 import Calendar from "../../assets/svg/calendar.svg";
 import Clock from "../../assets/svg/clock.svg";
 import Button from "../Button";
-import UserImg from "../../assets/svg/user.svg";
 import transform from "../../assets/svg/transform.svg";
 import list from "../../assets/svg/list.svg";
 import DateTimePicker from "./DateTimePicker";
@@ -22,7 +21,7 @@ class PatientCard extends Component {
       <div className="PatientCard">
         <div className="PatientCard__info">
           <img
-            src={this.props.image || UserImg}
+            src={this.props.image}
             alt="patient"
             className="DoctorBookingCard__img"
           />

@@ -1,13 +1,11 @@
 import React from "react";
-import MedicineSrc from "../assets/images/med1.png";
-import PharmacySrc from "../assets/images/roshdy.png";
 import LocationIcon from "../assets/svg/location.svg";
 import CloseIcon from "../assets/svg/close.svg";
 
 const Order = props => (
   <div className="medicationCard order">
     <img
-      src={MedicineSrc}
+      src={props.image}
       className="medicationCard__main__medicationImg center"
       alt="medicine"
     />
@@ -25,7 +23,7 @@ const Order = props => (
 
     <div className="medicationCard__pharmacy">
       <img
-        src={PharmacySrc}
+        src={props.phImage}
         alt="Pharmacy logo"
         className="medicationCard__pharmacy__logo"
       />

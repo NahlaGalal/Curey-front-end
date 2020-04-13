@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import MedicineCard from "../../components/Doctors and medications/MedicineCard";
 import OrderDetails from "../../components/Pop-ups/OrderDetails";
-import PharmacyIcon from "../../assets/images/roshdy.png";
+// import PharmacyIcon from "../../assets/images/roshdy.png";
 import SelectBox from "../../components/SelectBox";
 import Button from "../../components/Button";
 
@@ -70,7 +70,7 @@ export default class OrderPrescription extends Component {
 
   pharmaciesContainerRef = React.createRef();
 
-  toggleCitySelectBox = () => {
+  togglePharmacySelectBox = () => {
     const prev = this.state.pharmaciesBoxObened;
     let pharmacy = "";
     if (prev) {
@@ -98,7 +98,7 @@ export default class OrderPrescription extends Component {
         <div className="search-pharmacy">
           <SelectBox
             name="city_id"
-            onClick={this.toggleCitySelectBox}
+            onClick={this.togglePharmacySelectBox}
             className={`${this.state.pharmacy ? "hasValue" : null}`}
             listChecked={this.state.pharmacy ? [this.state.pharmacy] : []}
             header="Search Pharmacy"
@@ -141,7 +141,7 @@ export default class OrderPrescription extends Component {
                 medications: medications.map(medication => medication.name),
                 pharmacy: {
                   name: this.state.pharmacy,
-                  logo: PharmacyIcon,
+                  logo: null,
                   address: "Mansoura, Gehan St"
                 }
               }

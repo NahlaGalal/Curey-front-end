@@ -7,6 +7,7 @@ const MedicationGrid = props => (
       <MedicineCard
         name={medication.name}
         price={medication.price}
+        image={medication.image}
         description={medication.description}
         isFavourite={medication.isFavourite}
       />

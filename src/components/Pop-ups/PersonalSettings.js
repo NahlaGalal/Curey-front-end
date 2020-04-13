@@ -5,14 +5,10 @@ import SelectBox from "../SelectBox";
 import { connect } from "react-redux";
 import * as actions from "../../actions/types";
 
-const user = {
-  name: "Nahla Galal"
-};
-
-const ChangeFullName = () => {
+const ChangeFullName = (props) => {
   let { register, handleSubmit, errors, watch } = useForm({
     defaultValues: {
-      name: user.name
+      name: props.name
     }
   });
 
@@ -190,7 +186,7 @@ export class PersonalSettings extends Component {
           </aside>
           <div className="Popup__box__settings">
             {this.state.boxShown === "Full name" ? (
-              <ChangeFullName />
+              <ChangeFullName name={this.props.name}/>
             ) : this.state.boxShown === "City" ? (
               <ChangeCity cities={this.props.cities} />
             ) : (
