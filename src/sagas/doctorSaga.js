@@ -9,6 +9,14 @@ import {
   SAGA_SET_RE_EXAMINAION,
   SEND_PRESCRIPTION,
   SAGA_SEND_PRESCRIPTION,
+  SAGA_GET_DOCTOR_STATEMENT,
+  GET_DOCTOR_STATEMENT,
+  SAGA_GET_DOCTOR_REQUESTS,
+  GET_DOCTOR_REQUESTS,
+  SAGA_GET_DOCTOR_REEXAMINATION,
+  GET_DOCTOR_REEXAMINATION,
+  SAGA_GET_DOCTOR_PRESCRIPTIONS,
+  GET_DOCTOR_PRESCRIPTIONS,
 } from "../actions/types";
 import axios from "axios";
 import { put, takeEvery, call } from "redux-saga/effects";
@@ -27,6 +35,28 @@ function* getSchedule({ api_token }) {
     else
       yield put({
         type: GET_SCHEDULE,
+        payload: res.data.errors,
+        isFailed: true,
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function* getDoctorStatement({ api_token }) {
+  try {
+    const res = yield call(() =>
+      axios.get(`/api/web/doctor_dashboard?api_token=${api_token}`)
+    );
+    if (!res.data.isFailed)
+      yield put({
+        type: GET_DOCTOR_STATEMENT,
+        payload: res.data.data,
+        isFailed: false,
+      });
+    else
+      yield put({
+        type: GET_DOCTOR_STATEMENT,
         payload: res.data.errors,
         isFailed: true,
       });
@@ -73,6 +103,28 @@ function* postEditSchedule({ data }) {
   }
 }
 
+function* getReExaminations({ api_token }) {
+  try {
+    const res = yield call(() =>
+      axios.get(`/api/web/doctor/reExaminations?api_token=${api_token}`)
+    );
+    if (!res.data.isFailed)
+      yield put({
+        type: GET_DOCTOR_REEXAMINATION,
+        payload: res.data.data,
+        isFailed: false,
+      });
+    else
+      yield put({
+        type: GET_DOCTOR_REEXAMINATION,
+        payload: res.data.errors,
+        isFailed: true,
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 function* postSetReExamination({ data }) {
   try {
     const res = yield call(() =>
@@ -88,6 +140,28 @@ function* postSetReExamination({ data }) {
         type: SET_RE_EXAMINATION,
         payload: res.data.errors,
         isFailed: false,
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function* getRequests({ api_token }) {
+  try {
+    const res = yield call(() =>
+      axios.get(`/api/web/doctor/requests?api_token=${api_token}`)
+    );
+    if (!res.data.isFailed)
+      yield put({
+        type: GET_DOCTOR_REQUESTS,
+        payload: res.data.data,
+        isFailed: false,
+      });
+    else
+      yield put({
+        type: GET_DOCTOR_REQUESTS,
+        payload: res.data.errors,
+        isFailed: true,
       });
   } catch (err) {
     console.log(err);
@@ -116,10 +190,36 @@ function* postSendPrescription({ data }) {
   }
 }
 
+function* getPrescriptions({ api_token }) {
+  try {
+    const res = yield call(() =>
+      axios.get(`/api/web/doctor/prescriptions?api_token=${api_token}`)
+    );
+    if (!res.data.isFailed)
+      yield put({
+        type: GET_DOCTOR_PRESCRIPTIONS,
+        payload: res.data.data,
+        isFailed: false,
+      });
+    else
+      yield put({
+        type: GET_DOCTOR_PRESCRIPTIONS,
+        payload: res.data.errors,
+        isFailed: true,
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export default function* watchDoctorDashboard() {
   yield takeEvery(SAGA_GET_SCHEDULE, getSchedule);
   yield takeEvery(SAGA_ADD_SCHEDULE, postAddSchedule);
   yield takeEvery(SAGA_EDIT_SCHEDULE, postEditSchedule);
   yield takeEvery(SAGA_SET_RE_EXAMINAION, postSetReExamination);
   yield takeEvery(SAGA_SEND_PRESCRIPTION, postSendPrescription);
+  yield takeEvery(SAGA_GET_DOCTOR_STATEMENT, getDoctorStatement);
+  yield takeEvery(SAGA_GET_DOCTOR_REEXAMINATION, getReExaminations);
+  yield takeEvery(SAGA_GET_DOCTOR_REQUESTS, getRequests);
+  yield takeEvery(SAGA_GET_DOCTOR_PRESCRIPTIONS, getPrescriptions);
 }

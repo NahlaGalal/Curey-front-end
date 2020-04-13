@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import Search from "../../components/Doctors and medications/Search";
 import Button from "../../components/Button";
 import PrescriptionCard from "../../components/Doctors and medications/PrescriptionsCard";
+import { connect } from "react-redux";
+import * as actions from "../../actions/types";
+import ReactLoading from "react-loading";
 
 class PrescriptionList extends Component {
   state = {
@@ -13,19 +16,19 @@ class PrescriptionList extends Component {
           {
             name: "Flumox syrup",
             times: 3,
-            period: "day"
+            period: "day",
           },
           {
             name: "Panadol extra pills",
             times: 1,
-            period: "day"
+            period: "day",
           },
           {
             name: "Antinal pills",
             times: 2,
-            period: "day"
-          }
-        ]
+            period: "day",
+          },
+        ],
       },
       {
         doctorName: "John Doe",
@@ -34,19 +37,19 @@ class PrescriptionList extends Component {
           {
             name: "Flumox syrup",
             times: 3,
-            period: "day"
+            period: "day",
           },
           {
             name: "Panadol extra pills",
             times: 1,
-            period: "day"
+            period: "day",
           },
           {
             name: "Antinal pills",
             times: 2,
-            period: "day"
-          }
-        ]
+            period: "day",
+          },
+        ],
       },
       {
         doctorName: "John Doe",
@@ -55,19 +58,19 @@ class PrescriptionList extends Component {
           {
             name: "Flumox syrup",
             times: 3,
-            period: "day"
+            period: "day",
           },
           {
             name: "Panadol extra pills",
             times: 1,
-            period: "day"
+            period: "day",
           },
           {
             name: "Antinal pills",
             times: 2,
-            period: "day"
-          }
-        ]
+            period: "day",
+          },
+        ],
       },
       {
         doctorName: "John Doe",
@@ -76,19 +79,19 @@ class PrescriptionList extends Component {
           {
             name: "Flumox syrup",
             times: 3,
-            period: "day"
+            period: "day",
           },
           {
             name: "Panadol extra pills",
             times: 1,
-            period: "day"
+            period: "day",
           },
           {
             name: "Antinal pills",
             times: 2,
-            period: "day"
-          }
-        ]
+            period: "day",
+          },
+        ],
       },
       {
         doctorName: "John Doe",
@@ -97,19 +100,19 @@ class PrescriptionList extends Component {
           {
             name: "Flumox syrup",
             times: 3,
-            period: "day"
+            period: "day",
           },
           {
             name: "Panadol extra pills",
             times: 1,
-            period: "day"
+            period: "day",
           },
           {
             name: "Antinal pills",
             times: 2,
-            period: "day"
-          }
-        ]
+            period: "day",
+          },
+        ],
       },
       {
         doctorName: "John Doe",
@@ -118,19 +121,19 @@ class PrescriptionList extends Component {
           {
             name: "Flumox syrup",
             times: 3,
-            period: "day"
+            period: "day",
           },
           {
             name: "Panadol extra pills",
             times: 1,
-            period: "day"
+            period: "day",
           },
           {
             name: "Antinal pills",
             times: 2,
-            period: "day"
-          }
-        ]
+            period: "day",
+          },
+        ],
       },
       {
         doctorName: "John Doe",
@@ -139,19 +142,19 @@ class PrescriptionList extends Component {
           {
             name: "Flumox syrup",
             times: 3,
-            period: "day"
+            period: "day",
           },
           {
             name: "Panadol extra pills",
             times: 1,
-            period: "day"
+            period: "day",
           },
           {
             name: "Antinal pills",
             times: 2,
-            period: "day"
-          }
-        ]
+            period: "day",
+          },
+        ],
       },
       {
         doctorName: "John Doe",
@@ -160,19 +163,19 @@ class PrescriptionList extends Component {
           {
             name: "Flumox syrup",
             times: 3,
-            period: "day"
+            period: "day",
           },
           {
             name: "Panadol extra pills",
             times: 1,
-            period: "day"
+            period: "day",
           },
           {
             name: "Antinal pills",
             times: 2,
-            period: "day"
-          }
-        ]
+            period: "day",
+          },
+        ],
       },
       {
         doctorName: "John Doe",
@@ -181,22 +184,27 @@ class PrescriptionList extends Component {
           {
             name: "Flumox syrup",
             times: 3,
-            period: "day"
+            period: "day",
           },
           {
             name: "Panadol extra pills",
             times: 1,
-            period: "day"
+            period: "day",
           },
           {
             name: "Antinal pills",
             times: 2,
-            period: "day"
-          }
-        ]
-      }
-    ]
+            period: "day",
+          },
+        ],
+      },
+    ],
   };
+
+  componentDidMount() {
+    this.props.getPrescriptions(this.props.api_token);
+  }
+
   render() {
     return (
       <div className="PrescriptionList">
@@ -223,4 +231,14 @@ class PrescriptionList extends Component {
   }
 }
 
-export default PrescriptionList;
+const mapStateToProps = (state) => ({
+  api_token: state.user.api_token,
+  prescriptions: state.doctorDashboard.prescriptions,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getPrescriptions: (api_token) =>
+    dispatch({ type: actions.SAGA_GET_DOCTOR_PRESCRIPTIONS, api_token }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PrescriptionList);

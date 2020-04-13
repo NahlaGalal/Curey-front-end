@@ -6,58 +6,8 @@ import { connect } from "react-redux";
 import {
   SAGA_SEND_PRESCRIPTION,
   SAGA_SET_RE_EXAMINAION,
+  SAGA_GET_DOCTOR_STATEMENT
 } from "../../actions/types";
-
-const patientCard = [
-  {
-    name: "Margot Maggio",
-    address: "570 Doyle Avenue West Kalebbury",
-    rate: 5,
-    date: "JAN 23, 2020",
-    time: "4:30 PM",
-    state: "Home visit",
-  },
-  {
-    name: "Margot Maggio",
-    address: "570 Doyle Avenue West Kalebbury",
-    rate: 5,
-    date: "JAN 23, 2020",
-    time: "4:30 PM",
-    state: "Booking",
-  },
-  {
-    name: "Margot Maggio",
-    address: "570 Doyle Avenue West Kalebbury",
-    rate: 5,
-    date: "JAN 23, 2020",
-    time: "4:30 PM",
-    state: "Booking",
-  },
-  {
-    name: "Margot Maggio",
-    address: "570 Doyle Avenue West Kalebbury",
-    rate: 5,
-    date: "JAN 23, 2020",
-    time: "4:30 PM",
-    state: "Booking",
-  },
-  {
-    name: "Margot Maggio",
-    address: "570 Doyle Avenue West Kalebbury",
-    rate: 5,
-    date: "JAN 23, 2020",
-    time: "4:30 PM",
-    state: "Home visit",
-  },
-  {
-    name: "Margot Maggio",
-    address: "570 Doyle Avenue West Kalebbury",
-    rate: 5,
-    date: "JAN 23, 2020",
-    time: "4:30 PM",
-    state: "Home visit",
-  },
-];
 
 class DoctorStatement extends Component {
   state = {
@@ -76,6 +26,10 @@ class DoctorStatement extends Component {
       { value: 325, month: "Dec" },
     ],
   };
+
+  componentDidMount() {
+    this.props.getDoctorDashboard(this.props.api_token);
+  }
 
   toggleMenuBox = (e, i) => {
     e.stopPropagation();
@@ -156,7 +110,7 @@ class DoctorStatement extends Component {
             </Button>
           </div>
           <div className="performedRequests__grid mt-41 mb-40">
-            {patientCard.map((card, i) => (
+            {this.props.statement.map((card, i) => (
               <PatientCard
                 key={i}
                 index={i}
@@ -165,7 +119,7 @@ class DoctorStatement extends Component {
                 rate={card.rate}
                 date={card.date}
                 time={card.time}
-                state={card.state}
+                home_visit={card.home_visit}
                 request={false}
                 toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
                 menuVisibility={this.state.menuVisiblity}
@@ -194,11 +148,14 @@ class DoctorStatement extends Component {
 
 const mapStateToProps = (state) => ({
   api_token: state.user.api_token,
+  statement: state.docorDashboard.statement
 });
 
 const mapDispatchToProps = (dispatch) => ({
   submitTime: (data) => dispatch({ type: SAGA_SET_RE_EXAMINAION, data }),
   sendPrescription: (data) => dispatch({ type: SAGA_SEND_PRESCRIPTION, data }),
+  getDoctorDashboard: (api_token) =>
+    dispatch({ type: SAGA_GET_DOCTOR_STATEMENT, api_token }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DoctorStatement);
