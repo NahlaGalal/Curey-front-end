@@ -13,6 +13,7 @@ const Input = props => {
         ref={refe}
         id={id}
         onKeyPress={props.onKeyPress ? props.onKeyPress : null}
+        onChange={props.onChange ? props.onChange : null}
       />
       <label htmlFor={id} className={value ? "active" : null}>
         {placeholder}

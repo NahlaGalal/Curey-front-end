@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import nextIcon from "../../assets/svg/next.svg";
 import prevIcon from "../../assets/svg/prev.svg";
 
-const DateTimePicker = props => {
+const DateTimePicker = (props) => {
   const monthsStr = [
     "January",
     "February",
@@ -15,7 +15,7 @@ const DateTimePicker = props => {
     "September",
     "October",
     "November",
-    "December"
+    "December",
   ];
 
   const [inputShow, setInputShow] = useState(new Array(7).fill(false));
@@ -70,7 +70,7 @@ const DateTimePicker = props => {
     } else reset();
   };
 
-  const controlTime = e => {
+  const controlTime = (e) => {
     if (
       !e.key.toString().match(/[0-9]/) ||
       e.target.value.toString().length === 5
@@ -80,9 +80,10 @@ const DateTimePicker = props => {
   };
 
   const validateTime = () => {
-    if (time.length < 5) return setError(true);
+    if (time.length < 5) return true;
     let hour = +time.slice(0, 2);
-    if (timeFormat === "PM") hour += 12;
+    if (timeFormat === "PM" && hour !== 12) hour += 12;
+    else if(timeFormat === "AM" && hour === 12) hour = 0;
     const min = +time.slice(3);
     if (
       month === new Date().getMonth() &&
@@ -93,10 +94,29 @@ const DateTimePicker = props => {
         new Date().getHours() > hour ||
         (new Date().getHours() === hour && new Date().getMinutes() > min)
       )
-        return setError(true);
+        return true;
     }
-    if (hour < 24 && hour >= 0 && min <= 59 && min >= 0) return setError(false);
-    return setError(true);
+    if (hour < 24 && hour >= 0 && min <= 59 && min >= 0) return false;
+    return true;
+  };
+
+  const submitTime = () => {
+    if (validateTime()) setError(true);
+    else {
+      setError(false);
+      let hour = +time.slice(0, 2);
+      let time24 =
+        timeFormat === "PM" && hour !== 12
+          ? hour + 12
+          : timeFormat === "AM" && hour === 12
+          ? 0
+          : hour;
+      const date = `${year}-${month + 1}-${reExDate} ${time24}:${time.slice(
+        3
+      )}:00`;
+      props.submitTime(date);
+      props.closePopup();
+    }
   };
 
   return (
@@ -165,8 +185,8 @@ const DateTimePicker = props => {
                       placeholder="Set time"
                       name="time"
                       id={`time-${i}`}
-                      onKeyPress={e => controlTime(e)}
-                      onChange={e => setTime(e.target.value)}
+                      onKeyPress={(e) => controlTime(e)}
+                      onChange={(e) => setTime(e.target.value)}
                       value={time}
                     />
                     <span>{timeFormat}</span>
@@ -198,7 +218,7 @@ const DateTimePicker = props => {
         <div className="buttons">
           <button
             className="confirm btn btn-xxs btn-green-dark"
-            onClick={validateTime}
+            onClick={submitTime}
           >
             Confirm{" "}
           </button>

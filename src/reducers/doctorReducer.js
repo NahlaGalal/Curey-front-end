@@ -1,4 +1,4 @@
-import { GET_SCHEDULE, ADD_SCHEDULE, EDIT_SCHEDULE } from "../actions/types";
+import { GET_SCHEDULE, ADD_SCHEDULE, EDIT_SCHEDULE, SET_RE_EXAMINATION, SEND_PRESCRIPTION } from "../actions/types";
 
 export const doctorData = (state = [], action) => {
   switch (action.type) {
@@ -12,6 +12,8 @@ export const doctorData = (state = [], action) => {
       };
     case ADD_SCHEDULE:
     case EDIT_SCHEDULE:
+    case SET_RE_EXAMINATION:
+    case SEND_PRESCRIPTION:
       return {
         ...state,
         errors: action.isFailed ? action.payload : [],

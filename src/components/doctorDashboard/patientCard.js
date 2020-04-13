@@ -14,7 +14,7 @@ import DoctorPrescription from "../Pop-ups/DoctorPrescription";
 class PatientCard extends Component {
   state = {
     dateTimePickerBox: false,
-    prescriptionBox: false
+    prescriptionBox: false,
   };
 
   render() {
@@ -37,7 +37,7 @@ class PatientCard extends Component {
               <img src={Location} className="icon" alt="loactionIcon" />
               {this.props.address}
             </span>
-            <Rate rate={this.props.rate} />
+            {!this.props.request && <Rate rate={this.props.rate} />}
           </div>
         </div>
         <hr />
@@ -75,11 +75,16 @@ class PatientCard extends Component {
         {this.state.dateTimePickerBox && (
           <DateTimePicker
             closePopup={() => this.setState({ dateTimePickerBox: false })}
+            submitTime={(time) => this.props.submitTime(time)}
           />
         )}
         {this.state.prescriptionBox && (
           <DoctorPrescription
             closePopup={() => this.setState({ prescriptionBox: false })}
+            sendPrescription={(medications) => {
+              this.props.sendPrescription(medications);
+              this.setState({ prescriptionBox: false });
+            }}
             errors={{}}
           />
         )}

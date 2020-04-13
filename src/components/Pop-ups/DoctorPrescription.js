@@ -3,22 +3,22 @@ import { useForm } from "react-hook-form";
 import Button from "../Button";
 import Input from "../Input";
 
-const DoctorPrescription = props => {
+const DoctorPrescription = (props) => {
   let { register, handleSubmit, errors, watch } = useForm();
   let [medication, setMedication] = useState([
     {
       name: "",
       frequency: 0,
-      period: ""
-    }
+      period: "",
+    },
   ]);
 
-  const IncreaseFrequency = i => {
+  const IncreaseFrequency = (i) => {
     let state = [...medication];
     state[i].frequency = +state[i].frequency + 1;
     setMedication(state);
   };
-  const decreaseFrequency = i => {
+  const decreaseFrequency = (i) => {
     if (medication[i].frequency >= 1) {
       let state = [...medication];
       state[i].frequency = +state[i].frequency - 1 || 1;
@@ -26,7 +26,7 @@ const DoctorPrescription = props => {
     }
   };
 
-  const togglePeriod = i => {
+  const togglePeriod = (i) => {
     let state = [...medication];
     state[i].period = state[i].period === "week" ? "day" : "week";
     setMedication(state);
@@ -37,20 +37,21 @@ const DoctorPrescription = props => {
     state.push({
       name: "",
       frequency: 0,
-      period: ""
+      period: "",
     });
     setMedication(state);
   };
 
-  const onSubmitHandler = data => {
-    console.log(data);
-    props.closePopup();
+  const changeMedicationName = (e, i) => {
+    let state = [...medication];
+    state[i].name = e.target.value;
+    setMedication(state);
   };
 
   return (
-    <section className="Popup" onClick={e => e.stopPropagation()}>
+    <section className="Popup" onClick={(e) => e.stopPropagation()}>
       <div className="Popup__box">
-        <form onSubmit={handleSubmit(data => onSubmitHandler(data))}>
+        <form onSubmit={handleSubmit(() => props.sendPrescription(medication))}>
           <h2 className="heading-2">Prescription details</h2>
           <section className="Popup__box__details prescription">
             {medication.map((med, i) => (
@@ -71,6 +72,7 @@ const DoctorPrescription = props => {
                       : props.errors.medication_name
                   }
                   refe={register({ required: true })}
+                  onChange={(e) => changeMedicationName(e, i)}
                 />
                 <div className="row">
                   <div className="fieldinput">
@@ -79,14 +81,14 @@ const DoctorPrescription = props => {
                       type="text"
                       name={`frequency-${i}`}
                       id={`frequency-${i}`}
-                      onKeyPress={e =>
+                      onKeyPress={(e) =>
                         !e.key.toString().match(/[0-9]/)
                           ? e.preventDefault()
                           : null
                       }
                       ref={register({ required: true })}
                       value={med.frequency || ""}
-                      onChange={e => {
+                      onChange={(e) => {
                         let state = [...medication];
                         state[i].frequency = +e.target.value;
                         setMedication(state);
