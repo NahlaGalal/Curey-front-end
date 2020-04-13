@@ -68,8 +68,31 @@ function* getRequests({ api_token }) {
   }
 }
 
+function* getPrescriptions({ api_token }) {
+  try {
+    const res = yield call(() =>
+      axios.get(`/api/web/doctor/prescriptions?api_token=${api_token}`)
+    );
+    if (!res.data.isFailed)
+      yield put({
+        type: actions.GET_DOCTOR_PRESCRIPTIONS,
+        payload: res.data.data,
+        isFailed: false,
+      });
+    else
+      yield put({
+        type: actions.GET_DOCTOR_PRESCRIPTIONS,
+        payload: res.data.errors,
+        isFailed: true,
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export default function* watchDoctorDashboard() {
   yield takeEvery(actions.SAGA_GET_DOCTOR_STATEMENT, getDoctorStatement);
   yield takeEvery(actions.SAGA_GET_DOCTOR_REEXAMINATION, getReExaminations);
   yield takeEvery(actions.SAGA_GET_DOCTOR_REQUESTS, getRequests);
+  yield takeEvery(actions.SAGA_GET_DOCTOR_PRESCRIPTIONS, getPrescriptions);
 }

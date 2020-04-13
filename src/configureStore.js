@@ -70,6 +70,7 @@ const defaultState = {
   doctorDashboard: {
     statement: [],
     requests: [],
+    prescriptions: [],
     errors: [],
   },
 };
