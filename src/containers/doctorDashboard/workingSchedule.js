@@ -7,6 +7,7 @@ import {
   SAGA_GET_SCHEDULE,
   SAGA_ADD_SCHEDULE,
   SAGA_EDIT_SCHEDULE,
+  SAGA_CHANGE_HOME_VISIT,
 } from "../../actions/types";
 import ReactLoading from "react-loading";
 import EditSchedule from "../../components/Pop-ups/EditSchedule";
@@ -26,6 +27,7 @@ class WorkingSchedule extends Component {
     addScheduleBox: false,
     page: 1,
     editScheduleBox: false,
+    homeVisit: false,
     day: {
       id: null,
       name: "",
@@ -38,6 +40,17 @@ class WorkingSchedule extends Component {
 
   changePage = (e) => {
     this.setState({ page: +e.target.textContent });
+  };
+
+  changeHomeVisit = (e) => {
+    e.preventDefault();
+    if (e.target.homeVisit.checked !== this.state.homeVisit) {
+      this.props.postChangeHomeVisit({
+        api_token: this.props.api_token,
+        status: this.state.homeVisit ? 1 : 0,
+      });
+      this.setState({ homeVisit: !this.state.homeVisit });
+    }
   };
 
   addSchedule = (data) => {
@@ -195,12 +208,16 @@ class WorkingSchedule extends Component {
               />
             )}
           </div>
-          <div className="homeVisit">
-            <input type="checkbox" id="homeVisit" />
+          <form className="homeVisit" onSubmit={this.changeHomeVisit}>
+            <input type="checkbox" id="homeVisit" name="homeVisit" />
             <label htmlFor="homeVisit">
               <span></span> Home visit srevice
             </label>
-          </div>
+            <button type="submit" className="btn btn-green-dark btn-lg">
+              {" "}
+              Apply{" "}
+            </button>
+          </form>
         </div>
         {this.state.addScheduleBox && (
           <AddSchedule
@@ -230,6 +247,8 @@ const mapDispatchToProps = (dispatch) => ({
   getSchedule: (api_token) => dispatch({ type: SAGA_GET_SCHEDULE, api_token }),
   postAddSchedule: (data) => dispatch({ type: SAGA_ADD_SCHEDULE, data }),
   postEditSchedule: (data) => dispatch({ type: SAGA_EDIT_SCHEDULE, data }),
+  postChangeHomeVisit: (data) =>
+    dispatch({ type: SAGA_CHANGE_HOME_VISIT, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkingSchedule);

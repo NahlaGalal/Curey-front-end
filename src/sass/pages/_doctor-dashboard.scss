@@ -85,8 +85,11 @@
     }
   }
   .homeVisit {
-    padding: 2.6rem 2.4rem;
+    padding: 2.4rem;
     background-color: $color-light-1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     input {
       display: none;

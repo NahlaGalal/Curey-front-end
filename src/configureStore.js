@@ -75,6 +75,7 @@ const defaultState = {
     requests: [],
     prescriptions: [],
     re_examinations: [],
+    is_callup: false,
     errors: [],
   },
 };

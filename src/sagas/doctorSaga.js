@@ -17,6 +17,8 @@ import {
   GET_DOCTOR_REEXAMINATION,
   SAGA_GET_DOCTOR_PRESCRIPTIONS,
   GET_DOCTOR_PRESCRIPTIONS,
+  CHANGE_HOME_VISIT,
+  SAGA_CHANGE_HOME_VISIT,
 } from "../actions/types";
 import axios from "axios";
 import { put, takeEvery, call } from "redux-saga/effects";
@@ -213,6 +215,25 @@ function* getPrescriptions({ api_token }) {
   }
 }
 
+function* postHomeVisit({ data }) {
+  try {
+    const res = yield call(() => axios.post("/api/web/homevisit_status", data));
+    if (!res.data.isFailed)
+      yield put({
+        type: CHANGE_HOME_VISIT,
+        isFailed: false,
+      });
+    else
+      yield put({
+        type: CHANGE_HOME_VISIT,
+        payload: res.data.errors,
+        isFailed: true,
+      });
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export default function* watchDoctorDashboard() {
   yield takeEvery(SAGA_GET_SCHEDULE, getSchedule);
   yield takeEvery(SAGA_ADD_SCHEDULE, postAddSchedule);
@@ -223,4 +244,5 @@ export default function* watchDoctorDashboard() {
   yield takeEvery(SAGA_GET_DOCTOR_REEXAMINATION, getReExaminations);
   yield takeEvery(SAGA_GET_DOCTOR_REQUESTS, getRequests);
   yield takeEvery(SAGA_GET_DOCTOR_PRESCRIPTIONS, getPrescriptions);
+  yield takeEvery(SAGA_CHANGE_HOME_VISIT, postHomeVisit);
 }

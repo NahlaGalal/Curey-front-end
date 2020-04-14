@@ -8,6 +8,7 @@ import {
   GET_DOCTOR_REEXAMINATION,
   GET_DOCTOR_REQUESTS,
   GET_DOCTOR_STATEMENT,
+  CHANGE_HOME_VISIT,
 } from "../actions/types";
 
 export const doctorData = (state = [], action) => {
@@ -132,6 +133,12 @@ export const doctorData = (state = [], action) => {
           : [],
         errors: action.isFailed ? action.payload : [],
       };
+    case CHANGE_HOME_VISIT:
+      return {
+        ...state,
+        is_callup: !action.isFailed ? true : false,
+        errors: action.isFailed ? action.payload : []
+      }
     default:
       return state;
   }
