@@ -2,14 +2,13 @@ import React from "react";
 import LocationIcon from "../../assets/svg/location.svg";
 import ClockIcon from "../../assets/svg/clock.svg";
 
-const PrescriptionCard = props => (
+const DoctoPrescriptionCard = (props) => (
   <div className="PrescriptionCard">
     <div className="PrescriptionCard__head">
-      <img src={props.image} alt="doctor" className="doctorBox__img" />
+      <img src={props.image} alt="doctor" className="doctorBox__img doctor-prescription-img"/>
       <div className="doctorInfo">
         <h3 className="doctorCard__name">{props.name}</h3>
-        <p>{props.speciality}</p>
-        <p className="doctorInfo__address">
+        <p className="doctorInfo__address" style={{marginBottom: 0}}>
           <img src={LocationIcon} alt="location icon" className="icon" />
           {props.address}
         </p>
@@ -25,18 +24,18 @@ const PrescriptionCard = props => (
         key={index}
         medicineName={el.name}
         image={el.image}
-        times={el.times}
-        period={el.period}
+        times={el.dosage}
+        period={el.period || "day"}
       />
     ))}
   </div>
 );
 
-export default PrescriptionCard;
+export default DoctoPrescriptionCard;
 
 /*************************  */
 
-const PrescriptionItem = props => (
+const PrescriptionItem = (props) => (
   <div className="PrescriptionItem">
     <img src={props.image} alt="Medicine" />
     <div className="PrescriptionItem__info">

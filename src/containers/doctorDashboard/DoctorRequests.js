@@ -70,116 +70,123 @@ class DoctorRequests extends Component {
           ))}
           <span className="signup__container__forms__toggler__pointer"></span>
         </div>
-        <div className="re-examination__grid">
-          {this.state.pageNum === 0 && this.props.requests.length ? (
-            this.props.requests.map((card, i) => (
-              <PatientCard
-                key={card.id}
-                index={card.id}
-                name={card.patient}
-                address={card.address}
-                rate={4}
-                date={card.date}
-                time={card.timestamp}
-                home_visit={card.home_visit}
-                type="examination"
-                request={true}
-                toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
-                menuVisibility={this.state.menuVisiblity}
-                stopPropagation={(e) => e.stopPropagation()}
-                sendPrescription={(medications) =>
-                  this.props.sendPrescription({
-                    api_token: this.props.api_token,
-                    // appointment_id: med.id,
-                    appointment_id: 381,
-                    items: medications.map((med) => ({
-                      // product_id: med.name,
-                      product_id: 5,
-                      dosage: med.frequency,
-                      per: med.per,
-                    })),
-                  })
-                }
-                submitTime={(time) => this.submitTime(time)}
-              />
-            ))
-          ) : this.state.pageNum === 1 && this.props.requests.length ? (
-            this.props.requests
-              .filter((card) => card.home_visit === 0)
-              .map((card, i) => (
-                <PatientCard
-                  key={card.id}
-                  index={card.id}
-                  name={card.patient}
-                  address={card.address}
-                  rate={4}
-                  date={card.date}
-                  time={card.timestamp}
-                  home_visit={card.home_visit}
-                  type="examination"
-                  request={true}
-                  toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
-                  menuVisibility={this.state.menuVisiblity}
-                  stopPropagation={(e) => e.stopPropagation()}
-                  sendPrescription={(medications) =>
-                    this.props.sendPrescription({
-                      api_token: this.props.api_token,
-                      // appointment_id: med.id,
-                      appointment_id: 381,
-                      items: medications.map((med) => ({
-                        // product_id: med.name,
-                        product_id: 5,
-                        dosage: med.frequency,
-                        per: med.per,
-                      })),
-                    })
-                  }
-                  submitTime={(time) => this.submitTime(time)}
-                />
-              ))
-          ) : this.props.requests.length ? (
-            this.props.requests
-              .filter((card) => card.home_visit === 1)
-              .map((card, i) => (
-                <PatientCard
-                  key={card.id}
-                  index={card.id}
-                  name={card.patient}
-                  address={card.address}
-                  rate={4}
-                  date={card.date}
-                  time={card.timestamp}
-                  home_visit={card.home_visit}
-                  type="examination"
-                  request={true}
-                  toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
-                  menuVisibility={this.state.menuVisiblity}
-                  stopPropagation={(e) => e.stopPropagation()}
-                  sendPrescription={(medications) =>
-                    this.props.sendPrescription({
-                      api_token: this.props.api_token,
-                      // appointment_id: med.id,
-                      appointment_id: 381,
-                      items: medications.map((med) => ({
-                        // product_id: med.name,
-                        product_id: 5,
-                        dosage: med.frequency,
-                        per: med.per,
-                      })),
-                    })
-                  }
-                  submitTime={(time) => this.submitTime(time)}
-                />
-              ))
-          ) : (
-            <ReactLoading
-              type="spokes"
-              color="#0066ff"
-              className="loading center mb-40"
-            />
-          )}
-        </div>
-        <Button className="btn btn-blue btn-lg see-more">See more</Button>
+        {this.props.requests.length ? (
+          <div className="re-examination__grid">
+            {this.state.pageNum === 0
+              ? this.props.requests.map((card, i) => (
+                  <PatientCard
+                    key={card.id}
+                    index={card.id}
+                    name={card.patient}
+                    address={card.address}
+                    rate={4}
+                    date={card.date}
+                    time={card.timestamp}
+                    image={card.image}
+                    home_visit={card.home_visit}
+                    type="examination"
+                    request={true}
+                    toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
+                    menuVisibility={this.state.menuVisiblity}
+                    stopPropagation={(e) => e.stopPropagation()}
+                    sendPrescription={(medications) =>
+                      this.props.sendPrescription({
+                        api_token: this.props.api_token,
+                        appointment_id: card.id,
+                        items: medications.map((med) => ({
+                          // product_id: med.name,
+                          product_id: 5,
+                          dosage: med.frequency,
+                          per: med.per,
+                        })),
+                      })
+                    }
+                    submitTime={(time) => this.submitTime(time)}
+                  />
+                ))
+              : this.state.pageNum === 1
+              ? this.props.requests
+                  .filter((card) => !card.home_visit)
+                  .map((card, i) => (
+                    <PatientCard
+                      key={card.id}
+                      index={card.id}
+                      name={card.patient}
+                      address={card.address}
+                      rate={4}
+                      date={card.date}
+                      time={card.timestamp}
+                      image={card.image}
+                      home_visit={card.home_visit}
+                      type="examination"
+                      request={true}
+                      toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
+                      menuVisibility={this.state.menuVisiblity}
+                      stopPropagation={(e) => e.stopPropagation()}
+                      sendPrescription={(medications) =>
+                        this.props.sendPrescription({
+                          api_token: this.props.api_token,
+                          appointment_id: card.id,
+                          items: medications.map((med) => ({
+                            // product_id: med.name,
+                            product_id: 5,
+                            dosage: med.frequency,
+                            per: med.per,
+                          })),
+                        })
+                      }
+                      submitTime={(time) => this.submitTime(time)}
+                    />
+                  ))
+              : this.props.requests
+                  .filter((card) => card.home_visit)
+                  .map((card, i) => (
+                    <PatientCard
+                      key={card.id}
+                      index={card.id}
+                      name={card.patient}
+                      address={card.address}
+                      rate={4}
+                      date={card.date}
+                      time={card.timestamp}
+                      image={card.image}
+                      home_visit={card.home_visit}
+                      type="examination"
+                      request={true}
+                      toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
+                      menuVisibility={this.state.menuVisiblity}
+                      stopPropagation={(e) => e.stopPropagation()}
+                      sendPrescription={(medications) =>
+                        this.props.sendPrescription({
+                          api_token: this.props.api_token,
+                          appointment_id: card.id,
+                          items: medications.map((med) => ({
+                            // product_id: med.name,
+                            product_id: 5,
+                            dosage: med.frequency,
+                            per: med.per,
+                          })),
+                        })
+                      }
+                      submitTime={(time) => this.submitTime(time)}
+                    />
+                  ))}
+          </div>
+        ) : !this.props.error ? (
+          <ReactLoading
+            type="spokes"
+            color="#0066ff"
+            className="loading center mb-40"
+          />
+        ) : (
+          <p className="re-examination__error">
+            {" "}
+            You don't have any re-examination appointmnents
+          </p>
+        )}
+        {this.props.requests.length > 12 ? (
+          <Button className="btn btn-lg btn-blue center">See more</Button>
+        ) : null}
       </div>
     );
   }
@@ -187,7 +194,8 @@ class DoctorRequests extends Component {
 
 const mapStateToProps = (state) => ({
   api_token: state.user.api_token,
-  requests: state.doctorDashboard.requests,
+  requests: state.doctorData.requests,
+  error: state.doctorData.errors.error
 });
 
 const mapDispatchToProps = (dispatch) => ({

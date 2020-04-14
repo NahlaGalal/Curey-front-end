@@ -206,13 +206,16 @@
         0 0 0 7.93px #fff, 0 0 0 8.93px rgba(7, 163, 164, 0.1);
       margin-right: 2.5rem;
       margin-top: 8.93px;
+      &.doctor-prescription-img {
+        width: 3.6rem;
+        height: 3.6rem;
+      }
     }
     .doctorInfo {
       p:first-of-type {
         margin: 0.4rem 0;
       }
       p {
-        display: flex;
         color: rgba($color-dark, $very-high-opacity);
         .icon {
           margin-right: 0.4rem;
@@ -220,6 +223,9 @@
         span:first-of-type {
           margin-right: 0.8rem;
         }
+      }
+      &__address {
+        @include controlLines(1);
       }
     }
   }
@@ -252,6 +258,8 @@
       width: 4.2rem;
       height: 4.2rem;
       object-fit: cover;
+      border-radius: 50%;
+      box-shadow: $shadow;
     }
     &:last-of-type {
       margin-bottom: 0;

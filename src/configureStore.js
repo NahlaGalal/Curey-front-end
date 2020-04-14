@@ -67,16 +67,14 @@ const defaultState = {
     packing: [],
     errors: [],
     dashboard: [],
-    requests: []
+    requests: [],
   },
   doctorData: {
     schedule: [],
-    errors: []
-  },
-  doctorDashboard: {
     statement: [],
     requests: [],
     prescriptions: [],
+    re_examinations: [],
     errors: [],
   },
 };
@@ -88,7 +86,7 @@ export const loadState = () =>
         api_token: "",
         full_name: "",
         image: null,
-        email: ""
+        email: "",
       };
 
 export const saveState = (state) =>
@@ -98,7 +96,7 @@ export const saveState = (state) =>
       api_token: state.user.api_token,
       full_name: state.user.full_name,
       image: state.user.image,
-      email: state.user.email
+      email: state.user.email,
     })
   );
 
@@ -112,8 +110,8 @@ const initialState = () => {
       api_token: loadState().api_token,
       full_name: loadState().full_name,
       image: loadState().image,
-      email: loadState().email
-    }
+      email: loadState().email,
+    },
   };
 };
 

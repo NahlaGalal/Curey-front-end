@@ -134,12 +134,13 @@ function* postSetReExamination({ data }) {
     if (!res.data.isFailed)
       yield put({
         type: SET_RE_EXAMINATION,
+        isFailed: false
       });
     else
       yield put({
         type: SET_RE_EXAMINATION,
         payload: res.data.errors,
-        isFailed: false,
+        isFailed: true,
       });
   } catch (err) {
     console.log(err);

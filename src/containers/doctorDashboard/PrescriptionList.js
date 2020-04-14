@@ -1,206 +1,12 @@
 import React, { Component } from "react";
 import Search from "../../components/Doctors and medications/Search";
 import Button from "../../components/Button";
-import PrescriptionCard from "../../components/Doctors and medications/PrescriptionsCard";
 import { connect } from "react-redux";
 import * as actions from "../../actions/types";
 import ReactLoading from "react-loading";
+import DoctoPrescriptionCard from "../../components/doctorDashboard/DoctorPrescriptionCard";
 
 class PrescriptionList extends Component {
-  state = {
-    prescriptions: [
-      {
-        doctorName: "John Doe",
-        address: "Mansoura City, Gehan St",
-        medicines: [
-          {
-            name: "Flumox syrup",
-            times: 3,
-            period: "day",
-          },
-          {
-            name: "Panadol extra pills",
-            times: 1,
-            period: "day",
-          },
-          {
-            name: "Antinal pills",
-            times: 2,
-            period: "day",
-          },
-        ],
-      },
-      {
-        doctorName: "John Doe",
-        address: "Mansoura City, Gehan St",
-        medicines: [
-          {
-            name: "Flumox syrup",
-            times: 3,
-            period: "day",
-          },
-          {
-            name: "Panadol extra pills",
-            times: 1,
-            period: "day",
-          },
-          {
-            name: "Antinal pills",
-            times: 2,
-            period: "day",
-          },
-        ],
-      },
-      {
-        doctorName: "John Doe",
-        address: "Mansoura City, Gehan St",
-        medicines: [
-          {
-            name: "Flumox syrup",
-            times: 3,
-            period: "day",
-          },
-          {
-            name: "Panadol extra pills",
-            times: 1,
-            period: "day",
-          },
-          {
-            name: "Antinal pills",
-            times: 2,
-            period: "day",
-          },
-        ],
-      },
-      {
-        doctorName: "John Doe",
-        address: "Mansoura City, Gehan St",
-        medicines: [
-          {
-            name: "Flumox syrup",
-            times: 3,
-            period: "day",
-          },
-          {
-            name: "Panadol extra pills",
-            times: 1,
-            period: "day",
-          },
-          {
-            name: "Antinal pills",
-            times: 2,
-            period: "day",
-          },
-        ],
-      },
-      {
-        doctorName: "John Doe",
-        address: "Mansoura City, Gehan St",
-        medicines: [
-          {
-            name: "Flumox syrup",
-            times: 3,
-            period: "day",
-          },
-          {
-            name: "Panadol extra pills",
-            times: 1,
-            period: "day",
-          },
-          {
-            name: "Antinal pills",
-            times: 2,
-            period: "day",
-          },
-        ],
-      },
-      {
-        doctorName: "John Doe",
-        address: "Mansoura City, Gehan St",
-        medicines: [
-          {
-            name: "Flumox syrup",
-            times: 3,
-            period: "day",
-          },
-          {
-            name: "Panadol extra pills",
-            times: 1,
-            period: "day",
-          },
-          {
-            name: "Antinal pills",
-            times: 2,
-            period: "day",
-          },
-        ],
-      },
-      {
-        doctorName: "John Doe",
-        address: "Mansoura City, Gehan St",
-        medicines: [
-          {
-            name: "Flumox syrup",
-            times: 3,
-            period: "day",
-          },
-          {
-            name: "Panadol extra pills",
-            times: 1,
-            period: "day",
-          },
-          {
-            name: "Antinal pills",
-            times: 2,
-            period: "day",
-          },
-        ],
-      },
-      {
-        doctorName: "John Doe",
-        address: "Mansoura City, Gehan St",
-        medicines: [
-          {
-            name: "Flumox syrup",
-            times: 3,
-            period: "day",
-          },
-          {
-            name: "Panadol extra pills",
-            times: 1,
-            period: "day",
-          },
-          {
-            name: "Antinal pills",
-            times: 2,
-            period: "day",
-          },
-        ],
-      },
-      {
-        doctorName: "John Doe",
-        address: "Mansoura City, Gehan St",
-        medicines: [
-          {
-            name: "Flumox syrup",
-            times: 3,
-            period: "day",
-          },
-          {
-            name: "Panadol extra pills",
-            times: 1,
-            period: "day",
-          },
-          {
-            name: "Antinal pills",
-            times: 2,
-            period: "day",
-          },
-        ],
-      },
-    ],
-  };
-
   componentDidMount() {
     this.props.getPrescriptions(this.props.api_token);
   }
@@ -214,18 +20,32 @@ class PrescriptionList extends Component {
           withFilter
         />
 
-        <div className="PrescriptionList__grid">
-          {this.state.prescriptions.map((el, index) => (
-            <PrescriptionCard
-              key={index}
-              name={el.doctorName}
-              speciality={el.speciality}
-              address={el.address}
-              medications={el.medicines}
-            />
-          ))}
-        </div>
-        <Button className="btn btn-blue btn-lg center">See more</Button>
+        {this.props.prescriptions.length ? (
+          <div className="PrescriptionList__grid">
+            {this.props.prescriptions.map((el, index) => (
+              <DoctoPrescriptionCard
+                key={index}
+                name={el.patient}
+                image={el.image}
+                address={el.address}
+                medications={el.details}
+              />
+            ))}
+          </div>
+        ) : !this.props.error ? (
+          <ReactLoading
+            type="spokes"
+            color="#0066ff"
+            className="loading center mb-40"
+          />
+        ) : (
+          <p className="PrescriptionList__error">
+            You don't have any re-examination appointmnents
+          </p>
+        )}
+        {this.props.prescriptions.length > 12 ? (
+          <Button className="btn btn-lg btn-blue center">See more</Button>
+        ) : null}
       </div>
     );
   }
@@ -233,7 +53,8 @@ class PrescriptionList extends Component {
 
 const mapStateToProps = (state) => ({
   api_token: state.user.api_token,
-  prescriptions: state.doctorDashboard.prescriptions,
+  prescriptions: state.doctorData.prescriptions,
+  error: state.doctorData.errors.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({

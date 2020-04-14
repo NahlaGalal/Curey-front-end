@@ -7,7 +7,6 @@ import { medicationsData } from "./getMedicationsReducer";
 import { appointments } from "./appointmentsReducer";
 import { pharmacyData } from "./pharmacyReducer";
 import { doctorData } from "./doctorReducer";
-import { doctorDashboard } from "./doctorDashboard";
 
 export default combineReducers({
   prescription,
@@ -18,5 +17,4 @@ export default combineReducers({
   appointments,
   pharmacyData,
   doctorData,
-  doctorDashboard,
 });

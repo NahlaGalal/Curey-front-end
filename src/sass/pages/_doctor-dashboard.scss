@@ -3,6 +3,11 @@
   margin: 0 auto;
   padding: 6.4rem 0;
 
+  &__error {
+    color: $warning-color;
+    text-align: center;
+    font-size: 1.6rem;
+  }
   .signup__container__forms__toggler.active-0 {
     > span {
       left: -1px;
@@ -144,6 +149,74 @@
 
 .doctorStatement {
   @extend .pharmacyStatment;
+
+  &__error {
+    color: $warning-color;
+    text-align: center;
+    font-size: 1.6rem;
+  }
+  .signup__container__forms__toggler.four-parts {
+    span {
+      left: -1px;
+      width: calc(100% / 4);
+    }
+    &.active-0 {
+      > button {
+        color: $color-dark;
+        &:hover {
+          color: $color-white;
+        }
+        &:nth-of-type(1) {
+          color: $color-white;
+        }
+      }
+      > span {
+        left: -1px;
+      }
+    }
+    &.active-1 {
+      > button {
+        color: $color-dark;
+        &:hover {
+          color: $color-white;
+        }
+        &:nth-of-type(2) {
+          color: $color-white;
+        }
+      }
+      > span {
+        left: calc(100% / 4);
+      }
+    }
+    &.active-2 {
+      > button {
+        color: $color-dark;
+        &:hover {
+          color: $color-white;
+        }
+        &:nth-of-type(3) {
+          color: $color-white;
+        }
+      }
+      > span {
+        left: calc(100% / 2);
+      }
+    }
+    &.active-3 {
+      > button {
+        color: $color-dark;
+        &:hover {
+          color: $color-white;
+        }
+        &:nth-of-type(4) {
+          color: $color-white;
+        }
+      }
+      > span {
+        left: calc(100% - calc(100% / 4) + 1px);
+      }
+    }
+  }
 
   .PatientCard__info__text {
     width: 100%;

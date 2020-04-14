@@ -6,13 +6,15 @@ import { connect } from "react-redux";
 import {
   SAGA_SEND_PRESCRIPTION,
   SAGA_SET_RE_EXAMINAION,
-  SAGA_GET_DOCTOR_STATEMENT
+  SAGA_GET_DOCTOR_STATEMENT,
 } from "../../actions/types";
+import ReactLoading from "react-loading";
 
 class DoctorStatement extends Component {
   state = {
     filter: "All",
     menuVisiblity: -1,
+    pageNum: 0,
     data: [
       { value: 370, month: "Jan" },
       { value: 70, month: "Feb" },
@@ -47,7 +49,17 @@ class DoctorStatement extends Component {
     });
   };
 
+  togglePageNumber = (pageNo) => {
+    if (this.state.pageNum !== pageNo) {
+      this.setState({
+        pageNum: pageNo,
+      });
+    }
+  };
+
   render() {
+    const currentPage = ["All", "Bookings", "Home visits", "Re-examinations"];
+
     return (
       <div
         className="doctorStatement"
@@ -73,73 +85,168 @@ class DoctorStatement extends Component {
 
         <div className="performedRequests mb-40">
           <h2 className="heading-2 mb-32">Performed requests</h2>
-          <div className="toggler">
-            <Button
-              className={`btn ${this.state.filter === "All" ? "active" : ""}`}
-              //   onClick={() => this.filterBookings("All")}
-            >
-              {" "}
-              All{" "}
-            </Button>
-            <Button
-              className={`btn ${
-                this.state.filter === "Booking" ? "active" : ""
-              }`}
-              //   onClick={() => this.filterBookings("Booking")}
-            >
-              {" "}
-              Bookings{" "}
-            </Button>
-            <Button
-              className={`btn ${
-                this.state.filter === "Home visit" ? "active" : ""
-              }`}
-              //   onClick={() => this.filterBookings("Home visit")}
-            >
-              {" "}
-              Home visits{" "}
-            </Button>
-            <Button
-              className={`btn ${
-                this.state.filter === "Re-examination" ? "active" : ""
-              }`}
-              //   onClick={() => this.filterBookings("Re-examination")}
-            >
-              {" "}
-              Re-examinations{" "}
-            </Button>
-          </div>
-          <div className="performedRequests__grid mt-41 mb-40">
-            {this.props.statement.map((card, i) => (
-              <PatientCard
+          <div
+            className={
+              "mb-40 signup__container__forms__toggler four-parts toggler active-" +
+              this.state.pageNum
+            }
+          >
+            {currentPage.map((type, i) => (
+              <Button
                 key={i}
-                index={i}
-                name={card.name}
-                address={card.address}
-                rate={card.rate}
-                date={card.date}
-                time={card.time}
-                home_visit={card.home_visit}
-                request={false}
-                toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
-                menuVisibility={this.state.menuVisiblity}
-                stopPropagation={(e) => e.stopPropagation()}
-                sendPrescription={(medications) =>
-                  this.props.sendPrescription({
-                    api_token: this.props.api_token,
-                    appointment_id: card.id,
-                    items: medications.map((med) => ({
-                      product_id: med.name,
-                      dosage: med.frequency,
-                      per: med.per,
-                    })),
-                  })
-                }
-                submitTime={(time) => this.submitTime(time)}
-              />
+                className="btn"
+                onClick={() => {
+                  this.togglePageNumber(i);
+                }}
+              >
+                {type}
+              </Button>
             ))}
+            <span className="signup__container__forms__toggler__pointer"></span>
           </div>
-          <Button className="btn btn-lg btn-blue center">See more</Button>
+          {this.props.statement.length ? (
+            <div className="performedRequests__grid mt-41 mb-40">
+              {this.state.pageNum === 0
+                ? this.props.statement.map((card, i) => (
+                    <PatientCard
+                      key={i}
+                      index={i}
+                      name={card.patient}
+                      address={card.address}
+                      image={card.image}
+                      rate={card.rate}
+                      date={card.date}
+                      time={card.time}
+                      home_visit={card.home_visit}
+                      request={false}
+                      toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
+                      menuVisibility={this.state.menuVisiblity}
+                      stopPropagation={(e) => e.stopPropagation()}
+                      sendPrescription={(medications) =>
+                        this.props.sendPrescription({
+                          api_token: this.props.api_token,
+                          appointment_id: card.id,
+                          items: medications.map((med) => ({
+                            product_id: med.name,
+                            dosage: med.frequency,
+                            per: med.per,
+                          })),
+                        })
+                      }
+                      submitTime={(time) => this.submitTime(time)}
+                    />
+                  ))
+                : this.state.pageNum === 1
+                ? this.props.statement
+                    .filter((card) => !card.home_visit)
+                    .map((card, i) => (
+                      <PatientCard
+                        key={i}
+                        index={i}
+                        name={card.patient}
+                        address={card.address}
+                        image={card.image}
+                        rate={card.rate}
+                        date={card.date}
+                        time={card.time}
+                        home_visit={card.home_visit}
+                        request={false}
+                        toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
+                        menuVisibility={this.state.menuVisiblity}
+                        stopPropagation={(e) => e.stopPropagation()}
+                        sendPrescription={(medications) =>
+                          this.props.sendPrescription({
+                            api_token: this.props.api_token,
+                            appointment_id: card.id,
+                            items: medications.map((med) => ({
+                              product_id: med.name,
+                              dosage: med.frequency,
+                              per: med.per,
+                            })),
+                          })
+                        }
+                        submitTime={(time) => this.submitTime(time)}
+                      />
+                    ))
+                : this.state.pageNum === 2
+                ? this.props.statement
+                    .filter((card) => card.home_visit)
+                    .map((card, i) => (
+                      <PatientCard
+                        key={i}
+                        index={i}
+                        name={card.patient}
+                        address={card.address}
+                        image={card.image}
+                        rate={card.rate}
+                        date={card.date}
+                        time={card.time}
+                        home_visit={card.home_visit}
+                        request={false}
+                        toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
+                        menuVisibility={this.state.menuVisiblity}
+                        stopPropagation={(e) => e.stopPropagation()}
+                        sendPrescription={(medications) =>
+                          this.props.sendPrescription({
+                            api_token: this.props.api_token,
+                            appointment_id: card.id,
+                            items: medications.map((med) => ({
+                              product_id: med.name,
+                              dosage: med.frequency,
+                              per: med.per,
+                            })),
+                          })
+                        }
+                        submitTime={(time) => this.submitTime(time)}
+                      />
+                    ))
+                : this.props.statement
+                    .filter((card) => card.re_examination && !card.home_visit)
+                    .map((card, i) => (
+                      <PatientCard
+                        key={i}
+                        index={i}
+                        name={card.patient}
+                        address={card.address}
+                        image={card.image}
+                        rate={card.rate}
+                        date={card.date}
+                        time={card.time}
+                        home_visit={card.home_visit}
+                        request={false}
+                        toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
+                        menuVisibility={this.state.menuVisiblity}
+                        stopPropagation={(e) => e.stopPropagation()}
+                        sendPrescription={(medications) =>
+                          this.props.sendPrescription({
+                            api_token: this.props.api_token,
+                            appointment_id: card.id,
+                            items: medications.map((med) => ({
+                              product_id: med.name,
+                              dosage: med.frequency,
+                              per: med.per,
+                            })),
+                          })
+                        }
+                        submitTime={(time) => this.submitTime(time)}
+                      />
+                    ))}
+            </div>
+          ) : !this.props.error ? (
+            <ReactLoading
+              type="spokes"
+              color="#0066ff"
+              className="loading center mb-40"
+            />
+          ) : (
+            <p className="doctorStatement__error">
+              {" "}
+              You don't have any re-examination appointmnents
+            </p>
+          )}
+          {this.props.statement.length > 12 ? (
+            <Button className="btn btn-lg btn-blue center">See more</Button>
+          ) : null}
         </div>
       </div>
     );
@@ -148,7 +255,8 @@ class DoctorStatement extends Component {
 
 const mapStateToProps = (state) => ({
   api_token: state.user.api_token,
-  statement: state.docorDashboard.statement
+  statement: state.doctorData.statement,
+  error: state.doctorData.errors.error
 });
 
 const mapDispatchToProps = (dispatch) => ({
