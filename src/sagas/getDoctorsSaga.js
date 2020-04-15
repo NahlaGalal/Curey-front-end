@@ -1,5 +1,5 @@
 import { put, takeEvery, call } from "redux-saga/effects";
-import axios from "axios";
+import axios from "../util/axiosInstance";
 import {
   SAGA_GET_DOCTORS,
   GET_DOCTORS,

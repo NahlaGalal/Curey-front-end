@@ -12,7 +12,7 @@ import {
   SAGA_ACCEPT_REQUEST,
 } from "../actions/types";
 import { takeEvery, put, call } from "redux-saga/effects";
-import axios from "axios";
+import axios from "../util/axiosInstance";
 
 function* getMedicationsList({ api_token }) {
   try {

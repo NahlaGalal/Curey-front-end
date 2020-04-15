@@ -20,7 +20,7 @@ import {
   CHANGE_HOME_VISIT,
   SAGA_CHANGE_HOME_VISIT,
 } from "../actions/types";
-import axios from "axios";
+import axios from "../util/axiosInstance";
 import { put, takeEvery, call } from "redux-saga/effects";
 
 function* getSchedule({ api_token }) {
