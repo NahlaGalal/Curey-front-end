@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 import Button from "../Button";
 import { deleteState } from "../../configureStore";
 import AccountSettings from "./AccountSettings";
-import PersonalSettings from "./PersonalSettings";
 
 class UserThumbnail extends Component {
-  state = { accountSettingsBox: false, personalSettingsBox: false };
+  state = { accountSettingsBox: false };
 
   logout = () => {
     deleteState();
@@ -32,12 +31,6 @@ class UserThumbnail extends Component {
             <Button onClick={() => this.setState({ accountSettingsBox: true })}>
               Account
             </Button>
-            <Button
-              to="/"
-              onClick={() => this.setState({ personalSettingsBox: true })}
-            >
-              Personal
-            </Button>
             <Button>
               <Link to="/payment-method" onClick={this.props.hideLists}>
                 Online payment method
@@ -60,12 +53,6 @@ class UserThumbnail extends Component {
               email: this.props.userEmail,
               image: this.props.userImg,
             }}
-          />
-        )}
-        {this.state.personalSettingsBox && (
-          <PersonalSettings
-            closePopup={() => this.setState({ personalSettingsBox: false })}
-            name={this.props.userName}
           />
         )}
       </React.Fragment>
