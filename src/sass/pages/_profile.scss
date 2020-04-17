@@ -311,6 +311,11 @@ $border: #07a3a4;
                     }
                 }
             }
+            &__error {
+                font-size: 1.6rem;
+                color: $warning-color;
+                text-align: center;
+            }
         }
     }
 }
