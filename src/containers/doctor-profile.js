@@ -121,23 +121,27 @@ class DoctorProfile extends Component {
         <section className="profile__reviews">
           <h2>Reviews</h2>
           <div className="profile__reviews__container">
-            {doctor.reviews.map((review, i) => {
-              return (
-                <div className="review" key={i}>
-                  <div className="review__image">
-                    <img src={review.image} alt="user-profile" />
-                    <div>
-                      <p>{review.full_name}</p>
-                      <span>{review.time}</span>
+            {doctor.reviews.length ? 
+              doctor.reviews.map((review, i) => {
+                return (
+                  <div className="review" key={i}>
+                    <div className="review__image">
+                      <img src={review.image} alt="user-profile" />
+                      <div>
+                        <p>{review.full_name}</p>
+                        <span>{review.time}</span>
+                      </div>
+                    </div>
+                    <div className="review__rate">
+                      <Rate rate={review.rating} />
+                      <p>{review.review}</p>
                     </div>
                   </div>
-                  <div className="review__rate">
-                    <Rate rate={review.rating} />
-                    <p>{review.review}</p>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              }) : (
+                <p className="profile__reviews__container__error"> No reviews yet </p>
+              )
+            }
           </div>
         </section>
       </section>

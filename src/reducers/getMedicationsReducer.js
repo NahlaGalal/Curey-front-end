@@ -1,5 +1,7 @@
 import * as actions from "../actions/types";
 
+let products, index;
+
 export function medicationsData(state = {}, action) {
   switch (action.type) {
     case actions.RECIEVE_MEDICATIONS:
@@ -23,13 +25,20 @@ export function medicationsData(state = {}, action) {
       return {
         ...state,
         medicationsSearch: !action.isFailed
-          ? [
-              ...state.medicationsSearch,
-              ...action.payload.products.map((product) => ({
-                ...product,
-                image: `https://curey-backend.herokuapp.com/${product.image}`,
-              })),
-            ]
+          ? action.skip
+            ? [
+                ...state.medicationsSearch,
+                ...action.payload.products.map((product) => ({
+                  ...product,
+                  image: `https://curey-backend.herokuapp.com/${product.image}`,
+                })),
+              ]
+            : [
+                ...action.payload.products.map((product) => ({
+                  ...product,
+                  image: `https://curey-backend.herokuapp.com/${product.image}`,
+                })),
+              ]
           : [],
         medicationsDone:
           !action.isFailed && action.payload.products.length < 8 ? true : false,
@@ -72,7 +81,7 @@ export function medicationsData(state = {}, action) {
         ...state,
         medicationsSaved: !action.isFailed
           ? [
-              ...action.payload[0].map((medication) => ({
+              ...action.payload.map((medication) => ({
                 ...medication,
                 image: `https://curey-backend.herokuapp.com/${medication.image}`,
               })),
@@ -80,7 +89,52 @@ export function medicationsData(state = {}, action) {
           : [],
         errors: action.isFailed ? action.payload : [],
       };
+    case actions.RELOAD_MEDICATIONS:
+      products = [...state.products];
+      if (!action.isFailed) {
+        index = products.findIndex(
+          (product) => product.id === action.product_id
+        );
+      }
 
+      return {
+        ...state,
+        products:
+          !action.isFailed
+            ? Object.assign([], products, {
+                [index]: {
+                  ...products[index],
+                  is_favourite: !products[index].is_favourite,
+                },
+              })
+            : [...state.products],
+        keywords: !action.isFailed ? state.keywords : [],
+        medicationsDone: !action.isFailed && products.length < 8 ? true : false,
+        errors: action.isFailed ? action.payload : [],
+      };
+    case actions.RELOAD_SEARCH_MEDICATIONS:
+      products = [...state.medicationsSearch];
+      if (!action.isFailed) {
+        index = products.findIndex(
+          (product) => product.id === action.product_id
+        );
+      }
+
+      return {
+        ...state,
+        medicationsSearch:
+          !action.isFailed
+            ? Object.assign([], products, {
+                [index]: {
+                  ...products[index],
+                  is_favourite: !products[index].is_favourite,
+                },
+              })
+            : [...state.medicationsSearch],
+        keywords: !action.isFailed ? state.keywords : [],
+        medicationsDone: !action.isFailed && state.medicationsSearch.length < 8 ? true : false,
+        errors: action.isFailed ? action.payload : [],
+      };
     case actions.SUBMIT_MEDICATION_ORDER_FAILED:
       return {
         ...state,
@@ -99,7 +153,6 @@ export function medicationsData(state = {}, action) {
           : [],
         errors: action.isFailed ? [action.payload] : [],
       };
-
     default:
       return state;
   }

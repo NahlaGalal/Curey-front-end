@@ -29,6 +29,7 @@ export function user(state = [], action) {
     case LOGIN_USER:
       return {
         ...state,
+        user_id: !action.isFailed ? action.payload.user_id : "",
         api_token: !action.isFailed ? action.payload.api_token : "",
         full_name: !action.isFailed ? action.payload.full_name : "",
         image: !action.isFailed

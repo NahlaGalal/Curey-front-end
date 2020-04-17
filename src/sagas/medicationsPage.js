@@ -5,20 +5,21 @@ import * as actions from "../actions/types";
 function* getMedications({ api_token, skip, limit }) {
   try {
     let result = yield call(() =>
-      axios.get(`/api/web/medications?api_token=${api_token}&skip=${skip}&limit=${limit}`)
+      axios.get(
+        `/api/web/medications?api_token=${api_token}&skip=${skip}&limit=${limit}`
+      )
     );
     if (!result.data.isFailed) {
       yield put({
         type: actions.RECIEVE_MEDICATIONS,
         payload: result.data.data,
-        isFailed: false
+        isFailed: false,
       });
-      console.log(result.data.data);
     } else
       yield put({
         type: actions.RECIEVE_MEDICATIONS,
         payload: result.data.errors,
-        isFailed: true
+        isFailed: true,
       });
   } catch (e) {
     console.log(e);
@@ -28,46 +29,42 @@ function* getMedications({ api_token, skip, limit }) {
 function* getMedicationsSearch({ search, api_token, skip, limit, keywords }) {
   try {
     let res;
-    if(keywords.length) {
+    if (keywords.length) {
       res = yield call(() =>
-        axios.get(
-          `/api/web/medications/search`, {
-            params: {
-              name: search,
-              api_token,
-              skip,
-              limit,
-              keywords
-            }
-          }
-        )
+        axios.get(`/api/web/medications/search`, {
+          params: {
+            name: search,
+            api_token,
+            skip,
+            limit,
+            keywords,
+          },
+        })
       );
-    }else {
+    } else {
       res = yield call(() =>
-        axios.get(
-          `/api/web/medications/search`, {
-            params: {
-              name: search,
-              api_token,
-              skip,
-              limit
-            }
-          }
-        )
+        axios.get(`/api/web/medications/search`, {
+          params: {
+            name: search,
+            api_token,
+            skip,
+            limit,
+          },
+        })
       );
     }
     if (!res.data.isFailed) {
       yield put({
         type: actions.RECIEVE_SEARCH_MEDICATIONS,
         payload: res.data.data,
-        isFailed: false
+        skip,
+        isFailed: false,
       });
-      console.log(res.data.data);
     } else
       yield put({
         type: actions.RECIEVE_SEARCH_MEDICATIONS,
         payload: res.data.errors,
-        isFailed: true
+        isFailed: true,
       });
   } catch (err) {
     console.log(err);
@@ -83,13 +80,13 @@ function* getMedication({ api_token, id }) {
       yield put({
         type: actions.RECIEVE_MEDICATION,
         payload: result.data.data,
-        isFailed: false
+        isFailed: false,
       });
     } else
       yield put({
         type: actions.RECIEVE_MEDICATION,
         payload: result.data.errors,
-        isFailed: true
+        isFailed: true,
       });
   } catch (e) {
     console.log(e);
@@ -105,25 +102,31 @@ function* postAddFavourite({ data, source }) {
           type: actions.REQUEST_MEDICATION,
           id: data.product_id,
           api_token: data.api_token,
-          isFailed: false
+          isFailed: false,
         });
       else if (source === "MedicationsPage")
         yield put({
-          type: actions.REQUEST_MEDICATIONS,
-          api_token: data.api_token,
-          isFailed: false
+          type: actions.RELOAD_MEDICATIONS,
+          product_id: data.product_id,
+          isFailed: false,
+        });
+      else if (source === "MedicationsSearch")
+        yield put({
+          type: actions.RELOAD_SEARCH_MEDICATIONS,
+          product_id: data.product_id,
+          isFailed: false,
         });
       else
         yield put({
-          type: actions.REQUEST_HOME_DATA,
-          api_token: data.api_token,
-          isFailed: false
+          type: actions.RELOAD_HOME_MEDICATIONS,
+          product_id: data.product_id,
+          isFailed: false,
         });
     else
       yield put({
         type: actions.ADD_FAVOURITE,
         payload: res.data.errors,
-        isFailed: true
+        isFailed: true,
       });
   } catch (err) {
     console.log(err);
@@ -138,32 +141,38 @@ function* postDeleteFavourite({ data, source }) {
         yield put({
           type: actions.SAGA_GET_FAVOURITES,
           api_token: data.api_token,
-          isFailed: false
+          isFailed: false,
         });
       else if (source === "MedicationPage")
         yield put({
           type: actions.REQUEST_MEDICATION,
           id: data.product_id,
           api_token: data.api_token,
-          isFailed: false
+          isFailed: false,
         });
       else if (source === "MedicationsPage")
         yield put({
-          type: actions.REQUEST_MEDICATIONS,
-          api_token: data.api_token,
-          isFailed: false
+          type: actions.RELOAD_MEDICATIONS,
+          product_id: data.product_id,
+          isFailed: false,
+        });
+      else if (source === "MedicationsSearch")
+        yield put({
+          type: actions.RELOAD_SEARCH_MEDICATIONS,
+          product_id: data.product_id,
+          isFailed: false,
         });
       else
         yield put({
-          type: actions.REQUEST_HOME_DATA,
-          api_token: data.api_token,
-          isFailed: false
+          type: actions.RELOAD_HOME_MEDICATIONS,
+          product_id: data.product_id,
+          isFailed: false,
         });
     else
       yield put({
         type: actions.DELETE_FAVOURITE,
         payload: res.data.errors,
-        isFailed: true
+        isFailed: true,
       });
   } catch (err) {
     console.log(err);
@@ -179,13 +188,13 @@ function* getFavourites({ api_token }) {
       yield put({
         type: actions.GET_FAVOURITES,
         payload: res.data.data,
-        isFailed: false
+        isFailed: false,
       });
     else
       yield put({
         type: actions.GET_FAVOURITES,
         payload: res.data.errors,
-        isFailed: true
+        isFailed: true,
       });
   } catch (err) {
     console.log(err);
@@ -202,25 +211,25 @@ function* submitOrder({ api_token, data, notificationData }) {
       order: 1,
       medicationName: notificationData.medicationName,
       medicationImage: notificationData.medicationImage,
-      pharmacy: notificationData.pharmacy
+      pharmacy: notificationData.pharmacy,
     };
   else
     notification = {
       read: false,
       time: Date.now(),
-      order: 0
+      order: 0,
     };
   try {
     let result = yield call(() => axios.post("/api/web/submit_order", obj));
     if (!result.data.isFailed) {
       yield put({
         type: actions.ADD_NOTIFICATION,
-        notification
+        notification,
       });
     } else {
       yield put({
         type: actions.SUBMIT_MEDICATION_ORDER_FAILED,
-        payload: result.data.errors
+        payload: result.data.errors,
       });
     }
   } catch (e) {
@@ -237,14 +246,14 @@ function* getOrders({ api_token }) {
       yield put({
         type: actions.RECIEVE_ORDERS,
         payload: result.data.data.orders,
-        isFailed: false
+        isFailed: false,
       });
       console.log(result.data);
     } else
       yield put({
         type: actions.RECIEVE_ORDERS,
         payload: result.data.errors,
-        isFailed: true
+        isFailed: true,
       });
   } catch (e) {
     console.log(e);
@@ -260,7 +269,7 @@ function* cancelOrder({ api_token, order_id }) {
       alert(result.data.data.success);
       yield put({
         type: actions.REQUEST_ORDERS,
-        api_token
+        api_token,
       });
     } else {
       console.log(result.data.errors);

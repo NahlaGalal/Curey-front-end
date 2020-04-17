@@ -94,8 +94,8 @@ class MedicinePage extends Component {
                   is the address that the medication will be delivered to
                 </p>
                 <span>
-                  <img src={LocationIcon} alt="location-icon" /> Mansoura City,
-                  Gehan St
+                  <img src={LocationIcon} alt="location-icon" />{" "}
+                  {this.props.medicine.user_address}
                 </span>
                 <Button
                   className="btn btn-green-dark btn-lg delivery__container__btn"

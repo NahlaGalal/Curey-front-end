@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import createLogger from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 
@@ -84,39 +84,48 @@ export const loadState = () =>
   localStorage.getItem("curey-state")
     ? JSON.parse(localStorage.getItem("curey-state"))
     : {
+        id: "",
         api_token: "",
         full_name: "",
         image: null,
         email: "",
+        role: null
       };
 
 export const saveState = (state) =>
   localStorage.setItem(
     "curey-state",
     JSON.stringify({
+      user_id: state.user.user_id,
       api_token: state.user.api_token,
       full_name: state.user.full_name,
       image: state.user.image,
       email: state.user.email,
+      role: state.user.role
     })
   );
 
 export const deleteState = () => localStorage.removeItem("curey-state");
 
 const initialState = () => {
+  const state = loadState();
+
   return {
     ...defaultState,
     user: {
       ...defaultState.user,
-      api_token: loadState().api_token,
-      full_name: loadState().full_name,
-      image: loadState().image,
-      email: loadState().email,
+      user_id: state.user_id,
+      api_token: state.api_token,
+      full_name: state.full_name,
+      image: state.image,
+      email: state.email,
+      role: state.role
     },
   };
 };
 
 const configureStore = () => {
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const sagaMiddleware = createSagaMiddleware();
   const middlewares = [sagaMiddleware];
   if (process.env.NODE_ENV !== "production") {
@@ -125,7 +134,7 @@ const configureStore = () => {
   const store = createStore(
     reducers,
     initialState(),
-    applyMiddleware(...middlewares)
+    composeEnhancers(applyMiddleware(...middlewares))
   );
   sagaMiddleware.run(rootSaga);
   return store;

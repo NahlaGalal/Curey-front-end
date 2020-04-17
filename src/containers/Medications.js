@@ -110,7 +110,7 @@ class Medications extends Component {
         api_token: this.props.api_token,
         product_id
       },
-      "MedicationsPage"
+      this.state.search ? "MedicationsSearch" : "MedicationsPage"
     );
   };
 
@@ -120,7 +120,7 @@ class Medications extends Component {
         api_token: this.props.api_token,
         product_id
       },
-      "MedicationsPage"
+      this.state.search ? "MedicationsSearch" : "MedicationsPage"
     );
   };
 
