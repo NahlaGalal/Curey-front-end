@@ -5,7 +5,7 @@ import Navbar from "./layout/Nav";
 import { loadState } from "../configureStore";
 import PharmacyNavbar from "./layout/pharmacyNavbar";
 import DoctorNavbar from "./layout/doctorNavbar";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Error from "../containers/Error";
 import Landing_page from "../containers/Landing-page";
 import Login from "../containers/Login";
@@ -84,15 +84,17 @@ class Layout extends Component {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <Route exact path="/" component={Landing_page} />
-            <Route exact path="/login" component={Login} />
-            <Route
-              exact
-              path={["/forgot-password", "/verification", "/reset-password"]}
-              component={Forgot}
-            />
-            <Route exact path="/signup" component={SignUp} />
-            <Route component={Error} />
+            <Switch>
+              <Route exact path="/" component={Landing_page} />
+              <Route exact path="/login" component={Login} />
+              <Route
+                exact
+                path={["/forgot-password", "/verification", "/reset-password"]}
+                component={Forgot}
+              />
+              <Route exact path="/signup" component={SignUp} />
+              <Route exact component={Error} />
+            </Switch>
           </React.Fragment>
         )}
       </div>
