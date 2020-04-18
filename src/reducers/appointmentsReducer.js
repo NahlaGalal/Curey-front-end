@@ -18,7 +18,7 @@ export function appointments(state = {}, action) {
     case actions.BOOK_APPOINTMENT_RES:
       return {
         ...state,
-        success: !action.isFailed ? action.payload.message : "",
+        success: !action.isFailed ? action.payload.success : "",
         errors: action.isFailed ? action.payload : []
       }
     case actions.BOOK_APPOINTMENT:

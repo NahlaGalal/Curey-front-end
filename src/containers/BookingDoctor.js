@@ -50,6 +50,7 @@ class BookingDoctor extends Component {
         JSON.stringify(this.props.success) &&
       this.props.success
     ) {
+      console.log("fef", this.state.bookId)
       this.setState({
         bookedOrder: this.state.bookedOrder.fill(
           1,
