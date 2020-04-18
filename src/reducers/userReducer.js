@@ -46,7 +46,8 @@ export function user(state = [], action) {
         api_token: !action.isFailed ? "" : state.api_token,
         full_name: !action.isFailed ? "" : state.full_name,
         image: !action.isFailed ? "" : state.image,
-        email: !action.isFailed ? "" : state.email
+        email: !action.isFailed ? "" : state.email,
+        role: !action.isFailed ? "" : state.role
       };
     case GET_PRESCRIPTION:
       return {

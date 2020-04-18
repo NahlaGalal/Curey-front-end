@@ -1,0 +1,25 @@
+.Error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6.4rem;
+  color: $color-dark;
+  .heading-2 {
+    margin-bottom: 2.4rem;
+  }
+  &__404 {
+    display: flex;
+    font-size: 16rem;
+    align-items: center;
+    img {
+      width: 13.2rem;
+      height: 13.2rem;
+      margin: 0 1.6rem;
+    }
+  }
+  &__not-found {
+    font-size: 2.4rem;
+    margin: 2.4rem 0;
+  }
+}

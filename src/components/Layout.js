@@ -5,13 +5,19 @@ import Navbar from "./layout/Nav";
 import { loadState } from "../configureStore";
 import PharmacyNavbar from "./layout/pharmacyNavbar";
 import DoctorNavbar from "./layout/doctorNavbar";
+import { Route } from "react-router-dom";
+import Error from "../containers/Error";
+import Landing_page from "../containers/Landing-page";
+import Login from "../containers/Login";
+import Forgot from "../containers/forgot-comps";
+import SignUp from "../containers/sign-up";
 
 class Layout extends Component {
   state = {
     notificationList: false,
     userThumbnailList: false,
     pharmacyThumbnailList: false,
-    doctorThumbnailList: false
+    doctorThumbnailList: false,
   };
 
   hideLists = () =>
@@ -19,22 +25,22 @@ class Layout extends Component {
       userThumbnailList: false,
       notificationList: false,
       pharmacyThumbnailList: false,
-      doctorThumbnailList: false
+      doctorThumbnailList: false,
     });
 
   render() {
     return (
       <div onClick={this.hideLists}>
-        {loadState().api_token && (
+        {loadState().api_token ? (
           <React.Fragment>
             {this.props.location.pathname.startsWith("/pharmacy") ? (
               <PharmacyNavbar
                 hideLists={this.hideLists}
                 pharmacyThumbnailList={this.state.pharmacyThumbnailList}
-                togglePharmacyThumbnailList={e => {
+                togglePharmacyThumbnailList={(e) => {
                   e.stopPropagation();
                   this.setState({
-                    pharmacyThumbnailList: !this.state.pharmacyThumbnailList
+                    pharmacyThumbnailList: !this.state.pharmacyThumbnailList,
                   });
                 }}
               />
@@ -42,10 +48,10 @@ class Layout extends Component {
               <DoctorNavbar
                 hideLists={this.hideLists}
                 doctorThumbnailList={this.state.doctorThumbnailList}
-                toggleDoctorThumbnailList={e => {
+                toggleDoctorThumbnailList={(e) => {
                   e.stopPropagation();
                   this.setState({
-                    doctorThumbnailList: !this.state.doctorThumbnailList
+                    doctorThumbnailList: !this.state.doctorThumbnailList,
                   });
                 }}
               />
@@ -54,18 +60,18 @@ class Layout extends Component {
                 <NavigationBar
                   notificationList={this.state.notificationList}
                   userThumbnailList={this.state.userThumbnailList}
-                  toggleNotifocationsList={e => {
+                  toggleNotifocationsList={(e) => {
                     e.stopPropagation();
                     this.setState({
                       notificationList: !this.state.notificationList,
-                      userThumbnailList: false
+                      userThumbnailList: false,
                     });
                   }}
-                  toggleUserThumbnailList={e => {
+                  toggleUserThumbnailList={(e) => {
                     e.stopPropagation();
                     this.setState({
                       userThumbnailList: !this.state.userThumbnailList,
-                      notificationList: false
+                      notificationList: false,
                     });
                   }}
                   hideLists={this.hideLists}
@@ -75,6 +81,18 @@ class Layout extends Component {
             )}
             {this.props.children}
             <Footer />
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <Route exact path="/" component={Landing_page} />
+            <Route exact path="/login" component={Login} />
+            <Route
+              exact
+              path={["/forgot-password", "/verification", "/reset-password"]}
+              component={Forgot}
+            />
+            <Route exact path="/signup" component={SignUp} />
+            <Route component={Error} />
           </React.Fragment>
         )}
       </div>
