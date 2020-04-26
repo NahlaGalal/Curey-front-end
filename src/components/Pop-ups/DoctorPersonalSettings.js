@@ -2,17 +2,19 @@ import React, { Component } from "react";
 import Button from "../Button";
 import { connect } from "react-redux";
 import * as actions from "../../actions/types";
-import ChangeAddress from "../Settings/ChangeAddress";
 import ChangeFullName from "../Settings/ChangeFullName";
-import ChangeEmail from "../Settings/ChangeEmail";
-import ChangePassword from "../Settings/ChangePassword";
-import ChangePhone from "../Settings/ChangePhone";
-import ChangePhoto from "../Settings/ChangePhoto";
-import ChangePharmacyName from "../Settings/ChangePharmacyName";
+import ChangeAddress from "../Settings/ChangeAddress";
+import {
+  ChangeDegrees,
+  ChangeDuartion,
+  ChangeFees,
+  ChangeHomeVisit,
+  ChangeSpeciality,
+} from "../Settings/DoctorSettings";
 
-class AccountSettings extends Component {
+class DoctorPersonalSettings extends Component {
   state = {
-    boxShown: "Photo",
+    boxShown: "Full name",
   };
 
   componentDidMount() {
@@ -30,58 +32,14 @@ class AccountSettings extends Component {
           onClick={(e) => e.stopPropagation()}
         >
           <aside className="Popup__box__aside">
-            <div className="Popup__box__aside__image">
-              <img
-                src={this.props.user.image}
-                alt={`${this.props.user.name} profile-pic`}
-              />
-            </div>
             <Button
               className={`btn btn-transparent${
-                this.state.boxShown === "Photo" ? " active" : ""
+                this.state.boxShown === "Full name" ? " active" : ""
               }`}
               onClick={this.toggleBoxShown}
             >
               {" "}
-              Photo{" "}
-            </Button>
-            <Button
-              className={`btn btn-transparent${
-                this.state.boxShown === "Phone number" ? " active" : ""
-              }`}
-              onClick={this.toggleBoxShown}
-            >
-              {" "}
-              Phone number{" "}
-            </Button>
-            <Button
-              className={`btn btn-transparent${
-                this.state.boxShown === "Change password" ? " active" : ""
-              }`}
-              onClick={this.toggleBoxShown}
-            >
-              {" "}
-              Change password{" "}
-            </Button>
-            <Button
-              className={`btn btn-transparent${
-                this.state.boxShown === "Email address" ? " active" : ""
-              }`}
-              onClick={this.toggleBoxShown}
-            >
-              {" "}
-              Email address{" "}
-            </Button>
-            <Button
-              className={`btn btn-transparent${
-                this.state.boxShown === "Full name" ||
-                this.state.boxShown === "Pharmacy name"
-                  ? " active"
-                  : ""
-              }`}
-              onClick={this.toggleBoxShown}
-            >
-              {this.props.pharmacy ? "Pharmacy name" : "Full name"}
+              Full name{" "}
             </Button>
             <Button
               className={`btn btn-transparent${
@@ -92,26 +50,67 @@ class AccountSettings extends Component {
               {" "}
               Address{" "}
             </Button>
-            <Button className="btn btn-transparent btn-transparent-warning">
+            <Button
+              className={`btn btn-transparent${
+                this.state.boxShown === "Speciality" ? " active" : ""
+              }`}
+              onClick={this.toggleBoxShown}
+            >
               {" "}
-              Delete account{" "}
+              Speciality{" "}
+            </Button>
+            <Button
+              className={`btn btn-transparent${
+                this.state.boxShown === "Fees" ? " active" : ""
+              }`}
+              onClick={this.toggleBoxShown}
+            >
+              {" "}
+              Fees{" "}
+            </Button>
+            <Button
+              className={`btn btn-transparent${
+                this.state.boxShown === "Duration" ? " active" : ""
+              }`}
+              onClick={this.toggleBoxShown}
+            >
+              {" "}
+              Duration{" "}
+            </Button>
+            <Button
+              className={`btn btn-transparent${
+                this.state.boxShown === "Home visits" ? " active" : ""
+              }`}
+              onClick={this.toggleBoxShown}
+            >
+              {" "}
+              Home visits{" "}
+            </Button>
+            <Button
+              className={`btn btn-transparent${
+                this.state.boxShown === "Degrees" ? " active" : ""
+              }`}
+              onClick={this.toggleBoxShown}
+            >
+              {" "}
+              Degrees{" "}
             </Button>
           </aside>
           <div className="Popup__box__settings">
-            {this.state.boxShown === "Photo" ? (
-              <ChangePhoto image={this.props.user.image} />
-            ) : this.state.boxShown === "Phone number" ? (
-              <ChangePhone />
-            ) : this.state.boxShown === "Change password" ? (
-              <ChangePassword />
-            ) : this.state.boxShown === "Email address" ? (
-              <ChangeEmail email={this.props.user.email} />
-            ) : this.state.boxShown === "Full name" ? (
+            {this.state.boxShown === "Full name" ? (
               <ChangeFullName name={this.props.user.full_name} />
-            ) : this.state.boxShown === "Pharmacy name" ? (
-              <ChangePharmacyName name={this.props.user.full_name} />
-            ) : (
+            ) : this.state.boxShown === "Address" ? (
               <ChangeAddress cities={this.props.cities} />
+            ) : this.state.boxShown === "Speciality" ? (
+              <ChangeSpeciality />
+            ) : this.state.boxShown === "Fees" ? (
+              <ChangeFees />
+            ) : this.state.boxShown === "Duration" ? (
+              <ChangeDuartion />
+            ) : this.state.boxShown === "Home visits" ? (
+              <ChangeHomeVisit />
+            ) : (
+              <ChangeDegrees />
             )}
           </div>
         </div>
@@ -129,4 +128,7 @@ const mapDispatchToProps = (dispatch) => ({
   getCities: () => dispatch({ type: actions.SAGA_GET_CITIES }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AccountSettings);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DoctorPersonalSettings);

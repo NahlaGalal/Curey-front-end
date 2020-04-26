@@ -2,15 +2,12 @@ import React, { Component } from "react";
 import Button from "../Button";
 import { connect } from "react-redux";
 import * as actions from "../../actions/types";
-import ChangeAddress from "../Settings/ChangeAddress";
-import ChangeFullName from "../Settings/ChangeFullName";
-import ChangeEmail from "../Settings/ChangeEmail";
-import ChangePassword from "../Settings/ChangePassword";
-import ChangePhone from "../Settings/ChangePhone";
 import ChangePhoto from "../Settings/ChangePhoto";
-import ChangePharmacyName from "../Settings/ChangePharmacyName";
+import ChangePhone from "../Settings/ChangePhone";
+import ChangePassword from "../Settings/ChangePassword";
+import ChangeEmail from "../Settings/ChangeEmail";
 
-class AccountSettings extends Component {
+class DoctorAccountSettings extends Component {
   state = {
     boxShown: "Photo",
   };
@@ -72,26 +69,6 @@ class AccountSettings extends Component {
               {" "}
               Email address{" "}
             </Button>
-            <Button
-              className={`btn btn-transparent${
-                this.state.boxShown === "Full name" ||
-                this.state.boxShown === "Pharmacy name"
-                  ? " active"
-                  : ""
-              }`}
-              onClick={this.toggleBoxShown}
-            >
-              {this.props.pharmacy ? "Pharmacy name" : "Full name"}
-            </Button>
-            <Button
-              className={`btn btn-transparent${
-                this.state.boxShown === "Address" ? " active" : ""
-              }`}
-              onClick={this.toggleBoxShown}
-            >
-              {" "}
-              Address{" "}
-            </Button>
             <Button className="btn btn-transparent btn-transparent-warning">
               {" "}
               Delete account{" "}
@@ -104,14 +81,8 @@ class AccountSettings extends Component {
               <ChangePhone />
             ) : this.state.boxShown === "Change password" ? (
               <ChangePassword />
-            ) : this.state.boxShown === "Email address" ? (
-              <ChangeEmail email={this.props.user.email} />
-            ) : this.state.boxShown === "Full name" ? (
-              <ChangeFullName name={this.props.user.full_name} />
-            ) : this.state.boxShown === "Pharmacy name" ? (
-              <ChangePharmacyName name={this.props.user.full_name} />
             ) : (
-              <ChangeAddress cities={this.props.cities} />
+              <ChangeEmail email={this.props.user.email} />
             )}
           </div>
         </div>
@@ -121,7 +92,6 @@ class AccountSettings extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  cities: state.user.cities,
   user: state.user,
 });
 
@@ -129,4 +99,7 @@ const mapDispatchToProps = (dispatch) => ({
   getCities: () => dispatch({ type: actions.SAGA_GET_CITIES }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AccountSettings);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DoctorAccountSettings);
