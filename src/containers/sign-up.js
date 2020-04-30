@@ -21,9 +21,9 @@ const SignupUser = props => {
     props.postSignup({
       role_id: props.role_id,
       full_name: data.full_name,
-      email: validator.normalizeEmail(data.email),
+      email: data.email.toLocaleLowerCase(),
       password: data.password,
-      city_id: +city.city_id || 1
+      city_id: +city.city_id || 1,
     });
   };
 

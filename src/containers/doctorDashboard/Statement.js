@@ -241,7 +241,7 @@ class DoctorStatement extends Component {
           ) : (
             <p className="doctorStatement__error">
               {" "}
-              You don't have any re-examination appointmnents
+              You didn't have any appointmnents
             </p>
           )}
           {this.props.statement.length > 12 ? (

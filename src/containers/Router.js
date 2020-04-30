@@ -30,10 +30,8 @@ import DoctorStatement from "../containers/doctorDashboard/Statement";
 import Error from "./Error";
 
 const state = loadState();
-console.log(state);
 
 const Router = () => {
-  console.log(state);
   return (
     <BrowserRouter>
       <Switch>
