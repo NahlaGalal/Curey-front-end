@@ -21,6 +21,9 @@ const defaultState = {
     cart: [],
     notifications: [],
     role: null,
+    specialities: [],
+    address: "",
+    phone: ""
   },
   doctors: {
     doctorsData: [],

@@ -14,9 +14,9 @@ class NavigationBar extends Component {
 
   openNorifications = (e) => {
     this.props.readNotification(
-      this.props.notifications.map(notification => ({
+      this.props.notifications.map((notification) => ({
         ...notification,
-        read: true
+        read: true,
       }))
     );
     this.props.toggleNotifocationsList(e);
@@ -24,7 +24,7 @@ class NavigationBar extends Component {
 
   render() {
     const readNotifications = this.props.notifications.filter(
-      notification => !notification.read
+      (notification) => !notification.read
     );
 
     return (
@@ -101,7 +101,10 @@ class NavigationBar extends Component {
               </Button>
               <Button
                 className="btn NavigationBar__profile-btn"
-                onClick={this.props.toggleUserThumbnailList}
+                onClick={(e) => {
+                  this.props.getUserData(this.props.api_token);
+                  this.props.toggleUserThumbnailList(e);
+                }}
               >
                 <img
                   src={this.props.image}
@@ -132,19 +135,21 @@ class NavigationBar extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   api_token: state.user.api_token,
   full_name: state.user.full_name,
   image: state.user.image,
   email: state.user.email,
-  notifications: state.user.notifications
+  notifications: state.user.notifications,
 });
 
-const mapDispatchToProps = dispatch => ({
-  postLogout: api_token =>
+const mapDispatchToProps = (dispatch) => ({
+  postLogout: (api_token) =>
     dispatch({ type: actions.SAGA_LOGOUT_USER, api_token }),
-  readNotification: notifications =>
-    dispatch({ type: actions.READ_NOTIFICATION, notifications })
+  readNotification: (notifications) =>
+    dispatch({ type: actions.READ_NOTIFICATION, notifications }),
+  getUserData: (api_token) =>
+    dispatch({ type: actions.SAGA_GET_PROFILE, api_token }),
 });
 
 export default withRouter(

@@ -10,7 +10,8 @@ import {
   REMOVE_FROM_CART,
   ADD_NOTIFICATION,
   READ_NOTIFICATION,
-  SHOW_CART
+  SHOW_CART,
+  GET_PROFILE
 } from "../actions/types";
 
 export function user(state = [], action) {
@@ -99,6 +100,14 @@ export function user(state = [], action) {
         ...state,
         notifications: action.notifications
       };
+    case GET_PROFILE: 
+      return {
+        ...state,
+        address: !action.isFailed ? action.payload.profile.address : "",
+        phone: !action.isFailed ? action.payload.profile.phone : "",
+        cities: !action.isFailed ? action.payload.cities : state.cities,
+        specialities: !action.isFailed ? action.payload.specialities : []
+      }
     default:
       return state;
   }
