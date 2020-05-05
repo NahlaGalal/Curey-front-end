@@ -50,7 +50,7 @@ class DoctorProfile extends Component {
                 <div className="profile__header__content__main__header__image">
                   <img
                     src={doctor.image}
-                    alt={`doctor ${doctor.name} profile`}
+                    alt={`doctor ${doctor.full_name} profile`}
                   />
                 </div>
                 <div className="profile__header__content__main__header__info">
@@ -81,8 +81,8 @@ class DoctorProfile extends Component {
                   <div className="profile__header__content__main__info__degrees">
                     <h3>Degrees</h3>
                     <div className="tags">
-                      {doctor.degrees.map((degree, i) => (
-                        <span key={i}>{degree}</span>
+                      {doctor.degrees.map((degree) => (
+                        <span key={degree.id}>{degree.name}</span>
                       ))}
                     </div>
                   </div>

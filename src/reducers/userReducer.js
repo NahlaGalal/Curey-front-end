@@ -29,7 +29,6 @@ export function user(state = [], action) {
     case LOGIN_USER:
       return {
         ...state,
-        user_id: !action.isFailed ? action.payload.user_id : "",
         api_token: !action.isFailed ? action.payload.api_token : "",
         full_name: !action.isFailed ? action.payload.full_name : "",
         image: !action.isFailed
@@ -37,6 +36,7 @@ export function user(state = [], action) {
           : null,
         email: !action.isFailed ? action.payload.email : "",
         role: !action.isFailed ? action.payload.role : null,
+        is_complete: !action.isFailed ? action.payload.is_complete || 0 : 0,
         cart: [],
         errors: action.isFailed ? action.payload : {},
       };

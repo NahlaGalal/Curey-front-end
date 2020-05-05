@@ -21,6 +21,7 @@ const defaultState = {
     cart: [],
     notifications: [],
     role: null,
+    is_complete: 0,
   },
   doctors: {
     doctorsData: [],
@@ -84,24 +85,24 @@ export const loadState = () =>
   localStorage.getItem("curey-state")
     ? JSON.parse(localStorage.getItem("curey-state"))
     : {
-        id: "",
         api_token: "",
         full_name: "",
         image: null,
         email: "",
-        role: null
+        role: null,
+        is_complete: 0,
       };
 
 export const saveState = (state) =>
   localStorage.setItem(
     "curey-state",
     JSON.stringify({
-      user_id: state.user.user_id,
       api_token: state.user.api_token,
       full_name: state.user.full_name,
       image: state.user.image,
       email: state.user.email,
-      role: state.user.role
+      role: state.user.role,
+      is_complete: state.user.is_complete,
     })
   );
 
@@ -114,18 +115,19 @@ const initialState = () => {
     ...defaultState,
     user: {
       ...defaultState.user,
-      user_id: state.user_id,
       api_token: state.api_token,
       full_name: state.full_name,
       image: state.image,
       email: state.email,
-      role: state.role
+      role: state.role,
+      is_complete: state.is_complete
     },
   };
 };
 
 const configureStore = () => {
-  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const composeEnhancers =
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const sagaMiddleware = createSagaMiddleware();
   const middlewares = [sagaMiddleware];
   if (process.env.NODE_ENV !== "production") {

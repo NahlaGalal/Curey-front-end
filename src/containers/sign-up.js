@@ -179,7 +179,7 @@ class Signup extends Component {
   };
 
   render() {
-    const user_types = ["I'm a doctor", "I'm a user", "I'm a Pharmacy"];
+    const user_types = ["I'm a doctor", "I'm a customer", "I'm a Pharmacy"];
 
     return (
       <section className="signup">
