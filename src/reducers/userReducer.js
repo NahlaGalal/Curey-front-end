@@ -18,8 +18,7 @@ export function user(state = [], action) {
     case GET_CITIES:
       return {
         ...state,
-        cities: action.payload,
-        success: ""
+        cities: action.payload
       };
     case SIGNUP_USER:
       return {
@@ -47,6 +46,7 @@ export function user(state = [], action) {
         image: !action.isFailed ? "" : state.image,
         email: !action.isFailed ? "" : state.email,
         role: !action.isFailed ? "" : state.role,
+        success: "",
       };
     case GET_PRESCRIPTION:
       return {
