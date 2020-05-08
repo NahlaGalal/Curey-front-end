@@ -201,8 +201,8 @@ function* getFavourites({ api_token }) {
   }
 }
 
-function* submitOrder({ api_token, data, notificationData }) {
-  const obj = { api_token: api_token, products: data };
+function* submitOrder({ api_token, products, notificationData }) {
+  const obj = { api_token, products };
   let notification = {};
   if (notificationData.order)
     notification = {
@@ -248,7 +248,6 @@ function* getOrders({ api_token }) {
         payload: result.data.data.orders,
         isFailed: false,
       });
-      console.log(result.data);
     } else
       yield put({
         type: actions.RECIEVE_ORDERS,
@@ -264,15 +263,17 @@ function* cancelOrder({ api_token, order_id }) {
   const data = { api_token, order_id };
   try {
     let result = yield call(() => axios.post(`/api/web/cancel_order`, data));
-
     if (!result.data.isFailed) {
-      alert(result.data.data.success);
       yield put({
         type: actions.REQUEST_ORDERS,
         api_token,
       });
     } else {
-      console.log(result.data.errors);
+      yield put({
+        type: actions.CANCEL_ORDER,
+        payload: result.data.errors,
+        isFailed: true
+      })
     }
   } catch (e) {
     console.log(e);
@@ -288,5 +289,5 @@ export default function* watchMedications() {
   yield takeEvery(actions.SAGA_GET_FAVOURITES, getFavourites);
   yield takeEvery(actions.SUBMIT_MEDICATION_ORDER, submitOrder);
   yield takeEvery(actions.REQUEST_ORDERS, getOrders);
-  yield takeEvery(actions.CANCEL_ORDER, cancelOrder);
+  yield takeEvery(actions.SAGA_CANCEL_ORDER, cancelOrder);
 }

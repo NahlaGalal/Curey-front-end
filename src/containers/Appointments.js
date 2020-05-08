@@ -119,7 +119,7 @@ class Appointments extends Component {
             className="loading center mb-40"
           />
         ) : (
-          <p className="Appointments__Grid__error"> No appointments yet </p>
+          <p className="error"> No appointments yet </p>
         )}
       </div>
     );
