@@ -139,7 +139,7 @@ class DoctorProfile extends Component {
                   </div>
                 );
               }) : (
-                <p className="profile__reviews__container__error"> No reviews yet </p>
+                <p className="error"> No reviews yet </p>
               )
             }
           </div>

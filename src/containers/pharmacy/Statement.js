@@ -52,7 +52,7 @@ class PharmacyStatement extends Component {
               />
             </div>
           ) : this.props.errors.error ? (
-            <p className="dashboardGrid__error"> No Statistics yet </p>
+            <p className="error"> No Statistics yet </p>
           ) : (
             <ReactLoading
               type="spokes"
@@ -72,7 +72,7 @@ class PharmacyStatement extends Component {
                 medications={this.state.medications}
               />
             ) : this.props.errors.error ? (
-              <p className="dashboardGrid__error">
+              <p className="error">
                 {" "}
                 No performed Requests yet{" "}
               </p>

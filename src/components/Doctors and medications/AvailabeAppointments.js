@@ -156,7 +156,7 @@ const AvailableAppointments = (props) => {
           </div>
         </div>
       ) : (
-        <p className="availableAppointments__error">
+        <p className="error">
           {" "}
           No appointments available
         </p>

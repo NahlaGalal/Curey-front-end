@@ -90,11 +90,6 @@
     border-bottom: 0;
     border-color: rgba($color: $color-dark, $alpha: $medium-opacity);
   }
-  &__error {
-    color: $warning-color;
-    font-size: 1.6rem;
-    text-align: center;
-  }
 }
 
 .Thumbnail {

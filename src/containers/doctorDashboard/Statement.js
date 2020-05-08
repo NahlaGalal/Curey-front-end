@@ -239,7 +239,7 @@ class DoctorStatement extends Component {
               className="loading center mb-40"
             />
           ) : (
-            <p className="doctorStatement__error">
+            <p className="error">
               {" "}
               You didn't have any appointmnents
             </p>

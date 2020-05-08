@@ -33,7 +33,7 @@ class Packing extends Component {
               />
             ))
           ) : this.props.errors.error ? (
-            <p className="dashboardGrid__error"> No medications yet </p>
+            <p className="error"> No medications yet </p>
           ) : (
             <ReactLoading
               type="spokes"

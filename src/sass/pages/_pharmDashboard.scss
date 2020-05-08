@@ -9,11 +9,6 @@
 .dashboardGrid {
   @extend .DoctorsPrescriptions;
   margin-bottom: 4rem;
-  &__error {
-    font-size: 1.6rem;
-    text-align: center;
-    color: $warning-color;
-  }
 }
 .orderCard__btn {
   display: block;

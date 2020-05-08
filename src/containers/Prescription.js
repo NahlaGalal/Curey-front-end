@@ -133,7 +133,7 @@ export class Prescription extends Component {
             ))}
           </div>
         ) : (
-          !this.props.error ? (
+          !this.props.error.error ? (
             <ReactLoading type="spokes" color="#0066ff" className="loading" />
           ) : <p className="error"> No prescriptions yet </p>
         )}
@@ -152,7 +152,7 @@ export class Prescription extends Component {
 const mapStateToProps = state => ({
   api_token: state.user.api_token,
   prescriptions: state.user.prescriptions,
-  error: state.user.errors.error
+  error: state.user.errors
 });
 
 const mapDispatchToProps = dispatch => ({

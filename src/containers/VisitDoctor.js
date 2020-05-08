@@ -119,7 +119,7 @@ class VisitDoctor extends Component {
               />
             </React.Fragment>
           ) : this.state.error ? (
-            <p className="bookingDoctorContainer__error">{this.state.error}</p>
+            <p className="error">{this.state.error}</p>
           ) : (
             <ReactLoading type="spokes" color="#0066ff" className="loading" />
           )}

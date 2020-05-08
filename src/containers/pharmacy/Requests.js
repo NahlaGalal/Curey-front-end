@@ -38,7 +38,7 @@ class Requests extends Component {
               />
             ))
           ) : this.props.errors.error ? (
-            <p className="dashboardGrid__error"> No requests yet </p>
+            <p className="error"> No requests yet </p>
           ) : (
             <ReactLoading
               type="spokes"

@@ -152,7 +152,7 @@ export class Orders extends Component {
             })}
           </main>
         ) : this.props.medicationsDataError.length ? (
-          <p className="Orders__container__error">No orders yet</p>
+          <p className="error">No orders yet</p>
         ) : (
           <ReactLoading
             type="spokes"

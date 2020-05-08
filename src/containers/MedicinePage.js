@@ -138,7 +138,7 @@ class MedicinePage extends Component {
                       />
                     ))
                   ) : (
-                    <p className="pharmacies__container__error">
+                    <p className="error">
                       {" "}
                       There are no pharmacies buy this medicine near you
                     </p>
