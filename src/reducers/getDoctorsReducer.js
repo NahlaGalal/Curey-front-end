@@ -11,13 +11,7 @@ export const doctors = (state = {}, action) => {
       return {
         ...state,
         doctorsData: !action.isFailed
-          ? [
-              ...state.doctorsData,
-              ...action.payload.doctors.map((doctor) => ({
-                ...doctor,
-                image: `https://curey-backend.herokuapp.com/${doctor.image}`,
-              })),
-            ]
+          ? [...state.doctorsData, ...action.payload.doctors]
           : [],
         specialities: !action.isFailed ? action.payload.specialities : [],
         cities: !action.isFailed ? action.payload.cities : [],
@@ -29,13 +23,7 @@ export const doctors = (state = {}, action) => {
       return {
         ...state,
         doctorsSearch: !action.isFailed
-          ? [
-              ...state.doctorsSearch,
-              ...action.payload.doctors.map((doctor) => ({
-                ...doctor,
-                image: `https://curey-backend.herokuapp.com/${doctor.image}`,
-              })),
-            ]
+          ? [...state.doctorsSearch, ...action.payload.doctors]
           : [],
         doctorsDone:
           !action.isFailed && action.payload.doctors.length < 8 ? true : false,
@@ -48,7 +36,6 @@ export const doctors = (state = {}, action) => {
           ? {
               ...state.doctorData,
               ...action.payload.doctor,
-              image: `https://curey-backend.herokuapp.com/${action.payload.doctor.image}`,
               reviews: action.payload.reviews,
             }
           : {},

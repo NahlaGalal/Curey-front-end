@@ -181,7 +181,7 @@ export class PaymentForm extends Component {
                   onClick={this.toggleSelectBox}
                   className={this.state.city.length ? "hasValue" : null}
                   listChecked={this.state.city || []}
-                  header="Country"
+                  header="City"
                   boxOpened={this.state.selectBoxOpened}
                   list={cities}
                   optionsContainerRef={this.optionsContainerRef}

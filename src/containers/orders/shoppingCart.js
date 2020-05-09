@@ -99,7 +99,7 @@ class ShoppingCart extends Component {
             </React.Fragment>
           ) : !this.props.error ? (
             <ReactLoading type="spokes" color="#0066ff" className="loading" />
-          ) : <p className="shoppingCartContainer__error"> No items in shopping cart </p>}
+          ) : <p className="error"> No items in shopping cart </p>}
         </div>
         {this.state.orderDetailsBox && (
           <OrderDetails

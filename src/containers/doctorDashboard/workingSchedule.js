@@ -199,7 +199,7 @@ class WorkingSchedule extends Component {
                   ))}
               </div>
             ) : this.props.errors.error ? (
-              <p className="scheduleBox__error"> No schedule yet </p>
+              <p className="error"> No schedule yet </p>
             ) : (
               <ReactLoading
                 type="spokes"

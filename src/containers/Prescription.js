@@ -133,9 +133,9 @@ export class Prescription extends Component {
             ))}
           </div>
         ) : (
-          !this.props.error.length && (
+          !this.props.error.error ? (
             <ReactLoading type="spokes" color="#0066ff" className="loading" />
-          )
+          ) : <p className="error"> No prescriptions yet </p>
         )}
         {this.state.addPrescriptionBox && (
           <AddPrescription

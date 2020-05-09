@@ -49,7 +49,6 @@ export const doctorData = (state = [], action) => {
                 date = date.slice(1).join(" ");
                 return {
                   ...patient,
-                  image: `https://curey-backend.herokuapp.com/${patient.image}`,
                   date,
                   time,
                 };
@@ -76,7 +75,6 @@ export const doctorData = (state = [], action) => {
                 date = date.slice(1).join(" ");
                 return {
                   ...patient,
-                  image: `https://curey-backend.herokuapp.com/${patient.image}`,
                   date,
                   time,
                 };
@@ -103,7 +101,6 @@ export const doctorData = (state = [], action) => {
                 date = date.slice(1).join(" ");
                 return {
                   ...patient,
-                  image: `https://curey-backend.herokuapp.com/${patient.image}`,
                   date,
                   time,
                 };
@@ -120,11 +117,9 @@ export const doctorData = (state = [], action) => {
               ...action.payload.map((prescription) => {
                 return {
                   ...prescription,
-                  image: `https://curey-backend.herokuapp.com/${prescription.image}`,
                   details: [
                     ...prescription.details.map((detail) => ({
                       ...detail,
-                      image: `https://curey-backend.herokuapp.com/${detail.image}`,
                     })),
                   ],
                 };

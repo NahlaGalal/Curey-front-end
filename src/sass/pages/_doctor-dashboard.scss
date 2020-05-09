@@ -3,11 +3,6 @@
   margin: 0 auto;
   padding: 6.4rem 0;
 
-  &__error {
-    color: $warning-color;
-    text-align: center;
-    font-size: 1.6rem;
-  }
   .signup__container__forms__toggler.active-0 {
     > span {
       left: -1px;
@@ -76,12 +71,6 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(23rem, 0.25fr));
       grid-gap: 3.2rem;
-    }
-
-    &__error {
-      text-align: center;
-      font-size: 1.6rem;
-      color: $warning-color;
     }
   }
   .homeVisit {
@@ -153,11 +142,6 @@
 .doctorStatement {
   @extend .pharmacyStatment;
 
-  &__error {
-    color: $warning-color;
-    text-align: center;
-    font-size: 1.6rem;
-  }
   .signup__container__forms__toggler.four-parts {
     span {
       left: -1px;

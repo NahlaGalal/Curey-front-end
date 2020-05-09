@@ -39,7 +39,7 @@ class PrescriptionList extends Component {
             className="loading center mb-40"
           />
         ) : (
-          <p className="PrescriptionList__error">
+          <p className="error">
             You don't have any re-examination appointmnents
           </p>
         )}

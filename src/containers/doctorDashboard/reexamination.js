@@ -176,7 +176,7 @@ class ReExamination extends Component {
             className="loading center mb-40"
           />
         ) : (
-          <p className="re-examination__error">
+          <p className="error">
             {" "}
             You don't have any re-examination appointmnents
           </p>

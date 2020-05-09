@@ -115,7 +115,7 @@ class MedicinePage extends Component {
                         key={i}
                         name={pharmacy.name}
                         rate={pharmacy.overall_rating}
-                        reviews={10}
+                        reviews={pharmacy.count}
                         address={pharmacy.address}
                         image={pharmacy.image}
                         medication={{
@@ -138,7 +138,7 @@ class MedicinePage extends Component {
                       />
                     ))
                   ) : (
-                    <p className="pharmacies__container__error">
+                    <p className="error">
                       {" "}
                       There are no pharmacies buy this medicine near you
                     </p>
@@ -182,11 +182,11 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source }),
   addToCart: (api_token, product) =>
     dispatch({ type: actions.SAGA_ADD_TO_CART, api_token, product }),
-  submitMedicineOrder: (api_token, data, notificationData) =>
+  submitMedicineOrder: (api_token, products, notificationData) =>
     dispatch({
       type: actions.SUBMIT_MEDICATION_ORDER,
       api_token,
-      data,
+      products,
       notificationData,
     }),
   showCart: (api_token) =>

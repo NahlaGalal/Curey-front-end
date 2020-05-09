@@ -20,7 +20,7 @@ import {
   SHOW_CART,
   SAGA_SHOW_CART,
   SAGA_REMOVE_FROM_CART,
-  REMOVE_FROM_CART
+  REMOVE_FROM_CART,
 } from "../actions/types";
 
 function* signupUser({ data }) {
@@ -30,13 +30,13 @@ function* signupUser({ data }) {
       yield put({
         type: SIGNUP_USER,
         payload: res.data.data.success,
-        isFailed: false
+        isFailed: false,
       });
     else
       yield put({
         type: SIGNUP_USER,
         payload: res.data.errors,
-        isFailed: true
+        isFailed: true,
       });
   } catch (err) {
     console.log(err);
@@ -48,7 +48,7 @@ function* getCities() {
     const res = yield call(() => axios.get("/api/web/signup"));
     yield put({
       type: GET_CITIES,
-      payload: res.data.data.cities
+      payload: res.data.data.cities,
     });
   } catch (err) {
     console.log(err);
@@ -62,13 +62,13 @@ function* loginUser({ data }) {
       yield put({
         type: LOGIN_USER,
         payload: res.data.data,
-        isFailed: false
+        isFailed: false,
       });
     else
       yield put({
         type: LOGIN_USER,
         payload: res.data.errors,
-        isFailed: true
+        isFailed: true,
       });
   } catch (err) {
     console.log(err);
@@ -80,7 +80,7 @@ function* logoutUser({ api_token }) {
     const res = yield call(() => axios.post("/api/web/logout", { api_token }));
     yield put({
       type: LOGOUT_USER,
-      isFailed: res.data.isFailed
+      isFailed: res.data.isFailed,
     });
   } catch (err) {
     console.log(err);
@@ -96,13 +96,13 @@ function* getPrescriptions({ api_token }) {
       yield put({
         type: GET_PRESCRIPTION,
         payload: res.data.data,
-        isFailed: false
+        isFailed: false,
       });
     else
       yield put({
         type: GET_PRESCRIPTION,
         payload: res.data.errors,
-        isFailed: true
+        isFailed: true,
       });
   } catch (err) {
     console.log(err);
@@ -115,13 +115,13 @@ function* postAddPrescription({ data }) {
     if (!res.data.isFailed)
       yield put({
         type: SAGA_GET_PRESCRIPTION,
-        api_token: data.api_token
+        api_token: data.api_token,
       });
     else
       yield put({
         type: ADD_PRESCRIPTION,
         payload: res.data.errors,
-        isFailed: true
+        isFailed: true,
       });
   } catch (err) {
     console.log(err);
@@ -133,17 +133,16 @@ function* postDeletePrescriptions({ data }) {
     const res = yield call(() =>
       axios.post("/api/web/delete_prescription", data)
     );
-    console.log(res);
     if (!res.data.isFailed)
       yield put({
         type: SAGA_GET_PRESCRIPTION,
-        api_token: data.api_token
+        api_token: data.api_token,
       });
     else
       yield put({
         type: DELETE_PRESCRIPTIONS,
         payload: res.data.errors,
-        isFailed: true
+        isFailed: true,
       });
   } catch (err) {
     console.log(err);
@@ -151,53 +150,68 @@ function* postDeletePrescriptions({ data }) {
 }
 
 function* postAddToCart({ api_token, product }) {
-  const res = yield call(() =>
-    axios.post("/api/web/add_item", { api_token, product })
-  );
-  if (!res.data.isFailed)
-    yield put({
-      type: ADD_TO_CART,
-      payload: res.data.data,
-      isFailed: false
-    });
-  else
-    yield put({
-      type: ADD_TO_CART,
-      payload: res.data.errors,
-      isFailed: true
-    });
+  try {
+    const res = yield call(() =>
+      axios.post("/api/web/add_item", { api_token, product })
+    );
+    if (!res.data.isFailed)
+      yield put({
+        type: ADD_TO_CART,
+        payload: res.data.data,
+        isFailed: false,
+      });
+    else
+      yield put({
+        type: ADD_TO_CART,
+        payload: res.data.errors,
+        isFailed: true,
+      });
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function* getCart({ api_token }) {
-  const res = yield call(() => axios.get(`/api/web/cart?api_token=${api_token}`));
-  if(!res.data.isFailed) 
-    yield put({
-      type: SHOW_CART,
-      payload: res.data.data,
-      isFailed: false
-    })
-  else
-    yield put({
-      type: SHOW_CART,
-      payload: res.data.errors,
-      isFailed: true
-    })
+  try {
+    const res = yield call(() =>
+      axios.get(`/api/web/cart?api_token=${api_token}`)
+    );
+    if (!res.data.isFailed)
+      yield put({
+        type: SHOW_CART,
+        payload: res.data.data,
+        isFailed: false,
+      });
+    else
+      yield put({
+        type: SHOW_CART,
+        payload: res.data.errors,
+        isFailed: true,
+      });
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function* postRemoveCartItem({ api_token, product_id }) {
-  const res = yield call(() => axios.post("/api/web/delete_item", {api_token, product_id}));
-  console.log(res)
-  if(!res.data.isFailed)
-    yield put({
-      type: SAGA_SHOW_CART,
-      api_token
-    })
-  else
-    yield put({
-      type: REMOVE_FROM_CART,
-      payload: res.data.errors,
-      isFailed: true
-    })
+  try {
+    const res = yield call(() =>
+      axios.post("/api/web/delete_item", { api_token, product_id })
+    );
+    if (!res.data.isFailed)
+      yield put({
+        type: SAGA_SHOW_CART,
+        api_token,
+      });
+    else
+      yield put({
+        type: REMOVE_FROM_CART,
+        payload: res.data.errors,
+        isFailed: true,
+      });
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export default function* watchUser() {
@@ -210,5 +224,5 @@ export default function* watchUser() {
   yield takeEvery(SAGA_DELETE_PRESCRIPTIONS, postDeletePrescriptions);
   yield takeEvery(SAGA_ADD_TO_CART, postAddToCart);
   yield takeEvery(SAGA_SHOW_CART, getCart);
-  yield takeEvery(SAGA_REMOVE_FROM_CART, postRemoveCartItem)
+  yield takeEvery(SAGA_REMOVE_FROM_CART, postRemoveCartItem);
 }

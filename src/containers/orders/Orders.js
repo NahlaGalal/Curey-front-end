@@ -152,7 +152,7 @@ export class Orders extends Component {
             })}
           </main>
         ) : this.props.medicationsDataError.length ? (
-          <p className="Orders__container__error">No orders yet</p>
+          <p className="error">No orders yet</p>
         ) : (
           <ReactLoading
             type="spokes"
@@ -183,7 +183,7 @@ const mapDispatchToProps = dispatch => {
     onRequestOrders: api_token =>
       dispatch({ type: actions.REQUEST_ORDERS, api_token }),
     onCancelOrder: (api_token, order_id) =>
-      dispatch({ type: actions.CANCEL_ORDER, api_token, order_id })
+      dispatch({ type: actions.SAGA_CANCEL_ORDER, api_token, order_id })
   };
 };
 
