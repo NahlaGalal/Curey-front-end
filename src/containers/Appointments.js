@@ -112,7 +112,7 @@ class Appointments extends Component {
               />
             ))}
           </div>
-        ) : !this.props.appointmentsError.length ? (
+        ) : !this.props.appointmentsError.error ? (
           <ReactLoading
             type="spokes"
             color="#0066ff"

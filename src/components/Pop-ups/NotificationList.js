@@ -73,7 +73,7 @@ class NotificationList extends Component {
                 </React.Fragment>
               ))
             ) : (
-              <p className="Notifications__error"> No new notifications </p>
+              <p className="error"> No new notifications </p>
             )}
           </div>
         </div>

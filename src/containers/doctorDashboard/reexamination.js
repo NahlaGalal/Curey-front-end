@@ -77,7 +77,7 @@ class ReExamination extends Component {
                   <PatientCard
                     key={i}
                     index={i}
-                    name={card.name}
+                    name={card.patient}
                     address={card.address}
                     rate={card.rate}
                     date={card.date}
@@ -110,7 +110,7 @@ class ReExamination extends Component {
                     <PatientCard
                       key={i}
                       index={i}
-                      name={card.name}
+                      name={card.patient}
                       address={card.address}
                       rate={card.rate}
                       date={card.date}
@@ -142,7 +142,7 @@ class ReExamination extends Component {
                     <PatientCard
                       key={i}
                       index={i}
-                      name={card.name}
+                      name={card.patient}
                       address={card.address}
                       rate={card.rate}
                       date={card.date}

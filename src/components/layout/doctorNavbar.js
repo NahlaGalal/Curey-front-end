@@ -25,7 +25,9 @@ const DoctorNavbar = props => {
         </label>
 
         <div className="NavigationBar__logo">
-          <img src={require("../../assets/svg/Logo-SVG.svg")} alt="logo" />
+          <NavLink to="/doctor">
+            <img src={require("../../assets/svg/Logo-SVG.svg")} alt="logo" />
+          </NavLink>
         </div>
 
         <ul className="NavigationBar__links">
