@@ -36,6 +36,15 @@ class UserThumbnail extends Component {
                 Online payment method
               </Link>
             </Button>
+            {this.props.role !== 1 && (
+              <Button>
+                {this.props.role === 2 ? (
+                  <Link to="/pharmacy"> Browse as a pharmacist </Link>
+                ) : (
+                  <Link to="/doctor"> Browse as a doctor </Link>
+                )}
+              </Button>
+            )}
           </div>
           <hr />
           <footer>

@@ -124,6 +124,7 @@ class NavigationBar extends Component {
             userImg={this.props.image}
             userName={this.props.full_name}
             userEmail={this.props.email || ""}
+            role={this.props.role || 1}
             logout={() => this.props.postLogout(this.props.api_token)}
           />
         )}
@@ -137,7 +138,8 @@ const mapStateToProps = state => ({
   full_name: state.user.full_name,
   image: state.user.image,
   email: state.user.email,
-  notifications: state.user.notifications
+  notifications: state.user.notifications,
+  role: state.user.role
 });
 
 const mapDispatchToProps = dispatch => ({

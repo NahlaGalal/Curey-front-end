@@ -10,7 +10,7 @@ export class SavePage extends Component {
     this.props.getFavourites(this.props.api_token);
     this.setState({
       hovered: new Array(this.props.medications.length).fill(false),
-      medications: this.props.medications
+      medications: this.props.medications,
     });
   }
 
@@ -21,16 +21,16 @@ export class SavePage extends Component {
     ) {
       this.setState({
         medications: this.props.medications,
-        hovered: new Array(this.props.medications.length).fill(false)
+        hovered: new Array(this.props.medications.length).fill(false),
       });
     }
   }
 
-  deleteFavouriteMedication = product_id => {
+  deleteFavouriteMedication = (product_id) => {
     this.props.deleteFavouriteMedication(
       {
         api_token: this.props.api_token,
-        product_id
+        product_id,
       },
       "SavePage"
     );
@@ -44,34 +44,38 @@ export class SavePage extends Component {
         </div>
         <section className="topMedications">
           <div className="topMedications__container">
-            <div className="medicationGrid">
-              {this.state.medications.map((medication, i) => (
-                <MedicineCard
-                  key={i}
-                  id={medication.id}
-                  name={medication.name}
-                  price={medication.price}
-                  image={medication.image}
-                  description={medication.description}
-                  isFavourite={true}
-                  onMouseMove={() =>
-                    this.setState({
-                      hovered: this.state.hovered.fill(true, i, i + 1)
-                    })
-                  }
-                  onMouseLeave={() =>
-                    this.setState({
-                      hovered: this.state.hovered.fill(false, i, i + 1)
-                    })
-                  }
-                  hovered={this.state.hovered[i]}
-                  link
-                  deleteFavouriteMedication={() =>
-                    this.deleteFavouriteMedication(medication.id)
-                  }
-                />
-              ))}
-            </div>
+            {this.state.medications.length ? (
+              <div className="medicationGrid">
+                {this.state.medications.map((medication, i) => (
+                  <MedicineCard
+                    key={i}
+                    id={medication.id}
+                    name={medication.name}
+                    price={medication.price}
+                    image={medication.image}
+                    description={medication.description}
+                    isFavourite={true}
+                    onMouseMove={() =>
+                      this.setState({
+                        hovered: this.state.hovered.fill(true, i, i + 1),
+                      })
+                    }
+                    onMouseLeave={() =>
+                      this.setState({
+                        hovered: this.state.hovered.fill(false, i, i + 1),
+                      })
+                    }
+                    hovered={this.state.hovered[i]}
+                    link
+                    deleteFavouriteMedication={() =>
+                      this.deleteFavouriteMedication(medication.id)
+                    }
+                  />
+                ))}
+              </div>
+            ) : (
+              <p className="error"> No saved medications yet </p>
+            )}
           </div>
         </section>
       </Fragment>
@@ -79,16 +83,17 @@ export class SavePage extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   api_token: state.user.api_token,
-  medications: state.medicationsData.medicationsSaved
+  medications: state.medicationsData.medicationsSaved,
+  error: state.medicationsData.errors,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getFavourites: api_token =>
+const mapDispatchToProps = (dispatch) => ({
+  getFavourites: (api_token) =>
     dispatch({ type: SAGA_GET_FAVOURITES, api_token }),
   deleteFavouriteMedication: (data, source) =>
-    dispatch({ type: SAGA_DELETE_FAVOURITE, data, source })
+    dispatch({ type: SAGA_DELETE_FAVOURITE, data, source }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SavePage);
