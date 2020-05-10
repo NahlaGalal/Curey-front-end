@@ -66,15 +66,18 @@ const PharmacyNavbar = props => {
           </li>
         </ul>
 
-        <div className="NavigationBar__icons NavigationBar__icons__notifications NavigationBar__icons--pharmacy "></div>
+        <div
+          className="NavigationBar__icons NavigationBar__icons__notifications NavigationBar__icons--pharmacy"
+          style={{ marginBottom: 0 }}
+        ></div>
 
         <Button
           className="NavigationBar__phrmacyData btn"
           onClick={props.togglePharmacyThumbnailList}
         >
           <div>
-            <Rate rate={1} />
-            <span>1220 reviews</span>
+            <Rate rate={props.rating} />
+            <span>{props.no_reviews} reviews</span>
           </div>
           <div className="NavigationBar__phrmacyData--logo">
             <img src={props.image} alt="doctor logo" />
@@ -84,9 +87,45 @@ const PharmacyNavbar = props => {
       {props.pharmacyThumbnailList && (
         <PharmacyThumbnail
           hideLists={props.hideLists}
-          pharmacyLogo={props.image}
-          pharmacyName={props.pharmacy_name}
-          pharmacyAddress={props.address || ""}
+          getUserData={() => props.getUserData(props.api_token)}
+          image={props.image}
+          name={props.name}
+          changeName={(data) =>
+            props.postChangeName({
+              ...data,
+              api_token: props.api_token,
+            })
+          }
+          email={props.email}
+          changeEmail={(data) =>
+            props.postChangeEmail({
+              ...data,
+              api_token: props.api_token,
+            })
+          }
+          phone={props.phone}
+          changePhone={(data) =>
+            props.postChangePhone({
+              ...data,
+              api_token: props.api_token,
+            })
+          }
+          changePassword={(data) =>
+            props.postChangePassword({
+              ...data,
+              api_token: props.api_token,
+            })
+          }
+          cities={props.cities}
+          city_id={props.city_id}
+          address={props.address}
+          changeAddress={(data) =>
+            props.postChangeAddress({
+              ...data,
+              api_token: props.api_token,
+            })
+          }
+          role={props.role || 1}
           logout={() => props.postLogout(props.api_token)}
         />
       )}
@@ -94,16 +133,34 @@ const PharmacyNavbar = props => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   api_token: state.user.api_token,
-  pharmacy_name: state.user.full_name,
+  name: state.user.full_name,
   image: state.user.image,
-  address: state.user.address
+  address: state.user.address,
+  email: state.user.email,
+  role: state.user.role,
+  phone: state.user.phone,
+  city_id: state.user.city_id,
+  cities: state.user.cities,
+  rating: state.doctorData.reviews.total,
+  no_reviews: state.doctorData.reviews.number,
 });
 
-const mapDispatchToProps = dispatch => ({
-  postLogout: api_token =>
-    dispatch({ type: actions.SAGA_LOGOUT_USER, api_token })
+const mapDispatchToProps = (dispatch) => ({
+  postLogout: (api_token) =>
+    dispatch({ type: actions.SAGA_LOGOUT_USER, api_token }),
+  getUserData: (api_token) =>
+    dispatch({ type: actions.SAGA_GET_PROFILE, api_token }),
+  postChangeName: (data) => dispatch({ type: actions.SAGA_CHANGE_NAME, data }),
+  postChangeEmail: (data) =>
+    dispatch({ type: actions.SAGA_CHANGE_EMAIL, data }),
+  postChangePhone: (data) =>
+    dispatch({ type: actions.SAGA_CHANGE_PHONE, data }),
+  postChangePassword: (data) =>
+    dispatch({ type: actions.SAGA_CHANGE_PASSWORD, data }),
+  postChangeAddress: (data) =>
+    dispatch({ type: actions.SAGA_CHANGE_ADDRESS, data }),
 });
 
 export default withRouter(

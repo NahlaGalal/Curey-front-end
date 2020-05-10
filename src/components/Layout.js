@@ -38,7 +38,7 @@ class Layout extends Component {
                 hideLists={this.hideLists}
                 pharmacyThumbnailList={this.state.pharmacyThumbnailList}
                 togglePharmacyThumbnailList={(e) => {
-                  e.stopPropagation();
+                  if(e) e.stopPropagation();
                   this.setState({
                     pharmacyThumbnailList: !this.state.pharmacyThumbnailList,
                   });
@@ -49,7 +49,7 @@ class Layout extends Component {
                 hideLists={this.hideLists}
                 doctorThumbnailList={this.state.doctorThumbnailList}
                 toggleDoctorThumbnailList={(e) => {
-                  e.stopPropagation();
+                  if(e) e.stopPropagation();
                   this.setState({
                     doctorThumbnailList: !this.state.doctorThumbnailList,
                   });
@@ -61,7 +61,7 @@ class Layout extends Component {
                   notificationList={this.state.notificationList}
                   userThumbnailList={this.state.userThumbnailList}
                   toggleNotifocationsList={(e) => {
-                    e.stopPropagation();
+                    if(e) e.stopPropagation();
                     this.setState({
                       notificationList: !this.state.notificationList,
                       userThumbnailList: false,

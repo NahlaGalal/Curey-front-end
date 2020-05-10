@@ -1,134 +1,121 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Button from "../Button";
-import { connect } from "react-redux";
-import * as actions from "../../actions/types";
 import ChangeFullName from "../Settings/ChangeFullName";
 import ChangeAddress from "../Settings/ChangeAddress";
 import {
-  ChangeDegrees,
   ChangeDuartion,
   ChangeFees,
   ChangeHomeVisit,
   ChangeSpeciality,
 } from "../Settings/DoctorSettings";
 
-class DoctorPersonalSettings extends Component {
-  state = {
-    boxShown: "Full name",
-  };
+const DoctorPersonalSettings = (props) => {
+  const [boxShown, setBoxShown] = useState("Full name");
 
-  componentDidMount() {
-    this.props.getCities();
-  }
+  const toggleBoxShown = (e) => setBoxShown(e.target.textContent.trim());
 
-  toggleBoxShown = (e) =>
-    this.setState({ boxShown: e.target.textContent.trim() });
-
-  render() {
-    return (
-      <section className="Popup">
-        <div
-          className="Popup__box-grid Popup__box"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <aside className="Popup__box__aside">
-            <Button
-              className={`btn btn-transparent${
-                this.state.boxShown === "Full name" ? " active" : ""
-              }`}
-              onClick={this.toggleBoxShown}
-            >
-              {" "}
-              Full name{" "}
-            </Button>
-            <Button
-              className={`btn btn-transparent${
-                this.state.boxShown === "Address" ? " active" : ""
-              }`}
-              onClick={this.toggleBoxShown}
-            >
-              {" "}
-              Address{" "}
-            </Button>
-            <Button
-              className={`btn btn-transparent${
-                this.state.boxShown === "Speciality" ? " active" : ""
-              }`}
-              onClick={this.toggleBoxShown}
-            >
-              {" "}
-              Speciality{" "}
-            </Button>
-            <Button
-              className={`btn btn-transparent${
-                this.state.boxShown === "Fees" ? " active" : ""
-              }`}
-              onClick={this.toggleBoxShown}
-            >
-              {" "}
-              Fees{" "}
-            </Button>
-            <Button
-              className={`btn btn-transparent${
-                this.state.boxShown === "Duration" ? " active" : ""
-              }`}
-              onClick={this.toggleBoxShown}
-            >
-              {" "}
-              Duration{" "}
-            </Button>
-            <Button
-              className={`btn btn-transparent${
-                this.state.boxShown === "Home visits" ? " active" : ""
-              }`}
-              onClick={this.toggleBoxShown}
-            >
-              {" "}
-              Home visits{" "}
-            </Button>
-            <Button
-              className={`btn btn-transparent${
-                this.state.boxShown === "Degrees" ? " active" : ""
-              }`}
-              onClick={this.toggleBoxShown}
-            >
-              {" "}
-              Degrees{" "}
-            </Button>
-          </aside>
-          <div className="Popup__box__settings">
-            {this.state.boxShown === "Full name" ? (
-              <ChangeFullName name={this.props.user.full_name} />
-            ) : this.state.boxShown === "Address" ? (
-              <ChangeAddress cities={this.props.cities} />
-            ) : this.state.boxShown === "Speciality" ? (
-              <ChangeSpeciality />
-            ) : this.state.boxShown === "Fees" ? (
-              <ChangeFees />
-            ) : this.state.boxShown === "Duration" ? (
-              <ChangeDuartion />
-            ) : this.state.boxShown === "Home visits" ? (
-              <ChangeHomeVisit />
-            ) : (
-              <ChangeDegrees />
-            )}
-          </div>
+  return (
+    <section className="Popup">
+      <div
+        className="Popup__box-grid Popup__box"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <aside className="Popup__box__aside">
+          <Button
+            className={`btn btn-transparent${
+              boxShown === "Full name" ? " active" : ""
+            }`}
+            onClick={toggleBoxShown}
+          >
+            {" "}
+            Full name{" "}
+          </Button>
+          <Button
+            className={`btn btn-transparent${
+              boxShown === "Address" ? " active" : ""
+            }`}
+            onClick={toggleBoxShown}
+          >
+            {" "}
+            Address{" "}
+          </Button>
+          <Button
+            className={`btn btn-transparent${
+              boxShown === "Speciality" ? " active" : ""
+            }`}
+            onClick={toggleBoxShown}
+          >
+            {" "}
+            Speciality{" "}
+          </Button>
+          <Button
+            className={`btn btn-transparent${
+              boxShown === "Fees" ? " active" : ""
+            }`}
+            onClick={toggleBoxShown}
+          >
+            {" "}
+            Fees{" "}
+          </Button>
+          <Button
+            className={`btn btn-transparent${
+              boxShown === "Duration" ? " active" : ""
+            }`}
+            onClick={toggleBoxShown}
+          >
+            {" "}
+            Duration{" "}
+          </Button>
+          <Button
+            className={`btn btn-transparent${
+              boxShown === "Home visits" ? " active" : ""
+            }`}
+            onClick={toggleBoxShown}
+          >
+            {" "}
+            Home visits{" "}
+          </Button>
+        </aside>
+        <div className="Popup__box__settings">
+          {boxShown === "Full name" ? (
+          <ChangeFullName
+            name={props.name}
+            changeName={(data) => props.changeName(data)}
+          />
+          ) : boxShown === "Address" ? (
+          <ChangeAddress
+            cities={props.cities}
+            city_id={props.city_id}
+            address={props.address}
+            changeAddress={(data) => props.changeAddress(data)}
+          />
+          ) : boxShown === "Speciality" ? (
+          <ChangeSpeciality
+            specialities={props.specialities}
+            speciality={props.speciality}
+            changeSpeciality={(data) => props.changeSpeciality(data)}
+          />
+          ) : boxShown === "Fees" ? (
+          <ChangeFees
+            fees={props.fees}
+            changeFees={(data) => props.changeFees(data)}
+          />
+          ) : boxShown === "Duration" ? (
+          <ChangeDuartion
+            duration={props.duration}
+            changeDuration={(data) => props.changeDuration(data)}
+          />
+          ) : (
+          <ChangeHomeVisit
+            callup={props.callup}
+            callup_fees={props.callup_fees}
+            changeHomeVisit={(data) => props.changeHomeVisit(data)}
+          />
+          )}
         </div>
-      </section>
-    );
-  }
-}
+      </div>
+    </section>
+  );
+};
 
-const mapStateToProps = (state) => ({
-  cities: state.user.cities,
-  user: state.user,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  getCities: () => dispatch({ type: actions.SAGA_GET_CITIES }),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DoctorPersonalSettings);
+export default DoctorPersonalSettings;

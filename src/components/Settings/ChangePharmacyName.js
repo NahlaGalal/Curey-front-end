@@ -14,7 +14,11 @@ const ChangePharmacyName = (props) => {
       <p className="Popup__box__settings__description">
         Edit your pharmacy name here
       </p>
-      <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <form
+        onSubmit={handleSubmit((data) =>
+          props.changeName({ full_name: data.name })
+        )}
+      >
         <div className="fieldinput">
           <input
             name="name"

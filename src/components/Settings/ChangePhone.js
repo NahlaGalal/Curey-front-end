@@ -3,13 +3,17 @@ import { useForm } from "react-hook-form";
 import validator from "validator";
 
 const ChangePhone = (props) => {
-  let { register, handleSubmit, errors, watch } = useForm();
+  let { register, handleSubmit, errors, watch } = useForm({
+    defaultValues: {
+      phone: props.phone
+    }
+  });
 
   return (
     <React.Fragment>
       <h2 className="heading-2">Phone number</h2>
       <p className="Popup__box__settings__description">Add your phone number</p>
-      <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <form onSubmit={handleSubmit((data) => props.changePhone(data))}>
         <div className="fieldinput">
           <input
             name="phone"

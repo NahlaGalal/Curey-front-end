@@ -25,6 +25,7 @@ const defaultState = {
     address: "",
     phone: "",
     is_complete: 0,
+    city_id: 0
   },
   doctors: {
     doctorsData: [],
@@ -80,6 +81,10 @@ const defaultState = {
     prescriptions: [],
     re_examinations: [],
     is_callup: false,
+    reviews: {
+      number: 0,
+      total: 0
+    },
     errors: [],
   },
 };
@@ -94,6 +99,8 @@ export const loadState = () =>
         email: "",
         role: null,
         is_complete: 0,
+        no_reviews: 0,
+        rating: 0
       };
 
 export const saveState = (state) =>
@@ -106,6 +113,8 @@ export const saveState = (state) =>
       email: state.user.email,
       role: state.user.role,
       is_complete: state.user.is_complete,
+      no_reviews: state.doctorData.reviews.number,
+      rating: state.doctorData.reviews.total
     })
   );
 
@@ -123,8 +132,15 @@ const initialState = () => {
       image: state.image,
       email: state.email,
       role: state.role,
-      is_complete: state.is_complete
+      is_complete: state.is_complete,
     },
+    doctorData: {
+      ...defaultState.doctorData,
+      reviews: {
+        number: state.no_reviews,
+        total: state.rating
+      }
+    }
   };
 };
 

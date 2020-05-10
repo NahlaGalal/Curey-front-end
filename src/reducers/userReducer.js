@@ -89,13 +89,30 @@ export function user(state = [], action) {
         notifications: action.notifications,
       };
     case GET_PROFILE: 
+      let doctorData = {};
+      if(!action.isFailed && action.payload.profile.role === 3) {
+        doctorData = {
+          callup: !action.isFailed ? action.payload.profile.callup : false,
+          callup_fees: !action.isFailed ? action.payload.profile.callup_fees : 0,
+          degrees: !action.isFailed ? action.payload.profile.degrees : [],
+          duration: !action.isFailed ? action.payload.profile.duration : 0,
+          fees: !action.isFailed ? action.payload.profile.fees : 0,
+          speciality: !action.isFailed ? action.payload.profile.speciality : ""
+        }
+      }
       return {
         ...state,
+        full_name: !action.isFailed ? action.payload.profile.name : "",
+        email: !action.isFailed ? action.payload.profile.email : "",
+        image: !action.isFailed ? action.payload.profile.image : "",
+        role: !action.isFailed ? action.payload.profile.role : null,
         address: !action.isFailed ? action.payload.profile.address : "",
         phone: !action.isFailed ? action.payload.profile.phone : "",
         cities: !action.isFailed ? action.payload.cities : state.cities,
-        specialities: !action.isFailed ? action.payload.specialities : []
-      }
+        specialities: !action.isFailed ? action.payload.specialities : [],
+        city_id: !action.isFailed ? action.payload.profile.city_id : 0,
+        ...doctorData,
+      };
     default:
       return state;
   }

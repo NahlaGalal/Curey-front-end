@@ -55,6 +55,10 @@ export const doctorData = (state = [], action) => {
               }),
             ]
           : [],
+        reviews: {
+          number: !action.isFailed ? action.payload.doctor.no_reviews : 0,
+          total: !action.isFailed ? action.payload.doctor.rating : 0
+        },
         errors: action.isFailed ? action.payload : [],
       };
     case GET_DOCTOR_REQUESTS:

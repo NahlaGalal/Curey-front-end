@@ -3,12 +3,20 @@ import { useForm } from "react-hook-form";
 import SelectBox from "../SelectBox";
 
 const ChangeAddress = (props) => {
+  const currentCity = props.city_id
+    ? props.cities.find((city) => city.id === props.city_id).name
+    : "";
   let { register, handleSubmit, errors, watch } = useForm({
     defaultValues: {
-      City: "Mansoura",
+      City: currentCity,
+      address: props.address,
     },
   });
-  const [city, setCity] = useState({ city_id: 1, city: "Mansoura" });
+
+  const [city, setCity] = useState({
+    city_id: props.city_id,
+    city: currentCity,
+  });
   const [cityBoxOpened, setCityBoxOpened] = useState(false);
   let citiesContainerRef = React.createRef();
 
@@ -34,7 +42,11 @@ const ChangeAddress = (props) => {
     <React.Fragment>
       <h2 className="heading-2">Address</h2>
       <p className="Popup__box__settings__description">Add your address here</p>
-      <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <form
+        onSubmit={handleSubmit((data) =>
+          props.changeAddress({ address: data.address, city_id: city.city_id })
+        )}
+      >
         <SelectBox
           name="city_id"
           onClick={toggleCitySelectBox}

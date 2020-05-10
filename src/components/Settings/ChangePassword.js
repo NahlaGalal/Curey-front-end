@@ -10,10 +10,17 @@ const ChangePassword = (props) => {
       <p className="Popup__box__settings__description">
         Edit your password here
       </p>
-      <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <form
+        onSubmit={handleSubmit((data) =>
+          props.changePassword({
+            old_password: data.old_password,
+            new_password: data.new_password,
+          })
+        )}
+      >
         <div className="fieldinput">
           <input
-            name="current_password"
+            name="old_password"
             id="passwordCurrent"
             type="password"
             className="fieldinput__input"
@@ -21,13 +28,13 @@ const ChangePassword = (props) => {
           />
           <label
             htmlFor="passwordCurrent"
-            className={watch("current_password") ? "active" : ""}
+            className={watch("old_password") ? "active" : ""}
           >
             Current password
           </label>
-          {errors.current_password && (
+          {errors.old_password && (
             <p className="fieldinput__error">
-              {errors.current_password
+              {errors.old_password
                 ? "Your password must be between 8 and 50 characters"
                 : null}
             </p>

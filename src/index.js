@@ -4,12 +4,15 @@ import { Provider } from "react-redux";
 
 import Router from "./containers/Router";
 import * as serviceWorker from "./serviceWorker";
-import configureStore, { saveState } from "./configureStore";
+import configureStore, { saveState, loadState, deleteState } from "./configureStore";
 import "./sass/main.scss";
 
 const store = configureStore();
 
-store.subscribe(() => saveState(store.getState()));
+store.subscribe(() => {
+  // if(loadState().api_token) deleteState();
+  saveState(store.getState());
+});
 
 ReactDOM.render(
   <Provider store={store}>

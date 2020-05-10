@@ -4,15 +4,54 @@ const ChangePhoto = (props) => {
   const [imageUrl, setImageUrl] = useState("");
   const [imageName, setImageName] = useState("");
 
-  const uploadImage = (e) => {
-    let reader = new FileReader();
-    let file = e.target.files[0];
-    setImageName(file.name);
-    reader.onloadend = () => {
-      setImageUrl(reader.result);
-    };
-    if (e.target.files[0]) reader.readAsDataURL(file);
-  };
+  // async function uploadWithJSON() {
+  //   const toBase64 = (file) =>
+  //     new Promise((resolve, reject) => {
+  //       const reader = new FileReader();
+  //       reader.readAsDataURL(file);
+  //       reader.onload = () => resolve(reader.result);
+  //       reader.onerror = (error) => reject(error);
+  //     });
+
+  //   const data = {
+  //     title: title,
+  //     file: await toBase64(file),
+  //     desc: desc,
+  //   };
+
+  //   submitForm("application/json", data, (msg) => console.log(msg));
+  // }
+
+  const uploadImage = async e => {
+    const toBase64 = file => 
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        if(file) reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (err) => reject(err);
+      })
+
+      props.changeImage({
+        api_token: props.api_token,
+        image: await toBase64(e.target.files[0]),
+      });
+  }
+
+  // const uploadImage = (e) => {
+  //   let reader = new FileReader();
+  //   let file = e.target.files[0];
+  //   setImageName(file.name);
+  //   reader.onloadend = () => {
+  //     setImageUrl(reader.result);
+  //   };
+  //   if (e.target.files[0]) reader.readAsDataURL(file);
+  //   // const formData = new FormData();
+  //   // formData.append("image", file);
+  //   // formData.append("api_token", props.api_token);
+  //   // console.log(formData.values().next())
+  //   // console.log(file)
+  //   props.changeImage({image: file});
+  // };
 
   return (
     <React.Fragment>

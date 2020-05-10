@@ -1,12 +1,43 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import SelectBox from "../SelectBox";
 
 export const ChangeSpeciality = (props) => {
-  let { register, handleSubmit, errors, watch } = useForm({
+  const speciality_name = props.speciality
+    ? props.specialities.find(
+        (speciality) => speciality.id === props.speciality
+      ).name
+    : "";
+  let { register, handleSubmit, errors } = useForm({
     defaultValues: {
-      speciality: props.speciality,
+      Speciality: speciality_name,
     },
   });
+
+  const [speciality, setSpeciality] = useState({
+    speciality_id: props.speciality,
+    speciality: speciality_name,
+  });
+  const [specialityBoxOpened, setSpecialityBoxOpened] = useState(false);
+  let specialitiesContainerRef = React.createRef();
+
+  const toggleSpecialitySelectBox = () => {
+    const prev = specialityBoxOpened;
+    let specialityChosen = speciality.speciality,
+      speciality_id = speciality.speciality_id;
+    if (prev) {
+      const inputChecked = Array.from(
+        specialitiesContainerRef.current.querySelectorAll("input[type=radio]")
+      ).filter((input) => input.checked)[0];
+      specialityChosen = inputChecked ? inputChecked.value : "";
+      speciality_id = inputChecked ? inputChecked.id.split("_")[0] : "";
+    }
+    setSpecialityBoxOpened(!prev);
+    setSpeciality({
+      speciality_id,
+      speciality: specialityChosen,
+    });
+  };
 
   return (
     <React.Fragment>
@@ -14,27 +45,29 @@ export const ChangeSpeciality = (props) => {
       <p className="Popup__box__settings__description">
         Add your speciality here
       </p>
-      <form onSubmit={handleSubmit((data) => console.log(data))}>
-        <div className="fieldinput">
-          <input
-            name="speciality"
-            type="text"
-            id="speciality"
-            className="fieldinput__input"
-            ref={register({ required: true })}
-          />
-          <label
-            htmlFor="speciality"
-            className={watch("speciality") ? "active" : ""}
-          >
-            Speciality
-          </label>
-          {errors.speciality && (
-            <p className="fieldinput__error">
-              {errors.speciality ? "You must type your speciality" : null}
-            </p>
-          )}
-        </div>
+      <form
+        onSubmit={handleSubmit(() =>
+          props.changeSpeciality({
+            speciality_id: parseInt(speciality.speciality_id),
+          })
+        )}
+      >
+        <SelectBox
+          name="speciality_id"
+          onClick={toggleSpecialitySelectBox}
+          className={`${speciality.speciality ? "hasValue" : null}`}
+          listChecked={speciality.speciality_id ? [speciality.speciality] : []}
+          header="Speciality"
+          boxOpened={specialityBoxOpened}
+          list={props.specialities}
+          optionsContainerRef={specialitiesContainerRef}
+          multiSelect={false}
+          isError={errors.Speciality}
+          error={errors.Speciality ? "You must choose your city" : null}
+          refe={register({
+            validate: () => speciality.speciality_id !== null,
+          })}
+        />
         <button type="submit" className="btn btn-green-dark btn-xxs">
           Save
         </button>
@@ -54,7 +87,7 @@ export const ChangeFees = (props) => {
     <React.Fragment>
       <h2 className="heading-2">Fees</h2>
       <p className="Popup__box__settings__description">Add your fees here</p>
-      <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <form onSubmit={handleSubmit((data) => props.changeFees(data))}>
         <div className="fieldinput">
           <input
             name="fees"
@@ -96,7 +129,7 @@ export const ChangeDuartion = (props) => {
       <p className="Popup__box__settings__description">
         Add your duration of examination here
       </p>
-      <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <form onSubmit={handleSubmit((data) => props.changeDuration(data))}>
         <div className="fieldinput">
           <input
             name="duration"
@@ -131,10 +164,13 @@ export const ChangeDuartion = (props) => {
 export const ChangeHomeVisit = (props) => {
   let { register, handleSubmit, errors, watch } = useForm({
     defaultValues: {
-      home_visit: props.is_callup,
-      home_visit_fees: props.is_callup ? "" : props.is_callup_fees,
+      offers_callup: props.callup,
+      callup_fees: props.callup_fees,
     },
   });
+  const [homeVisit, setHomeVisit] = useState(props.callup);
+
+  const toggleHomeVisit = () => setHomeVisit(!homeVisit);
 
   return (
     <React.Fragment>
@@ -142,16 +178,21 @@ export const ChangeHomeVisit = (props) => {
       <p className="Popup__box__settings__description">
         Control your home visit service here
       </p>
-      <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <form onSubmit={handleSubmit((data) => props.changeHomeVisit(data))}>
         <div className="homeVisit">
-          <input type="checkbox" id="homeVisit" name="homeVisit" />
-          <label htmlFor="homeVisit">
-            <span></span> Home visit srevice
-          </label>
-        </div>
-        <div className="fieldinput">
           <input
-            name="home_visit"
+            type="checkbox"
+            id="homeVisit"
+            name="offers_callup"
+            ref={register}
+            hidden
+            onChange={toggleHomeVisit}
+          />
+          <label htmlFor="homeVisit">Home visit srevice</label>
+        </div>
+        <div className={`fieldinput${!homeVisit ? " hidden" : ""}`}>
+          <input
+            name="callup_fees"
             type="text"
             id="home-visit"
             className="fieldinput__input"
@@ -162,48 +203,15 @@ export const ChangeHomeVisit = (props) => {
           />
           <label
             htmlFor="home-visit"
-            className={watch("home_visit") ? "active" : ""}
+            className={watch("callup_fees") ? "active" : ""}
           >
             Home visit fees
           </label>
-          {errors.home_visit && (
+          {errors.callup_fees && (
             <p className="fieldinput__error">
-              {errors.home_visit ? "You must type your home visit fees" : null}
+              {errors.callup_fees ? "You must type your home visit fees" : null}
             </p>
           )}
-        </div>
-        <button type="submit" className="btn btn-green-dark btn-xxs">
-          Save
-        </button>
-      </form>
-    </React.Fragment>
-  );
-};
-
-export const ChangeDegrees = (props) => {
-  let [degrees, setDegrees] = useState(props.degrees);
-
-  return (
-    <React.Fragment>
-      <h2 className="heading-2">Degrees</h2>
-      <p className="Popup__box__settings__description">
-        Add your degrees here
-      </p>
-      <form onSubmit={e => e.preventDefault()}>
-        <div className="fieldinput">
-          <input
-            name="degrees"
-            type="text"
-            id="degrees"
-            className="fieldinput__input"
-            onChange={e => setDegrees(e.target.value)}
-          />
-          <label
-            htmlFor="degrees"
-            className={degrees ? "active" : ""}
-          >
-            Degrees seperated by ,
-          </label>
         </div>
         <button type="submit" className="btn btn-green-dark btn-xxs">
           Save

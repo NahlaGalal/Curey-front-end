@@ -15,7 +15,7 @@ const ChangeEmail = (props) => {
       <p className="Popup__box__settings__description">
         Edit you email address here
       </p>
-      <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <form onSubmit={handleSubmit((data) => props.changeEmail(data))}>
         <div className="fieldinput">
           <input
             className="fieldinput__input"

@@ -101,10 +101,7 @@ class NavigationBar extends Component {
               </Button>
               <Button
                 className="btn NavigationBar__profile-btn"
-                onClick={(e) => {
-                  this.props.getUserData(this.props.api_token);
-                  this.props.toggleUserThumbnailList(e);
-                }}
+                onClick={(e) => this.props.toggleUserThumbnailList(e)}
               >
                 <img
                   src={this.props.image}
@@ -124,9 +121,44 @@ class NavigationBar extends Component {
         {this.props.userThumbnailList && (
           <UserThumbnail
             hideLists={this.props.hideLists}
-            userImg={this.props.image}
-            userName={this.props.full_name}
-            userEmail={this.props.email || ""}
+            getUserData={() => this.props.getUserData(this.props.api_token)}
+            image={this.props.image}
+            name={this.props.full_name}
+            changeName={(data) =>
+              this.props.postChangeName({
+                ...data,
+                api_token: this.props.api_token,
+              })
+            }
+            email={this.props.email}
+            changeEmail={(data) =>
+              this.props.postChangeEmail({
+                ...data,
+                api_token: this.props.api_token,
+              })
+            }
+            phone={this.props.phone}
+            changePhone={(data) =>
+              this.props.postChangePhone({
+                ...data,
+                api_token: this.props.api_token,
+              })
+            }
+            changePassword={(data) =>
+              this.props.postChangePassword({
+                ...data,
+                api_token: this.props.api_token,
+              })
+            }
+            cities={this.props.cities}
+            city_id={this.props.city_id}
+            address={this.props.address}
+            changeAddress={(data) =>
+              this.props.postChangeAddress({
+                ...data,
+                api_token: this.props.api_token,
+              })
+            }
             role={this.props.role || 1}
             logout={() => this.props.postLogout(this.props.api_token)}
           />
@@ -142,7 +174,11 @@ const mapStateToProps = (state) => ({
   image: state.user.image,
   email: state.user.email,
   notifications: state.user.notifications,
-  role: state.user.role
+  role: state.user.role,
+  phone: state.user.phone,
+  address: state.user.address,
+  city_id: state.user.city_id,
+  cities: state.user.cities,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -152,6 +188,15 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch({ type: actions.READ_NOTIFICATION, notifications }),
   getUserData: (api_token) =>
     dispatch({ type: actions.SAGA_GET_PROFILE, api_token }),
+  postChangeName: (data) => dispatch({ type: actions.SAGA_CHANGE_NAME, data }),
+  postChangeEmail: (data) =>
+    dispatch({ type: actions.SAGA_CHANGE_EMAIL, data }),
+  postChangePhone: (data) =>
+    dispatch({ type: actions.SAGA_CHANGE_PHONE, data }),
+  postChangePassword: (data) =>
+    dispatch({ type: actions.SAGA_CHANGE_PASSWORD, data }),
+  postChangeAddress: (data) =>
+    dispatch({ type: actions.SAGA_CHANGE_ADDRESS, data }),
 });
 
 export default withRouter(

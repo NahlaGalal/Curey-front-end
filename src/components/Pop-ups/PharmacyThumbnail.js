@@ -10,6 +10,10 @@ class PharmacyThumbnail extends Component {
     accountSettingsBox: false,
   };
 
+  componentDidMount() {
+    this.props.getUserData();
+  }
+
   logout = () => {
     deleteState();
     this.props.logout();
@@ -21,17 +25,16 @@ class PharmacyThumbnail extends Component {
         <div className="Thumbnail" onClick={(e) => e.stopPropagation()}>
           <header>
             <div className="Thumbnail__profile-img">
-              <img
-                src={this.props.pharmacyLogo}
-                alt={this.props.pharmacyName}
-              />
+              <img src={this.props.image} alt={this.props.name} />
             </div>
             <div>
-              <p className="user-name">{this.props.pharmacyName}</p>
-              <p className="user-email">
-                <img src={locationIcon} alt="Location icon" />{" "}
-                {this.props.pharmacyAddress}
-              </p>
+              <p className="user-name">{this.props.name}</p>
+              {this.props.address && (
+                <p className="user-email">
+                  <img src={locationIcon} alt="Location icon" />{" "}
+                  {this.props.address}
+                </p>
+              )}
             </div>
           </header>
           <hr />
@@ -55,6 +58,33 @@ class PharmacyThumbnail extends Component {
         </div>
         {this.state.accountSettingsBox && (
           <AccountSettings
+            image={this.props.image}
+            name={this.props.name}
+            changeName={(data) => {
+              this.props.changeName(data);
+              this.setState({ accountSettingsBox: false });
+            }}
+            email={this.props.email}
+            changeEmail={(data) => {
+              this.props.changeEmail(data);
+              this.setState({ accountSettingsBox: false });
+            }}
+            phone={this.props.phone}
+            changePhone={(data) => {
+              this.props.changePhone(data);
+              this.setState({ accountSettingsBox: false });
+            }}
+            changePassword={(data) => {
+              this.props.changePassword(data);
+              this.setState({ accountSettingsBox: false });
+            }}
+            cities={this.props.cities}
+            city_id={this.props.city_id}
+            address={this.props.address}
+            changeAddress={(data) => {
+              this.props.changeAddress(data);
+              this.setState({ accountSettingsBox: false });
+            }}
             closePopup={() => this.setState({ accountSettingsBox: false })}
             pharmacy={true}
           />
