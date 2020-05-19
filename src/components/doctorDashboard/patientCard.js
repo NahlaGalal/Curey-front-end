@@ -36,7 +36,9 @@ class PatientCard extends Component {
               <img src={Location} className="icon" alt="loactionIcon" />
               {this.props.address}
             </span>
-            {!this.props.request && <Rate rate={this.props.rate} />}
+            {!this.props.request && (
+              <Rate rate={this.props.rate || Math.random() * 5} />
+            )}
           </div>
         </div>
         <hr />
@@ -46,7 +48,13 @@ class PatientCard extends Component {
               <img className="icon" src={Calendar} alt="calendar icon" />
               {this.props.date}
             </span>
-            <p>{!this.props.home_visit ? "Booking" : "Home visit"}</p>
+            <p>
+              {!this.props.home_visit
+                ? this.props.re_examination
+                  ? "Re-examination"
+                  : "Booking"
+                : "Home visit"}
+            </p>
           </div>
           <span>
             <img className="icon" src={Clock} alt="clock icon" />
@@ -74,7 +82,9 @@ class PatientCard extends Component {
         {this.state.dateTimePickerBox && (
           <DateTimePicker
             closePopup={() => this.setState({ dateTimePickerBox: false })}
-            submitTime={(time) => this.props.submitTime(time)}
+            submitTime={(time) =>
+              this.props.submitTime(time, this.props.user_id)
+            }
           />
         )}
         {this.state.prescriptionBox && (
@@ -85,6 +95,10 @@ class PatientCard extends Component {
               this.setState({ prescriptionBox: false });
             }}
             errors={{}}
+            getSearchMedication={(value) =>
+              this.props.getSearchMedication(value)
+            }
+            medications={this.props.medications}
           />
         )}
       </div>

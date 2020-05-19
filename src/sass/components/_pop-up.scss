@@ -218,9 +218,31 @@
       .select--options {
         top: -100px;
       }
-      & .prescription__doctor:not(:first-of-type) {
-        padding-top: 2rem;
-        border-top: 1px solid rgba($color: $color-dark, $alpha: $medium-opacity);
+      & .prescription__doctor {
+        position: relative;
+        &:not(:first-of-type) {
+          padding-top: 2rem;
+          border-top: 1px solid
+            rgba($color: $color-dark, $alpha: $medium-opacity);
+            .prescription__doctor__search {
+              top: 6.9rem;
+            }
+        }
+        &__search {
+          position: absolute;
+          background-color: $color-white;
+          box-shadow: $shadow;
+          width: 100%;
+          top: 4.9rem;
+          z-index: 100;
+          padding-left: 1.6rem;
+          li {
+            margin: 8px 0;
+            label {
+              cursor: pointer;
+            }
+          }
+        }
       }
       &.prescription {
         .row {
@@ -311,6 +333,8 @@
             background-color: $color-blue;
             color: $color-white;
           }
+        }
+        &__doctor {
         }
       }
       &__header {

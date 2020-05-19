@@ -17,8 +17,10 @@ import {
   GET_DOCTOR_REEXAMINATION,
   SAGA_GET_DOCTOR_PRESCRIPTIONS,
   GET_DOCTOR_PRESCRIPTIONS,
-  CHANGE_HOME_VISIT,
-  SAGA_CHANGE_HOME_VISIT,
+  DELETE_SCHEDULE,
+  SAGA_DELETE_SCHEDULE,
+  SEARCH_MEDICATION,
+  SAGA_SEARCH_MEDICATION,
 } from "../actions/types";
 import axios from "../util/axiosInstance";
 import { put, takeEvery, call } from "redux-saga/effects";
@@ -105,10 +107,31 @@ function* postEditSchedule({ data }) {
   }
 }
 
-function* getReExaminations({ api_token }) {
+function* postDeleteSchedule({ data }) {
+  try {
+    const res = yield call(() => axios.post("/api/web/delete_day", data));
+    if (!res.data.isFailed)
+      yield put({
+        type: SAGA_GET_SCHEDULE,
+        api_token: data.api_token,
+      });
+    else
+      yield put({
+        type: DELETE_SCHEDULE,
+        payload: res.data.errors,
+        isFailed: true,
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function* getReExaminations({ api_token, skip, limit }) {
   try {
     const res = yield call(() =>
-      axios.get(`/api/web/doctor/reExaminations?api_token=${api_token}`)
+      axios.get(
+        `/api/web/doctor/reExaminations?api_token=${api_token}&skip=${skip}&limit=${limit}`
+      )
     );
     if (!res.data.isFailed)
       yield put({
@@ -136,7 +159,7 @@ function* postSetReExamination({ data }) {
     if (!res.data.isFailed)
       yield put({
         type: SET_RE_EXAMINATION,
-        isFailed: false
+        isFailed: false,
       });
     else
       yield put({
@@ -149,10 +172,12 @@ function* postSetReExamination({ data }) {
   }
 }
 
-function* getRequests({ api_token }) {
+function* getRequests({ api_token, skip, limit }) {
   try {
     const res = yield call(() =>
-      axios.get(`/api/web/doctor/requests?api_token=${api_token}`)
+      axios.get(
+        `/api/web/doctor/requests?api_token=${api_token}&skip=${skip}&limit=${limit}`
+      )
     );
     if (!res.data.isFailed)
       yield put({
@@ -176,7 +201,6 @@ function* postSendPrescription({ data }) {
     const res = yield call(() =>
       axios.post("/api/web/doctor/send_prescription", data)
     );
-    console.log(res);
     if (!res.data.isFailed)
       yield put({
         type: SEND_PRESCRIPTION,
@@ -207,6 +231,30 @@ function* getPrescriptions({ api_token }) {
     else
       yield put({
         type: GET_DOCTOR_PRESCRIPTIONS,
+        payload: res.data.errors || res.data.prescription_details,
+        isFailed: true,
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function* getSearchMedication({ api_token, name }) {
+  try {
+    const res = yield call(() =>
+      axios.get(
+        `/api/web/medications/search?api_token=${api_token}&name=${name}&skip=${0}&limit=${10}`
+      )
+    );
+    if (!res.data.isFailed)
+      yield put({
+        type: SEARCH_MEDICATION,
+        payload: res.data.data,
+        isFailed: false,
+      });
+    else
+      yield put({
+        type: SEARCH_MEDICATION,
         payload: res.data.errors,
         isFailed: true,
       });
@@ -215,34 +263,16 @@ function* getPrescriptions({ api_token }) {
   }
 }
 
-function* postHomeVisit({ data }) {
-  try {
-    const res = yield call(() => axios.post("/api/web/homevisit_status", data));
-    if (!res.data.isFailed)
-      yield put({
-        type: CHANGE_HOME_VISIT,
-        isFailed: false,
-      });
-    else
-      yield put({
-        type: CHANGE_HOME_VISIT,
-        payload: res.data.errors,
-        isFailed: true,
-      });
-  } catch (err) {
-    console.log(err)
-  }
-}
-
 export default function* watchDoctorDashboard() {
   yield takeEvery(SAGA_GET_SCHEDULE, getSchedule);
   yield takeEvery(SAGA_ADD_SCHEDULE, postAddSchedule);
   yield takeEvery(SAGA_EDIT_SCHEDULE, postEditSchedule);
+  yield takeEvery(SAGA_DELETE_SCHEDULE, postDeleteSchedule);
   yield takeEvery(SAGA_SET_RE_EXAMINAION, postSetReExamination);
   yield takeEvery(SAGA_SEND_PRESCRIPTION, postSendPrescription);
   yield takeEvery(SAGA_GET_DOCTOR_STATEMENT, getDoctorStatement);
   yield takeEvery(SAGA_GET_DOCTOR_REEXAMINATION, getReExaminations);
   yield takeEvery(SAGA_GET_DOCTOR_REQUESTS, getRequests);
   yield takeEvery(SAGA_GET_DOCTOR_PRESCRIPTIONS, getPrescriptions);
-  yield takeEvery(SAGA_CHANGE_HOME_VISIT, postHomeVisit);
+  yield takeEvery(SAGA_SEARCH_MEDICATION, getSearchMedication);
 }

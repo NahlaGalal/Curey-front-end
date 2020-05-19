@@ -1,6 +1,8 @@
 // @ts-check
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en"
 import Marker from "../assets/svg/marker.svg";
 import { Rate } from "../util/rate";
 import Phone from "../assets/svg/phone.svg";
@@ -40,6 +42,8 @@ class DoctorProfile extends Component {
 
   render() {
     let { doctor } = this.props;
+    TimeAgo.addLocale(en);
+    const timeAge = new TimeAgo("en-US");
 
     return doctor.full_name ? (
       <section className="profile">
@@ -129,7 +133,9 @@ class DoctorProfile extends Component {
                       <img src={review.image} alt="user-profile" />
                       <div>
                         <p>{review.full_name}</p>
-                        <span>{review.time}</span>
+                        <span>
+                          {timeAge.format(new Date(review.timestamp))}
+                        </span>
                       </div>
                     </div>
                     <div className="review__rate">

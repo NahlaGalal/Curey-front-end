@@ -5,7 +5,6 @@ import AutoAddSchedule from "./AutoAddSchedule";
 
 const AddSchedule = props => {
   const [activeToggler, setActiveToggler] = useState(false);
-  const [formSubmit, setFormSubmit] = useState(1);
 
   return (
     <section className="Popup">
@@ -26,14 +25,14 @@ const AddSchedule = props => {
           </Button>
         </div>
         {activeToggler ? (
-          <AutoAddSchedule formSubmit={formSubmit} addSchedule={data => props.addSchedule(data)} add={true}/>
+          <AutoAddSchedule  addSchedule={data => props.addSchedule(data)} add={true}/>
         ) : (
-          <ManualAddSchedule formSubmit={formSubmit} add={true}/>
+          <ManualAddSchedule add={true}/>
         )}
         <div className="Popup__box__footer buttons">
           <button
             className="btn btn-xxs btn-green-dark btn-apply"
-            onClick={() => setFormSubmit(formSubmit + 1)}
+            form="submit-form"
           >
             Confirm
           </button>

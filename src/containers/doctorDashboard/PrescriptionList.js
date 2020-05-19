@@ -32,7 +32,7 @@ class PrescriptionList extends Component {
               />
             ))}
           </div>
-        ) : !this.props.error ? (
+        ) : !Object.keys(this.props.error).length ? (
           <ReactLoading
             type="spokes"
             color="#0066ff"
@@ -40,7 +40,7 @@ class PrescriptionList extends Component {
           />
         ) : (
           <p className="error">
-            You don't have any re-examination appointmnents
+            You don't have any prescriptions
           </p>
         )}
         {this.props.prescriptions.length > 12 ? (
@@ -54,7 +54,7 @@ class PrescriptionList extends Component {
 const mapStateToProps = (state) => ({
   api_token: state.user.api_token,
   prescriptions: state.doctorData.prescriptions,
-  error: state.doctorData.errors.error,
+  error: state.doctorData.errors,
 });
 
 const mapDispatchToProps = (dispatch) => ({

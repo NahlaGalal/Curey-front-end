@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import SelectBox from "../SelectBox";
 import plusIcon from "../../assets/svg/plus.svg";
@@ -14,13 +14,6 @@ const days = [
   { name: "Friday", id: 7 },
 ];
 
-function usePrevious(value) {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-  return ref.current;
-}
 
 const ManualAddSchedule = (props) => {
   const { register, errors, handleSubmit } = useForm();
@@ -32,15 +25,8 @@ const ManualAddSchedule = (props) => {
       format: "AM",
     },
   ]);
-  const submittedCnt = usePrevious(props.formSubmit);
 
   const dayContainerRef = React.createRef();
-  const submitRef = React.createRef();
-
-  useEffect(() => {
-    if (props.formSubmit !== submittedCnt && submittedCnt)
-      submitRef.current.click();
-  });
 
   const toggleDaySelectBox = () => {
     const boxOpened = dayBox;
@@ -72,6 +58,7 @@ const ManualAddSchedule = (props) => {
     <form
       className="Popup__box__details prescription"
       onSubmit={handleSubmit((data) => console.log(data))}
+      if="submit-form"
     >
       {props.add ? (
         <SelectBox
@@ -135,7 +122,6 @@ const ManualAddSchedule = (props) => {
           <img src={plusIcon} alt="Plus icon" />
         </button>
       </div>
-      <input type="submit" hidden ref={submitRef} />
     </form>
   );
 };

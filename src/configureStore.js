@@ -85,6 +85,7 @@ const defaultState = {
       number: 0,
       total: 0
     },
+    searchMedication: [],
     errors: [],
   },
 };

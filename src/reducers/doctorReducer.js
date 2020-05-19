@@ -8,7 +8,7 @@ import {
   GET_DOCTOR_REEXAMINATION,
   GET_DOCTOR_REQUESTS,
   GET_DOCTOR_STATEMENT,
-  CHANGE_HOME_VISIT,
+  SEARCH_MEDICATION,
 } from "../actions/types";
 
 export const doctorData = (state = [], action) => {
@@ -16,11 +16,12 @@ export const doctorData = (state = [], action) => {
     case GET_SCHEDULE:
       return {
         ...state,
-        schedule: !action.isFailed ? action.payload : [],
+        schedule:
+          !action.isFailed && action.payload.length ? action.payload : [],
         errors: action.isFailed
-          ? action.payload.length
-            ? action.payload
-            : { error: "No schedule yet" }
+          ? action.payload
+          : !action.payload.length
+          ? { error: "No schedule yet" }
           : [],
       };
     case ADD_SCHEDULE:
@@ -34,108 +35,128 @@ export const doctorData = (state = [], action) => {
     case GET_DOCTOR_STATEMENT:
       return {
         ...state,
-        statement: !action.isFailed
-          ? [
-              ...action.payload.performed.map((patient) => {
-                let time = new Date(patient.timestamp)
-                  .toLocaleTimeString()
-                  .split(" ");
-                time[0] = time[0].slice(0, -3);
-                time = time.join(" ");
-                let date = new Date(patient.timestamp)
-                  .toDateString()
-                  .split(" ");
-                date[2] = `${date[2]},`;
-                date = date.slice(1).join(" ");
-                return {
-                  ...patient,
-                  date,
-                  time,
-                };
-              }),
-            ]
-          : [],
+        statement:
+          !action.isFailed && action.payload.performed.length
+            ? [
+                ...action.payload.performed.map((patient) => {
+                  let time = new Date(patient.timestamp)
+                    .toLocaleTimeString()
+                    .split(" ");
+                  time[0] = time[0].slice(0, -3);
+                  time = time.join(" ");
+                  let date = new Date(patient.timestamp)
+                    .toDateString()
+                    .split(" ");
+                  date[2] = `${date[2]},`;
+                  date = date.slice(1).join(" ");
+                  return {
+                    ...patient,
+                    date,
+                    time,
+                  };
+                }),
+              ]
+            : [],
         reviews: {
           number: !action.isFailed ? action.payload.doctor.no_reviews : 0,
-          total: !action.isFailed ? action.payload.doctor.rating : 0
+          total: !action.isFailed ? action.payload.doctor.rating : 0,
         },
-        errors: action.isFailed ? action.payload : [],
+        errors: action.isFailed
+          ? action.payload
+          : !action.payload.performed.length
+          ? { error: "You don't have any requests yet" }
+          : [],
       };
     case GET_DOCTOR_REQUESTS:
       return {
         ...state,
-        requests: !action.isFailed
-          ? [
-              ...action.payload.map((patient) => {
-                let time = new Date(patient.timestamp)
-                  .toLocaleTimeString()
-                  .split(" ");
-                time[0] = time[0].slice(0, -3);
-                time = time.join(" ");
-                let date = new Date(patient.timestamp)
-                  .toDateString()
-                  .split(" ");
-                date[2] = `${date[2]},`;
-                date = date.slice(1).join(" ");
-                return {
-                  ...patient,
-                  date,
-                  time,
-                };
-              }),
-            ]
+        requests:
+          !action.isFailed && action.payload.length
+            ? [
+                ...action.payload.map((patient) => {
+                  let time = new Date(patient.timestamp)
+                    .toLocaleTimeString()
+                    .split(" ");
+                  time[0] = time[0].slice(0, -3);
+                  time = time.join(" ");
+                  let date = new Date(patient.timestamp)
+                    .toDateString()
+                    .split(" ");
+                  date[2] = `${date[2]},`;
+                  date = date.slice(1).join(" ");
+                  return {
+                    ...patient,
+                    date,
+                    time,
+                  };
+                }),
+              ]
+            : [],
+        errors: action.isFailed
+          ? action.payload
+          : !action.payload.length
+          ? { error: "You don't have any requests yet" }
           : [],
-        errors: action.isFailed ? action.payload : [],
       };
     case GET_DOCTOR_REEXAMINATION:
       return {
         ...state,
-        re_examinations: !action.isFailed
-          ? [
-              ...action.payload.map((patient) => {
-                let time = new Date(patient.timestamp)
-                  .toLocaleTimeString()
-                  .split(" ");
-                time[0] = time[0].slice(0, -3);
-                time = time.join(" ");
-                let date = new Date(patient.timestamp)
-                  .toDateString()
-                  .split(" ");
-                date[2] = `${date[2]},`;
-                date = date.slice(1).join(" ");
-                return {
-                  ...patient,
-                  date,
-                  time,
-                };
-              }),
-            ]
+        re_examinations:
+          !action.isFailed && action.payload.length
+            ? [
+                ...action.payload.map((patient) => {
+                  let time = new Date(patient.timestamp)
+                    .toLocaleTimeString()
+                    .split(" ");
+                  time[0] = time[0].slice(0, -3);
+                  time = time.join(" ");
+                  let date = new Date(patient.timestamp)
+                    .toDateString()
+                    .split(" ");
+                  date[2] = `${date[2]},`;
+                  date = date.slice(1).join(" ");
+                  return {
+                    ...patient,
+                    date,
+                    time,
+                  };
+                }),
+              ]
+            : [],
+        errors: action.isFailed
+          ? action.payload
+          : !action.payload.length
+          ? { error: "You don't have any re-examination requestd yet" }
           : [],
-        errors: action.isFailed ? action.payload : [],
       };
     case GET_DOCTOR_PRESCRIPTIONS:
       return {
         ...state,
-        prescriptions: !action.isFailed
-          ? [
-              ...action.payload.map((prescription) => {
-                return {
-                  ...prescription,
-                  details: [
-                    ...prescription.details.map((detail) => ({
-                      ...detail,
-                    })),
-                  ],
-                };
-              }),
-            ]
+        prescriptions:
+          !action.isFailed && action.payload.length
+            ? [
+                ...action.payload.map((prescription) => {
+                  return {
+                    ...prescription,
+                    details: [
+                      ...prescription.details.map((detail) => ({
+                        ...detail,
+                      })),
+                    ],
+                  };
+                }),
+              ]
+            : [],
+        errors: action.isFailed
+          ? action.payload
+          : !action.payload.length
+          ? { error: "You don't have any prescriptions yet" }
           : [],
-        errors: action.isFailed ? action.payload : [],
       };
-    case CHANGE_HOME_VISIT:
+    case SEARCH_MEDICATION:
       return {
         ...state,
-        is_callup: !action.isFailed ? true : false,
+        searchMedication: !action.isFailed ? action.payload.products : [],
         errors: action.isFailed ? action.payload : []
       }
     default:

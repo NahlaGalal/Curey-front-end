@@ -60,6 +60,20 @@ export class Prescription extends Component {
     });
   };
 
+  formatTime = (time) => {
+    let hours = parseInt(time.slice(0, 2));
+    let minutes = time.slice(3, 5);
+    let hourFormat = "AM";
+    if(hours > 12) {
+      hours -= 12;
+      hourFormat = "PM";
+    }else if(hours === 12) hourFormat = "PM";
+    else if(hours === 0) hours = 12;
+    hours = hours.toString().padStart(2, '0');
+    time = `${hours}:${minutes} ${hourFormat}`
+    return <li key={time}>{time}</li>
+  }
+
   render() {
     return (
       <main className="Prescription" onClick={() => this.setState({menuVisiblity: -1})}>
@@ -102,9 +116,9 @@ export class Prescription extends Component {
                 </div>
                 <h3>Dosing times</h3>
                 <ul className="Prescription__container__card__dosing">
-                  {prescription.dosage_time.map(dose => (
-                    <li key={dose}>{dose}</li>
-                  ))}
+                  {prescription.dosage_time.map(dose => 
+                    this.formatTime(dose)
+                  )}
                 </ul>
                 <div
                   className={`Prescription__container__card__menu ${

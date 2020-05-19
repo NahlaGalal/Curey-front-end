@@ -10,6 +10,7 @@ import {
   SAGA_GET_REQUESTS,
   GET_REQUESTS,
   SAGA_ACCEPT_REQUEST,
+  ACCEPT_REQUEST,
 } from "../actions/types";
 import { takeEvery, put, call } from "redux-saga/effects";
 import axios from "../util/axiosInstance";
@@ -64,7 +65,6 @@ function* postDeliveryOrder({ data }) {
     if (!res.data.isFailed)
       yield put({
         type: MOVE_TO_DELIVERY,
-        payload: res.data.data,
         isFailed: false,
       });
     else
@@ -123,15 +123,20 @@ function* getRequests({ api_token }) {
   }
 }
 
-function* postAcceptOrder({ api_token, id }) {
+function* postAcceptOrder({ data }) {
   try {
-    const res = yield call(() =>
-      axios.post("/api/web/accept_request", api_token, id)
-    );
+    const res = yield call(() => axios.post("/api/web/accept_order", data));
     if (!res.data.isFailed) {
-      alert(res.data.data.success);
+      yield put({
+        type: ACCEPT_REQUEST,
+        isFailed: false,
+      });
     } else {
-      alert(res.data.data.errors.error);
+      yield put({
+        type: ACCEPT_REQUEST,
+        payload: res.data.errors,
+        isFailed: true
+      })
     }
   } catch (err) {
     console.log(err);

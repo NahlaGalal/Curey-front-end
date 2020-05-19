@@ -11,7 +11,8 @@ import {
   ADD_NOTIFICATION,
   READ_NOTIFICATION,
   SHOW_CART,
-  GET_PROFILE
+  GET_PROFILE,
+  RECIEVE_HOME_DATA,
 } from "../actions/types";
 
 export function user(state = [], action) {
@@ -19,7 +20,7 @@ export function user(state = [], action) {
     case GET_CITIES:
       return {
         ...state,
-        cities: action.payload
+        cities: action.payload,
       };
     case SIGNUP_USER:
       return {
@@ -38,6 +39,12 @@ export function user(state = [], action) {
         is_complete: !action.isFailed ? action.payload.is_complete || 0 : 0,
         cart: [],
         errors: action.isFailed ? action.payload : {},
+      };
+    case RECIEVE_HOME_DATA:
+      return {
+        ...state,
+        name: !action.isFailed ? action.payload.user_data.name : "",
+        image: !action.isFailed ? action.payload.user_data.image : "",
       };
     case LOGOUT_USER:
       return {
@@ -88,17 +95,19 @@ export function user(state = [], action) {
         ...state,
         notifications: action.notifications,
       };
-    case GET_PROFILE: 
+    case GET_PROFILE:
       let doctorData = {};
-      if(!action.isFailed && action.payload.profile.role === 3) {
+      if (!action.isFailed && action.payload.profile.role === 3) {
         doctorData = {
           callup: !action.isFailed ? action.payload.profile.callup : false,
-          callup_fees: !action.isFailed ? action.payload.profile.callup_fees : 0,
+          callup_fees: !action.isFailed
+            ? action.payload.profile.callup_fees
+            : 0,
           degrees: !action.isFailed ? action.payload.profile.degrees : [],
           duration: !action.isFailed ? action.payload.profile.duration : 0,
           fees: !action.isFailed ? action.payload.profile.fees : 0,
-          speciality: !action.isFailed ? action.payload.profile.speciality : ""
-        }
+          speciality: !action.isFailed ? action.payload.profile.speciality : "",
+        };
       }
       return {
         ...state,

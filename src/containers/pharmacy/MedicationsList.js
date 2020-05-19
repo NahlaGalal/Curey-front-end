@@ -67,7 +67,6 @@ export class MedicationsList extends Component {
           type="medications"
           openFilterBox={this.openFilterBox}
           withFilter
-          // searchfunction={this.searchDoctor}
         />
         <div className="dashboardGrid">
           {this.props.medications.length ? (

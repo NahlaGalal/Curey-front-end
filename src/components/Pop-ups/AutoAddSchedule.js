@@ -1,8 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import SelectBox from "../SelectBox";
 import TimeInput from "../TimeInput";
-import Input from "../Input";
 
 const startDays = [
   { name: "Saturday", id: 1 },
@@ -24,16 +23,8 @@ const endDays = [
   { name: "Friday", id: 17 }
 ];
 
-function usePrevious(value) {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-  return ref.current;
-}
-
 const AutoAddSchedule = props => {
-  const { register, errors, watch, handleSubmit } = useForm();
+  const { register, errors, handleSubmit } = useForm();
 
   const [startDayBox, setStartDayBox] = useState(false);
   const [endDayBox, setEndDayBox] = useState(false);
@@ -47,15 +38,9 @@ const AutoAddSchedule = props => {
     time: "",
     format: "AM"
   });
-  const submittedCnt = usePrevious(props.formSubmit);
 
   const startDayContainerRef = React.createRef();
   const endDayContainerRef = React.createRef();
-  const submitRef = React.createRef();
-
-  useEffect(() => {
-    if (props.formSubmit !== submittedCnt && submittedCnt) submitRef.current.click();
-  });
 
   const toggleStartDaySelectBox = () => {
     const boxOpened = startDayBox;
@@ -97,9 +82,10 @@ const AutoAddSchedule = props => {
         props.addSchedule({
           ...data,
           sTimeFormat: startTime.format,
-          eTimeFormat: endTime.format
+          eTimeFormat: endTime.format,
         })
       )}
+      id="submit-form"
     >
       {props.add ? (
         <div className="row schedule">
@@ -114,7 +100,9 @@ const AutoAddSchedule = props => {
             multiSelect={false}
             isError={errors["Starting day"]}
             error={
-              errors["Starting day"] ? "You must choose your starting day" : null
+              errors["Starting day"]
+                ? "You must choose your starting day"
+                : null
             }
             refe={register({ required: true })}
           />
@@ -189,20 +177,6 @@ const AutoAddSchedule = props => {
           />
         </div>
       </div>
-      <Input
-        type="text"
-        name="duration"
-        value={watch("duration")}
-        id="duration"
-        placeholder="Session duration in minutes"
-        isError={errors.duration}
-        error={errors.duration ? "You must type session duration" : null}
-        refe={register({ required: true, validate: (value) => +value !== 0 })}
-        onKeyPress={(e) =>
-          !e.key.toString().match(/[0-9]/) ? e.preventDefault() : null
-        }
-      />
-      <input type="submit" hidden ref={submitRef} />
     </form>
   );
 };

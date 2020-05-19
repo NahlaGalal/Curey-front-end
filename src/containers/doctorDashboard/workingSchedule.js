@@ -7,7 +7,7 @@ import {
   SAGA_GET_SCHEDULE,
   SAGA_ADD_SCHEDULE,
   SAGA_EDIT_SCHEDULE,
-  SAGA_CHANGE_HOME_VISIT,
+  SAGA_DELETE_SCHEDULE,
 } from "../../actions/types";
 import ReactLoading from "react-loading";
 import EditSchedule from "../../components/Pop-ups/EditSchedule";
@@ -27,7 +27,6 @@ class WorkingSchedule extends Component {
     addScheduleBox: false,
     page: 1,
     editScheduleBox: false,
-    homeVisit: false,
     day: {
       id: null,
       name: "",
@@ -38,24 +37,9 @@ class WorkingSchedule extends Component {
     this.props.getSchedule(this.props.api_token);
   }
 
-  changePage = (e) => {
-    this.setState({ page: +e.target.textContent });
-  };
+  changePage = (e) => this.setState({ page: +e.target.textContent });
 
-  changeHomeVisit = (e) => {
-    e.preventDefault();
-    if (e.target.homeVisit.checked !== this.state.homeVisit) {
-      this.props.postChangeHomeVisit({
-        api_token: this.props.api_token,
-        status: this.state.homeVisit ? 1 : 0,
-      });
-      this.setState({ homeVisit: !this.state.homeVisit });
-    }
-  };
-
-  addSchedule = (data) => {
-    let from = days.findIndex((day) => day === data["Starting day"]);
-    const to = days.findIndex((day) => day === data["Ending day"]);
+  formatTime = (data) => {
     let start_time = `${data["dosing-0"]}:00`,
       end_time = `${data["dosing-1"]}:00`;
     start_time =
@@ -73,6 +57,13 @@ class WorkingSchedule extends Component {
         : data.eTimeFormat === "AM" && end_time.startsWith("12")
         ? "00:00:00"
         : end_time;
+    return { start_time, end_time };
+  };
+
+  addSchedule = (data) => {
+    let from = days.findIndex((day) => day === data["Starting day"]);
+    const to = days.findIndex((day) => day === data["Ending day"]);
+    const { start_time, end_time } = this.formatTime(data);
     let schedule = [];
     while (from !== to) {
       schedule.push({
@@ -92,23 +83,7 @@ class WorkingSchedule extends Component {
   };
 
   updateDay = (data) => {
-    let start_time = `${data["dosing-0"]}:00`,
-      end_time = `${data["dosing-1"]}:00`;
-    start_time =
-      data.sTimeFormat === "PM" && !start_time.startsWith("12")
-        ? start_time.replace(
-            start_time.slice(0, 2),
-            +start_time.slice(0, 2) + 12
-          )
-        : data.sTimeFormat === "AM" && start_time.startsWith("12")
-        ? "00:00:00"
-        : start_time;
-    end_time =
-      data.eTimeFormat === "PM" && !end_time.startsWith("12")
-        ? end_time.replace(end_time.slice(0, 2), +end_time.slice(0, 2) + 12)
-        : data.eTimeFormat === "AM" && end_time.startsWith("12")
-        ? "00:00:00"
-        : end_time;
+    const { start_time, end_time } = this.formatTime(data);
     this.props.postEditSchedule({
       api_token: this.props.api_token,
       from: start_time,
@@ -195,6 +170,14 @@ class WorkingSchedule extends Component {
                           day: { id: times[0].id, name: times[0].day },
                         })
                       }
+                      deleteDay={() =>
+                        times.map(({ id }) =>
+                          this.props.postDeleteDay({
+                            api_token: this.props.api_token,
+                            day_id: id,
+                          })
+                        )
+                      }
                     />
                   ))}
               </div>
@@ -208,16 +191,6 @@ class WorkingSchedule extends Component {
               />
             )}
           </div>
-          <form className="homeVisit" onSubmit={this.changeHomeVisit}>
-            <input type="checkbox" id="homeVisit" name="homeVisit" />
-            <label htmlFor="homeVisit">
-              <span></span> Home visit srevice
-            </label>
-            <button type="submit" className="btn btn-green-dark btn-lg">
-              {" "}
-              Apply{" "}
-            </button>
-          </form>
         </div>
         {this.state.addScheduleBox && (
           <AddSchedule
@@ -247,8 +220,7 @@ const mapDispatchToProps = (dispatch) => ({
   getSchedule: (api_token) => dispatch({ type: SAGA_GET_SCHEDULE, api_token }),
   postAddSchedule: (data) => dispatch({ type: SAGA_ADD_SCHEDULE, data }),
   postEditSchedule: (data) => dispatch({ type: SAGA_EDIT_SCHEDULE, data }),
-  postChangeHomeVisit: (data) =>
-    dispatch({ type: SAGA_CHANGE_HOME_VISIT, data }),
+  postDeleteDay: (data) => dispatch({ type: SAGA_DELETE_SCHEDULE, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkingSchedule);

@@ -115,7 +115,7 @@ class MedicinePage extends Component {
                         key={i}
                         name={pharmacy.name}
                         rate={pharmacy.overall_rating}
-                        reviews={pharmacy.count}
+                        reviews={pharmacy.rating_count}
                         address={pharmacy.address}
                         image={pharmacy.image}
                         medication={{

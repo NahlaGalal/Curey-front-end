@@ -1,5 +1,6 @@
 import React from "react";
 import EditIcon from "../../assets/svg/edit.svg";
+import DeleteIcon from "../../assets/svg/delete.svg";
 import Button from "../Button";
 
 const AppointmentSchedule = (props) => {
@@ -8,7 +9,7 @@ const AppointmentSchedule = (props) => {
     let hour = +time.slice(0, 2);
     while (hour < +props.scheduleEnding[i].slice(0, 2)) {
       let start_time = !hour
-        ? `12:00:00 AM`
+        ? `12:00 AM`
         : hour > 12
         ? `${time.replace(time.slice(0, 2), hour - 12).slice(0, -3)} PM`
         : hour === 12
@@ -35,6 +36,9 @@ const AppointmentSchedule = (props) => {
     <div className="AppointmentSchedule">
       <div className="flex">
         <h4>{props.title}</h4>
+        <Button className="btn" onClick={props.deleteDay}>
+          <img src={DeleteIcon} alt="edit" style={{marginRight: 8}}/>
+        </Button>
         <Button className="btn" onClick={props.updateDay}>
           <img src={EditIcon} alt="edit" />
         </Button>

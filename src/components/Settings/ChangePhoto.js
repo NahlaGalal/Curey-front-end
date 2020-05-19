@@ -29,6 +29,8 @@ const ChangePhoto = (props) => {
         if(file) reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result);
         reader.onerror = (err) => reject(err);
+        setImageName();
+        setImageUrl()
       })
 
       props.changeImage({

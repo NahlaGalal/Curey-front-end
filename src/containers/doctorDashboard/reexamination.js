@@ -6,6 +6,7 @@ import {
   SAGA_SEND_PRESCRIPTION,
   SAGA_SET_RE_EXAMINAION,
   SAGA_GET_DOCTOR_REEXAMINATION,
+  SAGA_SEARCH_MEDICATION,
 } from "../../actions/types";
 import ReactLoading from "react-loading";
 
@@ -16,7 +17,7 @@ class ReExamination extends Component {
   };
 
   componentDidMount() {
-    this.props.getReExaminations(this.props.api_token);
+    this.props.getReExaminations(this.props.api_token, 0, 12);
   }
 
   togglePageNumber = (pageNo) => {
@@ -34,14 +35,51 @@ class ReExamination extends Component {
     this.setState({ menuVisiblity });
   };
 
-  submitTime = (time) => {
+  submitTime = (appointment_time, user_id) => {
     this.props.submitTime({
       api_token: this.props.api_token,
-      appointment_time: time,
+      appointment_time,
       is_callup: this.props.state === "Home visit" ? 1 : 0,
-      user_id: 5,
+      user_id,
     });
   };
+
+  generatePatientCard = (card, i) => (
+    <PatientCard
+      key={i}
+      index={i}
+      user_id={card.id}
+      name={card.patient}
+      address={card.address}
+      rate={card.rate}
+      date={card.date}
+      time={card.time}
+      image={card.image}
+      home_visit={card.home_visit}
+      type="re-examination"
+      request={false}
+      toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
+      menuVisibility={this.state.menuVisiblity}
+      stopPropagation={(e) => e.stopPropagation()}
+      medications={this.props.medications}
+      sendPrescription={(medications) => {
+        this.props.sendPrescription({
+          api_token: this.props.api_token,
+          appointment_id: card.id,
+          items: medications.map((med) => ({
+            product_id: med.id,
+            dosage: med.frequency,
+            per_week: med.period === "week" ? true : false,
+          })),
+        });
+        this.setState({ menuVisiblity: -1 });
+      }}
+      getSearchMedication={(value) =>
+        this.props.getSearchMedication(this.props.api_token, value)
+      }
+      submitTime={(time, user_id) => this.submitTime(time, user_id)}
+    />
+  );
 
   render() {
     const currentPage = ["All", "Bookings", "Home visits"];
@@ -73,101 +111,16 @@ class ReExamination extends Component {
         {this.props.re_examination.length ? (
           <div className="re-examination__grid">
             {this.state.pageNum === 0
-              ? this.props.re_examination.map((card, i) => (
-                  <PatientCard
-                    key={i}
-                    index={i}
-                    name={card.patient}
-                    address={card.address}
-                    rate={card.rate}
-                    date={card.date}
-                    time={card.time}
-                    image={card.image}
-                    home_visit={card.home_visit}
-                    type="re-examination"
-                    request={false}
-                    toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
-                    menuVisibility={this.state.menuVisiblity}
-                    stopPropagation={(e) => e.stopPropagation()}
-                    sendPrescription={(medications) =>
-                      this.props.sendPrescription({
-                        api_token: this.props.api_token,
-                        appointment_id: card.id,
-                        items: medications.map((med) => ({
-                          product_id: med.name,
-                          dosage: med.frequency,
-                          per: med.per,
-                        })),
-                      })
-                    }
-                    submitTime={(time) => this.submitTime(time)}
-                  />
-                ))
+              ? this.props.re_examination.map((card, i) =>
+                  this.generatePatientCard(card, i)
+                )
               : this.state.pageNum === 1
               ? this.props.re_examination
                   .filter((card) => !card.home_visit)
-                  .map((card, i) => (
-                    <PatientCard
-                      key={i}
-                      index={i}
-                      name={card.patient}
-                      address={card.address}
-                      rate={card.rate}
-                      date={card.date}
-                      time={card.time}
-                      image={card.image}
-                      home_visit={card.home_visit}
-                      type="re-examination"
-                      request={false}
-                      toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
-                      menuVisibility={this.state.menuVisiblity}
-                      stopPropagation={(e) => e.stopPropagation()}
-                      sendPrescription={(medications) =>
-                        this.props.sendPrescription({
-                          api_token: this.props.api_token,
-                          appointment_id: card.id,
-                          items: medications.map((med) => ({
-                            product_id: med.name,
-                            dosage: med.frequency,
-                            per: med.per,
-                          })),
-                        })
-                      }
-                      submitTime={(time) => this.submitTime(time)}
-                    />
-                  ))
+                  .map((card, i) => this.generatePatientCard(card, i))
               : this.props.re_examination
                   .filter((card) => card.home_visit)
-                  .map((card, i) => (
-                    <PatientCard
-                      key={i}
-                      index={i}
-                      name={card.patient}
-                      address={card.address}
-                      rate={card.rate}
-                      date={card.date}
-                      time={card.time}
-                      image={card.image}
-                      home_visit={card.home_visit}
-                      type="re-examination"
-                      request={false}
-                      toggleMenuBox={(e) => this.toggleMenuBox(e, i)}
-                      menuVisibility={this.state.menuVisiblity}
-                      stopPropagation={(e) => e.stopPropagation()}
-                      sendPrescription={(medications) =>
-                        this.props.sendPrescription({
-                          api_token: this.props.api_token,
-                          appointment_id: card.id,
-                          items: medications.map((med) => ({
-                            product_id: med.name,
-                            dosage: med.frequency,
-                            per: med.per,
-                          })),
-                        })
-                      }
-                      submitTime={(time) => this.submitTime(time)}
-                    />
-                  ))}
+                  .map((card, i) => this.generatePatientCard(card, i))}
           </div>
         ) : !this.props.error ? (
           <ReactLoading
@@ -192,14 +145,17 @@ class ReExamination extends Component {
 const mapStateToProps = (state) => ({
   api_token: state.user.api_token,
   re_examination: state.doctorData.re_examinations,
+  medications: state.doctorData.searchMedication,
   error: state.doctorData.errors.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   submitTime: (data) => dispatch({ type: SAGA_SET_RE_EXAMINAION, data }),
   sendPrescription: (data) => dispatch({ type: SAGA_SEND_PRESCRIPTION, data }),
-  getReExaminations: (api_token) =>
-    dispatch({ type: SAGA_GET_DOCTOR_REEXAMINATION, api_token }),
+  getReExaminations: (api_token, skip, limit) =>
+    dispatch({ type: SAGA_GET_DOCTOR_REEXAMINATION, api_token, skip, limit }),
+  getSearchMedication: (api_token, name) =>
+    dispatch({ type: SAGA_SEARCH_MEDICATION, api_token, name }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReExamination);

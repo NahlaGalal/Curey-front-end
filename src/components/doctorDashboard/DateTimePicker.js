@@ -111,9 +111,11 @@ const DateTimePicker = (props) => {
           : timeFormat === "AM" && hour === 12
           ? 0
           : hour;
-      const date = `${year}-${month + 1}-${reExDate} ${time24}:${time.slice(
-        3
-      )}:00`;
+      const date = `${year}-${(month + 1)
+        .toString()
+        .padStart(2, "0")}-${reExDate
+        .toString()
+        .padStart(2, "0")} ${time24}:${time.slice(3)}:00`;
       props.submitTime(date);
       props.closePopup();
     }
