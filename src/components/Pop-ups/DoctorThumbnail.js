@@ -42,7 +42,7 @@ class DoctorThumbnail extends Component {
               )}
               <p className="user-email">
                 <img src={locationIcon} alt="Location icon" />{" "}
-                {this.props.address}
+                {this.props.work_address}
               </p>
             </div>
           </header>
@@ -122,6 +122,7 @@ class DoctorThumbnail extends Component {
             cities={this.props.cities}
             city_id={this.props.city_id}
             address={this.props.address}
+            work_address={this.props.work_address}
             changeAddress={(data) => {
               this.props.changeAddress(data);
               this.setState({ pesronalSettingsBox: false });

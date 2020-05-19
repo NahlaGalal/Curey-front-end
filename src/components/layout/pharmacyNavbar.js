@@ -119,6 +119,7 @@ const PharmacyNavbar = props => {
           cities={props.cities}
           city_id={props.city_id}
           address={props.address}
+          work_address={props.work_address}
           changeAddress={(data) =>
             props.postChangeAddress({
               ...data,
@@ -138,6 +139,7 @@ const mapStateToProps = (state) => ({
   name: state.user.full_name,
   image: state.user.image,
   address: state.user.address,
+  work_address: state.user.work_address,
   email: state.user.email,
   role: state.user.role,
   phone: state.user.phone,

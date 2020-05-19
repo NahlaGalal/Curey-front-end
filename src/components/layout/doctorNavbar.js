@@ -129,6 +129,7 @@ const DoctorNavbar = (props) => {
           cities={props.cities}
           city_id={props.city_id}
           address={props.address}
+          work_address={props.work_address}
           changeAddress={(data) => {
             props.postChangeAddress({ ...data, api_token: props.api_token });
             props.toggleDoctorThumbnailList();
@@ -164,6 +165,7 @@ const mapStateToProps = (state) => ({
   doctor_name: state.user.full_name,
   image: state.user.image,
   address: state.user.address,
+  work_address: state.user.work_address,
   rating: state.doctorData.reviews.total,
   no_reviews: state.doctorData.reviews.number,
   fees: state.user.fees,

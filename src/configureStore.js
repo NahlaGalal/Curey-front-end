@@ -25,7 +25,8 @@ const defaultState = {
     address: "",
     phone: "",
     is_complete: 0,
-    city_id: 0
+    city_id: 0,
+    work_address: ""
   },
   doctors: {
     doctorsData: [],

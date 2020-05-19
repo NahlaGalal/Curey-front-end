@@ -115,6 +115,7 @@ const AccountSettings = (props) => {
               cities={props.cities}
               city_id={props.city_id}
               address={props.address}
+              work_address={props.work_address}
               changeAddress={(data) => props.changeAddress(data)}
             />
           )}

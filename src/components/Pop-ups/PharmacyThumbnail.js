@@ -29,10 +29,10 @@ class PharmacyThumbnail extends Component {
             </div>
             <div>
               <p className="user-name">{this.props.name}</p>
-              {this.props.address && (
+              {this.props.work_address && (
                 <p className="user-email">
                   <img src={locationIcon} alt="Location icon" />{" "}
-                  {this.props.address}
+                  {this.props.work_address}
                 </p>
               )}
             </div>
@@ -81,6 +81,7 @@ class PharmacyThumbnail extends Component {
             cities={this.props.cities}
             city_id={this.props.city_id}
             address={this.props.address}
+            work_address={this.props.work_address}
             changeAddress={(data) => {
               this.props.changeAddress(data);
               this.setState({ accountSettingsBox: false });

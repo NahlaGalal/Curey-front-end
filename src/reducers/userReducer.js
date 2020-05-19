@@ -120,6 +120,7 @@ export function user(state = [], action) {
         cities: !action.isFailed ? action.payload.cities : state.cities,
         specialities: !action.isFailed ? action.payload.specialities : [],
         city_id: !action.isFailed ? action.payload.profile.city_id : 0,
+        work_address: !action.isFailed ? action.payload.profile.work_address : "",
         ...doctorData,
       };
     default:

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import SelectBox from "../SelectBox";
+import Input from "../Input";
 
 const ChangeAddress = (props) => {
   const currentCity = props.city_id
@@ -10,6 +11,7 @@ const ChangeAddress = (props) => {
     defaultValues: {
       City: currentCity,
       address: props.address,
+      work_address: props.work_address,
     },
   });
 
@@ -44,7 +46,11 @@ const ChangeAddress = (props) => {
       <p className="Popup__box__settings__description">Add your address here</p>
       <form
         onSubmit={handleSubmit((data) =>
-          props.changeAddress({ address: data.address, city_id: city.city_id })
+          props.changeAddress({
+            address: data.address,
+            city_id: city.city_id,
+            work_address: data.work_address,
+          })
         )}
       >
         <SelectBox
@@ -63,23 +69,26 @@ const ChangeAddress = (props) => {
             validate: () => city.city_id !== null,
           })}
         />
-        <div className="fieldinput">
-          <input
-            name="address"
-            type="text"
-            id="address"
-            className="fieldinput__input"
-            ref={register({ required: true })}
-          />
-          <label htmlFor="address" className={watch("address") ? "active" : ""}>
-            Address
-          </label>
-          {errors.address && (
-            <p className="fieldinput__error">
-              {errors.address ? "Your must type your address" : null}
-            </p>
-          )}
-        </div>
+        <Input
+          name="work_address"
+          type="text"
+          id="work_address"
+          value={watch("work_address")}
+          placeholder="Work address"
+          isError={errors.work_address}
+          error="Your must type your address"
+          refe={register({ required: true })}
+        />
+        <Input
+          name="address"
+          type="text"
+          id="address"
+          value={watch("address")}
+          placeholder="Address"
+          isError={errors.address}
+          error="Your must type your address"
+          refe={register({ required: true })}
+        />
         <button type="submit" className="btn btn-green-dark btn-xxs">
           Save
         </button>
