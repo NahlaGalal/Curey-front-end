@@ -28,7 +28,7 @@ import DoctorRequests from "./doctorDashboard/DoctorRequests";
 import PrescriptionList from "../containers/doctorDashboard/PrescriptionList";
 import DoctorStatement from "../containers/doctorDashboard/Statement";
 import Error from "./Error";
-import PharmCompSignup from "./PharmCompSignup";
+import DoctorCompSignup from "./DoctorCompSignup";
 
 const state = loadState();
 
@@ -41,8 +41,8 @@ const Router = () => {
             <Switch>
               <Route
                 exact
-                path="/pharmacy-complete-signup"
-                component={PharmCompSignup}
+                path="/doctor-complete-signup"
+                component={DoctorCompSignup}
               />
               <Route exact path="/home" component={Home} />
               <Route exact path="/doctors" component={Doctors} />

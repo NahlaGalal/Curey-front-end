@@ -4,7 +4,7 @@ import Input from "../components/Input";
 import { connect } from "react-redux";
 import * as actions from "../actions/types";
 import { Link } from "react-router-dom";
-import validator from "validator";
+
 import SelectBox from "../components/SelectBox";
 
 const SignupUser = (props) => {
@@ -19,7 +19,11 @@ const SignupUser = (props) => {
       address: data.address,
       phone: data.phone,
       city_id: +city.city_id || 1,
-      image: data.pharmacy_image,
+      image: data.doctor_image,
+      fees: data.fees,
+      offers_callup: data.offers_callup,
+      callup_fees: data.callup_fees || 0,
+      duration: data.duration,
     });
   };
 
@@ -80,7 +84,7 @@ const SignupUser = (props) => {
           name="address"
           value={watch("address")}
           id="address"
-          placeholder="Pharmacy address"
+          placeholder="address"
           isError={errors.address || props.errors.address}
           error={
             errors.address
@@ -112,17 +116,80 @@ const SignupUser = (props) => {
           })}
         />
         <diV className="mb-20">
-          <label htmlFor="pharmacy_image">
-            <p className="heading-4 mb-20">Pharmacy image</p>
+          <label htmlFor="doctor_image">
+            <p className="heading-4 mb-20">Your image</p>
           </label>
           <input
             type="file"
-            name="pharmacy_image"
-            value={watch("pharmacy_image")}
-            id="pharmacy_image"
+            name="doctor_image"
+            value={watch("doctor_image")}
+            id="doctor_image"
             refe={register}
           />
         </diV>
+
+        <Input
+          type="number"
+          name="fees"
+          value={watch("fees")}
+          id="fees"
+          placeholder="your fees"
+          isError={errors.fees || props.errors.fees}
+          error={
+            errors.address ? "please enter valid number " : props.errors.address
+          }
+          refe={register({
+            required: true,
+            minLength: 2,
+            maxLength: 6,
+          })}
+        />
+
+        <label htmlFor="offers_callup" className="heading-4 center mb-20">
+          <Input
+            type="checkbox"
+            name="offers_callup"
+            value={watch("offers_callup")}
+            id="offers_callup"
+            refe={register}
+          />
+          offers callup
+        </label>
+
+        <Input
+          type="number"
+          name="callup_fees"
+          value={watch("callup_fees")}
+          id="callup_fees"
+          placeholder="your callup fees"
+          isError={errors.callup_fees || props.errors.callup_fees}
+          error={
+            errors.address ? "please enter valid number " : props.errors.address
+          }
+          refe={register({
+            required: false,
+            minLength: 2,
+            maxLength: 8,
+          })}
+        />
+
+        <Input
+          type="number"
+          name="duration"
+          value={watch("duration")}
+          id="duration"
+          placeholder="your duration"
+          isError={errors.duration || props.errors.duration}
+          error={
+            errors.address ? "please enter valid number " : props.errors.address
+          }
+          refe={register({
+            required: true,
+            minLength: 1,
+            maxLength: 4,
+          })}
+        />
+
         <button className="btn btn-md btn-green" type="submit">
           Signup
         </button>
@@ -133,9 +200,10 @@ const SignupUser = (props) => {
 
 /*********************************** */
 
-class PharmCompSignup extends Component {
+class DoctorCompSignup extends Component {
   componentDidMount() {
     this.props.getCities();
+    this.props.getSpecialities();
   }
 
   render() {
@@ -180,8 +248,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   postSignup: (data) =>
-    dispatch({ type: actions.SAGA_COMPLETE_PHARM_SIGNUP, data }),
+    dispatch({ type: actions.SAGA_COMPLETE_DOCTOR_SIGNUP, data }),
   getCities: () => dispatch({ type: actions.SAGA_GET_CITIES }),
+  getSpecialities: () => dispatch({ type: actions.SAGA_GET_SPECIALITY }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PharmCompSignup);
+export default connect(mapStateToProps, mapDispatchToProps)(DoctorCompSignup);

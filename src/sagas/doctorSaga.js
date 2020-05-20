@@ -21,6 +21,10 @@ import {
   SAGA_DELETE_SCHEDULE,
   SEARCH_MEDICATION,
   SAGA_SEARCH_MEDICATION,
+  GET_SPECIALITY,
+  SAGA_GET_SPECIALITY,
+  COMPLETE_DOCTOR_SIGNUP,
+  SAGA_COMPLETE_DOCTOR_SIGNUP,
 } from "../actions/types";
 import axios from "../util/axiosInstance";
 import { put, takeEvery, call } from "redux-saga/effects";
@@ -61,6 +65,29 @@ function* getDoctorStatement({ api_token }) {
     else
       yield put({
         type: GET_DOCTOR_STATEMENT,
+        payload: res.data.errors,
+        isFailed: true,
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function* getDoctorSpeciality({ api_token }) {
+  try {
+    const res = yield call(() =>
+      axios.get(`/api/web/complete_signup?api_token=${api_token}`)
+    );
+    if (!res.data.isFailed) {
+      yield put({
+        type: GET_SPECIALITY,
+        payload: res.data.data,
+        isFailed: false,
+      });
+      console.log(res);
+    } else
+      yield put({
+        type: GET_SPECIALITY,
         payload: res.data.errors,
         isFailed: true,
       });
@@ -263,6 +290,26 @@ function* getSearchMedication({ api_token, name }) {
   }
 }
 
+function* postCompleteSignUp({ data }) {
+  try {
+    const res = yield call(() => axios.post("/api/web/complete_signup", data));
+    if (!res.data.isFailed) {
+      console.log(res);
+      yield put({
+        type: COMPLETE_DOCTOR_SIGNUP,
+        isFailed: false,
+      });
+    } else {
+      yield put({
+        type: COMPLETE_DOCTOR_SIGNUP,
+        payload: res.data.errors,
+        isFailed: true,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
 export default function* watchDoctorDashboard() {
   yield takeEvery(SAGA_GET_SCHEDULE, getSchedule);
   yield takeEvery(SAGA_ADD_SCHEDULE, postAddSchedule);
@@ -275,4 +322,6 @@ export default function* watchDoctorDashboard() {
   yield takeEvery(SAGA_GET_DOCTOR_REQUESTS, getRequests);
   yield takeEvery(SAGA_GET_DOCTOR_PRESCRIPTIONS, getPrescriptions);
   yield takeEvery(SAGA_SEARCH_MEDICATION, getSearchMedication);
+  yield takeEvery(SAGA_GET_SPECIALITY, getDoctorSpeciality);
+  yield takeEvery(SAGA_COMPLETE_DOCTOR_SIGNUP, postCompleteSignUp);
 }
