@@ -11,6 +11,8 @@ import {
   GET_REQUESTS,
   SAGA_ACCEPT_REQUEST,
   ACCEPT_REQUEST,
+  COMPLETE_PHARM_SIGNUP,
+  SAGA_COMPLETE_PHARM_SIGNUP,
 } from "../actions/types";
 import { takeEvery, put, call } from "redux-saga/effects";
 import axios from "../util/axiosInstance";
@@ -135,8 +137,29 @@ function* postAcceptOrder({ data }) {
       yield put({
         type: ACCEPT_REQUEST,
         payload: res.data.errors,
-        isFailed: true
-      })
+        isFailed: true,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function* postCompleteSignUp({ data }) {
+  try {
+    const res = yield call(() => axios.post("/api/web/complete_signup", data));
+    if (!res.data.isFailed) {
+      console.log(res);
+      yield put({
+        type: COMPLETE_PHARM_SIGNUP,
+        isFailed: false,
+      });
+    } else {
+      yield put({
+        type: COMPLETE_PHARM_SIGNUP,
+        payload: res.data.errors,
+        isFailed: true,
+      });
     }
   } catch (err) {
     console.log(err);
@@ -150,4 +173,5 @@ export default function* watchPharmacyDashboard() {
   yield takeEvery(SAGA_GET_DASHBOARD, getDashboard);
   yield takeEvery(SAGA_GET_REQUESTS, getRequests);
   yield takeEvery(SAGA_ACCEPT_REQUEST, postAcceptOrder);
+  yield takeEvery(SAGA_COMPLETE_PHARM_SIGNUP, postCompleteSignUp);
 }
