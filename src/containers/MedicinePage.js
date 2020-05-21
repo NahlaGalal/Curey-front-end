@@ -9,7 +9,12 @@ import * as actions from "../actions/types";
 import ReactLoading from "react-loading";
 
 class MedicinePage extends Component {
-  state = { hovered: false, changeAddressBox: false };
+  state = {
+    hovered: false,
+    changeAddressBox: false,
+    address: "",
+    permenant: 0,
+  };
 
   componentDidMount() {
     this.props.requestMedicineData(
@@ -49,6 +54,8 @@ class MedicinePage extends Component {
   submitOrder = (pharmacy) => {
     this.props.submitMedicineOrder(
       this.props.api_token,
+      this.state.address,
+      this.state.permenant,
       [{ id: pharmacy.product_pharmacy_id, amount: 1 }],
       {
         order: 1,
@@ -95,7 +102,7 @@ class MedicinePage extends Component {
                 </p>
                 <span>
                   <img src={LocationIcon} alt="location-icon" />{" "}
-                  {this.props.medicine.user_address}
+                  {this.state.address || this.props.medicine.user_address}
                 </span>
                 <Button
                   className="btn btn-green-dark btn-lg delivery__container__btn"
@@ -149,6 +156,13 @@ class MedicinePage extends Component {
             {this.state.changeAddressBox && (
               <ChangeAddress
                 closePopup={() => this.setState({ changeAddressBox: false })}
+                changeAddress={(data) =>
+                  this.setState({
+                    address: data.address,
+                    permenant: data.permenant,
+                    changeAddressBox: false,
+                  })
+                }
               />
             )}
           </main>
@@ -182,10 +196,12 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source }),
   addToCart: (api_token, product) =>
     dispatch({ type: actions.SAGA_ADD_TO_CART, api_token, product }),
-  submitMedicineOrder: (api_token, products, notificationData) =>
+  submitMedicineOrder: (api_token, address, permenant, products, notificationData) =>
     dispatch({
       type: actions.SUBMIT_MEDICATION_ORDER,
       api_token,
+      address,
+      permenant,
       products,
       notificationData,
     }),

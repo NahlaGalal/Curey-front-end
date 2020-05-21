@@ -201,8 +201,15 @@ function* getFavourites({ api_token }) {
   }
 }
 
-function* submitOrder({ api_token, products, notificationData }) {
-  const obj = { api_token, products };
+function* submitOrder({
+  api_token,
+  address,
+  permenant,
+  products,
+  notificationData,
+}) {
+  let obj = { api_token, products };
+  if (address) obj = { api_token, products, permenant, address };
   let notification = {};
   if (notificationData.order)
     notification = {
@@ -272,8 +279,8 @@ function* cancelOrder({ api_token, order_id }) {
       yield put({
         type: actions.CANCEL_ORDER,
         payload: result.data.errors,
-        isFailed: true
-      })
+        isFailed: true,
+      });
     }
   } catch (e) {
     console.log(e);
