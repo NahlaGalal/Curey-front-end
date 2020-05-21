@@ -142,75 +142,9 @@
         object-fit: cover;
         margin: 1.6rem auto 2.4rem;
       }
-      .fieldinput {
-        transition: $transition;
-        &-image {
-          &__input {
-            color: rgba($color: $color-dark, $alpha: $very-high-opacity);
-            &.active {
-              color: $color-dark;
-            }
-          }
-          label {
-            width: 8.7rem;
-            height: 100%;
-            color: $color-dark;
-            top: 0;
-            right: 0;
-            left: unset;
-            z-index: 10;
-            padding: 1.6rem;
-            border-left: 1px solid
-              rgba($color: $color-dark, $alpha: $medium-opacity);
-            cursor: pointer;
-          }
-        }
-        &.hidden {
-          opacity: 0;
-          overflow: hidden;
-          visibility: hidden;
-          height: 0;
-        }
-      }
       .btn {
         margin: 0 auto;
         display: block;
-      }
-      .homeVisit {
-        margin-bottom: 1.6rem;
-        label {
-          cursor: pointer;
-          position: relative;
-          z-index: 5;
-          padding-left: 2.5rem;
-          font-size: 1.6rem;
-
-          &::after,
-          &::before {
-            z-index: 6;
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-            height: 1.6rem;
-            width: 1.6rem;
-            background-color: $color-light-1;
-          }
-
-          &::before {
-            z-index: 7;
-            width: 0.8rem;
-            height: 0.8rem;
-            left: 0.4rem;
-            transform: translateY(-50%) scale(0);
-            transition: $transition;
-            background-color: $active-option-color;
-          }
-        }
-        input:checked + label::before {
-          transform: translateY(-50%) scale(1);
-        }
       }
     }
     &__details {

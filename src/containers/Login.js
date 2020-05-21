@@ -21,8 +21,14 @@ const Login = props => {
 
   useEffect(() => {
     if (props.user.api_token) {
-      if (props.user.role === 2) props.history.push("/pharmacy/statement");
-      else if (props.user.role === 3) props.history.push("/doctor/statement");
+      if (props.user.role === 2) {
+        if(props.user.is_complete) props.history.push("/pharmacy/statement");
+        else props.history.push("/pharmacy/complete-signup");
+      }
+      else if (props.user.role === 3) {
+        if(props.user.is_complete) props.history.push("/doctor/statement");
+        else props.history.push("/doctor/complete-signup");
+      }
       else props.history.push("/home");
     }
   });

@@ -21,6 +21,8 @@ import {
   SAGA_SHOW_CART,
   SAGA_REMOVE_FROM_CART,
   REMOVE_FROM_CART,
+  GET_COMPLETE_SIGNUP,
+  SAGA_GET_COMPLETE_SIGNUP,
 } from "../actions/types";
 
 function* signupUser({ data }) {
@@ -214,6 +216,28 @@ function* postRemoveCartItem({ api_token, product_id }) {
   }
 }
 
+function* getCompleteSignup({ api_token }) {
+  try {
+    const res = yield call(() =>
+      axios.get(`/api/web/complete_signup?api_token=${api_token}`)
+    );
+    if (!res.data.isFailed)
+      yield put({
+        type: GET_COMPLETE_SIGNUP,
+        payload: res.data.data,
+        isFailed: false,
+      });
+    else
+      yield put({
+        type: GET_COMPLETE_SIGNUP,
+        payload: res.data.errors,
+        isFailed: true,
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export default function* watchUser() {
   yield takeEvery(SAGA_SIGNUP_USER, signupUser);
   yield takeEvery(SAGA_GET_CITIES, getCities);
@@ -225,4 +249,5 @@ export default function* watchUser() {
   yield takeEvery(SAGA_ADD_TO_CART, postAddToCart);
   yield takeEvery(SAGA_SHOW_CART, getCart);
   yield takeEvery(SAGA_REMOVE_FROM_CART, postRemoveCartItem);
+  yield takeEvery(SAGA_GET_COMPLETE_SIGNUP, getCompleteSignup);
 }

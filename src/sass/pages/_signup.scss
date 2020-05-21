@@ -125,6 +125,13 @@
               height: 100%;
             }
           }
+          img {
+            display: block;
+            margin: 0 auto 2rem;
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+          }
         }
       }
     }

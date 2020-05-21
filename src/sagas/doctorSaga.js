@@ -294,9 +294,9 @@ function* postCompleteSignUp({ data }) {
   try {
     const res = yield call(() => axios.post("/api/web/complete_signup", data));
     if (!res.data.isFailed) {
-      console.log(res);
       yield put({
         type: COMPLETE_DOCTOR_SIGNUP,
+        payload: res.data.data,
         isFailed: false,
       });
     } else {
@@ -310,6 +310,7 @@ function* postCompleteSignUp({ data }) {
     console.log(err);
   }
 }
+
 export default function* watchDoctorDashboard() {
   yield takeEvery(SAGA_GET_SCHEDULE, getSchedule);
   yield takeEvery(SAGA_ADD_SCHEDULE, postAddSchedule);

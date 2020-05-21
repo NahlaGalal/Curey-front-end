@@ -63,7 +63,7 @@ export const ChangeSpeciality = (props) => {
           optionsContainerRef={specialitiesContainerRef}
           multiSelect={false}
           isError={errors.Speciality}
-          error={errors.Speciality ? "You must choose your city" : null}
+          error={errors.Speciality ? "You must choose your speciality" : null}
           refe={register({
             validate: () => speciality.speciality_id !== null,
           })}

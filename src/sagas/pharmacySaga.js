@@ -149,9 +149,9 @@ function* postCompleteSignUp({ data }) {
   try {
     const res = yield call(() => axios.post("/api/web/complete_signup", data));
     if (!res.data.isFailed) {
-      console.log(res);
       yield put({
         type: COMPLETE_PHARM_SIGNUP,
+        payload: res.data.data,
         isFailed: false,
       });
     } else {

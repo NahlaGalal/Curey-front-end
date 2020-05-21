@@ -13,6 +13,9 @@ import {
   SHOW_CART,
   GET_PROFILE,
   RECIEVE_HOME_DATA,
+  COMPLETE_PHARM_SIGNUP,
+  COMPLETE_DOCTOR_SIGNUP,
+  GET_COMPLETE_SIGNUP,
 } from "../actions/types";
 
 export function user(state = [], action) {
@@ -36,7 +39,7 @@ export function user(state = [], action) {
         image: !action.isFailed ? action.payload.image : null,
         email: !action.isFailed ? action.payload.email : "",
         role: !action.isFailed ? action.payload.role : null,
-        is_complete: !action.isFailed ? action.payload.is_complete || 0 : 0,
+        is_complete: !action.isFailed ? action.payload.role === 1 ? 1 : action.payload.is_complete : 0,
         cart: [],
         errors: action.isFailed ? action.payload : {},
       };
@@ -54,6 +57,7 @@ export function user(state = [], action) {
         image: !action.isFailed ? "" : state.image,
         email: !action.isFailed ? "" : state.email,
         role: !action.isFailed ? "" : state.role,
+        // is_complete: !action.isFailed ? 
         success: "",
       };
     case GET_PRESCRIPTION:
@@ -122,6 +126,19 @@ export function user(state = [], action) {
         city_id: !action.isFailed ? action.payload.profile.city_id : 0,
         work_address: !action.isFailed ? action.payload.profile.work_address : "",
         ...doctorData,
+      };
+    case COMPLETE_PHARM_SIGNUP:
+    case COMPLETE_DOCTOR_SIGNUP:
+      return {
+        ...state,
+        is_complete: !action.isFailed ? 1 : state.is_complete
+      }
+    case GET_COMPLETE_SIGNUP:
+      return {
+        ...state,
+        cities: !action.isFailed ? action.payload.cities : [],
+        specialities: !action.isFailed ? action.payload.specialites : [],
+        errors: action.isFailed ? action.payload : [],
       };
     default:
       return state;

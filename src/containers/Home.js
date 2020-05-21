@@ -119,13 +119,12 @@ export class Home extends Component {
     );
   }
 }
-const mapStateToProps = state => {
-  return {
+
+const mapStateToProps = state => ({
     topDoctors: state.homeData.top_doctors,
     topMedications: state.homeData.top_products,
     api_token: state.user.api_token
-  };
-};
+});
 
 const mapDispatchToProps = dispatch => ({
   onRequestData: api_token =>

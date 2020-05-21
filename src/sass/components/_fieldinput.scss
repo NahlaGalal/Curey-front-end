@@ -1,52 +1,81 @@
 .fieldinput {
-    width: 100%;
-    position: relative;
-    z-index: 1;
-    background-color: $color-white;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  background-color: $color-white;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+  transition: $transition;
+
+  &.hidden {
+    opacity: 0;
+    overflow: hidden;
+    visibility: hidden;
+    height: 0;
+  }
+
+  &__input {
     border-radius: 1rem;
-    margin-bottom: 2rem;
+    width: 100%;
+    display: block;
+    outline: none !important;
+    border: 1px solid rgba($color-dark, $medium-opacity);
+    padding: 1.45rem 1.6rem;
+    transition: $transition;
+    position: relative;
+    z-index: 2;
+    background: none;
+    font-size: 1.6rem;
 
+    &:active,
+    &:focus {
+      box-shadow: 0 0 0 2px rgba($color-green-light, $medium-opacity);
+    }
+  }
+
+  label {
+    position: absolute;
+    top: 1.45rem;
+    left: 1.6rem;
+    font-size: 1.6rem;
+    color: rgba($color-dark, $very-high-opacity);
+    z-index: 1;
+    transition: $transition;
+
+    &.active {
+      font-size: 1.4rem;
+      transform: translate(0);
+      top: -8px;
+      background-color: $color-white;
+      z-index: 4;
+      padding: 0 0.5rem;
+    }
+	}
+	
+	&-image {
     &__input {
-        border-radius: 1rem;
-        width: 100%;
-        display: block;
-        outline: none !important;
-        border: 1px solid rgba($color-dark, $medium-opacity);
-        padding: 1.45rem 1.6rem;
-        transition: $transition;
-        position: relative;
-        z-index: 2;
-        background: none;
-        font-size: 1.6rem;
-
-        &:active,
-        &:focus {
-            box-shadow: 0 0 0 2px rgba($color-green-light, $medium-opacity);
-        }
+      color: rgba($color: $color-dark, $alpha: $very-high-opacity);
+      &.active {
+        color: $color-dark;
+      }
     }
-
     label {
-        position: absolute;
-        top: 1.45rem;
-        left: 1.6rem;
-        font-size: 1.6rem;
-        color: rgba($color-dark, $very-high-opacity);
-        z-index: 1;
-        transition: $transition;
-
-        &.active {
-            font-size: 1.4rem;
-            transform: translate(0);
-            top: -8px;
-            background-color: $color-white;
-            z-index: 4;
-            padding: 0 0.5rem;
-        }
+      width: 8.7rem;
+      height: 5rem;
+      color: $color-dark;
+      top: 0;
+      right: 0;
+      left: unset;
+      z-index: 10;
+      padding: 1.6rem;
+      border-left: 1px solid rgba($color: $color-dark, $alpha: $medium-opacity);
+      cursor: pointer;
     }
+  }
 
-    &__error {
-        color: $warning-color !important;
-        font-size: 1.2rem;
-        margin-top: 0.8rem;
-    }
+  &__error {
+    color: $warning-color !important;
+    font-size: 1.2rem;
+    margin-top: 0.8rem;
+  }
 }

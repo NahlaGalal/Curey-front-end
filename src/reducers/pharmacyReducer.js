@@ -5,6 +5,7 @@ import {
   GET_DASHBOARD,
   GET_REQUESTS,
   ACCEPT_REQUEST,
+  COMPLETE_PHARM_SIGNUP
 } from "../actions/types";
 
 export function pharmacyData(state = {}, action) {
@@ -19,7 +20,11 @@ export function pharmacyData(state = {}, action) {
       return {
         ...state,
         packing: !action.isFailed ? action.payload : [],
-        errors: action.isFailed ? action.payload : [],
+        errors: action.isFailed
+          ? action.payload
+          : !action.payload.length
+          ? { error: "No requests yet" }
+          : [],
       };
     case MOVE_TO_DELIVERY:
     case ACCEPT_REQUEST:
@@ -31,7 +36,11 @@ export function pharmacyData(state = {}, action) {
       return {
         ...state,
         dashboard: !action.isFailed ? action.payload : [],
-        errors: action.isFailed ? action.payload : [],
+        errors: action.isFailed
+          ? action.payload
+          : !action.payload.performed.length
+          ? { error: "No requests yet" }
+          : [],
       };
     case GET_REQUESTS:
       return {
@@ -43,6 +52,12 @@ export function pharmacyData(state = {}, action) {
           ? { error: "No requests yet" }
           : [],
       };
+    case COMPLETE_PHARM_SIGNUP:
+      return {
+        ...state,
+        success: !action.isFailed ? action.payload.success : "",
+        errors: action.isFailed ? action.payload : []
+      }
     default:
       return state;
   }

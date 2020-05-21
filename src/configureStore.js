@@ -74,6 +74,7 @@ const defaultState = {
     errors: [],
     dashboard: [],
     requests: [],
+    success: ""
   },
   doctorData: {
     schedule: [],
@@ -87,6 +88,7 @@ const defaultState = {
       total: 0
     },
     searchMedication: [],
+    success: "",
     errors: [],
   },
 };

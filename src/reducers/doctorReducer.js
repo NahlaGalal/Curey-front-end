@@ -9,6 +9,7 @@ import {
   GET_DOCTOR_REQUESTS,
   GET_DOCTOR_STATEMENT,
   SEARCH_MEDICATION,
+  COMPLETE_DOCTOR_SIGNUP,
 } from "../actions/types";
 
 export const doctorData = (state = [], action) => {
@@ -36,7 +37,7 @@ export const doctorData = (state = [], action) => {
       return {
         ...state,
         statement:
-          !action.isFailed && action.payload.performed.length
+          !action.isFailed && action.payload.performed[0] !== "empty"
             ? [
                 ...action.payload.performed.map((patient) => {
                   let time = new Date(patient.timestamp)
@@ -63,7 +64,7 @@ export const doctorData = (state = [], action) => {
         },
         errors: action.isFailed
           ? action.payload
-          : !action.payload.performed.length
+          : action.payload.performed[0] === "empty"
           ? { error: "You don't have any requests yet" }
           : [],
       };
@@ -159,6 +160,12 @@ export const doctorData = (state = [], action) => {
         searchMedication: !action.isFailed ? action.payload.products : [],
         errors: action.isFailed ? action.payload : []
       }
+    case COMPLETE_DOCTOR_SIGNUP:
+      return {
+        ...state,
+        success: !action.isFailed ? action.payload.success : "",
+        errors: action.isFailed ? action.payload : [],
+      };
     default:
       return state;
   }
