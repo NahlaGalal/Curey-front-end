@@ -1,21 +1,19 @@
 import React from "react";
 import ReactLoading from "react-loading";
 
-const SelectBox = props => {
+const SelectBox = (props) => {
   return (
-    <div className="select-component" onClick={props.onClick}>
-      <div className={props.className}>
-        {props.listChecked.join(", ").slice(0, 50)}
-      </div>
+    <div className="select-component" onClick={props.openBox}>
+      <div className={props.className}>{props.listChecked}</div>
       <span
         style={{
-          display: props.listChecked.length ? "none" : "block"
+          display: props.listChecked ? "none" : "block",
         }}
       >
         {props.header}
       </span>
       <div
-        onClick={e => {
+        onClick={(e) => {
           e.stopPropagation();
         }}
         className={`select--options ${props.boxOpened ? "active" : ""}`}
@@ -23,11 +21,11 @@ const SelectBox = props => {
       >
         <h3>{props.header}</h3>
         {props.list.length ? (
-          props.list.map(type => (
-            <div key={type.id} className="option">
+          props.list.map((type) => (
+            <div key={type.id} className="option" onClick={props.onClick}>
               <input
                 ref={props.refe}
-                type={`${props.multiple ? "checkbox" : "radio"}`}
+                type="radio"
                 id={`${type.id}_${type.name}`}
                 hidden
                 value={type.name}

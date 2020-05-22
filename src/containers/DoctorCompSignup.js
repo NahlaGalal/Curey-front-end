@@ -30,22 +30,17 @@ const CompleteSignup = (props) => {
     setHomeVisit(!homeVisit);
   };
 
-  const toggleSpecialitySelectBox = () => {
-    const prev = specialityBoxOpened;
-    let specialityChosen = speciality.speciality,
-      speciality_id = speciality.speciality_id;
-    if (prev) {
-      const inputChecked = Array.from(
-        specialitiesContainerRef.current.querySelectorAll("input[type=radio]")
-      ).filter((input) => input.checked)[0];
-      specialityChosen = inputChecked ? inputChecked.value : "";
-      speciality_id = inputChecked ? inputChecked.id.split("_")[0] : "";
+  const closeSpecialitySelectBox = () => {
+    const inputChecked = Array.from(
+      specialitiesContainerRef.current.querySelectorAll("input[type=radio]")
+    ).find((input) => input.checked);
+    setSpecialityBoxOpened(false);
+    if (inputChecked &&inputChecked.id) {
+      setSpeciality({
+        speciality_id: inputChecked.id.split("_")[0],
+        speciality: inputChecked.value,
+      });
     }
-    setSpecialityBoxOpened(!prev);
-    setSpeciality({
-      speciality_id,
-      speciality: specialityChosen,
-    });
   };
 
   const uploadImage = async (e) => {
@@ -81,23 +76,18 @@ const CompleteSignup = (props) => {
     if (props.success) props.redirectToDashboard();
   });
 
-  const toggleCitySelectBox = () => {
-    const prev = cityBoxOpened;
-    let city = "",
-      city_id = "";
-    if (prev) {
-      const inputChecked = Array.from(
-        citiesContainerRef.current.querySelectorAll("input[type=radio]")
-      ).filter((input) => input.checked)[0];
-      city = inputChecked ? inputChecked.value : "";
-      city_id = inputChecked ? inputChecked.id.split("_")[0] : "";
-    }
+  const closeCitySelectBox = () => {
+    const inputChecked = Array.from(
+      citiesContainerRef.current.querySelectorAll("input[type=radio]")
+    ).find((input) => input.checked);
     errors.city_id = undefined;
-    setCityBoxOpened(!prev);
-    setCity({
-      city_id,
-      city,
-    });
+    setCityBoxOpened(false);
+    if (inputChecked && inputChecked.id) {
+      setCity({
+        city_id: inputChecked.id.split("_")[0],
+        city: inputChecked.value,
+      });
+    }
   };
 
   return (
@@ -135,14 +125,14 @@ const CompleteSignup = (props) => {
 
         <SelectBox
           name="city_id"
-          onClick={toggleCitySelectBox}
+          onClick={closeCitySelectBox}
+          openBox={() => setCityBoxOpened(!cityBoxOpened)}
           className={`${city.city ? "hasValue" : null}`}
-          listChecked={city.city_id ? [city.city] : []}
+          listChecked={city.city_id ? city.city : ""}
           header="City"
           boxOpened={cityBoxOpened}
           list={props.cities}
           optionsContainerRef={citiesContainerRef}
-          multiSelect={false}
           isError={errors.City || props.errors.city_id}
           error={
             errors.City ? "You must choose your city" : props.errors.city_id
@@ -154,14 +144,14 @@ const CompleteSignup = (props) => {
 
         <SelectBox
           name="speciality_id"
-          onClick={toggleSpecialitySelectBox}
+          onClick={closeSpecialitySelectBox}
+          openBox={() => setSpecialityBoxOpened(!specialityBoxOpened)}
           className={`${speciality.speciality ? "hasValue" : null}`}
-          listChecked={speciality.speciality_id ? [speciality.speciality] : []}
+          listChecked={speciality.speciality_id ? speciality.speciality : ""}
           header="Speciality"
           boxOpened={specialityBoxOpened}
           list={props.specialities}
           optionsContainerRef={specialitiesContainerRef}
-          multiSelect={false}
           isError={errors.Speciality}
           error={errors.Speciality ? "You must choose your speciality" : null}
           refe={register({
@@ -317,7 +307,9 @@ class DoctorCompSignup extends Component {
               <CompleteSignup
                 cities={this.props.user.cities}
                 specialities={this.props.user.specialities}
-                postCompeleteSignup={(data) => this.props.postCompeleteSignup(data, this.props.history)}
+                postCompeleteSignup={(data) =>
+                  this.props.postCompeleteSignup(data, this.props.history)
+                }
                 success={this.props.success}
                 errors={this.props.errors}
                 api_token={this.props.api_token}

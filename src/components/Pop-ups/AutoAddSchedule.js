@@ -10,7 +10,7 @@ const startDays = [
   { name: "Tuesday", id: 4 },
   { name: "Wednesday", id: 5 },
   { name: "Thursday", id: 6 },
-  { name: "Friday", id: 7 }
+  { name: "Friday", id: 7 },
 ];
 
 const endDays = [
@@ -20,10 +20,10 @@ const endDays = [
   { name: "Tuesday", id: 14 },
   { name: "Wednesday", id: 15 },
   { name: "Thursday", id: 16 },
-  { name: "Friday", id: 17 }
+  { name: "Friday", id: 17 },
 ];
 
-const AutoAddSchedule = props => {
+const AutoAddSchedule = (props) => {
   const { register, errors, handleSubmit } = useForm();
 
   const [startDayBox, setStartDayBox] = useState(false);
@@ -32,47 +32,39 @@ const AutoAddSchedule = props => {
   const [endDay, setEndDay] = useState("");
   const [startTime, setStartTime] = useState({
     time: "",
-    format: "AM"
+    format: "AM",
   });
   const [endTime, setEndTime] = useState({
     time: "",
-    format: "AM"
+    format: "AM",
   });
 
   const startDayContainerRef = React.createRef();
   const endDayContainerRef = React.createRef();
 
-  const toggleStartDaySelectBox = () => {
-    const boxOpened = startDayBox;
-    let itemChecked = [];
-    if (boxOpened) {
-      itemChecked = Array.from(
-        startDayContainerRef.current.querySelectorAll("input[type=radio]")
-      )
-        .filter(input => input.checked)
-        .map(el => ({
-          name: el.value,
-          id: el.id.split("_")[0]
-        }));
+  const closeStartDaySelectBox = () => {
+    let itemChecked = Array.from(
+      startDayContainerRef.current.querySelectorAll("input[type=radio]")
+    ).find((input) => input.checked);
+    setStartDayBox(false);
+    if (itemChecked && itemChecked.id) {
+      setStartDay({
+        name: itemChecked.value,
+        id: itemChecked.id.split("_")[0],
+      });
     }
-    setStartDayBox(!boxOpened);
-    setStartDay(itemChecked[0]);
   };
-  const toggleEndDaySelectBox = () => {
-    const boxOpened = endDayBox;
-    let itemChecked = [];
-    if (boxOpened) {
-      itemChecked = Array.from(
-        endDayContainerRef.current.querySelectorAll("input[type=radio]")
-      )
-        .filter(input => input.checked)
-        .map(el => ({
-          name: el.value,
-          id: el.id.split("_")[0]
-        }));
+  const closeEndDaySelectBox = () => {
+    let itemChecked = Array.from(
+      endDayContainerRef.current.querySelectorAll("input[type=radio]")
+    ).find((input) => input.checked);
+    setEndDayBox(false);
+    if (itemChecked && itemChecked.id) {
+      setEndDay({
+        name: itemChecked.value,
+        id: itemChecked.id.split("_")[0],
+      });
     }
-    setEndDayBox(!boxOpened);
-    setEndDay(itemChecked[0]);
   };
 
   return (
@@ -90,14 +82,14 @@ const AutoAddSchedule = props => {
       {props.add ? (
         <div className="row schedule">
           <SelectBox
-            onClick={toggleStartDaySelectBox}
-            className={`${startDay ? "hasValue" : null}`}
-            listChecked={startDay ? [startDay.name] : []}
+            onClick={closeStartDaySelectBox}
+            openBox={() => setStartDayBox(!startDayBox)}
+            className={`${startDay.id ? "hasValue" : null}`}
+            listChecked={startDay ? startDay.name : ""}
             header="Starting day"
             boxOpened={startDayBox}
             list={startDays}
             optionsContainerRef={startDayContainerRef}
-            multiSelect={false}
             isError={errors["Starting day"]}
             error={
               errors["Starting day"]
@@ -107,14 +99,14 @@ const AutoAddSchedule = props => {
             refe={register({ required: true })}
           />
           <SelectBox
-            onClick={toggleEndDaySelectBox}
-            className={`${endDay ? "hasValue" : null}`}
-            listChecked={endDay ? [endDay.name] : []}
+            onClick={closeEndDaySelectBox}
+            openBox={() => setEndDayBox(!endDayBox)}
+            className={`${endDay.id ? "hasValue" : null}`}
+            listChecked={endDay ? endDay.name : ""}
             header="Ending day"
             boxOpened={endDayBox}
             list={endDays}
             optionsContainerRef={endDayContainerRef}
-            multiSelect={false}
             isError={errors["Ending day"]}
             error={
               errors["Ending day"] ? "You must choose your ending day" : null

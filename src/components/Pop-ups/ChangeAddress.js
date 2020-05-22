@@ -24,23 +24,18 @@ const ChangeAddress = (props) => {
   const [activeToggler, setActiveToggler] = useState(1);
   const citiesContainerRef = React.createRef();
 
-  const toggleCitySelectBox = () => {
-    const prev = cityBoxOpened;
-    let city = "",
-      city_id = "";
-    if (prev) {
-      const inputChecked = Array.from(
-        citiesContainerRef.current.querySelectorAll("input[type=radio]")
-      ).filter((input) => input.checked)[0];
-      city = inputChecked ? inputChecked.value : "";
-      city_id = inputChecked ? inputChecked.id.split("_")[0] : "";
-    }
+  const closeCitySelectBox = () => {
+    const inputChecked = Array.from(
+      citiesContainerRef.current.querySelectorAll("input[type=radio]")
+    ).find((input) => input.checked);
     errors.city_id = undefined;
-    setCityBoxOpened(!prev);
-    setCity({
-      city_id,
-      city,
-    });
+    setCityBoxOpened(false);
+    if(inputChecked && inputChecked.id) {
+      setCity({
+        city_id: inputChecked.id.split("_")[0],
+        city: inputChecked.value,
+      });
+    }
   };
 
   return (
@@ -73,14 +68,14 @@ const ChangeAddress = (props) => {
         >
           <SelectBox
             name="city_id"
-            onClick={toggleCitySelectBox}
-            className={`${city.city ? "hasValue" : null}`}
-            listChecked={city.city_id ? [city.city] : []}
+            onClick={closeCitySelectBox}
+            openBox={() => setCityBoxOpened(!cityBoxOpened)}
+            className={`${city.city_id ? "hasValue" : null}`}
+            listChecked={city.city_id ? city.city : ""}
             header="City"
             boxOpened={cityBoxOpened}
             list={cityList}
             optionsContainerRef={citiesContainerRef}
-            multiSelect={false}
             isError={errors.City}
             error={errors.City ? "You must choose your city" : null}
             refe={register}

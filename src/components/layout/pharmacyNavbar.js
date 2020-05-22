@@ -88,7 +88,7 @@ const PharmacyNavbar = (props) => {
         <PharmacyThumbnail
           hideLists={props.hideLists}
           getUserData={() =>
-            props.getUserData(props.api_token, this.props.history)
+            props.getUserData(props.api_token, props.history)
           }
           image={props.image}
           name={props.name}
@@ -144,7 +144,7 @@ const PharmacyNavbar = (props) => {
             )
           }
           role={props.role || 1}
-          logout={() => props.postLogout(props.api_token, this.props.history)}
+          logout={() => props.postLogout(props.api_token, props.history)}
         />
       )}
     </React.Fragment>

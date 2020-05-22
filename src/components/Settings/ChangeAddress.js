@@ -22,22 +22,17 @@ const ChangeAddress = (props) => {
   const [cityBoxOpened, setCityBoxOpened] = useState(false);
   let citiesContainerRef = React.createRef();
 
-  const toggleCitySelectBox = () => {
-    const prev = cityBoxOpened;
-    let cityChosen = city.city,
-      city_id = city.city_id;
-    if (prev) {
-      const inputChecked = Array.from(
-        citiesContainerRef.current.querySelectorAll("input[type=radio]")
-      ).filter((input) => input.checked)[0];
-      cityChosen = inputChecked ? inputChecked.value : "";
-      city_id = inputChecked ? inputChecked.id.split("_")[0] : "";
+  const closeCitySelectBox = () => {
+    const inputChecked = Array.from(
+      citiesContainerRef.current.querySelectorAll("input[type=radio]")
+    ).filter((input) => input.checked)[0];
+    setCityBoxOpened(false);
+    if (inputChecked && inputChecked.id) {
+      setCity({
+        city_id: inputChecked.id.split("_")[0],
+        city: inputChecked.value,
+      });
     }
-    setCityBoxOpened(!prev);
-    setCity({
-      city_id,
-      city: cityChosen,
-    });
   };
 
   return (
@@ -55,30 +50,32 @@ const ChangeAddress = (props) => {
       >
         <SelectBox
           name="city_id"
-          onClick={toggleCitySelectBox}
+          onClick={closeCitySelectBox}
+          openBox={() => setCityBoxOpened(!cityBoxOpened)}
           className={`${city.city ? "hasValue" : null}`}
-          listChecked={city.city_id ? [city.city] : []}
+          listChecked={city.city_id ? city.city : ""}
           header="City"
           boxOpened={cityBoxOpened}
           list={props.cities}
           optionsContainerRef={citiesContainerRef}
-          multiSelect={false}
           isError={errors.City}
           error={errors.City ? "You must choose your city" : null}
           refe={register({
             validate: () => city.city_id !== null,
           })}
         />
-        <Input
-          name="work_address"
-          type="text"
-          id="work_address"
-          value={watch("work_address")}
-          placeholder="Work address"
-          isError={errors.work_address}
-          error="Your must type your address"
-          refe={register({ required: true })}
-        />
+        {props.work_address !== undefined && (
+          <Input
+            name="work_address"
+            type="text"
+            id="work_address"
+            value={watch("work_address")}
+            placeholder="Work address"
+            isError={errors.work_address}
+            error="Your must type your address"
+            refe={register({ required: true })}
+          />
+        )}
         <Input
           name="address"
           type="text"

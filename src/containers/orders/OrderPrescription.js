@@ -10,84 +10,84 @@ const medications = [
     name: "Antinal",
     price: 20,
     description:
-      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
+      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
   },
   {
     name: "Antinal",
     price: 15,
     description:
-      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
+      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
   },
   {
     name: "Antinal",
     price: 15.5,
     description:
-      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
+      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
   },
   {
     name: "Antinal",
     price: 43,
     description:
-      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
+      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
   },
   {
     name: "Antinal",
     price: 1,
     description:
-      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
-  }
+      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
+  },
 ];
 
 const pharmacies = [
   {
     name: "Roshdy Pharmacy",
-    id: 1
+    id: 1,
   },
   {
     name: "Dawaee pharmacies",
-    id: 2
+    id: 2,
   },
   {
     name: "Misr pharmacies",
-    id: 3
+    id: 3,
   },
   {
     name: "Gardenia pharmacies",
-    id: 4
+    id: 4,
   },
   {
     name: "AlShafi pharmacies",
-    id: 5
-  }
+    id: 5,
+  },
 ];
 
 export default class OrderPrescription extends Component {
   state = {
     orderDetailsBox: false,
-    pharmacy: "",
-    pharmaciesBoxObened: false
+    pharmacy: { name: "", id: null },
+    pharmaciesBoxObened: false,
   };
 
   pharmaciesContainerRef = React.createRef();
 
-  togglePharmacySelectBox = () => {
-    const prev = this.state.pharmaciesBoxObened;
-    let pharmacy = "";
-    if (prev) {
-      const inputChecked = Array.from(
-        this.pharmaciesContainerRef.current.querySelectorAll("input[type=radio]")
-      ).filter(input => input.checked)[0];
-      pharmacy = inputChecked ? inputChecked.value : "";
+  closePharmacySelectBox = () => {
+    const inputChecked = Array.from(
+      this.pharmaciesContainerRef.current.querySelectorAll("input[type=radio]")
+    ).filter((input) => input.checked)[0];
+    if (inputChecked && inputChecked.id) {
+      this.setState({
+        pharmacy: {
+          name: inputChecked.value,
+          id: inputChecked.id.split("_")[0],
+        },
+      });
     }
-    this.setState({
-      pharmaciesBoxObened: !prev,
-      pharmacy
-    });
+    this.setState({ pharmaciesBoxObened: false });
   };
 
   render() {
     const totalPrice = medications
-      .map(medication => medication.price)
+      .map((medication) => medication.price)
       .reduce((total, price) => (total += price), 0);
 
     return (
@@ -98,14 +98,18 @@ export default class OrderPrescription extends Component {
         <div className="search-pharmacy">
           <SelectBox
             name="city_id"
-            onClick={this.togglePharmacySelectBox}
-            className={`${this.state.pharmacy ? "hasValue" : null}`}
-            listChecked={this.state.pharmacy ? [this.state.pharmacy] : []}
+            onClick={this.closePharmacySelectBox}
+            openBox={() =>
+              this.setState({
+                pharmaciesBoxObened: !this.state.pharmaciesBoxObened,
+              })
+            }
+            className={`${this.state.pharmacy.id ? "hasValue" : null}`}
+            listChecked={this.state.pharmacy.id ? this.state.pharmacy.name : ""}
             header="Search Pharmacy"
             boxOpened={this.state.pharmaciesBoxObened}
             list={pharmacies}
             optionsContainerRef={this.pharmaciesContainerRef}
-            multiSelect={false}
           />
           <Button className="btn btn-transparent btn-search">Search map</Button>
         </div>
@@ -138,13 +142,13 @@ export default class OrderPrescription extends Component {
             orders={[
               {
                 totalPrice,
-                medications: medications.map(medication => medication.name),
+                medications: medications.map((medication) => medication.name),
                 pharmacy: {
                   name: this.state.pharmacy,
                   logo: null,
-                  address: "Mansoura, Gehan St"
-                }
-              }
+                  address: "Mansoura, Gehan St",
+                },
+              },
             ]}
           />
         )}

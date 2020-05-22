@@ -42,23 +42,18 @@ const CompleteSignup = (props) => {
     if (props.success) props.redirectToDashboard();
   });
 
-  const toggleCitySelectBox = () => {
-    const prev = cityBoxOpened;
-    let city = "",
-      city_id = "";
-    if (prev) {
-      const inputChecked = Array.from(
-        citiesContainerRef.current.querySelectorAll("input[type=radio]")
-      ).filter((input) => input.checked)[0];
-      city = inputChecked ? inputChecked.value : "";
-      city_id = inputChecked ? inputChecked.id.split("_")[0] : "";
-    }
+  const closeCitySelectBox = () => {
+    const inputChecked = Array.from(
+      citiesContainerRef.current.querySelectorAll("input[type=radio]")
+    ).find((input) => input.checked);
     errors.city_id = undefined;
-    setCityBoxOpened(!prev);
-    setCity({
-      city_id,
-      city,
-    });
+    setCityBoxOpened(false);
+    if (inputChecked && inputChecked.id) {
+      setCity({
+        city_id: inputChecked.id.split("_")[0],
+        city: inputChecked.value,
+      });
+    }
   };
 
   return (
@@ -96,14 +91,14 @@ const CompleteSignup = (props) => {
 
         <SelectBox
           name="city_id"
-          onClick={toggleCitySelectBox}
-          className={`${city.city ? "hasValue" : null}`}
-          listChecked={city.city_id ? [city.city] : []}
+          onClick={closeCitySelectBox}
+          openBox={() => setCityBoxOpened(!cityBoxOpened)}
+          className={`${city.city_id ? "hasValue" : null}`}
+          listChecked={city.city_id ? city.city : ""}
           header="City"
           boxOpened={cityBoxOpened}
           list={props.cities}
           optionsContainerRef={citiesContainerRef}
-          multiSelect={false}
           isError={errors.City || props.errors.city_id}
           error={
             errors.City ? "You must choose your city" : props.errors.city_id
@@ -183,11 +178,15 @@ class PharmCompSignup extends Component {
               <CompleteSignup
                 cities={this.props.user.cities}
                 image={this.props.image}
-                postCompleteSignup={(data) => this.props.postCompleteSignup(data, this.props.history)}
+                postCompleteSignup={(data) =>
+                  this.props.postCompleteSignup(data, this.props.history)
+                }
                 success={this.props.success}
                 errors={this.props.errors}
                 api_token={this.props.api_token}
-                redirectToDashboard={() => this.props.history.push("/pharmacy/statement")}
+                redirectToDashboard={() =>
+                  this.props.history.push("/pharmacy/statement")
+                }
               />
             </div>
           </section>
@@ -205,13 +204,14 @@ const mapStateToProps = (state) => ({
   api_token: state.user.api_token,
   image: state.user.image,
   success: state.pharmacyData.success,
-  errors: state.pharmacyData.errors
+  errors: state.pharmacyData.errors,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   postCompleteSignup: (data, history) =>
     dispatch({ type: actions.SAGA_COMPLETE_PHARM_SIGNUP, data, history }),
-  getCompleteSignup: (api_token, history) => dispatch({ type: actions.SAGA_GET_COMPLETE_SIGNUP, api_token, history }),
+  getCompleteSignup: (api_token, history) =>
+    dispatch({ type: actions.SAGA_GET_COMPLETE_SIGNUP, api_token, history }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PharmCompSignup);

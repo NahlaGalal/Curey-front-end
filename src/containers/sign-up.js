@@ -31,30 +31,25 @@ const SignupUser = props => {
     if (props.success) props.redirectToLogin();
   });
 
-  const toggleCitySelectBox = () => {
-    const prev = cityBoxOpened;
-    let city = "",
-      city_id = "";
-    if (prev) {
+  const closeCitySelectBox = () => {
       const inputChecked = Array.from(
         citiesContainerRef.current.querySelectorAll("input[type=radio]")
       ).filter(input => input.checked)[0];
-      city = inputChecked ? inputChecked.value : "";
-      city_id = inputChecked ? inputChecked.id.split("_")[0] : "";
-    }
     errors.city_id = undefined;
-    setCityBoxOpened(!prev);
-    setCity({
-      city_id,
-      city
-    });
+    setCityBoxOpened(false);
+    if (inputChecked && inputChecked.id) {
+      setCity({
+        city_id: inputChecked.id.split("_")[0],
+        city: inputChecked.value,
+      });
+    }
   };
 
   return (
     <section className="signup__container__forms__user">
       <form
         noValidate
-        onSubmit={handleSubmit(data => {
+        onSubmit={handleSubmit((data) => {
           onSubmitHandler(data);
         })}
       >
@@ -73,7 +68,7 @@ const SignupUser = props => {
           refe={register({
             required: true,
             minLength: 6,
-            maxLength: 50
+            maxLength: 50,
           })}
         />
         <Input
@@ -91,29 +86,27 @@ const SignupUser = props => {
           refe={register({
             required: true,
             maxLength: 50,
-            validate: value => validator.isEmail(value)
+            validate: (value) => validator.isEmail(value),
           })}
         />
         {props.role_id === 1 ? (
           <div>
             <SelectBox
               name="city_id"
-              onClick={toggleCitySelectBox}
-              className={`${city.city ? "hasValue" : null}`}
-              listChecked={city.city_id ? [city.city] : []}
+              onClick={closeCitySelectBox}
+              openBox={() => setCityBoxOpened(!cityBoxOpened)}
+              className={`${city.city_id ? "hasValue" : null}`}
+              listChecked={city.city_id ? city.city : ""}
               header="City"
               boxOpened={cityBoxOpened}
               list={props.cities}
               optionsContainerRef={citiesContainerRef}
-              multiSelect={false}
               isError={errors.City || props.errors.city_id}
               error={
-                errors.City
-                  ? "You must choose your city"
-                  : props.errors.city_id
+                errors.City ? "You must choose your city" : props.errors.city_id
               }
               refe={register({
-                validate: () => city.city_id !== null
+                validate: () => city.city_id !== null,
               })}
             />
           </div>
@@ -133,7 +126,7 @@ const SignupUser = props => {
           refe={register({
             required: true,
             minLength: 8,
-            maxLength: 50
+            maxLength: 50,
           })}
         />
         <Input
@@ -150,7 +143,7 @@ const SignupUser = props => {
           }
           refe={register({
             required: true,
-            validate: value => value === watch("password")
+            validate: (value) => value === watch("password"),
           })}
         />
         <button className="btn btn-md btn-green" type="submit">

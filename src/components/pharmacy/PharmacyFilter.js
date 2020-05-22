@@ -6,14 +6,14 @@ class PharmacyFilter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      companyChecked: [],
-      genericChecked: [],
-      pharmacologyChecked: [],
-      typeChecked: [],
+      companyChecked: { name: "", id: null },
+      genericChecked: { name: "", id: null },
+      pharmacologyChecked: { name: "", id: null },
+      typeChecked: { name: "", id: null },
       companyBoxOpened: false,
       genericBoxOpened: false,
       pharmacologyBoxOpened: false,
-      typeBoxOpened: false
+      typeBoxOpened: false,
     };
     this.companyContainerRef = React.createRef();
     this.genericContainerRef = React.createRef();
@@ -21,70 +21,69 @@ class PharmacyFilter extends Component {
     this.typeContainerRef = React.createRef();
   }
 
-  checkFilter = e => {
+  checkFilter = (e) => {
     const filter = e.target.textContent;
     let {
       companyChecked,
       genericChecked,
       pharmacologyChecked,
-      typeChecked
+      typeChecked,
     } = this.state;
-    if (companyChecked.find(item => item.name === filter)) {
-      companyChecked = [];
+    if (companyChecked.name === filter) {
+      companyChecked = { name: "", id: null };
       Array.from(
         this.companyContainerRef.current.querySelectorAll("input[type=radio]")
-      ).forEach(item => (item.checked = true));
-    } else if (genericChecked.find(item => item.name === filter)) {
-      genericChecked = [];
+      ).forEach((item) => (item.checked = false));
+    } else if (genericChecked.name === filter) {
+      genericChecked = { name: "", id: null };
       Array.from(
         this.genericContainerRef.current.querySelectorAll("input[type=radio]")
-      ).forEach(item => (item.checked = true));
-    } else if (pharmacologyChecked.find(item => item.name === filter)) {
-      pharmacologyChecked = [];
+      ).forEach((item) => (item.checked = false));
+    } else if (pharmacologyChecked.name === filter) {
+      pharmacologyChecked = { name: "", id: null };
       Array.from(
         this.pharmacologyContainerRef.current.querySelectorAll(
           "input[type=radio]"
         )
-      ).forEach(item => (item.checked = true));
+      ).forEach((item) => (item.checked = false));
     } else {
-      typeChecked = [];
+      typeChecked = { name: "", id: null };
       Array.from(
         this.typeContainerRef.current.querySelectorAll("input[type=radio]")
-      ).forEach(item => (item.checked = true));
+      ).forEach((item) => (item.checked = false));
     }
     this.setState({
       companyChecked,
       genericChecked,
       pharmacologyChecked,
-      typeChecked
+      typeChecked,
     });
   };
 
-  toggleBoxSelectBox = box => {
-    const boxOpened = this.state[`${box}BoxOpened`];
-    let itemChecked = [];
-    if (boxOpened) {
-      itemChecked = Array.from(
-        this[`${box}ContainerRef`].current.querySelectorAll("input[type=radio]")
-      )
-        .filter(input => input.checked)
-        .map(el => ({
-          name: el.value,
-          id: el.id.split("_")[0]
-        }));
+  closeBoxSelectBox = (box) => {
+    let itemChecked = "";
+    itemChecked = Array.from(
+      this[`${box}ContainerRef`].current.querySelectorAll("input[type=radio]")
+    ).find((input) => input.checked);
+    if (itemChecked && itemChecked.id) {
+      this.setState({
+        [`${box}Checked`]: {
+          name: itemChecked.value,
+          id: itemChecked.id.split("_")[0],
+        },
+      });
     }
     this.setState({
-      [`${box}BoxOpened`]: !boxOpened,
-      [`${box}Checked`]: itemChecked
+      [`${box}BoxOpened`]: false,
     });
   };
 
   render() {
     const keywords = [
-      ...this.state.companyChecked,
-      ...this.state.genericChecked,
-      ...this.state.pharmacologyChecked,
-      ...this.state.typeChecked
+      this.state.companyChecked,
+      this.state.genericChecked,
+      this.state.pharmacologyChecked,
+      this.state.typeChecked,
     ];
 
     return (
@@ -94,11 +93,11 @@ class PharmacyFilter extends Component {
             <h2> Filter </h2>
           </header>
           <div className="Filter__checked">
-            {keywords.map(({ name, id }) => (
+            {keywords.map(({ name, id }) => id && (
               <Button
                 className="btn btn-filter active"
                 key={id + name}
-                onClick={e => this.checkFilter(e)}
+                onClick={(e) => this.checkFilter(e)}
               >
                 {name}
               </Button>
@@ -106,53 +105,47 @@ class PharmacyFilter extends Component {
           </div>
           <div className="Filter__checkbox">
             <SelectBox
-              onClick={() => this.toggleBoxSelectBox("company")}
-              className={`${
-                this.state.companyChecked.length ? "hasValue" : null
-              }`}
-              listChecked={this.state.companyChecked.map(item => item.name)}
+              onClick={() => this.closeBoxSelectBox("company")}
+              openBox={() => this.setState({ companyBoxOpened: !this.state.companyBoxOpened })}
+              className={`${this.state.companyChecked.id ? "hasValue" : null}`}
+              listChecked={this.state.companyChecked.name}
               header="Company"
               boxOpened={this.state.companyBoxOpened}
               list={this.props.companies}
               optionsContainerRef={this.companyContainerRef}
-              multiple={false}
             />
             <SelectBox
-              onClick={() => this.toggleBoxSelectBox("generic")}
-              className={`${
-                this.state.genericChecked.length ? "hasValue" : null
-              }`}
-              listChecked={this.state.genericChecked.map(item => item.name)}
+              onClick={() => this.closeBoxSelectBox("generic")}
+              openBox={() => this.setState({ genericBoxOpened: !this.state.genericBoxOpened })}
+              className={`${this.state.genericChecked.id ? "hasValue" : null}`}
+              listChecked={this.state.genericChecked.name}
               header="Generic name"
               boxOpened={this.state.genericBoxOpened}
               list={this.props.generics}
               optionsContainerRef={this.genericContainerRef}
-              multiple={false}
             />
 
             <SelectBox
-              onClick={() => this.toggleBoxSelectBox("pharmacology")}
+              onClick={() => this.closeBoxSelectBox("pharmacology")}
+              openBox={() => this.setState({ pharmacologyBoxOpened: !this.state.pharmacologyBoxOpened })}
               className={`${
-                this.state.pharmacologyChecked.length ? "hasValue" : null
+                this.state.pharmacologyChecked.id ? "hasValue" : null
               }`}
-              listChecked={this.state.pharmacologyChecked.map(
-                item => item.name
-              )}
+              listChecked={this.state.pharmacologyChecked.name}
               header="Pharmacology"
               boxOpened={this.state.pharmacologyBoxOpened}
               list={this.props.pharmacologies}
               optionsContainerRef={this.pharmacologyContainerRef}
-              multiple={false}
             />
             <SelectBox
-              onClick={() => this.toggleBoxSelectBox("type")}
-              className={`${this.state.typeChecked.length ? "hasValue" : null}`}
-              listChecked={this.state.typeChecked.map(item => item.name)}
+              onClick={() => this.closeBoxSelectBox("type")}
+              openBox={() => this.setState({ typeBoxOpened: !this.state.typeBoxOpened })}
+              className={`${this.state.typeChecked.id ? "hasValue" : null}`}
+              listChecked={this.state.typeChecked.name}
               header="Type"
               boxOpened={this.state.typeBoxOpened}
               list={this.props.types}
               optionsContainerRef={this.typeContainerRef}
-              multiple={false}
             />
           </div>
           <div className="Filter__buttons">
@@ -163,7 +156,7 @@ class PharmacyFilter extends Component {
                   companies: [...this.state.companyChecked] || [],
                   generics: [...this.state.genericChecked] || [],
                   pharmacologies: [...this.state.pharmacologyChecked] || [],
-                  types: [...this.state.typeChecked] || []
+                  types: [...this.state.typeChecked] || [],
                 })
               }
             >

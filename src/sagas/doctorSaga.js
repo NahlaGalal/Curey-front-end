@@ -157,7 +157,6 @@ function* postSetReExamination({ data, history }) {
     const res = yield call(() =>
       axios.post("/api/web/doctor/set_reExamination", data)
     );
-    console.log(res);
     if (!res.data.isFailed)
       yield put({
         type: SET_RE_EXAMINATION,

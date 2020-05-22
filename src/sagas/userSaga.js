@@ -45,7 +45,7 @@ function* signupUser({ data, history }) {
   }
 }
 
-function* getCities(history) {
+function* getCities({ history }) {
   try {
     const res = yield call(() => axios.get("/api/web/signup"));
     yield put({

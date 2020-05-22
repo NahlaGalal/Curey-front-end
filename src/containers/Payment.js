@@ -1,17 +1,16 @@
 import React, { Component, createRef } from "react";
 import Payment from "payment";
-// import SelectBox from "../components/SelectBox";
 import Button from "../components/Button";
 import SelectBox from "../components/SelectBox";
 
 const cities = [
   {
     name: "Cairo",
-    id: 1
+    id: 1,
   },
   { name: "Mansoura", id: 2 },
   { name: "Bilqas", id: 3 },
-  { name: "El-Mahallah", id: 4 }
+  { name: "El-Mahallah", id: 4 },
 ];
 
 export class PaymentForm extends Component {
@@ -29,8 +28,8 @@ export class PaymentForm extends Component {
       cardExpiry: "",
       cardCVC: "",
       zipCode: "",
-      city: [],
-      selectBoxOpened: false
+      city: { name: "", id: null },
+      selectBoxOpened: false,
     };
   }
 
@@ -43,24 +42,23 @@ export class PaymentForm extends Component {
 
   onChangeHandler = ({ target: { value, name } }) => {
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
-  toggleSelectBox = () => {
-    const prev = this.state.selectBoxOpened;
-    let city = [];
-    if (prev) {
-      city = Array.from(
-        this.optionsContainerRef.current.querySelectorAll("input[type=radio]")
-      )
-        .filter(input => input.checked)
-        .map(el => el.value);
+  closeSelectBox = () => {
+    let city = Array.from(
+      this.optionsContainerRef.current.querySelectorAll("input[type=radio]")
+    ).find((input) => input.checked);
+    if (city && city.id) {
+      this.setState({
+        city: {
+          name: city.value,
+          id: city.id.split("_")[0],
+        },
+      });
     }
-    this.setState({
-      selectBoxOpened: !prev,
-      city
-    });
+    this.setState({ selectBoxOpened: false });
   };
 
   render() {
@@ -178,14 +176,14 @@ export class PaymentForm extends Component {
               </div>
               <div className="Payment__form__inputs--text--row">
                 <SelectBox
-                  onClick={this.toggleSelectBox}
-                  className={this.state.city.length ? "hasValue" : null}
-                  listChecked={this.state.city || []}
+                  onClick={this.closeSelectBox}
+                  openBox={() => this.setState({selectBoxOpened: !this.state.selectBoxOpened})}
+                  className={this.state.city.id ? "hasValue" : null}
+                  listChecked={this.state.city.name || ""}
                   header="City"
                   boxOpened={this.state.selectBoxOpened}
                   list={cities}
                   optionsContainerRef={this.optionsContainerRef}
-                  multiple={false}
                   name="city"
                 />
                 <div className="fieldinput">

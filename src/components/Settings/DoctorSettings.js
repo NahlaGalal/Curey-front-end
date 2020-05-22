@@ -21,22 +21,17 @@ export const ChangeSpeciality = (props) => {
   const [specialityBoxOpened, setSpecialityBoxOpened] = useState(false);
   let specialitiesContainerRef = React.createRef();
 
-  const toggleSpecialitySelectBox = () => {
-    const prev = specialityBoxOpened;
-    let specialityChosen = speciality.speciality,
-      speciality_id = speciality.speciality_id;
-    if (prev) {
-      const inputChecked = Array.from(
-        specialitiesContainerRef.current.querySelectorAll("input[type=radio]")
-      ).filter((input) => input.checked)[0];
-      specialityChosen = inputChecked ? inputChecked.value : "";
-      speciality_id = inputChecked ? inputChecked.id.split("_")[0] : "";
+  const closeSpecialitySelectBox = () => {
+    const inputChecked = Array.from(
+      specialitiesContainerRef.current.querySelectorAll("input[type=radio]")
+    ).find((input) => input.checked);
+    setSpecialityBoxOpened(false);
+    if(inputChecked && inputChecked.id) {
+      setSpeciality({
+        speciality_id: inputChecked.id.split("_")[0],
+        speciality: inputChecked.value,
+      });
     }
-    setSpecialityBoxOpened(!prev);
-    setSpeciality({
-      speciality_id,
-      speciality: specialityChosen,
-    });
   };
 
   return (
@@ -54,14 +49,14 @@ export const ChangeSpeciality = (props) => {
       >
         <SelectBox
           name="speciality_id"
-          onClick={toggleSpecialitySelectBox}
+          onClick={closeSpecialitySelectBox}
+          openBox={() => setSpecialityBoxOpened(!specialityBoxOpened)}
           className={`${speciality.speciality ? "hasValue" : null}`}
-          listChecked={speciality.speciality_id ? [speciality.speciality] : []}
+          listChecked={speciality.speciality_id ? speciality.speciality : ""}
           header="Speciality"
           boxOpened={specialityBoxOpened}
           list={props.specialities}
           optionsContainerRef={specialitiesContainerRef}
-          multiSelect={false}
           isError={errors.Speciality}
           error={errors.Speciality ? "You must choose your speciality" : null}
           refe={register({

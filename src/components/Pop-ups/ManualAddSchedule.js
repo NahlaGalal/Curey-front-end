@@ -14,11 +14,10 @@ const days = [
   { name: "Friday", id: 7 },
 ];
 
-
 const ManualAddSchedule = (props) => {
   const { register, errors, handleSubmit } = useForm();
   const [dayBox, setDayBox] = useState(false);
-  const [day, setDay] = useState("");
+  const [day, setDay] = useState({ name: "", id: null });
   const [appointments, setAppointments] = useState([
     {
       time: "",
@@ -28,21 +27,17 @@ const ManualAddSchedule = (props) => {
 
   const dayContainerRef = React.createRef();
 
-  const toggleDaySelectBox = () => {
-    const boxOpened = dayBox;
-    let itemChecked = [];
-    if (boxOpened) {
-      itemChecked = Array.from(
-        dayContainerRef.current.querySelectorAll("input[type=radio]")
-      )
-        .filter((input) => input.checked)
-        .map((el) => ({
-          name: el.value,
-          id: el.id.split("_")[0],
-        }));
+  const closeDaySelectBox = () => {
+    let itemChecked = Array.from(
+      dayContainerRef.current.querySelectorAll("input[type=radio]")
+    ).find((input) => input.checked);
+    setDayBox(false);
+    if(itemChecked && itemChecked.id) {
+      setDay({
+        name: itemChecked.value,
+        id: itemChecked.id.slice("_")[0],
+      });
     }
-    setDayBox(!boxOpened);
-    setDay(itemChecked[0]);
   };
 
   const addDosingInput = () => {
@@ -62,14 +57,14 @@ const ManualAddSchedule = (props) => {
     >
       {props.add ? (
         <SelectBox
-          onClick={toggleDaySelectBox}
-          className={`${day ? "hasValue" : null}`}
-          listChecked={day ? [day.name] : []}
+          onClick={closeDaySelectBox}
+          openBox={() => setDayBox(!dayBox)}
+          className={`${day.id ? "hasValue" : null}`}
+          listChecked={day ? day.name : []}
           header="Set the day"
           boxOpened={dayBox}
           list={days}
           optionsContainerRef={dayContainerRef}
-          multiSelect={false}
           isError={errors["Set the day"]}
           error={
             errors["Set the day"] ? "You must choose your starting day" : null
