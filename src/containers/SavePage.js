@@ -7,7 +7,7 @@ export class SavePage extends Component {
   state = { hovered: [], medications: [] };
 
   componentDidMount() {
-    this.props.getFavourites(this.props.api_token);
+    this.props.getFavourites(this.props.api_token, this.props.history);
     this.setState({
       hovered: new Array(this.props.medications.length).fill(false),
       medications: this.props.medications,
@@ -32,7 +32,8 @@ export class SavePage extends Component {
         api_token: this.props.api_token,
         product_id,
       },
-      "SavePage"
+      "SavePage",
+      this.props.history
     );
   };
 
@@ -90,10 +91,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getFavourites: (api_token) =>
-    dispatch({ type: SAGA_GET_FAVOURITES, api_token }),
-  deleteFavouriteMedication: (data, source) =>
-    dispatch({ type: SAGA_DELETE_FAVOURITE, data, source }),
+  getFavourites: (api_token, history) =>
+    dispatch({ type: SAGA_GET_FAVOURITES, api_token, history }),
+  deleteFavouriteMedication: (data, source, history) =>
+    dispatch({ type: SAGA_DELETE_FAVOURITE, data, source, history }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SavePage);

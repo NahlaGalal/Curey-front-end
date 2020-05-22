@@ -121,46 +121,65 @@ class NavigationBar extends Component {
         {this.props.userThumbnailList && (
           <UserThumbnail
             hideLists={this.props.hideLists}
-            getUserData={() => this.props.getUserData(this.props.api_token)}
+            getUserData={() =>
+              this.props.getUserData(this.props.api_token, this.props.history)
+            }
             image={this.props.image}
             name={this.props.full_name}
             changeName={(data) =>
-              this.props.postChangeName({
-                ...data,
-                api_token: this.props.api_token,
-              })
+              this.props.postChangeName(
+                {
+                  ...data,
+                  api_token: this.props.api_token,
+                },
+                this.props.history
+              )
             }
             email={this.props.email}
             changeEmail={(data) =>
-              this.props.postChangeEmail({
-                ...data,
-                api_token: this.props.api_token,
-              })
+              this.props.postChangeEmail(
+                {
+                  ...data,
+                  api_token: this.props.api_token,
+                },
+                this.props.history
+              )
             }
             phone={this.props.phone}
             changePhone={(data) =>
-              this.props.postChangePhone({
-                ...data,
-                api_token: this.props.api_token,
-              })
+              this.props.postChangePhone(
+                {
+                  ...data,
+                  api_token: this.props.api_token,
+                },
+                this.props.history
+              )
             }
             changePassword={(data) =>
-              this.props.postChangePassword({
-                ...data,
-                api_token: this.props.api_token,
-              })
+              this.props.postChangePassword(
+                {
+                  ...data,
+                  api_token: this.props.api_token,
+                },
+                this.props.history
+              )
             }
             cities={this.props.cities}
             city_id={this.props.city_id}
             address={this.props.address}
             changeAddress={(data) =>
-              this.props.postChangeAddress({
-                ...data,
-                api_token: this.props.api_token,
-              })
+              this.props.postChangeAddress(
+                {
+                  ...data,
+                  api_token: this.props.api_token,
+                },
+                this.props.history
+              )
             }
             role={this.props.role || 1}
-            logout={() => this.props.postLogout(this.props.api_token)}
+            logout={() =>
+              this.props.postLogout(this.props.api_token, this.props.history)
+            }
           />
         )}
       </React.Fragment>
@@ -182,21 +201,22 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  postLogout: (api_token) =>
-    dispatch({ type: actions.SAGA_LOGOUT_USER, api_token }),
+  postLogout: (api_token, history) =>
+    dispatch({ type: actions.SAGA_LOGOUT_USER, api_token, history }),
   readNotification: (notifications) =>
     dispatch({ type: actions.READ_NOTIFICATION, notifications }),
-  getUserData: (api_token) =>
-    dispatch({ type: actions.SAGA_GET_PROFILE, api_token }),
-  postChangeName: (data) => dispatch({ type: actions.SAGA_CHANGE_NAME, data }),
-  postChangeEmail: (data) =>
-    dispatch({ type: actions.SAGA_CHANGE_EMAIL, data }),
-  postChangePhone: (data) =>
-    dispatch({ type: actions.SAGA_CHANGE_PHONE, data }),
-  postChangePassword: (data) =>
-    dispatch({ type: actions.SAGA_CHANGE_PASSWORD, data }),
-  postChangeAddress: (data) =>
-    dispatch({ type: actions.SAGA_CHANGE_ADDRESS, data }),
+  getUserData: (api_token, history) =>
+    dispatch({ type: actions.SAGA_GET_PROFILE, api_token, history }),
+  postChangeName: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_NAME, data, history }),
+  postChangeEmail: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_EMAIL, data, history }),
+  postChangePhone: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_PHONE, data, history }),
+  postChangePassword: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_PASSWORD, data, history }),
+  postChangeAddress: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_ADDRESS, data, history }),
 });
 
 export default withRouter(

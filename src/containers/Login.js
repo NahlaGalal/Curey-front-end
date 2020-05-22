@@ -16,7 +16,7 @@ const Login = props => {
     props.postLogin({
       user: data.user,
       password: data.password
-    });
+    }, props.history);
   };
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  postLogin: data => dispatch({ type: actions.SAGA_LOGIN_USER, data })
+  postLogin: (data, history) => dispatch({ type: actions.SAGA_LOGIN_USER, data, history })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

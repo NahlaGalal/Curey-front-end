@@ -99,29 +99,29 @@ const DoctorNavbar = (props) => {
         <DoctorThumbnail
           hideLists={props.hideLists}
           api_token={props.api_token}
-          logout={() => props.postLogout(props.api_token)}
-          getProfileData={props.getProfileData}
+          logout={() => props.postLogout(props.api_token, props.history)}
+          getProfileData={(api_token) => props.getProfileData(api_token, props.history)}
           image={props.image}
           changeImage={(data) => {
-            props.postChangeImage({ ...data });
+            props.postChangeImage({ ...data }, props.history);
           }}
           name={props.doctor_name}
           changeName={(data) => {
-            props.postChangeName({ ...data, api_token: props.api_token });
+            props.postChangeName({ ...data, api_token: props.api_token }, props.history);
             props.toggleDoctorThumbnailList();
           }}
           changeFees={(data) => {
-            props.postChangeFees({ ...data, api_token: props.api_token });
+            props.postChangeFees({ ...data, api_token: props.api_token }, props.history);
             props.toggleDoctorThumbnailList();
           }}
           fees={props.fees}
           changeDuration={(data) => {
-            props.postChangeDuration({ ...data, api_token: props.api_token });
+            props.postChangeDuration({ ...data, api_token: props.api_token }, props.history);
             props.toggleDoctorThumbnailList();
           }}
           duration={props.duration}
           changeHomeVisit={(data) => {
-            props.postChangeHomeVisit({ ...data, api_token: props.api_token });
+            props.postChangeHomeVisit({ ...data, api_token: props.api_token }, props.history);
             props.toggleDoctorThumbnailList();
           }}
           callup={props.callup}
@@ -131,27 +131,27 @@ const DoctorNavbar = (props) => {
           address={props.address}
           work_address={props.work_address}
           changeAddress={(data) => {
-            props.postChangeAddress({ ...data, api_token: props.api_token });
+            props.postChangeAddress({ ...data, api_token: props.api_token }, props.history);
             props.toggleDoctorThumbnailList();
           }}
           specialities={props.specialities}
           speciality={props.speciality}
           changeSpeciality={(data) => {
-            props.postChangeSpeciality({ ...data, api_token: props.api_token });
+            props.postChangeSpeciality({ ...data, api_token: props.api_token }, props.history);
             props.toggleDoctorThumbnailList();
           }}
           phone={props.phone}
           changePhone={(data) => {
-            props.postChangePhone({ ...data, api_token: props.api_token });
+            props.postChangePhone({ ...data, api_token: props.api_token }, props.history);
             props.toggleDoctorThumbnailList();
           }}
           changePassword={(data) => {
-            props.postChangePassword({ ...data, api_token: props.api_token });
+            props.postChangePassword({ ...data, api_token: props.api_token }, props.history);
             props.toggleDoctorThumbnailList();
           }}
           email={props.email}
           changeEmail={(data) => {
-            props.postChangeEmail({ ...data, api_token: props.api_token });
+            props.postChangeEmail({ ...data, api_token: props.api_token }, props.history);
             props.toggleDoctorThumbnailList();
           }}
         />
@@ -181,28 +181,28 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  postLogout: (api_token) =>
-    dispatch({ type: actions.SAGA_LOGOUT_USER, api_token }),
-  getProfileData: (api_token) =>
-    dispatch({ type: actions.SAGA_GET_PROFILE, api_token }),
-  postChangeName: (data) => dispatch({ type: actions.SAGA_CHANGE_NAME, data }),
-  postChangeFees: (data) => dispatch({ type: actions.SAGA_CHANGE_FEES, data }),
-  postChangeDuration: (data) =>
-    dispatch({ type: actions.SAGA_CHANGE_DURATION, data }),
-  postChangeHomeVisit: (data) =>
-    dispatch({ type: actions.SAGA_CHANGE_HOME_VISIT_FEES, data }),
-  postChangeAddress: (data) =>
-    dispatch({ type: actions.SAGA_CHANGE_ADDRESS, data }),
-  postChangeSpeciality: (data) =>
-    dispatch({ type: actions.SAGA_CHANGE_SPECIALITY, data }),
-  postChangePhone: (data) =>
-    dispatch({ type: actions.SAGA_CHANGE_PHONE, data }),
-  postChangePassword: (data) =>
-    dispatch({ type: actions.SAGA_CHANGE_PASSWORD, data }),
-  postChangeEmail: (data) =>
-    dispatch({ type: actions.SAGA_CHANGE_EMAIL, data }),
-  postChangeImage: (data) =>
-    dispatch({ type: actions.SAGA_CHANGE_IMAGE, data }),
+  postLogout: (api_token, history) =>
+    dispatch({ type: actions.SAGA_LOGOUT_USER, api_token, history }),
+  getProfileData: (api_token, history) =>
+    dispatch({ type: actions.SAGA_GET_PROFILE, api_token, history }),
+  postChangeName: (data, history) => dispatch({ type: actions.SAGA_CHANGE_NAME, data, history }),
+  postChangeFees: (data, history) => dispatch({ type: actions.SAGA_CHANGE_FEES, data, history }),
+  postChangeDuration: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_DURATION, data, history }),
+  postChangeHomeVisit: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_HOME_VISIT_FEES, data, history }),
+  postChangeAddress: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_ADDRESS, data, history }),
+  postChangeSpeciality: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_SPECIALITY, data, history }),
+  postChangePhone: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_PHONE, data, history }),
+  postChangePassword: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_PASSWORD, data, history }),
+  postChangeEmail: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_EMAIL, data, history }),
+  postChangeImage: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_IMAGE, data, history }),
 });
 
 export default withRouter(

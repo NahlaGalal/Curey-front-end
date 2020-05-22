@@ -21,15 +21,13 @@ import {
   SAGA_DELETE_SCHEDULE,
   SEARCH_MEDICATION,
   SAGA_SEARCH_MEDICATION,
-  GET_SPECIALITY,
-  SAGA_GET_SPECIALITY,
   COMPLETE_DOCTOR_SIGNUP,
   SAGA_COMPLETE_DOCTOR_SIGNUP,
 } from "../actions/types";
 import axios from "../util/axiosInstance";
 import { put, takeEvery, call } from "redux-saga/effects";
 
-function* getSchedule({ api_token }) {
+function* getSchedule({ api_token, history }) {
   try {
     const res = yield call(() =>
       axios.get(`/api/web/schedule?api_token=${api_token}`)
@@ -47,11 +45,11 @@ function* getSchedule({ api_token }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* getDoctorStatement({ api_token }) {
+function* getDoctorStatement({ api_token, history }) {
   try {
     const res = yield call(() =>
       axios.get(`/api/web/doctor_dashboard?api_token=${api_token}`)
@@ -69,34 +67,11 @@ function* getDoctorStatement({ api_token }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* getDoctorSpeciality({ api_token }) {
-  try {
-    const res = yield call(() =>
-      axios.get(`/api/web/complete_signup?api_token=${api_token}`)
-    );
-    if (!res.data.isFailed) {
-      yield put({
-        type: GET_SPECIALITY,
-        payload: res.data.data,
-        isFailed: false,
-      });
-      console.log(res);
-    } else
-      yield put({
-        type: GET_SPECIALITY,
-        payload: res.data.errors,
-        isFailed: true,
-      });
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-function* postAddSchedule({ data }) {
+function* postAddSchedule({ data, history }) {
   try {
     const res = yield call(() => axios.post("/api/web/add_schedule", data));
     if (!res.data.isFailed)
@@ -111,11 +86,11 @@ function* postAddSchedule({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postEditSchedule({ data }) {
+function* postEditSchedule({ data, history }) {
   try {
     const res = yield call(() => axios.post("/api/web/update_day", data));
     if (!res.data.isFailed)
@@ -130,11 +105,11 @@ function* postEditSchedule({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postDeleteSchedule({ data }) {
+function* postDeleteSchedule({ data, history }) {
   try {
     const res = yield call(() => axios.post("/api/web/delete_day", data));
     if (!res.data.isFailed)
@@ -149,11 +124,11 @@ function* postDeleteSchedule({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* getReExaminations({ api_token, skip, limit }) {
+function* getReExaminations({ api_token, skip, limit, history }) {
   try {
     const res = yield call(() =>
       axios.get(
@@ -173,11 +148,11 @@ function* getReExaminations({ api_token, skip, limit }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postSetReExamination({ data }) {
+function* postSetReExamination({ data, history }) {
   try {
     const res = yield call(() =>
       axios.post("/api/web/doctor/set_reExamination", data)
@@ -195,11 +170,11 @@ function* postSetReExamination({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* getRequests({ api_token, skip, limit }) {
+function* getRequests({ api_token, skip, limit, history }) {
   try {
     const res = yield call(() =>
       axios.get(
@@ -219,11 +194,11 @@ function* getRequests({ api_token, skip, limit }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postSendPrescription({ data }) {
+function* postSendPrescription({ data, history }) {
   try {
     const res = yield call(() =>
       axios.post("/api/web/doctor/send_prescription", data)
@@ -240,11 +215,11 @@ function* postSendPrescription({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* getPrescriptions({ api_token }) {
+function* getPrescriptions({ api_token, history }) {
   try {
     const res = yield call(() =>
       axios.get(`/api/web/doctor/prescriptions?api_token=${api_token}`)
@@ -262,11 +237,11 @@ function* getPrescriptions({ api_token }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* getSearchMedication({ api_token, name }) {
+function* getSearchMedication({ api_token, name, history }) {
   try {
     const res = yield call(() =>
       axios.get(
@@ -286,11 +261,11 @@ function* getSearchMedication({ api_token, name }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postCompleteSignUp({ data }) {
+function* postCompleteSignUp({ data, history }) {
   try {
     const res = yield call(() => axios.post("/api/web/complete_signup", data));
     if (!res.data.isFailed) {
@@ -307,7 +282,7 @@ function* postCompleteSignUp({ data }) {
       });
     }
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
@@ -323,6 +298,5 @@ export default function* watchDoctorDashboard() {
   yield takeEvery(SAGA_GET_DOCTOR_REQUESTS, getRequests);
   yield takeEvery(SAGA_GET_DOCTOR_PRESCRIPTIONS, getPrescriptions);
   yield takeEvery(SAGA_SEARCH_MEDICATION, getSearchMedication);
-  yield takeEvery(SAGA_GET_SPECIALITY, getDoctorSpeciality);
   yield takeEvery(SAGA_COMPLETE_DOCTOR_SIGNUP, postCompleteSignUp);
 }

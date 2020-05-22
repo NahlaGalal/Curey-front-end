@@ -2,7 +2,7 @@ import axios from "../util/axiosInstance";
 import { put, takeEvery, call } from "redux-saga/effects";
 import * as actions from "../actions/types";
 
-function* getHomeData({ api_token }) {
+function* getHomeData({ api_token, history }) {
   try {
     let result = yield call(() =>
       axios.get(`/api/web/home?api_token=${api_token}`)
@@ -20,7 +20,7 @@ function* getHomeData({ api_token }) {
         isFailed: true
       });
   } catch (e) {
-    console.log(e);
+    history.push("/error500");
   }
 }
 

@@ -19,9 +19,10 @@ class MedicinePage extends Component {
   componentDidMount() {
     this.props.requestMedicineData(
       this.props.api_token,
-      this.props.match.params.id
+      this.props.match.params.id,
+      this.props.history
     );
-    this.props.showCart(this.props.api_token);
+    this.props.showCart(this.props.api_token, this.props.history);
   }
 
   deleteFavouriteMedication = (product_id) => {
@@ -30,7 +31,8 @@ class MedicinePage extends Component {
         api_token: this.props.api_token,
         product_id,
       },
-      "MedicationPage"
+      "MedicationPage",
+      this.props.history
     );
   };
 
@@ -40,15 +42,20 @@ class MedicinePage extends Component {
         api_token: this.props.api_token,
         product_id,
       },
-      "MedicationPage"
+      "MedicationPage",
+      this.props.history
     );
   };
 
   addToCart = (product_pharmacy_id) => {
-    this.props.addToCart(this.props.api_token, {
-      id: product_pharmacy_id,
-      amount: 1,
-    });
+    this.props.addToCart(
+      this.props.api_token,
+      {
+        id: product_pharmacy_id,
+        amount: 1,
+      },
+      this.props.history
+    );
   };
 
   submitOrder = (pharmacy) => {
@@ -62,7 +69,8 @@ class MedicinePage extends Component {
         medicationName: this.props.medicine.name,
         pharmacy: pharmacy.name,
         medicationImage: this.props.medicine.image,
-      }
+      },
+      this.props.history
     );
   };
 
@@ -188,15 +196,22 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  requestMedicineData: (api_token, id) =>
-    dispatch({ type: actions.REQUEST_MEDICATION, api_token, id }),
-  deleteFavouriteMedication: (data, source) =>
-    dispatch({ type: actions.SAGA_DELETE_FAVOURITE, data, source }),
-  addFavouriteMedication: (data, source) =>
-    dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source }),
-  addToCart: (api_token, product) =>
-    dispatch({ type: actions.SAGA_ADD_TO_CART, api_token, product }),
-  submitMedicineOrder: (api_token, address, permenant, products, notificationData) =>
+  requestMedicineData: (api_token, id, history) =>
+    dispatch({ type: actions.REQUEST_MEDICATION, api_token, id, history }),
+  deleteFavouriteMedication: (data, source, history) =>
+    dispatch({ type: actions.SAGA_DELETE_FAVOURITE, data, source, history }),
+  addFavouriteMedication: (data, source, history) =>
+    dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source, history }),
+  addToCart: (api_token, product, history) =>
+    dispatch({ type: actions.SAGA_ADD_TO_CART, api_token, product, history }),
+  submitMedicineOrder: (
+    api_token,
+    address,
+    permenant,
+    products,
+    notificationData,
+    history
+  ) =>
     dispatch({
       type: actions.SUBMIT_MEDICATION_ORDER,
       api_token,
@@ -204,9 +219,10 @@ const mapDispatchToProps = (dispatch) => ({
       permenant,
       products,
       notificationData,
+      history,
     }),
-  showCart: (api_token) =>
-    dispatch({ type: actions.SAGA_SHOW_CART, api_token }),
+  showCart: (api_token, history) =>
+    dispatch({ type: actions.SAGA_SHOW_CART, api_token, history }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MedicinePage);

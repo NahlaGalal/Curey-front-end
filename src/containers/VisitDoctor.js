@@ -10,21 +10,23 @@ class VisitDoctor extends Component {
     doctor: {},
     error: "",
     bookedOrder: [],
-    bookId: null
+    bookId: null,
   };
 
   componentDidMount() {
     if (this.props.match.params.id !== this.props.doctor.id) {
       this.props.getDoctorData(
         this.props.match.params.id,
-        this.props.api_token
+        this.props.api_token,
+        this.props.history
       );
       this.setState({ doctor: {} });
     } else this.setState({ doctor: this.props.doctor });
 
     this.props.getAvailableAppointments(
       this.props.api_token,
-      this.props.match.params.id
+      this.props.match.params.id,
+      this.props.history
     );
   }
 
@@ -43,13 +45,13 @@ class VisitDoctor extends Component {
           ).fill(0);
           this.setState({
             bookedOrder: arr,
-            doctor: this.props.doctor
+            doctor: this.props.doctor,
           });
         } else this.setState({ doctor: this.props.doctor });
       } else
         this.setState({
           doctor: {},
-          error: "This doctor isn't available for home visit services"
+          error: "This doctor isn't available for home visit services",
         });
     }
     if (
@@ -62,7 +64,7 @@ class VisitDoctor extends Component {
           1,
           +this.state.bookId,
           +this.state.bookId + 1
-        )
+        ),
       });
     }
   }
@@ -72,7 +74,7 @@ class VisitDoctor extends Component {
       bookId:
         day === 1
           ? +i
-          : +i + +this.props.doctor.appointments.first_day.available.length
+          : +i + +this.props.doctor.appointments.first_day.available.length,
     });
     const is_callup =
       this.props.match.url.split("/")[1] === "bookingDoctor" ? 0 : 1;
@@ -80,7 +82,8 @@ class VisitDoctor extends Component {
       this.props.api_token,
       this.props.doctor.id,
       is_callup,
-      appointment_time
+      appointment_time,
+      this.props.history
     );
   };
 
@@ -129,30 +132,37 @@ class VisitDoctor extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     api_token: state.user.api_token,
     doctor: state.doctors.doctorData,
     success: state.appointments.success,
-    error: state.appointments.errors
+    error: state.appointments.errors,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onBookAppointment: (api_token, doctor_id, is_callup, appointment_time) =>
+    onBookAppointment: (
+      api_token,
+      doctor_id,
+      is_callup,
+      appointment_time,
+      history
+    ) =>
       dispatch({
         type: actions.BOOK_APPOINTMENT,
-        data: { api_token, doctor_id, is_callup, appointment_time }
+        data: { api_token, doctor_id, is_callup, appointment_time, history },
       }),
-    getDoctorData: (id, api_token) =>
-      dispatch({ type: actions.SAGA_GET_DOCTOR, id, api_token }),
-    getAvailableAppointments: (api_token, doctor_id) =>
+    getDoctorData: (id, api_token, history) =>
+      dispatch({ type: actions.SAGA_GET_DOCTOR, id, api_token, history }),
+    getAvailableAppointments: (api_token, doctor_id, history) =>
       dispatch({
         type: actions.SAGA_GET_DOCTOR_APPOINTMENTS,
         api_token,
-        doctor_id
-      })
+        doctor_id,
+        history,
+      }),
   };
 };
 

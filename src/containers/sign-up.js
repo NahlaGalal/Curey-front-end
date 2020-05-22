@@ -167,7 +167,7 @@ class Signup extends Component {
   };
 
   componentDidMount() {
-    this.props.getCities();
+    this.props.getCities(this.props.history);
   }
 
   toggleUserForm = role_id => {
@@ -220,7 +220,7 @@ class Signup extends Component {
               <SignupUser
                 role_id={this.state.role_id}
                 cities={this.props.user.cities}
-                postSignup={this.props.postSignup}
+                postSignup={(data) => this.props.postSignup(data, this.props.history)}
                 success={this.props.user.success}
                 errors={this.props.user.errors}
                 redirectToLogin={() => this.props.history.push("/login")}
@@ -241,8 +241,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  postSignup: data => dispatch({ type: actions.SAGA_SIGNUP_USER, data }),
-  getCities: () => dispatch({ type: actions.SAGA_GET_CITIES })
+  postSignup: (data, history) => dispatch({ type: actions.SAGA_SIGNUP_USER, data, history }),
+  getCities: (history) => dispatch({ type: actions.SAGA_GET_CITIES, history })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup);

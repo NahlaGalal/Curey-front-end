@@ -10,12 +10,12 @@ class ShoppingCart extends Component {
   state = {
     orderDetailsBox: false,
     cart: [],
-    orderDetails: []
+    orderDetails: [],
   };
 
   componentDidMount() {
     this.setState({ cart: this.props.cart });
-    this.props.showCart(this.props.api_token);
+    this.props.showCart(this.props.api_token, this.props.history);
   }
 
   componentDidUpdate(prevProps) {
@@ -26,14 +26,14 @@ class ShoppingCart extends Component {
 
   openOrderDetailsBox = () => {
     const orderDetails = [];
-    this.state.cart.forEach(item => {
+    this.state.cart.forEach((item) => {
       const orderIndex = orderDetails.findIndex(
-        order => order.pharmacy.name === item.pharmacy.name
+        (order) => order.pharmacy.name === item.pharmacy.name
       );
       if (orderIndex === -1) {
         orderDetails.push({
           pharmacy: { ...item.pharmacy },
-          medications: [{ ...item }]
+          medications: [{ ...item }],
         });
       } else {
         orderDetails[orderIndex].medications.push({ ...item });
@@ -43,17 +43,22 @@ class ShoppingCart extends Component {
   };
 
   applyOrder = () => {
-    const products = this.state.cart.map(cart => ({
+    const products = this.state.cart.map((cart) => ({
       id: cart.pharmacy.product_pharmacy_id,
-      amount: 1
+      amount: 1,
     }));
-    this.props.submitOrder(this.props.api_token, products, { order: 0 });
+    this.props.submitOrder(
+      this.props.api_token,
+      products,
+      { order: 0 },
+      this.props.history
+    );
     this.setState({ orderDetailsBox: false, cart: [] });
   };
 
   render() {
     const totalPrice = this.state.cart
-      .map(cart => +cart.price)
+      .map((cart) => +cart.price)
       .reduce((total, price) => (total += price), 0)
       .toFixed(2);
 
@@ -78,7 +83,8 @@ class ShoppingCart extends Component {
                     remove={() =>
                       this.props.removeFromCart(
                         this.props.api_token,
-                        cart.pharmacy.product_pharmacy_id
+                        cart.pharmacy.product_pharmacy_id,
+                        this.props.history
                       )
                     }
                   />
@@ -99,7 +105,9 @@ class ShoppingCart extends Component {
             </React.Fragment>
           ) : !this.props.error ? (
             <ReactLoading type="spokes" color="#0066ff" className="loading" />
-          ) : <p className="error"> No items in shopping cart </p>}
+          ) : (
+            <p className="error"> No items in shopping cart </p>
+          )}
         </div>
         {this.state.orderDetailsBox && (
           <OrderDetails
@@ -113,27 +121,30 @@ class ShoppingCart extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   cart: state.user.cart,
   api_token: state.user.api_token,
-  error: state.user.errors.error
+  error: state.user.errors.error,
 });
 
-const mapDispatchToProps = dispatch => ({
-  removeFromCart: (api_token, product_id) =>
+const mapDispatchToProps = (dispatch) => ({
+  removeFromCart: (api_token, product_id, history) =>
     dispatch({
       type: actions.SAGA_REMOVE_FROM_CART,
       api_token,
-      product_id
+      product_id,
+      history,
     }),
-  submitOrder: (api_token, data, notificationData) =>
+  submitOrder: (api_token, data, notificationData, history) =>
     dispatch({
       type: actions.SUBMIT_MEDICATION_ORDER,
       api_token,
       data,
-      notificationData
+      notificationData,
+      history,
     }),
-  showCart: api_token => dispatch({ type: actions.SAGA_SHOW_CART, api_token })
+  showCart: (api_token, history) =>
+    dispatch({ type: actions.SAGA_SHOW_CART, api_token, history }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCart);

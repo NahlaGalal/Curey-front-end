@@ -2,7 +2,7 @@ import axios from "../util/axiosInstance";
 import { put, takeEvery, call } from "redux-saga/effects";
 import * as actions from "../actions/types";
 
-function* getMedications({ api_token, skip, limit }) {
+function* getMedications({ api_token, skip, limit, history }) {
   try {
     let result = yield call(() =>
       axios.get(
@@ -22,11 +22,18 @@ function* getMedications({ api_token, skip, limit }) {
         isFailed: true,
       });
   } catch (e) {
-    console.log(e);
+    history.push("/error500");
   }
 }
 
-function* getMedicationsSearch({ search, api_token, skip, limit, keywords }) {
+function* getMedicationsSearch({
+  search,
+  api_token,
+  skip,
+  limit,
+  keywords,
+  history,
+}) {
   try {
     let res;
     if (keywords.length) {
@@ -67,11 +74,11 @@ function* getMedicationsSearch({ search, api_token, skip, limit, keywords }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* getMedication({ api_token, id }) {
+function* getMedication({ api_token, id, history }) {
   try {
     let result = yield call(() =>
       axios.get(`/api/web/medication?api_token=${api_token}&id=${id}`)
@@ -89,11 +96,11 @@ function* getMedication({ api_token, id }) {
         isFailed: true,
       });
   } catch (e) {
-    console.log(e);
+    history.push("/error500");
   }
 }
 
-function* postAddFavourite({ data, source }) {
+function* postAddFavourite({ data, source, history }) {
   try {
     let res = yield call(() => axios.post("/api/web/add_favourites", data));
     if (!res.data.isFailed)
@@ -129,11 +136,11 @@ function* postAddFavourite({ data, source }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postDeleteFavourite({ data, source }) {
+function* postDeleteFavourite({ data, source, history }) {
   try {
     let res = yield call(() => axios.post("/api/web/delete_favourites", data));
     if (!res.data.isFailed)
@@ -175,11 +182,11 @@ function* postDeleteFavourite({ data, source }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* getFavourites({ api_token }) {
+function* getFavourites({ api_token, history }) {
   try {
     let res = yield call(() =>
       axios.get(`/api/web/favourites?api_token=${api_token}`)
@@ -197,7 +204,7 @@ function* getFavourites({ api_token }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
@@ -207,6 +214,7 @@ function* submitOrder({
   permenant,
   products,
   notificationData,
+  history,
 }) {
   let obj = { api_token, products };
   if (address) obj = { api_token, products, permenant, address };
@@ -240,11 +248,11 @@ function* submitOrder({
       });
     }
   } catch (e) {
-    console.log(e);
+    history.push("/error500");
   }
 }
 
-function* getOrders({ api_token }) {
+function* getOrders({ api_token, history }) {
   try {
     let result = yield call(() =>
       axios.get(`/api/web/orders?api_token=${api_token}`)
@@ -262,11 +270,11 @@ function* getOrders({ api_token }) {
         isFailed: true,
       });
   } catch (e) {
-    console.log(e);
+    history.push("/error500");
   }
 }
 
-function* cancelOrder({ api_token, order_id }) {
+function* cancelOrder({ api_token, order_id, history }) {
   const data = { api_token, order_id };
   try {
     let result = yield call(() => axios.post(`/api/web/cancel_order`, data));
@@ -283,7 +291,7 @@ function* cancelOrder({ api_token, order_id }) {
       });
     }
   } catch (e) {
-    console.log(e);
+    history.push("/error500");
   }
 }
 

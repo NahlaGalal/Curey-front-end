@@ -15,7 +15,7 @@ class Requests extends Component {
   };
 
   componentDidMount() {
-    this.props.getRequests(this.props.api_token);
+    this.props.getRequests(this.props.api_token, this.props.history);
   }
 
   render() {
@@ -34,10 +34,13 @@ class Requests extends Component {
                 medications={this.state.medications}
                 request="request"
                 requestAccepted={() =>
-                  this.props.acceptRequest({
-                    api_token: this.props.api_token,
-                    order_id: request.id,
-                  })
+                  this.props.acceptRequest(
+                    {
+                      api_token: this.props.api_token,
+                      order_id: request.id,
+                    },
+                    this.props.history
+                  )
                 }
               />
             ))
@@ -66,10 +69,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getRequests: (api_token) =>
-    dispatch({ type: actions.SAGA_GET_REQUESTS, api_token }),
-  acceptRequest: (data) =>
-    dispatch({ type: actions.SAGA_ACCEPT_REQUEST, data }),
+  getRequests: (api_token, history) =>
+    dispatch({ type: actions.SAGA_GET_REQUESTS, api_token, history }),
+  acceptRequest: (data, history) =>
+    dispatch({ type: actions.SAGA_ACCEPT_REQUEST, data, history }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Requests);

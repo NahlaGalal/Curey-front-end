@@ -18,17 +18,17 @@ class PharmacyStatement extends Component {
       { value: 70, month: "Feb2" },
       { value: 350, month: "Oct" },
       { value: 600, month: "Nov" },
-      { value: 325, month: "Dec" }
+      { value: 325, month: "Dec" },
     ],
     medications: [
       { name: "Flumox syrup", quantity: 3 },
       { name: "Antinal pills", quantity: 2 },
-      { name: "Panadol extra pills", quantity: 1 }
-    ]
+      { name: "Panadol extra pills", quantity: 1 },
+    ],
   };
 
   componentDidMount() {
-    this.props.getDashbaord(this.props.api_token);
+    this.props.getDashbaord(this.props.api_token, this.props.history);
   }
 
   render() {
@@ -72,10 +72,7 @@ class PharmacyStatement extends Component {
                 medications={this.state.medications}
               />
             ) : this.props.errors.error ? (
-              <p className="error">
-                {" "}
-                No performed Requests yet{" "}
-              </p>
+              <p className="error"> No performed Requests yet </p>
             ) : (
               <ReactLoading
                 type="spokes"
@@ -93,14 +90,14 @@ class PharmacyStatement extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   api_token: state.user.api_token,
   errors: state.pharmacyData.errors,
-  dashboard: state.pharmacyData.dashboard
+  dashboard: state.pharmacyData.dashboard,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getDashbaord: api_token =>
-    dispatch({ type: actions.SAGA_GET_DASHBOARD, api_token })
+const mapDispatchToProps = (dispatch) => ({
+  getDashbaord: (api_token, history) =>
+    dispatch({ type: actions.SAGA_GET_DASHBOARD, api_token, history }),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(PharmacyStatement);

@@ -2,7 +2,7 @@ import axios from "../util/axiosInstance";
 import { put, takeEvery, call } from "redux-saga/effects";
 import * as actions from "../actions/types";
 
-function* getAppointments({ api_token }) {
+function* getAppointments({ api_token, history }) {
   try {
     let result = yield call(() =>
       axios.get(`/api/web/appointments?api_token=${api_token}`)
@@ -20,11 +20,11 @@ function* getAppointments({ api_token }) {
         isFailed: true
       });
   } catch (e) {
-    console.log(e);
+    history.push("/error500");
   }
 }
 
-function* bookAppointment({ data }) {
+function* bookAppointment({ data, history }) {
   try {
     let res = yield call(() => axios.post("/api/web/book_appointment", data));
     if (!res.data.isFailed)
@@ -40,7 +40,7 @@ function* bookAppointment({ data }) {
         isFailed: true
       });
   } catch (e) {
-    console.log(e);
+    history.push("/error500");
   }
 }
 

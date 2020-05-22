@@ -164,7 +164,7 @@ const CompleteSignup = (props) => {
 
 class PharmCompSignup extends Component {
   componentDidMount() {
-    this.props.getCompleteSignup(this.props.api_token);
+    this.props.getCompleteSignup(this.props.api_token, this.props.history);
   }
 
   render() {
@@ -183,7 +183,7 @@ class PharmCompSignup extends Component {
               <CompleteSignup
                 cities={this.props.user.cities}
                 image={this.props.image}
-                postCompleteSignup={this.props.postCompleteSignup}
+                postCompleteSignup={(data) => this.props.postCompleteSignup(data, this.props.history)}
                 success={this.props.success}
                 errors={this.props.errors}
                 api_token={this.props.api_token}
@@ -209,9 +209,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  postCompleteSignup: (data) =>
-    dispatch({ type: actions.SAGA_COMPLETE_PHARM_SIGNUP, data }),
-  getCompleteSignup: (api_token) => dispatch({ type: actions.SAGA_GET_COMPLETE_SIGNUP, api_token }),
+  postCompleteSignup: (data, history) =>
+    dispatch({ type: actions.SAGA_COMPLETE_PHARM_SIGNUP, data, history }),
+  getCompleteSignup: (api_token, history) => dispatch({ type: actions.SAGA_GET_COMPLETE_SIGNUP, api_token, history }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PharmCompSignup);

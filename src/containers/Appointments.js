@@ -16,7 +16,7 @@ class Appointments extends Component {
 
   componentDidMount() {
     this.setState({ bookings: this.props.appointments });
-    this.props.onRequestAppointments(this.props.api_token);
+    this.props.onRequestAppointments(this.props.api_token, this.props.history);
   }
 
   componentDidUpdate(prevProps) {
@@ -136,8 +136,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onRequestAppointments: api_token =>
-      dispatch({ type: actions.REQUEST_APPOINTMENTS, api_token })
+    onRequestAppointments: (api_token, history) =>
+      dispatch({ type: actions.REQUEST_APPOINTMENTS, api_token, history })
   };
 };
 

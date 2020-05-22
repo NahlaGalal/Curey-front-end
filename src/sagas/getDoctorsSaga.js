@@ -8,10 +8,10 @@ import {
   SAGA_GET_DOCTOR,
   GET_DOCTOR,
   SAGA_GET_DOCTOR_APPOINTMENTS,
-  GET_DOCTOR_APPOINTMENTS
+  GET_DOCTOR_APPOINTMENTS,
 } from "../actions/types";
 
-function* getAllDoctors({ api_token, skip, limit }) {
+function* getAllDoctors({ api_token, skip, limit, history }) {
   try {
     const res = yield call(() =>
       axios.get(
@@ -22,16 +22,16 @@ function* getAllDoctors({ api_token, skip, limit }) {
       yield put({
         type: GET_DOCTORS,
         payload: res.data.data,
-        isFailed: false
+        isFailed: false,
       });
     else
       yield put({
         type: GET_DOCTORS,
         payload: res.data.errors,
-        isFailed: true
+        isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
@@ -41,32 +41,40 @@ function* getDoctorsSearch({
   skip,
   limit,
   city_id,
-  speciality_id
+  speciality_id,
+  history,
 }) {
   try {
     const res = yield call(() =>
-      axios.get(
-        `/api/web/doctors/search?name=${search}&api_token=${api_token}&skip=${skip}&limit=${limit}&city_id=${city_id}&speciality_id=${speciality_id}`
-      )
+      axios.get(`/api/web/doctors/search`, {
+        params: {
+          name: search,
+          api_token,
+          skip,
+          limit,
+          city_id,
+          speciality_id,
+        },
+      })
     );
     if (!res.data.isFailed)
       yield put({
         type: SEARCH_DOCTORS,
         payload: res.data.data,
-        isFailed: false
+        isFailed: false,
       });
     else
       yield put({
         type: SEARCH_DOCTORS,
         payload: res.data.errors,
-        isFailed: true
+        isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* getDoctorData({ id, api_token }) {
+function* getDoctorData({ id, api_token, history }) {
   try {
     const res = yield call(() =>
       axios.get(`/api/web/doctor?api_token=${api_token}&id=${id}`)
@@ -75,20 +83,20 @@ function* getDoctorData({ id, api_token }) {
       yield put({
         type: GET_DOCTOR,
         payload: res.data.data,
-        isFailed: false
+        isFailed: false,
       });
     else
       yield put({
         type: GET_DOCTOR,
         payload: res.data.errors,
-        isFailed: true
+        isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* getDoctorAppointments({ api_token, doctor_id }) {
+function* getDoctorAppointments({ api_token, doctor_id, history }) {
   try {
     const res = yield call(() =>
       axios.get(
@@ -99,20 +107,20 @@ function* getDoctorAppointments({ api_token, doctor_id }) {
       yield put({
         type: GET_DOCTOR_APPOINTMENTS,
         payload: res.data.data,
-        isFailed: false
+        isFailed: false,
       });
     else
       yield put({
         type: GET_DOCTOR_APPOINTMENTS,
         payload: res.data.errors,
-        isFailed: true
+        isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-export default function* watchDoctors(data) {
+export default function* watchDoctors() {
   yield takeEvery(SAGA_GET_DOCTORS, getAllDoctors);
   yield takeEvery(SAGA_SEARCH_DOCTORS, getDoctorsSearch);
   yield takeEvery(SAGA_GET_DOCTOR, getDoctorData);

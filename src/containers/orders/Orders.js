@@ -17,7 +17,7 @@ export class Orders extends Component {
   }
 
   componentDidMount() {
-    this.props.onRequestOrders(this.props.api_token);
+    this.props.onRequestOrders(this.props.api_token, this.props.history);
   }
 
   componentDidUpdate(prevProps) {
@@ -128,7 +128,8 @@ export class Orders extends Component {
                         onClick={() =>
                           this.props.onCancelOrder(
                             this.props.api_token,
-                            order.id
+                            order.id,
+                            this.props.history
                           )
                         }
                       >
@@ -180,10 +181,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onRequestOrders: api_token =>
-      dispatch({ type: actions.REQUEST_ORDERS, api_token }),
-    onCancelOrder: (api_token, order_id) =>
-      dispatch({ type: actions.SAGA_CANCEL_ORDER, api_token, order_id })
+    onRequestOrders: (api_token, history) =>
+      dispatch({ type: actions.REQUEST_ORDERS, api_token, history }),
+    onCancelOrder: (api_token, order_id, history) =>
+      dispatch({ type: actions.SAGA_CANCEL_ORDER, api_token, order_id, history })
   };
 };
 

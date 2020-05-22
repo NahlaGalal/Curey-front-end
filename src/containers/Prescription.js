@@ -12,29 +12,29 @@ import deleteIcon from "../assets/svg/delete.svg";
 export class Prescription extends Component {
   state = {
     menuVisiblity: -1,
-    addPrescriptionBox: false
+    addPrescriptionBox: false,
   };
 
   componentDidMount() {
-    this.props.getPrescriptions(this.props.api_token);
+    this.props.getPrescriptions(this.props.api_token, this.props.history);
   }
 
-  toggleMenu = (e, i) => {  
+  toggleMenu = (e, i) => {
     e.stopPropagation();
     let menuVisiblity = i;
     if (this.state.menuVisiblity === i) menuVisiblity = -1;
     this.setState({ menuVisiblity });
   };
 
-  deletePrescriptions = prescription_id => {
+  deletePrescriptions = (prescription_id) => {
     this.props.postDeletePrescriptions({
       api_token: this.props.api_token,
-      prescription_id
-    });
+      prescription_id,
+    }, this.props.history);
     this.setState({ menuVisiblity: -1 });
   };
 
-  addPrescription = data => {
+  addPrescription = (data) => {
     let hours = [],
       date = null,
       end_date = "";
@@ -56,27 +56,30 @@ export class Prescription extends Component {
       frequency: data.frequency,
       days: data.days,
       hours: hours.sort(),
-      auto: 0
-    });
+      auto: 0,
+    }, this.props.history);
   };
 
   formatTime = (time) => {
     let hours = parseInt(time.slice(0, 2));
     let minutes = time.slice(3, 5);
     let hourFormat = "AM";
-    if(hours > 12) {
+    if (hours > 12) {
       hours -= 12;
       hourFormat = "PM";
-    }else if(hours === 12) hourFormat = "PM";
-    else if(hours === 0) hours = 12;
-    hours = hours.toString().padStart(2, '0');
-    time = `${hours}:${minutes} ${hourFormat}`
-    return <li key={time}>{time}</li>
-  }
+    } else if (hours === 12) hourFormat = "PM";
+    else if (hours === 0) hours = 12;
+    hours = hours.toString().padStart(2, "0");
+    time = `${hours}:${minutes} ${hourFormat}`;
+    return <li key={time}>{time}</li>;
+  };
 
   render() {
     return (
-      <main className="Prescription" onClick={() => this.setState({menuVisiblity: -1})}>
+      <main
+        className="Prescription"
+        onClick={() => this.setState({ menuVisiblity: -1 })}
+      >
         <Button
           className="btn btn-lg btn-green-dark"
           onClick={() => this.setState({ addPrescriptionBox: true })}
@@ -110,13 +113,13 @@ export class Prescription extends Component {
                 </p>
                 <h3>Days in week</h3>
                 <div className="Prescription__container__card__days">
-                  {prescription.Days.map(day => (
+                  {prescription.Days.map((day) => (
                     <span key={day}>{day.slice(0, 2)}</span>
                   ))}
                 </div>
                 <h3>Dosing times</h3>
                 <ul className="Prescription__container__card__dosing">
-                  {prescription.dosage_time.map(dose => 
+                  {prescription.dosage_time.map((dose) =>
                     this.formatTime(dose)
                   )}
                 </ul>
@@ -124,7 +127,7 @@ export class Prescription extends Component {
                   className={`Prescription__container__card__menu ${
                     this.state.menuVisiblity === i ? "visible" : ""
                   }`}
-                  onClick={e => e.stopPropagation()}
+                  onClick={(e) => e.stopPropagation()}
                 >
                   <Button>
                     <img
@@ -146,15 +149,15 @@ export class Prescription extends Component {
               </section>
             ))}
           </div>
+        ) : !this.props.error.error ? (
+          <ReactLoading type="spokes" color="#0066ff" className="loading" />
         ) : (
-          !this.props.error.error ? (
-            <ReactLoading type="spokes" color="#0066ff" className="loading" />
-          ) : <p className="error"> No prescriptions yet </p>
+          <p className="error"> No prescriptions yet </p>
         )}
         {this.state.addPrescriptionBox && (
           <AddPrescription
             closePopup={() => this.setState({ addPrescriptionBox: false })}
-            addPrescription={data => this.addPrescription(data)}
+            addPrescription={(data) => this.addPrescription(data)}
             errors={this.props.error}
           />
         )}
@@ -163,28 +166,31 @@ export class Prescription extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   api_token: state.user.api_token,
   prescriptions: state.user.prescriptions,
-  error: state.user.errors
+  error: state.user.errors,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getPrescriptions: api_token =>
+const mapDispatchToProps = (dispatch) => ({
+  getPrescriptions: (api_token, history) =>
     dispatch({
       type: actions.SAGA_GET_PRESCRIPTION,
-      api_token
+      api_token,
+      history,
     }),
-  postDeletePrescriptions: data =>
+  postDeletePrescriptions: (data, history) =>
     dispatch({
       type: actions.SAGA_DELETE_PRESCRIPTIONS,
-      data
+      data,
+      history,
     }),
-  postAddPrescription: data =>
+  postAddPrescription: (data, history) =>
     dispatch({
       type: actions.SAGA_ADD_PRESCRIPTION,
-      data
-    })
+      data,
+      history,
+    }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Prescription);

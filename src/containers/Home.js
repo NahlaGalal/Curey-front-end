@@ -8,11 +8,11 @@ import { connect } from "react-redux";
 import * as actions from "../actions/types";
 import ReactLoading from "react-loading";
 
-export class Home extends Component {
+class Home extends Component {
   state = { hovered: [] };
 
   componentDidMount() {
-    this.props.onRequestData(this.props.api_token);
+    this.props.onRequestData(this.props.api_token, this.props.history);
   }
 
   componentDidUpdate(prevProps) {
@@ -32,7 +32,8 @@ export class Home extends Component {
         api_token: this.props.api_token,
         product_id
       },
-      "Home"
+      "Home",
+      this.props.history
     );
   };
 
@@ -42,7 +43,8 @@ export class Home extends Component {
         api_token: this.props.api_token,
         product_id
       },
-      "Home"
+      "Home",
+      this.props.history
     );
   };
 
@@ -127,12 +129,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onRequestData: api_token =>
-    dispatch({ type: actions.REQUEST_HOME_DATA, api_token }),
-  deleteFavouriteMedication: (data, source) =>
-    dispatch({ type: actions.SAGA_DELETE_FAVOURITE, data, source }),
-  addFavouriteMedication: (data, source) =>
-    dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source })
+  onRequestData: (api_token, history) =>
+    dispatch({ type: actions.REQUEST_HOME_DATA, api_token, history }),
+  deleteFavouriteMedication: (data, source, history) =>
+    dispatch({ type: actions.SAGA_DELETE_FAVOURITE, data, source, history }),
+  addFavouriteMedication: (data, source, history) =>
+    dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source, history })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -17,7 +17,7 @@ import {
 import { takeEvery, put, call } from "redux-saga/effects";
 import axios from "../util/axiosInstance";
 
-function* getMedicationsList({ api_token }) {
+function* getMedicationsList({ api_token, history }) {
   try {
     const res = yield call(() =>
       axios.get(`/api/web/stock?api_token=${api_token}`)
@@ -35,11 +35,11 @@ function* getMedicationsList({ api_token }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* getPackingList({ api_token }) {
+function* getPackingList({ api_token, history }) {
   try {
     const res = yield call(() =>
       axios.get(`/api/web/packing_list?api_token=${api_token}`)
@@ -57,11 +57,11 @@ function* getPackingList({ api_token }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postDeliveryOrder({ data }) {
+function* postDeliveryOrder({ data, history }) {
   try {
     const res = yield call(() => axios.post("/api/web/order_ready", data));
     if (!res.data.isFailed)
@@ -76,11 +76,11 @@ function* postDeliveryOrder({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* getDashboard({ api_token }) {
+function* getDashboard({ api_token, history }) {
   try {
     const res = yield call(() =>
       axios.get(`/api/web/pharmacy_dashboard?api_token=${api_token}`)
@@ -98,11 +98,11 @@ function* getDashboard({ api_token }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* getRequests({ api_token }) {
+function* getRequests({ api_token, history }) {
   try {
     const res = yield call(() =>
       axios.get(`/api/web/requests?api_token=${api_token}`)
@@ -121,11 +121,11 @@ function* getRequests({ api_token }) {
       });
     }
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postAcceptOrder({ data }) {
+function* postAcceptOrder({ data, history }) {
   try {
     const res = yield call(() => axios.post("/api/web/accept_order", data));
     if (!res.data.isFailed) {
@@ -141,11 +141,11 @@ function* postAcceptOrder({ data }) {
       });
     }
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postCompleteSignUp({ data }) {
+function* postCompleteSignUp({ data, history }) {
   try {
     const res = yield call(() => axios.post("/api/web/complete_signup", data));
     if (!res.data.isFailed) {
@@ -162,7 +162,7 @@ function* postCompleteSignUp({ data }) {
       });
     }
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 

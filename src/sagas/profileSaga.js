@@ -25,7 +25,7 @@ import {
   SAGA_CHANGE_HOME_VISIT_FEES,
 } from "../actions/types";
 
-function* getProfile({ api_token }) {
+function* getProfile({ api_token, history }) {
   try {
     let res = yield call(() =>
       axios.get(`/api/web/profile?api_token=${api_token}`)
@@ -43,17 +43,17 @@ function* getProfile({ api_token }) {
         isFailed: true,
       });
   } catch (e) {
-    console.log(e);
+    history.push("/error500");
   }
 }
 
-function* postChangeName({ data }) {
+function* postChangeName({ data, history }) {
   try {
     let res = yield call(() => axios.post("/api/web/change_name", data));
     if (!res.data.isFailed)
       yield put({
         type: SAGA_GET_PROFILE,
-        api_token: data.api_token
+        api_token: data.api_token,
       });
     else
       yield put({
@@ -62,24 +62,24 @@ function* postChangeName({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postChangeImage({ data }) {
-  console.log(data)
+function* postChangeImage({ data, history }) {
   try {
-    let res = yield call(() => axios.post("/api/web/change_image", data, {
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "multipart/form-data"
-      }
-    }));
-    console.log(res)
+    let res = yield call(() =>
+      axios.post("/api/web/change_image", data, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
+      })
+    );
     if (!res.data.isFailed)
       yield put({
         type: SAGA_GET_PROFILE,
-        api_token: data.api_token
+        api_token: data.api_token,
       });
     else
       yield put({
@@ -88,17 +88,17 @@ function* postChangeImage({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postChangeAddress({ data }) {
+function* postChangeAddress({ data, history }) {
   try {
     let res = yield call(() => axios.post("/api/web/change_address", data));
     if (!res.data.isFailed)
       yield put({
         type: SAGA_GET_PROFILE,
-        api_token: data.api_token
+        api_token: data.api_token,
       });
     else
       yield put({
@@ -107,17 +107,17 @@ function* postChangeAddress({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postChangePassword({ data }) {
+function* postChangePassword({ data, history }) {
   try {
     let res = yield call(() => axios.post("/api/web/change_password", data));
     if (!res.data.isFailed)
       yield put({
         type: SAGA_GET_PROFILE,
-        api_token: data.api_token
+        api_token: data.api_token,
       });
     else
       yield put({
@@ -126,17 +126,17 @@ function* postChangePassword({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postChangePhone({ data }) {
+function* postChangePhone({ data, history }) {
   try {
     let res = yield call(() => axios.post("/api/web/change_phone", data));
     if (!res.data.isFailed)
       yield put({
         type: SAGA_GET_PROFILE,
-        api_token: data.api_token
+        api_token: data.api_token,
       });
     else
       yield put({
@@ -145,17 +145,17 @@ function* postChangePhone({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postChangeSpeciality({ data }) {
+function* postChangeSpeciality({ data, history }) {
   try {
     let res = yield call(() => axios.post("/api/web/change_speciality", data));
     if (!res.data.isFailed)
       yield put({
         type: SAGA_GET_PROFILE,
-        api_token: data.api_token
+        api_token: data.api_token,
       });
     else
       yield put({
@@ -164,17 +164,17 @@ function* postChangeSpeciality({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postChangeFees({ data }) {
+function* postChangeFees({ data, history }) {
   try {
     let res = yield call(() => axios.post("/api/web/change_fees", data));
     if (!res.data.isFailed)
       yield put({
         type: SAGA_GET_PROFILE,
-        api_token: data.api_token
+        api_token: data.api_token,
       });
     else
       yield put({
@@ -183,17 +183,17 @@ function* postChangeFees({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postChangeDuration({ data }) {
+function* postChangeDuration({ data, history }) {
   try {
     let res = yield call(() => axios.post("/api/web/change_duration", data));
     if (!res.data.isFailed)
       yield put({
         type: SAGA_GET_PROFILE,
-        api_token: data.api_token
+        api_token: data.api_token,
       });
     else
       yield put({
@@ -202,17 +202,17 @@ function* postChangeDuration({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postChangeEmail({ data }) {
+function* postChangeEmail({ data, history }) {
   try {
     let res = yield call(() => axios.post("/api/web/change_email", data));
     if (!res.data.isFailed)
       yield put({
         type: SAGA_GET_PROFILE,
-        api_token: data.api_token
+        api_token: data.api_token,
       });
     else
       yield put({
@@ -221,17 +221,17 @@ function* postChangeEmail({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postChangeHomeVisitFees({ data }) {
+function* postChangeHomeVisitFees({ data, history }) {
   try {
     let res = yield call(() => axios.post("/api/web/change_hv", data));
     if (!res.data.isFailed)
       yield put({
         type: SAGA_GET_PROFILE,
-        api_token: data.api_token
+        api_token: data.api_token,
       });
     else
       yield put({
@@ -240,7 +240,7 @@ function* postChangeHomeVisitFees({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 

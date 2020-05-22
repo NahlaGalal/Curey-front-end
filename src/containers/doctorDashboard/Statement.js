@@ -31,7 +31,7 @@ class DoctorStatement extends Component {
   };
 
   componentDidMount() {
-    this.props.getDoctorDashboard(this.props.api_token);
+    this.props.getDoctorDashboard(this.props.api_token, this.props.history);
   }
 
   toggleMenuBox = (e, i) => {
@@ -47,7 +47,7 @@ class DoctorStatement extends Component {
       appointment_time,
       is_callup: this.props.state === "Home visit" ? 1 : 0,
       user_id,
-    });
+    }, this.props.history);
   };
 
   togglePageNumber = (pageNo) => {
@@ -85,11 +85,11 @@ class DoctorStatement extends Component {
             dosage: med.frequency,
             per_week: med.period === "week" ? true : false,
           })),
-        });
+        }, this.props.history);
         this.setState({ menuVisiblity: -1 });
       }}
       getSearchMedication={(value) =>
-        this.props.getSearchMedication(this.props.api_token, value)
+        this.props.getSearchMedication(this.props.api_token, value, this.props.history)
       }
       submitTime={(time, user_id) => this.submitTime(time, user_id)}
     />
@@ -186,12 +186,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  submitTime: (data) => dispatch({ type: SAGA_SET_RE_EXAMINAION, data }),
-  sendPrescription: (data) => dispatch({ type: SAGA_SEND_PRESCRIPTION, data }),
-  getDoctorDashboard: (api_token) =>
-    dispatch({ type: SAGA_GET_DOCTOR_STATEMENT, api_token }),
-  getSearchMedication: (api_token, name) =>
-    dispatch({ type: SAGA_SEARCH_MEDICATION, api_token, name }),
+  submitTime: (data, history) => dispatch({ type: SAGA_SET_RE_EXAMINAION, data, history }),
+  sendPrescription: (data, history) => dispatch({ type: SAGA_SEND_PRESCRIPTION, data, history }),
+  getDoctorDashboard: (api_token, history) =>
+    dispatch({ type: SAGA_GET_DOCTOR_STATEMENT, api_token, history }),
+  getSearchMedication: (api_token, name, history) =>
+    dispatch({ type: SAGA_SEARCH_MEDICATION, api_token, name, history }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DoctorStatement);

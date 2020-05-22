@@ -7,11 +7,11 @@ import ReactLoading from "react-loading";
 
 class Packing extends Component {
   componentDidMount() {
-    this.props.getPackingList(this.props.api_token);
+    this.props.getPackingList(this.props.api_token, this.props.history);
   }
 
   moveToDelivery = order_id => {
-    this.props.moveToDelivery({ api_token: this.props.api_token, order_id });
+    this.props.moveToDelivery({ api_token: this.props.api_token, order_id }, this.props.history);
   };
 
   render() {
@@ -57,8 +57,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getPackingList: api_token => dispatch({ type: SAGA_GET_PACKING, api_token }),
-  moveToDelivery: data => dispatch({ type: SAGA_MOVE_TO_DELIVERY, data })
+  getPackingList: (api_token, history) => dispatch({ type: SAGA_GET_PACKING, api_token, history }),
+  moveToDelivery: (data, history) => dispatch({ type: SAGA_MOVE_TO_DELIVERY, data, history })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Packing);

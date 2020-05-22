@@ -6,14 +6,15 @@ import { loadState } from "../configureStore";
 import PharmacyNavbar from "./layout/pharmacyNavbar";
 import DoctorNavbar from "./layout/doctorNavbar";
 import { Route, Switch } from "react-router-dom";
-import Error from "../containers/Error";
+import Error from "../components/Error";
 import Landing_page from "../containers/Landing-page";
 import Login from "../containers/Login";
 import Forgot from "../containers/forgot-comps";
 import SignUp from "../containers/sign-up";
 import DoctorCompSignup from "../containers/DoctorCompSignup";
 import PharmacyCompSignup from "../containers/PharmCompSignup";
-import { Home } from "../containers/Home";
+import Home from "../containers/Home";
+import Error500 from "./Error-500";
 
 class Layout extends Component {
   state = {
@@ -40,6 +41,7 @@ class Layout extends Component {
             path="/pharmacy/complete-signup"
             component={PharmacyCompSignup}
           />
+          <Route exact path="/error500" component={Error500} />
           <Route exact component={PharmacyCompSignup} />
         </Switch>
       );
@@ -51,6 +53,7 @@ class Layout extends Component {
             path="/doctor/complete-signup"
             component={DoctorCompSignup}
           />
+          <Route exact path="/error500" component={Error500} />
           <Route exact component={DoctorCompSignup} />
         </Switch>
       );
@@ -130,6 +133,7 @@ class Layout extends Component {
                 component={Forgot}
               />
               <Route exact path="/signup" component={SignUp} />
+              <Route exact path="/error500" component={Error500} />
               <Route exact component={Error} />
             </Switch>
           </React.Fragment>

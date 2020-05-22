@@ -8,7 +8,7 @@ import DoctoPrescriptionCard from "../../components/doctorDashboard/DoctorPrescr
 
 class PrescriptionList extends Component {
   componentDidMount() {
-    this.props.getPrescriptions(this.props.api_token);
+    this.props.getPrescriptions(this.props.api_token, this.props.history);
   }
 
   render() {
@@ -58,8 +58,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getPrescriptions: (api_token) =>
-    dispatch({ type: actions.SAGA_GET_DOCTOR_PRESCRIPTIONS, api_token }),
+  getPrescriptions: (api_token, history) =>
+    dispatch({ type: actions.SAGA_GET_DOCTOR_PRESCRIPTIONS, api_token, history }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PrescriptionList);

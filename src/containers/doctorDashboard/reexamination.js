@@ -17,7 +17,7 @@ class ReExamination extends Component {
   };
 
   componentDidMount() {
-    this.props.getReExaminations(this.props.api_token, 0, 12);
+    this.props.getReExaminations(this.props.api_token, 0, 12, this.props.history);
   }
 
   togglePageNumber = (pageNo) => {
@@ -41,7 +41,7 @@ class ReExamination extends Component {
       appointment_time,
       is_callup: this.props.state === "Home visit" ? 1 : 0,
       user_id,
-    });
+    }, this.props.history);
   };
 
   generatePatientCard = (card, i) => (
@@ -71,11 +71,11 @@ class ReExamination extends Component {
             dosage: med.frequency,
             per_week: med.period === "week" ? true : false,
           })),
-        });
+        }, this.props.history);
         this.setState({ menuVisiblity: -1 });
       }}
       getSearchMedication={(value) =>
-        this.props.getSearchMedication(this.props.api_token, value)
+        this.props.getSearchMedication(this.props.api_token, value, this.props.history)
       }
       submitTime={(time, user_id) => this.submitTime(time, user_id)}
     />
@@ -150,12 +150,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  submitTime: (data) => dispatch({ type: SAGA_SET_RE_EXAMINAION, data }),
-  sendPrescription: (data) => dispatch({ type: SAGA_SEND_PRESCRIPTION, data }),
-  getReExaminations: (api_token, skip, limit) =>
-    dispatch({ type: SAGA_GET_DOCTOR_REEXAMINATION, api_token, skip, limit }),
-  getSearchMedication: (api_token, name) =>
-    dispatch({ type: SAGA_SEARCH_MEDICATION, api_token, name }),
+  submitTime: (data, history) => dispatch({ type: SAGA_SET_RE_EXAMINAION, data, history }),
+  sendPrescription: (data, history) => dispatch({ type: SAGA_SEND_PRESCRIPTION, data, history }),
+  getReExaminations: (api_token, skip, limit, history) =>
+    dispatch({ type: SAGA_GET_DOCTOR_REEXAMINATION, api_token, skip, limit, history }),
+  getSearchMedication: (api_token, name, history) =>
+    dispatch({ type: SAGA_SEARCH_MEDICATION, api_token, name, history }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReExamination);

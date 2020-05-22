@@ -252,5 +252,3 @@ export class PaymentForm extends Component {
 }
 
 export default PaymentForm;
-
-// FIXME: Add Country select-box

@@ -7,7 +7,7 @@ import * as actions from "../../actions/types";
 import { withRouter } from "react-router-dom";
 import Button from "../Button";
 
-const PharmacyNavbar = props => {
+const PharmacyNavbar = (props) => {
   useEffect(() => {
     if (props.api_token === "") props.history.push("/login");
   });
@@ -87,47 +87,64 @@ const PharmacyNavbar = props => {
       {props.pharmacyThumbnailList && (
         <PharmacyThumbnail
           hideLists={props.hideLists}
-          getUserData={() => props.getUserData(props.api_token)}
+          getUserData={() =>
+            props.getUserData(props.api_token, this.props.history)
+          }
           image={props.image}
           name={props.name}
           changeName={(data) =>
-            props.postChangeName({
-              ...data,
-              api_token: props.api_token,
-            })
+            props.postChangeName(
+              {
+                ...data,
+                api_token: props.api_token,
+              },
+              this.props.history
+            )
           }
           email={props.email}
           changeEmail={(data) =>
-            props.postChangeEmail({
-              ...data,
-              api_token: props.api_token,
-            })
+            props.postChangeEmail(
+              {
+                ...data,
+                api_token: props.api_token,
+              },
+              this.props.history
+            )
           }
           phone={props.phone}
           changePhone={(data) =>
-            props.postChangePhone({
-              ...data,
-              api_token: props.api_token,
-            })
+            props.postChangePhone(
+              {
+                ...data,
+                api_token: props.api_token,
+              },
+              this.props.history
+            )
           }
           changePassword={(data) =>
-            props.postChangePassword({
-              ...data,
-              api_token: props.api_token,
-            })
+            props.postChangePassword(
+              {
+                ...data,
+                api_token: props.api_token,
+              },
+              this.props.history
+            )
           }
           cities={props.cities}
           city_id={props.city_id}
           address={props.address}
           work_address={props.work_address}
           changeAddress={(data) =>
-            props.postChangeAddress({
-              ...data,
-              api_token: props.api_token,
-            })
+            props.postChangeAddress(
+              {
+                ...data,
+                api_token: props.api_token,
+              },
+              this.props.history
+            )
           }
           role={props.role || 1}
-          logout={() => props.postLogout(props.api_token)}
+          logout={() => props.postLogout(props.api_token, this.props.history)}
         />
       )}
     </React.Fragment>
@@ -150,19 +167,20 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  postLogout: (api_token) =>
-    dispatch({ type: actions.SAGA_LOGOUT_USER, api_token }),
-  getUserData: (api_token) =>
-    dispatch({ type: actions.SAGA_GET_PROFILE, api_token }),
-  postChangeName: (data) => dispatch({ type: actions.SAGA_CHANGE_NAME, data }),
-  postChangeEmail: (data) =>
-    dispatch({ type: actions.SAGA_CHANGE_EMAIL, data }),
-  postChangePhone: (data) =>
-    dispatch({ type: actions.SAGA_CHANGE_PHONE, data }),
-  postChangePassword: (data) =>
-    dispatch({ type: actions.SAGA_CHANGE_PASSWORD, data }),
-  postChangeAddress: (data) =>
-    dispatch({ type: actions.SAGA_CHANGE_ADDRESS, data }),
+  postLogout: (api_token, history) =>
+    dispatch({ type: actions.SAGA_LOGOUT_USER, api_token, history }),
+  getUserData: (api_token, history) =>
+    dispatch({ type: actions.SAGA_GET_PROFILE, api_token, history }),
+  postChangeName: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_NAME, data, history }),
+  postChangeEmail: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_EMAIL, data, history }),
+  postChangePhone: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_PHONE, data, history }),
+  postChangePassword: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_PASSWORD, data, history }),
+  postChangeAddress: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_ADDRESS, data, history }),
 });
 
 export default withRouter(

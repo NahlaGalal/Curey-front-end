@@ -4,14 +4,22 @@ import { Provider } from "react-redux";
 
 import Router from "./containers/Router";
 import * as serviceWorker from "./serviceWorker";
-import configureStore, { saveState, loadState, deleteState } from "./configureStore";
+import configureStore, { saveState } from "./configureStore";
 import "./sass/main.scss";
 
 const store = configureStore();
 
 store.subscribe(() => {
-  // if(loadState().api_token) deleteState();
-  saveState(store.getState());
+  const state = store.getState();
+  let flag = false;
+  // Object.values(state).forEach(obj => {
+  //   if(obj.errors && obj.errors.auth) {
+  //     // deleteState();
+  //     flag = true;
+  //     return <Route exact component={Error} />
+  //   }
+  // })
+  if(!flag) saveState(state);
 });
 
 ReactDOM.render(

@@ -17,7 +17,7 @@ export class MedicationsList extends Component {
   };
 
   componentDidMount() {
-    this.props.getMedicationsList(this.props.api_token);
+    this.props.getMedicationsList(this.props.api_token, this.props.history);
   }
 
   openFilterBox = () => this.setState({ filterShown: "visible" });
@@ -98,8 +98,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getMedicationsList: api_token =>
-    dispatch({ type: SAGA_GET_MEDICATIONS, api_token })
+  getMedicationsList: (api_token, history) =>
+    dispatch({ type: SAGA_GET_MEDICATIONS, api_token, history })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MedicationsList);

@@ -22,12 +22,13 @@ import Requests from "./pharmacy/Requests";
 import Packing from "./pharmacy/Packing";
 import PharmacyStatement from "./pharmacy/Statement";
 import MedicationsList from "./pharmacy/MedicationsList";
-import ReExamination from "../containers/doctorDashboard/reexamination";
-import WorkingSchedule from "../containers/doctorDashboard/workingSchedule";
+import ReExamination from "./doctorDashboard/reexamination";
+import WorkingSchedule from "./doctorDashboard/workingSchedule";
 import DoctorRequests from "./doctorDashboard/DoctorRequests";
-import PrescriptionList from "../containers/doctorDashboard/PrescriptionList";
-import DoctorStatement from "../containers/doctorDashboard/Statement";
-import Error from "./Error";
+import PrescriptionList from "./doctorDashboard/PrescriptionList";
+import DoctorStatement from "./doctorDashboard/Statement";
+import Error from "../components/Error";
+import Error500 from "../components/Error-500";
 
 const state = loadState();
 
@@ -103,6 +104,7 @@ const Router = () => {
                 path="/doctor/prescriptions"
                 component={PrescriptionList}
               />
+              <Route exact path="/error500" component={Error500} />
               {state.role === 1 && <Redirect exact from="/" to="/home" />}
               {state.role === 2 && (
                 <Redirect exact from="/" to="/pharmacy/statement" />

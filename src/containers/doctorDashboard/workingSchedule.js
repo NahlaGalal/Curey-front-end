@@ -34,7 +34,7 @@ class WorkingSchedule extends Component {
   };
 
   componentDidMount() {
-    this.props.getSchedule(this.props.api_token);
+    this.props.getSchedule(this.props.api_token, this.props.history);
   }
 
   changePage = (e) => this.setState({ page: +e.target.textContent });
@@ -78,18 +78,24 @@ class WorkingSchedule extends Component {
       from: start_time,
       to: end_time,
     });
-    this.props.postAddSchedule({ api_token: this.props.api_token, schedule });
+    this.props.postAddSchedule(
+      { api_token: this.props.api_token, schedule },
+      this.props.history
+    );
     this.setState({ addScheduleBox: false });
   };
 
   updateDay = (data) => {
     const { start_time, end_time } = this.formatTime(data);
-    this.props.postEditSchedule({
-      api_token: this.props.api_token,
-      from: start_time,
-      to: end_time,
-      day_id: this.state.day.id,
-    });
+    this.props.postEditSchedule(
+      {
+        api_token: this.props.api_token,
+        from: start_time,
+        to: end_time,
+        day_id: this.state.day.id,
+      },
+      this.props.history
+    );
     this.setState({ editScheduleBox: false });
   };
 
@@ -172,10 +178,13 @@ class WorkingSchedule extends Component {
                       }
                       deleteDay={() =>
                         times.map(({ id }) =>
-                          this.props.postDeleteDay({
-                            api_token: this.props.api_token,
-                            day_id: id,
-                          })
+                          this.props.postDeleteDay(
+                            {
+                              api_token: this.props.api_token,
+                              day_id: id,
+                            },
+                            this.props.history
+                          )
                         )
                       }
                     />
@@ -217,10 +226,14 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getSchedule: (api_token) => dispatch({ type: SAGA_GET_SCHEDULE, api_token }),
-  postAddSchedule: (data) => dispatch({ type: SAGA_ADD_SCHEDULE, data }),
-  postEditSchedule: (data) => dispatch({ type: SAGA_EDIT_SCHEDULE, data }),
-  postDeleteDay: (data) => dispatch({ type: SAGA_DELETE_SCHEDULE, data }),
+  getSchedule: (api_token, history) =>
+    dispatch({ type: SAGA_GET_SCHEDULE, api_token, history }),
+  postAddSchedule: (data, history) =>
+    dispatch({ type: SAGA_ADD_SCHEDULE, data, history }),
+  postEditSchedule: (data, history) =>
+    dispatch({ type: SAGA_EDIT_SCHEDULE, data, history }),
+  postDeleteDay: (data, history) =>
+    dispatch({ type: SAGA_DELETE_SCHEDULE, data, history }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkingSchedule);

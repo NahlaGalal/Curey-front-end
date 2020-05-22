@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import TimeAgo from "javascript-time-ago";
-import en from "javascript-time-ago/locale/en"
+import en from "javascript-time-ago/locale/en";
 import Marker from "../assets/svg/marker.svg";
 import { Rate } from "../util/rate";
 import Phone from "../assets/svg/phone.svg";
@@ -30,7 +30,11 @@ class DoctorProfile extends Component {
   };
 
   componentDidMount() {
-    this.props.getDoctorData(this.props.match.params.id, this.props.api_token);
+    this.props.getDoctorData(
+      this.props.match.params.id,
+      this.props.api_token,
+      this.props.history
+    );
     if (window.innerWidth >= 900) {
       window.addEventListener("scroll", this.onScrollHandler);
     }
@@ -125,7 +129,7 @@ class DoctorProfile extends Component {
         <section className="profile__reviews">
           <h2>Reviews</h2>
           <div className="profile__reviews__container">
-            {doctor.reviews.length ? 
+            {doctor.reviews.length ? (
               doctor.reviews.map((review, i) => {
                 return (
                   <div className="review" key={i}>
@@ -144,10 +148,10 @@ class DoctorProfile extends Component {
                     </div>
                   </div>
                 );
-              }) : (
-                <p className="error"> No reviews yet </p>
-              )
-            }
+              })
+            ) : (
+              <p className="error"> No reviews yet </p>
+            )}
           </div>
         </section>
       </section>
@@ -161,18 +165,19 @@ class DoctorProfile extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   api_token: state.user.api_token,
-  doctor: state.doctors.doctorData
+  doctor: state.doctors.doctorData,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getDoctorData: (id, api_token) =>
+const mapDispatchToProps = (dispatch) => ({
+  getDoctorData: (id, api_token, history) =>
     dispatch({
       type: actions.SAGA_GET_DOCTOR,
       id,
-      api_token
-    })
+      api_token,
+      history,
+    }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DoctorProfile);

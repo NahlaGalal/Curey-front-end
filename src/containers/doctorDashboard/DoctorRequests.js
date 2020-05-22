@@ -17,7 +17,7 @@ class DoctorRequests extends Component {
   };
 
   componentDidMount() {
-    this.props.getRequests(this.props.api_token, 0, 12);
+    this.props.getRequests(this.props.api_token, 0, 12, this.props.history);
   }
 
   togglePageNumber = (pageNo) => {
@@ -36,12 +36,15 @@ class DoctorRequests extends Component {
   };
 
   submitTime = (appointment_time, user_id) => {
-    this.props.submitTime({
-      api_token: this.props.api_token,
-      appointment_time,
-      is_callup: this.props.state === "Home visit" ? 1 : 0,
-      user_id,
-    });
+    this.props.submitTime(
+      {
+        api_token: this.props.api_token,
+        appointment_time,
+        is_callup: this.props.state === "Home visit" ? 1 : 0,
+        user_id,
+      },
+      this.props.history
+    );
   };
 
   generatePatientCard = (card, i) => (
@@ -63,19 +66,26 @@ class DoctorRequests extends Component {
       stopPropagation={(e) => e.stopPropagation()}
       medications={this.props.medications}
       sendPrescription={(medications) => {
-        this.props.sendPrescription({
-          api_token: this.props.api_token,
-          appointment_id: card.id,
-          items: medications.map((med) => ({
-            product_id: med.id,
-            dosage: med.frequency,
-            per_week: med.period === "week" ? true : false,
-          })),
-        });
+        this.props.sendPrescription(
+          {
+            api_token: this.props.api_token,
+            appointment_id: card.id,
+            items: medications.map((med) => ({
+              product_id: med.id,
+              dosage: med.frequency,
+              per_week: med.period === "week" ? true : false,
+            })),
+          },
+          this.props.history
+        );
         this.setState({ menuVisiblity: -1 });
       }}
       getSearchMedication={(value) =>
-        this.props.getSearchMedication(this.props.api_token, value)
+        this.props.getSearchMedication(
+          this.props.api_token,
+          value,
+          this.props.history
+        )
       }
       submitTime={(time, user_id) => this.submitTime(time, user_id)}
     />
@@ -150,12 +160,20 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  submitTime: (data) => dispatch({ type: SAGA_SET_RE_EXAMINAION, data }),
-  sendPrescription: (data) => dispatch({ type: SAGA_SEND_PRESCRIPTION, data }),
-  getRequests: (api_token, skip, limit) =>
-    dispatch({ type: SAGA_GET_DOCTOR_REQUESTS, api_token, skip, limit }),
-  getSearchMedication: (api_token, name) =>
-    dispatch({ type: SAGA_SEARCH_MEDICATION, api_token, name }),
+  submitTime: (data, history) =>
+    dispatch({ type: SAGA_SET_RE_EXAMINAION, data, history }),
+  sendPrescription: (data, history) =>
+    dispatch({ type: SAGA_SEND_PRESCRIPTION, data, history }),
+  getRequests: (api_token, skip, limit, history) =>
+    dispatch({
+      type: SAGA_GET_DOCTOR_REQUESTS,
+      api_token,
+      skip,
+      limit,
+      history,
+    }),
+  getSearchMedication: (api_token, name, history) =>
+    dispatch({ type: SAGA_SEARCH_MEDICATION, api_token, name, history }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DoctorRequests);

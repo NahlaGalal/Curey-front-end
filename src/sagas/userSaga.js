@@ -25,7 +25,7 @@ import {
   SAGA_GET_COMPLETE_SIGNUP,
 } from "../actions/types";
 
-function* signupUser({ data }) {
+function* signupUser({ data, history }) {
   try {
     const res = yield call(() => axios.post("/api/web/signup", data));
     if (!res.data.isFailed)
@@ -41,11 +41,11 @@ function* signupUser({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* getCities() {
+function* getCities(history) {
   try {
     const res = yield call(() => axios.get("/api/web/signup"));
     yield put({
@@ -53,11 +53,11 @@ function* getCities() {
       payload: res.data.data.cities,
     });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* loginUser({ data }) {
+function* loginUser({ data, history }) {
   try {
     const res = yield call(() => axios.post("/api/web/login", data));
     if (!res.data.isFailed)
@@ -73,11 +73,11 @@ function* loginUser({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* logoutUser({ api_token }) {
+function* logoutUser({ api_token, history }) {
   try {
     const res = yield call(() => axios.post("/api/web/logout", { api_token }));
     yield put({
@@ -85,11 +85,11 @@ function* logoutUser({ api_token }) {
       isFailed: res.data.isFailed,
     });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* getPrescriptions({ api_token }) {
+function* getPrescriptions({ api_token, history }) {
   try {
     const res = yield call(() =>
       axios.get(`/api/web/prescriptions?api_token=${api_token}`)
@@ -107,11 +107,11 @@ function* getPrescriptions({ api_token }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postAddPrescription({ data }) {
+function* postAddPrescription({ data, history }) {
   try {
     const res = yield call(() => axios.post("/api/web/add_prescription", data));
     if (!res.data.isFailed)
@@ -126,11 +126,11 @@ function* postAddPrescription({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postDeletePrescriptions({ data }) {
+function* postDeletePrescriptions({ data, history }) {
   try {
     const res = yield call(() =>
       axios.post("/api/web/delete_prescription", data)
@@ -147,11 +147,11 @@ function* postDeletePrescriptions({ data }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postAddToCart({ api_token, product }) {
+function* postAddToCart({ api_token, product, history }) {
   try {
     const res = yield call(() =>
       axios.post("/api/web/add_item", { api_token, product })
@@ -169,11 +169,11 @@ function* postAddToCart({ api_token, product }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* getCart({ api_token }) {
+function* getCart({ api_token, history }) {
   try {
     const res = yield call(() =>
       axios.get(`/api/web/cart?api_token=${api_token}`)
@@ -191,11 +191,11 @@ function* getCart({ api_token }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* postRemoveCartItem({ api_token, product_id }) {
+function* postRemoveCartItem({ api_token, product_id, history }) {
   try {
     const res = yield call(() =>
       axios.post("/api/web/delete_item", { api_token, product_id })
@@ -212,11 +212,11 @@ function* postRemoveCartItem({ api_token, product_id }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 
-function* getCompleteSignup({ api_token }) {
+function* getCompleteSignup({ api_token, history }) {
   try {
     const res = yield call(() =>
       axios.get(`/api/web/complete_signup?api_token=${api_token}`)
@@ -234,7 +234,7 @@ function* getCompleteSignup({ api_token }) {
         isFailed: true,
       });
   } catch (err) {
-    console.log(err);
+    history.push("/error500");
   }
 }
 

@@ -15,13 +15,13 @@ class Doctors extends Component {
     filters: {
       cities: [],
       specialities: [],
-      specialities_id: []
-    }
+      specialities_id: [],
+    },
   };
 
   componentDidMount() {
     this.setState({ doctors: this.props.doctors });
-    this.props.getAllDoctors(this.props.api_token, 0, 16);
+    this.props.getAllDoctors(this.props.api_token, 0, 16, this.props.history);
   }
 
   componentDidUpdate(prevProps) {
@@ -40,72 +40,78 @@ class Doctors extends Component {
 
   openFilterBox = () => this.setState({ filterShown: "visible" });
   cancelFilters = () => this.setState({ filterShown: "hidden" });
-  applyFilters = filters => {
-    if(!this.state.search) {
+  applyFilters = (filters) => {
+    if (!this.state.search) {
       let cities = filters.cities,
         specialities = filters.specialities;
       if (!filters.cities.length)
-        cities = this.props.cities.map(city => city.id.toString());
+        cities = this.props.cities.map((city) => city.id.toString());
       if (!filters.specialities.length)
-        specialities = this.props.specialities.map(speciality => speciality.name);
+        specialities = this.props.specialities.map(
+          (speciality) => speciality.name
+        );
       const doctors = this.props.doctors
-        .filter(doctor => cities.includes(doctor.city_id.toString()))
-        .filter(doctor => specialities.includes(doctor.speciality));
+        .filter((doctor) => cities.includes(doctor.city_id.toString()))
+        .filter((doctor) => specialities.includes(doctor.speciality));
       this.setState({
         filterShown: "hidden",
         doctors,
-        filters
+        filters,
       });
-    }else {
+    } else {
       this.props.getDoctorsSearch(
         this.props.api_token,
         this.state.search,
         0,
         16,
         filters.cities[0] || "",
-        filters.specialities_id[0] || ""
+        filters.specialities_id[0] || "",
+        this.props.history
       );
       this.setState({
         filterShown: "hidden",
-        filters
+        filters,
       });
     }
   };
 
-  searchDoctor = search => {
-    if(search) {
+  searchDoctor = (search) => {
+    if (search) {
       this.props.getDoctorsSearch(
         this.props.api_token,
         search,
         0,
         16,
         this.state.filters.cities[0] || "",
-        this.state.filters.specialities_id[0] || ""
+        this.state.filters.specialities_id[0] || "",
+        this.props.history
       );
-    }else {
+    } else {
       this.setState({ doctors: this.props.doctors });
     }
-    this.setState({ search })
+    this.setState({ search });
   };
 
   seeMoreDoctors = () => {
-    if(this.state.search) {
+    if (this.state.search) {
       this.props.getDoctorsSearch(
         this.props.api_token,
         this.state.search,
         this.state.doctors.length,
         16,
         this.state.filters.cities[0] || "",
-        this.state.filters.specialities_id[0] || ""
+        this.state.filters.specialities_id[0] || "",
+        this.props.history
       );
-    }else {
+    } else {
       this.props.getAllDoctors(
         this.props.api_token,
         this.state.doctors.length,
-        8
+        8,
+        this.props.history
       );
     }
-  }
+  };
 
   render() {
     return (
@@ -151,24 +157,33 @@ class Doctors extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   api_token: state.user.api_token,
   doctors: state.doctors.doctorsData,
   specialities: state.doctors.specialities,
   cities: state.doctors.cities,
   doctorsSearch: state.doctors.doctorsSearch,
-  doctorsDone: state.doctors.doctorsDone
+  doctorsDone: state.doctors.doctorsDone,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getAllDoctors: (api_token, skip, limit) =>
+const mapDispatchToProps = (dispatch) => ({
+  getAllDoctors: (api_token, skip, limit, history) =>
     dispatch({
       type: actions.SAGA_GET_DOCTORS,
       api_token,
       skip,
-      limit
+      limit,
+      history,
     }),
-  getDoctorsSearch: (api_token, search, skip, limit, city_id, speciality_id) =>
+  getDoctorsSearch: (
+    api_token,
+    search,
+    skip,
+    limit,
+    city_id,
+    speciality_id,
+    history
+  ) =>
     dispatch({
       type: actions.SAGA_SEARCH_DOCTORS,
       search,
@@ -176,8 +191,9 @@ const mapDispatchToProps = dispatch => ({
       skip,
       limit,
       city_id,
-      speciality_id
-    })
+      speciality_id,
+      history,
+    }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Doctors);

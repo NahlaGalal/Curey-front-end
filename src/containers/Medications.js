@@ -22,7 +22,7 @@ class Medications extends Component {
   };
 
   componentDidMount() {
-    this.props.onRequestData(this.props.api_token, 0, 16);
+    this.props.onRequestData(this.props.api_token, 0, 16, this.props.history);
     this.setState({
       medications: this.props.medications,
       hovered: new Array(this.props.medications.length).fill(false)
@@ -77,7 +77,8 @@ class Medications extends Component {
         this.state.search,
         0,
         16,
-        filters.keywords.map(key => key.id)
+        filters.keywords.map(key => key.id),
+        this.props.history
       );
       this.setState({
         filterShown: "hidden",
@@ -93,7 +94,8 @@ class Medications extends Component {
         search,
         0,
         16,
-        this.state.filters.keywords.map(key => key.id)
+        this.state.filters.keywords.map(key => key.id),
+        this.props.history
       );
     } else {
       this.setState({
@@ -110,7 +112,8 @@ class Medications extends Component {
         api_token: this.props.api_token,
         product_id
       },
-      this.state.search ? "MedicationsSearch" : "MedicationsPage"
+      this.state.search ? "MedicationsSearch" : "MedicationsPage",
+      this.props.history
     );
   };
 
@@ -120,7 +123,8 @@ class Medications extends Component {
         api_token: this.props.api_token,
         product_id
       },
-      this.state.search ? "MedicationsSearch" : "MedicationsPage"
+      this.state.search ? "MedicationsSearch" : "MedicationsPage",
+      this.props.history
     );
   };
 
@@ -131,13 +135,15 @@ class Medications extends Component {
         this.state.search,
         this.state.medications.length,
         8,
-        this.state.filters.keywords.map(key => key.id)
+        this.state.filters.keywords.map(key => key.id),
+        this.props.history
       );
     }else {
       this.props.onRequestData(
         this.props.api_token,
         this.state.medications.length,
-        8
+        8,
+        this.props.history
       );
     }
   }
@@ -151,7 +157,7 @@ class Medications extends Component {
           cancelFilters={this.cancelFilters}
           applyFilters={this.applyFilters}
           type="medications"
-          scanPrescription={formData => this.props.scanPrescription(formData)}
+          scanPrescription={formData => this.props.scanPrescription(formData, this.props.history)}
           prescription={this.props.prescription}
         />
         <Search
@@ -252,16 +258,16 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onRequestData: (api_token, skip, limit) =>
-      dispatch({ type: actions.REQUEST_MEDICATIONS, api_token, skip, limit }),
-    getMedicationsSearch: (api_token, search, skip, limit, keywords) =>
-      dispatch({ type: actions.SEARCH_MEDICATIONS, api_token, search, skip, limit, keywords }),
-    deleteFavouriteMedication: (data, source) =>
-      dispatch({ type: actions.SAGA_DELETE_FAVOURITE, data, source }),
-    addFavouriteMedication: (data, source) =>
-      dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source }),
-    scanPrescription: file =>
-      dispatch({ type: actions.SCAN_PRESCRIPTION, file })
+    onRequestData: (api_token, skip, limit, history) =>
+      dispatch({ type: actions.REQUEST_MEDICATIONS, api_token, skip, limit, history }),
+    getMedicationsSearch: (api_token, search, skip, limit, keywords, history) =>
+      dispatch({ type: actions.SEARCH_MEDICATIONS, api_token, search, skip, limit, keywords, history }),
+    deleteFavouriteMedication: (data, source, history) =>
+      dispatch({ type: actions.SAGA_DELETE_FAVOURITE, data, source, history }),
+    addFavouriteMedication: (data, source, history) =>
+      dispatch({ type: actions.SAGA_ADD_FAVOURITE, data, source, history }),
+    scanPrescription: (file, history) =>
+      dispatch({ type: actions.SCAN_PRESCRIPTION, file, history })
   };
 };
 
