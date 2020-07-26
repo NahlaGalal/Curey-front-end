@@ -72,7 +72,10 @@ const defaultState = {
     medications: [],
     packing: [],
     errors: [],
-    dashboard: [],
+    dashboard: {
+      pharmacy: {},
+      performed: []
+    },
     requests: [],
     success: ""
   },

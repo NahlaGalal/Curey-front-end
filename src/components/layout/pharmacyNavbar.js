@@ -140,7 +140,7 @@ const PharmacyNavbar = (props) => {
                 ...data,
                 api_token: props.api_token,
               },
-              this.props.history
+              props.history
             )
           }
           role={props.role || 1}

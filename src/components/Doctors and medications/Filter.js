@@ -204,10 +204,10 @@ const Filter = (props) => {
             className="btn btn-green-dark btn-apply btn-xxs"
             onClick={() =>
               props.applyFilters({
-                cities: [city.id] || [],
-                specialities: [speciality.name] || [],
-                keywords: [...commonSearch] || [],
-                specialities_id: [speciality.id] || [],
+                cities: city.id ? [city.id] : [],
+                specialities: speciality.name ? [speciality.name] : [],
+                keywords: [...commonSearch],
+                specialities_id: speciality.id ? [speciality.id] : [],
               })
             }
           >

@@ -31,7 +31,7 @@ class Requests extends Component {
                 image={request.image}
                 day="JAN 23, 2020"
                 hour="4:30 PM"
-                medications={this.state.medications}
+                medications={request.details}
                 request="request"
                 requestAccepted={() =>
                   this.props.acceptRequest(
@@ -54,7 +54,7 @@ class Requests extends Component {
             />
           )}
         </div>
-        {this.props.requests.length ? (
+        {this.props.requests.length > 16 ? (
           <Button className="btn btn-blue btn-lg">See more</Button>
         ) : null}
       </div>

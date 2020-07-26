@@ -41,6 +41,7 @@ class Doctors extends Component {
   openFilterBox = () => this.setState({ filterShown: "visible" });
   cancelFilters = () => this.setState({ filterShown: "hidden" });
   applyFilters = (filters) => {
+    console.log(filters)
     if (!this.state.search) {
       let cities = filters.cities,
         specialities = filters.specialities;
@@ -53,6 +54,7 @@ class Doctors extends Component {
       const doctors = this.props.doctors
         .filter((doctor) => cities.includes(doctor.city_id.toString()))
         .filter((doctor) => specialities.includes(doctor.speciality));
+        console.log(cities.length, specialities)
       this.setState({
         filterShown: "hidden",
         doctors,

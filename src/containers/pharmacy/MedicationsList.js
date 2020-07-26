@@ -70,7 +70,7 @@ export class MedicationsList extends Component {
         />
         <div className="dashboardGrid">
           {this.props.medications.length ? (
-            this.props.medications.map((medication, i) => (
+            this.props.medications.slice(0, 12).map((medication, i) => (
               <PharmacyCard medication={medication} key={i} />
             ))
           ) : this.props.errors.error ? (

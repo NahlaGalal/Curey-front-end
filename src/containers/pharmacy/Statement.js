@@ -36,7 +36,7 @@ class PharmacyStatement extends Component {
       <div className="pharmacyStatment">
         <div className="pharmacyStatment__statisticis mb-56">
           <h2 className="heading-2 mb-32">Statistics</h2>
-          {this.props.dashboard.length ? (
+          {this.props.dashboard.pharmacy.name ? (
             <div className="pharmacyStatment__statisticis--grid">
               <BarChart
                 data={this.state.data}
@@ -51,8 +51,6 @@ class PharmacyStatement extends Component {
                 title="Total earning per month by L.E"
               />
             </div>
-          ) : this.props.errors.error ? (
-            <p className="error"> No Statistics yet </p>
           ) : (
             <ReactLoading
               type="spokes"
@@ -65,12 +63,16 @@ class PharmacyStatement extends Component {
         <div className="performedRequests mb-40">
           <h2 className="heading-2 mb-32">Performed requests</h2>
           <div className="performedRequests__grid">
-            {this.props.dashboard.length ? (
-              <OrderCard
-                name="MO Zayan"
-                address="Mansoura City, Gehan St"
-                medications={this.state.medications}
-              />
+            {this.props.dashboard.performed.length ? (
+              this.props.dashboard.performed.map((order, i) => (
+                <OrderCard
+                  key={i}
+                  name={order.buyer}
+                  address={order.address}
+                  medications={order.details}
+                  image={order.image}
+                />
+              ))
             ) : this.props.errors.error ? (
               <p className="error"> No performed Requests yet </p>
             ) : (

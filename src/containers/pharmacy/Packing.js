@@ -42,7 +42,7 @@ class Packing extends Component {
             />
           )}
         </div>
-        {this.props.packing.length ? (
+        {this.props.packing.length > 16 ? (
           <Button className="btn btn-blue btn-lg">See more</Button>
         ) : null}
       </div>

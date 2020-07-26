@@ -127,12 +127,9 @@ function* getRequests({ api_token, history }) {
 
 function* postAcceptOrder({ data, history }) {
   try {
-    const res = yield call(() => axios.post("/api/web/accept_order", data));
+    const res = yield call(() => axios.post("/api/web/accept_request", data));
     if (!res.data.isFailed) {
-      yield put({
-        type: ACCEPT_REQUEST,
-        isFailed: false,
-      });
+      getPackingList({ api_token: data.api_token, history });
     } else {
       yield put({
         type: ACCEPT_REQUEST,

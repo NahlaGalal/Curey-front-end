@@ -135,11 +135,11 @@ const mapDispatchToProps = (dispatch) => ({
       product_id,
       history,
     }),
-  submitOrder: (api_token, data, notificationData, history) =>
+  submitOrder: (api_token, products, notificationData, history) =>
     dispatch({
       type: actions.SUBMIT_MEDICATION_ORDER,
       api_token,
-      data,
+      products,
       notificationData,
       history,
     }),
