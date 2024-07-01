@@ -40,7 +40,7 @@
               color: rgba($color: $color-dark, $alpha: $very-high-opacity);
               font-family: $semi-bold-font;
               &-failed {
-                @extend p.state;
+                font-family: $semi-bold-font;
                 color: $warning-color;
               }
             }
