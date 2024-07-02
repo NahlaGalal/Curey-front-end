@@ -7,6 +7,7 @@ import ChangePassword from "../Settings/ChangePassword";
 import ChangePhone from "../Settings/ChangePhone";
 import ChangePhoto from "../Settings/ChangePhoto";
 import ChangePharmacyName from "../Settings/ChangePharmacyName";
+import DefaultImg from "../../assets/images/user.png";
 
 const AccountSettings = (props) => {
   const [boxShown, setBoxShown] = useState("Photo");
@@ -21,7 +22,11 @@ const AccountSettings = (props) => {
       >
         <aside className="Popup__box__aside">
           <div className="Popup__box__aside__image">
-            <img src={props.image} alt={`${props.name} profile-pic`} />
+            <img
+              src={props.image}
+              alt={`${props.name} profile-pic`}
+              onError={(e) => (e.currentTarget.src = DefaultImg)}
+            />
           </div>
           <Button
             className={`btn btn-transparent${

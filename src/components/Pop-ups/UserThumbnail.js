@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Button from "../Button";
 import { deleteState } from "../../configureStore";
 import AccountSettings from "./AccountSettings";
+import DefaultImg from "../../assets/images/user.png";
 
 class UserThumbnail extends Component {
   state = { accountSettingsBox: false };
@@ -22,7 +23,11 @@ class UserThumbnail extends Component {
         <div className="Thumbnail" onClick={(e) => e.stopPropagation()}>
           <header>
             <div className="Thumbnail__profile-img">
-              <img src={this.props.image} alt={this.props.name} />
+              <img
+                src={this.props.image}
+                alt={this.props.name}
+                onError={(e) => (e.currentTarget.src = DefaultImg)}
+              />
             </div>
             <div>
               <p className="user-name">{this.props.name}</p>

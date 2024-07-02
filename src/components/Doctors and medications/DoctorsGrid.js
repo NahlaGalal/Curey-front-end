@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Home_icon from "../../assets/svg/home.svg";
 import Button from "../Button";
 import { Rate } from "../../util/rate";
+import DefaultImg from "../../assets/images/doctor.png";
 
 class DoctorsGrid extends React.Component {
   state = { isCallupInfo: [] };
@@ -17,12 +18,12 @@ class DoctorsGrid extends React.Component {
     }
   }
 
-  hideCallupInfo = i => {
+  hideCallupInfo = (i) => {
     const { isCallupInfo } = this.state;
     isCallupInfo[i] = "visible";
     this.setState({ isCallupInfo });
   };
-  showCallupInfo = i => {
+  showCallupInfo = (i) => {
     const { isCallupInfo } = this.state;
     isCallupInfo[i] = "hidden";
     this.setState({ isCallupInfo });
@@ -38,6 +39,7 @@ class DoctorsGrid extends React.Component {
                 alt={doctor.full_name}
                 src={doctor.image}
                 className="center doctorCard__main__doctorImg"
+                onError={(e) => (e.currentTarget.src = DefaultImg)}
               />
               {doctor.offers_callup ? (
                 <img
@@ -61,9 +63,9 @@ class DoctorsGrid extends React.Component {
               <Button className="btn btn-lg btn-green center">choose</Button>
             </Link>
             <div
-              className={`iscallup-doctor-info ${this.state.isCallupInfo[
-                doctor.id
-              ] || "hidden"}`}
+              className={`iscallup-doctor-info ${
+                this.state.isCallupInfo[doctor.id] || "hidden"
+              }`}
             >
               <p>This doctor is available for home services</p>
             </div>

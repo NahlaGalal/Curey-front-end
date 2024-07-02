@@ -1,10 +1,16 @@
 import React from "react";
 import LocationIcon from "../../assets/svg/location.svg";
+import DefaultImg from "../../assets/images/doctor.png";
 
-const DoctorBox = props => (
+const DoctorBox = (props) => (
   <div className="doctorBox">
     <div>
-      <img src={props.image} alt="doctor" className="doctorBox__img" />
+      <img
+        src={props.image}
+        alt="doctor"
+        className="doctorBox__img"
+        onError={(e) => (e.currentTarget.src = DefaultImg)}
+      />
     </div>
     <div>
       <h3 className="doctorCard__name">{props.name}</h3>

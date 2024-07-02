@@ -4,6 +4,7 @@ import ChangePhoto from "../Settings/ChangePhoto";
 import ChangePhone from "../Settings/ChangePhone";
 import ChangePassword from "../Settings/ChangePassword";
 import ChangeEmail from "../Settings/ChangeEmail";
+import DefaultImg from "../../assets/images/doctor.png";
 
 class DoctorAccountSettings extends Component {
   state = {
@@ -25,6 +26,7 @@ class DoctorAccountSettings extends Component {
               <img
                 src={this.props.image}
                 alt={`${this.props.name} profile-pic`}
+                onError={(e) => (e.currentTarget.src = DefaultImg)}
               />
             </div>
             <Button

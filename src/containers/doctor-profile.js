@@ -11,6 +11,8 @@ import Button from "../components/Button";
 import { connect } from "react-redux";
 import ReactLoading from "react-loading";
 import * as actions from "../actions/types";
+import DefaultImg from "../assets/images/doctor.png";
+import DefaultUserImg from "../assets/images/user.png";
 
 class DoctorProfile extends Component {
   boxRef = React.createRef();
@@ -59,6 +61,7 @@ class DoctorProfile extends Component {
                   <img
                     src={doctor.image}
                     alt={`doctor ${doctor.full_name} profile`}
+                    onError={(e) => (e.currentTarget.src = DefaultImg)}
                   />
                 </div>
                 <div className="profile__header__content__main__header__info">
@@ -134,7 +137,11 @@ class DoctorProfile extends Component {
                 return (
                   <div className="review" key={i}>
                     <div className="review__image">
-                      <img src={review.image} alt="user-profile" />
+                      <img
+                        src={review.image}
+                        alt="user-profile"
+                        onError={(e) => (e.currentTarget.src = DefaultUserImg)}
+                      />
                       <div>
                         <p>{review.full_name}</p>
                         <span>

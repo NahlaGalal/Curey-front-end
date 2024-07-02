@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import * as actions from "../actions/types";
 
 import SelectBox from "../components/SelectBox";
+import DefaultImg from "../assets/images/doctor.png";
 
 const CompleteSignup = (props) => {
   const [city, setCity] = useState({ city_id: null, city: "" });
@@ -35,7 +36,7 @@ const CompleteSignup = (props) => {
       specialitiesContainerRef.current.querySelectorAll("input[type=radio]")
     ).find((input) => input.checked);
     setSpecialityBoxOpened(false);
-    if (inputChecked &&inputChecked.id) {
+    if (inputChecked && inputChecked.id) {
       setSpeciality({
         speciality_id: inputChecked.id.split("_")[0],
         speciality: inputChecked.value,
@@ -99,7 +100,11 @@ const CompleteSignup = (props) => {
         })}
       >
         <h4 className="heading-4">Image preview</h4>
-        <img src={imageUrl || props.image} alt={`${props.name} profile-pic`} />
+        <img
+          src={imageUrl || props.image}
+          alt={`${props.name} profile-pic`}
+          onError={(e) => (e.currentTarget.src = DefaultImg)}
+        />
         <div className="fieldinput fieldinput-image">
           <span
             className={`fieldinput__input fieldinput-image__input${

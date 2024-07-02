@@ -4,15 +4,16 @@ import { Rate } from "../util/rate";
 import LocationIcon from "../assets/svg/location.svg";
 import Button from "../components/Button";
 import OrderMedication from "./Pop-ups/OrderMedication";
+import DefaultImg from "../assets/images/pharmacy.png";
 
 class PharmacyItem extends Component {
   state = {
     orderMedicationBox: false,
-    addedToCart: false
+    addedToCart: false,
   };
 
   componentDidMount() {
-    if(this.props.isCart) this.setState({ addedToCart: true });
+    if (this.props.isCart) this.setState({ addedToCart: true });
   }
 
   addToCart = () => {
@@ -30,7 +31,11 @@ class PharmacyItem extends Component {
       <Fragment>
         <div className="pharmacy">
           <div className="pharmacy__logo">
-            <img src={this.props.image} alt={this.props.name} />
+            <img
+              src={this.props.image}
+              alt={this.props.name}
+              onError={(e) => (e.currentTarget.src = DefaultImg)}
+            />
           </div>
           <div className="pharmacy__info">
             <div className="pharmacy__name">
@@ -52,16 +57,18 @@ class PharmacyItem extends Component {
                 Order
               </Button>
               <Button
-                className={`btn btn-dark btn-xs ${!this.state.addedToCart &&
-                  "visible"}`}
+                className={`btn btn-dark btn-xs ${
+                  !this.state.addedToCart && "visible"
+                }`}
                 onClick={this.addToCart}
               >
                 Add to cart
               </Button>
               <Link to="/shoppingcart">
                 <Button
-                  className={`btn btn-dark btn-xs btn-cart ${this.state.addedToCart &&
-                    "visible"}`}
+                  className={`btn btn-dark btn-xs btn-cart ${
+                    this.state.addedToCart && "visible"
+                  }`}
                 >
                   Go to cart
                 </Button>

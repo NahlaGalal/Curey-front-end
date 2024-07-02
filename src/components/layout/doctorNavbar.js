@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import * as actions from "../../actions/types";
 import { withRouter } from "react-router-dom";
 import Button from "../Button";
+import DefaultImg from "../../assets/images/doctor.png";
 
 const DoctorNavbar = (props) => {
   useEffect(() => {
@@ -91,7 +92,11 @@ const DoctorNavbar = (props) => {
             <span>{props.no_reviews} reviews</span>
           </div>
           <div className="NavigationBar__phrmacyData--logo">
-            <img src={props.image} alt="doctor logo" />
+            <img
+              src={props.image}
+              alt="doctor logo"
+              onError={(e) => (e.currentTarget.src = DefaultImg)}
+            />
           </div>
         </Button>
       </nav>
@@ -100,28 +105,42 @@ const DoctorNavbar = (props) => {
           hideLists={props.hideLists}
           api_token={props.api_token}
           logout={() => props.postLogout(props.api_token, props.history)}
-          getProfileData={(api_token) => props.getProfileData(api_token, props.history)}
+          getProfileData={(api_token) =>
+            props.getProfileData(api_token, props.history)
+          }
           image={props.image}
           changeImage={(data) => {
             props.postChangeImage({ ...data }, props.history);
           }}
           name={props.doctor_name}
           changeName={(data) => {
-            props.postChangeName({ ...data, api_token: props.api_token }, props.history);
+            props.postChangeName(
+              { ...data, api_token: props.api_token },
+              props.history
+            );
             props.toggleDoctorThumbnailList();
           }}
           changeFees={(data) => {
-            props.postChangeFees({ ...data, api_token: props.api_token }, props.history);
+            props.postChangeFees(
+              { ...data, api_token: props.api_token },
+              props.history
+            );
             props.toggleDoctorThumbnailList();
           }}
           fees={props.fees}
           changeDuration={(data) => {
-            props.postChangeDuration({ ...data, api_token: props.api_token }, props.history);
+            props.postChangeDuration(
+              { ...data, api_token: props.api_token },
+              props.history
+            );
             props.toggleDoctorThumbnailList();
           }}
           duration={props.duration}
           changeHomeVisit={(data) => {
-            props.postChangeHomeVisit({ ...data, api_token: props.api_token }, props.history);
+            props.postChangeHomeVisit(
+              { ...data, api_token: props.api_token },
+              props.history
+            );
             props.toggleDoctorThumbnailList();
           }}
           callup={props.callup}
@@ -131,27 +150,42 @@ const DoctorNavbar = (props) => {
           address={props.address}
           work_address={props.work_address}
           changeAddress={(data) => {
-            props.postChangeAddress({ ...data, api_token: props.api_token }, props.history);
+            props.postChangeAddress(
+              { ...data, api_token: props.api_token },
+              props.history
+            );
             props.toggleDoctorThumbnailList();
           }}
           specialities={props.specialities}
           speciality={props.speciality}
           changeSpeciality={(data) => {
-            props.postChangeSpeciality({ ...data, api_token: props.api_token }, props.history);
+            props.postChangeSpeciality(
+              { ...data, api_token: props.api_token },
+              props.history
+            );
             props.toggleDoctorThumbnailList();
           }}
           phone={props.phone}
           changePhone={(data) => {
-            props.postChangePhone({ ...data, api_token: props.api_token }, props.history);
+            props.postChangePhone(
+              { ...data, api_token: props.api_token },
+              props.history
+            );
             props.toggleDoctorThumbnailList();
           }}
           changePassword={(data) => {
-            props.postChangePassword({ ...data, api_token: props.api_token }, props.history);
+            props.postChangePassword(
+              { ...data, api_token: props.api_token },
+              props.history
+            );
             props.toggleDoctorThumbnailList();
           }}
           email={props.email}
           changeEmail={(data) => {
-            props.postChangeEmail({ ...data, api_token: props.api_token }, props.history);
+            props.postChangeEmail(
+              { ...data, api_token: props.api_token },
+              props.history
+            );
             props.toggleDoctorThumbnailList();
           }}
         />
@@ -185,8 +219,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch({ type: actions.SAGA_LOGOUT_USER, api_token, history }),
   getProfileData: (api_token, history) =>
     dispatch({ type: actions.SAGA_GET_PROFILE, api_token, history }),
-  postChangeName: (data, history) => dispatch({ type: actions.SAGA_CHANGE_NAME, data, history }),
-  postChangeFees: (data, history) => dispatch({ type: actions.SAGA_CHANGE_FEES, data, history }),
+  postChangeName: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_NAME, data, history }),
+  postChangeFees: (data, history) =>
+    dispatch({ type: actions.SAGA_CHANGE_FEES, data, history }),
   postChangeDuration: (data, history) =>
     dispatch({ type: actions.SAGA_CHANGE_DURATION, data, history }),
   postChangeHomeVisit: (data, history) =>

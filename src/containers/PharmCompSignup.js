@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import * as actions from "../actions/types";
 import validator from "validator";
 import SelectBox from "../components/SelectBox";
+import DefaultImg from "../assets/images/pharmacy.png";
 
 const CompleteSignup = (props) => {
   const [city, setCity] = useState({ city_id: null, city: "" });
@@ -65,7 +66,11 @@ const CompleteSignup = (props) => {
         })}
       >
         <h4 className="heading-4">Image preview</h4>
-        <img src={imageUrl || props.image} alt={`${props.name} profile-pic`} />
+        <img
+          src={imageUrl || props.image}
+          alt={`${props.name} profile-pic`}
+          onError={(e) => (e.currentTarget.src = DefaultImg)}
+        />
         <div className="fieldinput fieldinput-image">
           <span
             className={`fieldinput__input fieldinput-image__input${

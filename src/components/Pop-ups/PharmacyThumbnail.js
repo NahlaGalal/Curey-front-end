@@ -4,6 +4,7 @@ import Button from "../Button";
 import { deleteState } from "../../configureStore";
 import locationIcon from "../../assets/svg/location.svg";
 import AccountSettings from "./AccountSettings";
+import DefaultImg from "../../assets/images/pharmacy.png";
 
 class PharmacyThumbnail extends Component {
   state = {
@@ -25,7 +26,11 @@ class PharmacyThumbnail extends Component {
         <div className="Thumbnail" onClick={(e) => e.stopPropagation()}>
           <header>
             <div className="Thumbnail__profile-img">
-              <img src={this.props.image} alt={this.props.name} />
+              <img
+                src={this.props.image}
+                alt={this.props.name}
+                onError={(e) => (e.currentTarget.src = DefaultImg)}
+              />
             </div>
             <div>
               <p className="user-name">{this.props.name}</p>

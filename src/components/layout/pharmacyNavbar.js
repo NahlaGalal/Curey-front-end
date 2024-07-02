@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import * as actions from "../../actions/types";
 import { withRouter } from "react-router-dom";
 import Button from "../Button";
+import DefaultImg from "../../assets/images/pharmacy.png";
 
 const PharmacyNavbar = (props) => {
   useEffect(() => {
@@ -80,16 +81,18 @@ const PharmacyNavbar = (props) => {
             <span>{props.no_reviews} reviews</span>
           </div>
           <div className="NavigationBar__phrmacyData--logo">
-            <img src={props.image} alt="doctor logo" />
+            <img
+              src={props.image}
+              alt="doctor logo"
+              onError={(e) => (e.currentTarget.src = DefaultImg)}
+            />
           </div>
         </Button>
       </nav>
       {props.pharmacyThumbnailList && (
         <PharmacyThumbnail
           hideLists={props.hideLists}
-          getUserData={() =>
-            props.getUserData(props.api_token, props.history)
-          }
+          getUserData={() => props.getUserData(props.api_token, props.history)}
           image={props.image}
           name={props.name}
           changeName={(data) =>

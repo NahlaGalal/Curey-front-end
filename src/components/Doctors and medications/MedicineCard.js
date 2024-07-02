@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Button from "../Button";
+import DefaultImg from "../../assets/images/pharmacy.png";
 
-const MedicineCard = props => (
+const MedicineCard = (props) => (
   <div
     className="medicationCard"
     onMouseMove={props.onMouseMove}
@@ -26,6 +27,7 @@ const MedicineCard = props => (
         alt={props.name}
         src={props.image}
         className="center medicationCard__main__medicationImg"
+        onError={(e) => (e.currentTarget.src = DefaultImg)}
       />
     </div>
 

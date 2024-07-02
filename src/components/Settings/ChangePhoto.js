@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DefaultImg from "../../assets/images/user.png";
 
 const ChangePhoto = (props) => {
   const [imageUrl, setImageUrl] = useState("");
@@ -22,22 +23,22 @@ const ChangePhoto = (props) => {
   //   submitForm("application/json", data, (msg) => console.log(msg));
   // }
 
-  const uploadImage = async e => {
-    const toBase64 = file => 
+  const uploadImage = async (e) => {
+    const toBase64 = (file) =>
       new Promise((resolve, reject) => {
         const reader = new FileReader();
-        if(file) reader.readAsDataURL(file);
+        if (file) reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result);
         reader.onerror = (err) => reject(err);
         setImageName();
-        setImageUrl()
-      })
-
-      props.changeImage({
-        api_token: props.api_token,
-        image: await toBase64(e.target.files[0]),
+        setImageUrl();
       });
-  }
+
+    props.changeImage({
+      api_token: props.api_token,
+      image: await toBase64(e.target.files[0]),
+    });
+  };
 
   // const uploadImage = (e) => {
   //   let reader = new FileReader();
@@ -62,7 +63,11 @@ const ChangePhoto = (props) => {
         Add a nice photo to your profile
       </p>
       <h4 className="heading-4">Image preview</h4>
-      <img src={imageUrl || props.image} alt={`${props.name} profile-pic`} />
+      <img
+        src={imageUrl || props.image}
+        alt={`${props.name} profile-pic`}
+        onError={(e) => (e.currentTarget.src = DefaultImg)}
+      />
       <form onSubmit={(e) => e.preventDefault()}>
         <div className="fieldinput fieldinput-image">
           <span

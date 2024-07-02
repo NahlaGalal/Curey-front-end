@@ -6,6 +6,7 @@ import UserThumbnail from "../Pop-ups/UserThumbnail";
 import { connect } from "react-redux";
 import * as actions from "../../actions/types";
 import { withRouter } from "react-router-dom";
+import DefaultImg from "../../assets/images/user.png";
 
 class NavigationBar extends Component {
   componentDidUpdate() {
@@ -107,6 +108,7 @@ class NavigationBar extends Component {
                   src={this.props.image}
                   alt="profile"
                   className="NavigationBar__img"
+                  onError={e => e.currentTarget.src = DefaultImg}
                 />
               </Button>
             </div>

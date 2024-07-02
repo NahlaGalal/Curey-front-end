@@ -9,6 +9,7 @@ import transform from "../../assets/svg/transform.svg";
 import list from "../../assets/svg/list.svg";
 import DateTimePicker from "./DateTimePicker";
 import DoctorPrescription from "../Pop-ups/DoctorPrescription";
+import DefaultImg from "../../assets/images/user.png";
 
 class PatientCard extends Component {
   state = {
@@ -24,6 +25,7 @@ class PatientCard extends Component {
             src={this.props.image}
             alt="patient"
             className="DoctorBookingCard__img"
+            onError={(e) => (e.currentTarget.src = DefaultImg)}
           />
           <div className="PatientCard__info__text">
             <div className="flex">

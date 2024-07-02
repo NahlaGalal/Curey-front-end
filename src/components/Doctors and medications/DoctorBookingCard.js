@@ -2,43 +2,52 @@ import React from "react";
 import LocationIcon from "../../assets/svg/location.svg";
 import CalendarIcon from "../../assets/svg/calendar.svg";
 import ClockIcon from "../../assets/svg/clock.svg";
+import DefaultImg from "../../assets/images/doctor.png";
 
-const DoctorBookingCard = props => {
+const DoctorBookingCard = (props) => {
   const dateTime = new Date(props.date);
-  const date = `${dateTime.toString().split(" ")[1]} ${dateTime.getDate()}, ${dateTime.getFullYear()}`;
+  const date = `${
+    dateTime.toString().split(" ")[1]
+  } ${dateTime.getDate()}, ${dateTime.getFullYear()}`;
   const time = new Date(dateTime).toLocaleTimeString();
 
-  return(
-  <div className="DoctorBookingCard">
-    <div className="DoctorBookingCard__info">
-      <img alt="doctor" src={props.image} className="DoctorBookingCard__img" />
-      <div className="DoctorBookingCard__info__text">
-        <div className="flex">
-          <h3 className="heading-3">{props.name}</h3>
-          <span className="doctorCard__price">{props.price} L.E</span>
-        </div>
+  return (
+    <div className="DoctorBookingCard">
+      <div className="DoctorBookingCard__info">
+        <img
+          alt="doctor"
+          src={props.image}
+          className="DoctorBookingCard__img"
+          onError={(e) => (e.currentTarget.src = DefaultImg)}
+        />
+        <div className="DoctorBookingCard__info__text">
+          <div className="flex">
+            <h3 className="heading-3">{props.name}</h3>
+            <span className="doctorCard__price">{props.price} L.E</span>
+          </div>
 
-        <p>{props.speciality}</p>
-        <p className="DoctorBookingCard__info__address" title={props.address}>
-          <img alt="location icon" src={LocationIcon} /> {props.address}
-        </p>
+          <p>{props.speciality}</p>
+          <p className="DoctorBookingCard__info__address" title={props.address}>
+            <img alt="location icon" src={LocationIcon} /> {props.address}
+          </p>
+        </div>
       </div>
-    </div>
-    <hr />
-    <footer>
-      <div className="flex">
+      <hr />
+      <footer>
+        <div className="flex">
+          <p>
+            <img src={CalendarIcon} alt="Calendar Icon" className="icon" />
+            {date}
+          </p>
+          <span>{props.status}</span>
+        </div>
         <p>
-          <img src={CalendarIcon} alt="Calendar Icon" className="icon" />
-          {date}
+          <img src={ClockIcon} alt="Clock Icon" className="icon" />
+          {time}
         </p>
-        <span>{props.status}</span>
-      </div>
-      <p>
-        <img src={ClockIcon} alt="Clock Icon" className="icon" />
-        {time}
-      </p>
-    </footer>
-  </div>
-)};
+      </footer>
+    </div>
+  );
+};
 
 export default DoctorBookingCard;

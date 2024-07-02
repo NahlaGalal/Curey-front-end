@@ -1,6 +1,8 @@
 import React from "react";
 import Button from "../Button";
 import { Rate } from "../../util/rate";
+import DefaultDoctorImg from "../../assets/images/doctor.png";
+import DefaultProductImg from "../../assets/images/product.png";
 
 const OrderCard = (props) => (
   <div className="PrescriptionCard">
@@ -9,6 +11,7 @@ const OrderCard = (props) => (
         src={props.image}
         alt="doctor"
         className="doctorBox__img"
+        onError={(e) => (e.currentTarget.src = DefaultDoctorImg)}
       />
       <div className="doctorInfo">
         <h3 className="doctorCard__name">{props.name}</h3>
@@ -77,7 +80,11 @@ export default OrderCard;
 
 const MedicineItem = (props) => (
   <div className="PrescriptionItem">
-    <img src={props.image} alt="Medicine" />
+    <img
+      src={props.image}
+      alt="Medicine"
+      onError={(e) => (e.currentTarget.src = DefaultProductImg)}
+    />
     <div className="PrescriptionItem__info">
       <p>{props.medicineName}</p>
       <p className="PrescriptionItem__info__quantity">

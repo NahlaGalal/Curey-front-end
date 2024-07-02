@@ -1,8 +1,9 @@
 import React from "react";
 import PopupFooter from "./PopupFooter";
 import LocationIcon from "../../assets/svg/location.svg";
+import DefaultImg from "../../assets/images/pharmacy.png";
 
-const OrderDetails = props => {
+const OrderDetails = (props) => {
   return (
     <section className="Popup">
       <div className="Popup__box">
@@ -10,7 +11,7 @@ const OrderDetails = props => {
         {props.orders.map((order, i) => {
           const { medications, pharmacy } = order;
           const totalPrice = medications
-            .map(medication => +medication.price)
+            .map((medication) => +medication.price)
             .reduce((total, price) => (total += price), 0)
             .toFixed(2);
 
@@ -21,6 +22,7 @@ const OrderDetails = props => {
                   <img
                     src={pharmacy.image}
                     alt={`${pharmacy.name} logo`}
+                    onError={(e) => (e.currentTarget.src = DefaultImg)}
                   />
                   <div>
                     <p>{pharmacy.name}</p>
